@@ -1,5 +1,5 @@
-﻿using PipServices.Commons.Errors;
-using System;
+﻿using System;
+using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Refer
 {
@@ -10,12 +10,12 @@ namespace PipServices.Commons.Refer
         {
         }
 
-        public ReferenceNotFoundException(string correlationId, Locator locator) :
-            base(correlationId, "REF_NOT_FOUND", locator == null ? "" : "Reference to " + locator.ToString() + " was not found")
+        public ReferenceNotFoundException(string correlationId, Descriptor descriptor) :
+            base(correlationId, "REF_NOT_FOUND", descriptor == null ? "" : "Reference to " + descriptor.ToString() + " was not found")
         {
-            if (locator != null)
+            if (descriptor != null)
             {
-                WithDetails(locator);
+                WithDetails(descriptor);
             }
         }
     }

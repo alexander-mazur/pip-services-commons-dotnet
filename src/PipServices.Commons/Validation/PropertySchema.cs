@@ -15,7 +15,7 @@ namespace PipServices.Commons.Validation
         /// <param name="optional">The optional flag</param>
         /// <param name="rules">A list of validation rules</param>
         public PropertySchema(string name, bool array, string type, bool optional,
-            IEnumerable<IPropertyValidationRule> rules)
+        IEnumerable<IPropertyValidationRule> rules)
         {
             Name = name;
             IsArray = array;
@@ -27,7 +27,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Creates instance of the object property schema defined by complex schema
+        /// Creates instance of the object property schema defined by complex schema
         /// </summary>
         /// <param name="name">The name of the property</param>
         /// <param name="array">The array flag</param>
@@ -35,7 +35,7 @@ namespace PipServices.Commons.Validation
         /// <param name="optional">The optional flag</param>
         /// <param name="rules">A list of validation rules</param>
         public PropertySchema(string name, bool array, Schema schema, bool optional,
-            IEnumerable<IPropertyValidationRule> rules)
+        IEnumerable<IPropertyValidationRule> rules)
         {
             Name = name;
             IsArray = array;
@@ -47,34 +47,34 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     The property name
+        /// The property name
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        ///     The array flag
+        /// The array flag
         /// </summary>
         public bool IsArray { get; }
 
         /// <summary>
-        ///     The optional flag
+        /// The optional flag
         /// </summary>
         public bool IsOptional { get; }
 
         /// <summary>
-        ///     The simple type to define property value.
-        ///     Supported the following types: 'int', 'float', 'long', 'number'
-        ///     'string', 'boolean', 'object', 'array', 'map', 'TypeName'
+        /// The simple type to define property value.
+        /// Supported the following types: 'int', 'float', 'long', 'number'
+        /// 'string', 'boolean', 'object', 'array', 'map', 'TypeName'
         /// </summary>
         public string Type { get; }
 
         /// <summary>
-        ///     The complex value schema
+        /// The complex value schema
         /// </summary>
         public Schema Schema { get; }
 
         /// <summary>
-        ///     The collection of validation rules
+        /// The collection of validation rules
         /// </summary>
         public IList<IPropertyValidationRule> Rules
         {

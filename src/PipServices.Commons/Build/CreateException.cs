@@ -11,12 +11,12 @@ namespace PipServices.Commons.Build
         {
         }
 
-        public CreateException(string correlationId, Locator locator) :
-            base(correlationId, "CANNOT_CREATE", locator == null ? "" : "Requested component " + locator.ToString() + " cannot be created")
+        public CreateException(string correlationId, Descriptor descriptor) :
+            base(correlationId, "CANNOT_CREATE", descriptor == null ? "" : "Requested component " + descriptor.ToString() + " cannot be created")
         {
-            if (locator != null)
+            if (descriptor != null)
             {
-                WithDetails(locator);
+                WithDetails(descriptor);
             }
         }
 

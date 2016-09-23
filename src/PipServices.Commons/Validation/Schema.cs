@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PipServices.Commons.Validation
 {
@@ -11,7 +8,7 @@ namespace PipServices.Commons.Validation
         private readonly List<IValidationRule> _rules = new List<IValidationRule>();
 
         /// <summary>
-        ///     Gets a list of object properties
+        /// Gets a list of object properties
         /// </summary>
         public IList<PropertySchema> Properties
         {
@@ -19,7 +16,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Gets a list of validation rules for entire object
+        /// Gets a list of validation rules for entire object
         /// </summary>
         public IList<IValidationRule> Rules
         {
@@ -27,7 +24,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema a required property defined by a simple type.
+        /// Adds to the validation schema a required property defined by a simple type.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -40,7 +37,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema a required property array defined by a simple type.
+        /// Adds to the validation schema a required property array defined by a simple type.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property values</param>
@@ -53,7 +50,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema an optional property defined by a simple type.
+        /// Adds to the validation schema an optional property defined by a simple type.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -66,7 +63,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema an optional property array defined by a simple type.
+        /// Adds to the validation schema an optional property array defined by a simple type.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -79,7 +76,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema a required property defined by validation schema.
+        /// Adds to the validation schema a required property defined by validation schema.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -92,7 +89,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema a required property array defined by validation schema.
+        /// Adds to the validation schema a required property array defined by validation schema.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -105,7 +102,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema an optional property defined by validation schema.
+        /// Adds to the validation schema an optional property defined by validation schema.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -118,7 +115,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Adds to the validation schema an optional property array defined by validation schema.
+        /// Adds to the validation schema an optional property array defined by validation schema.
         /// </summary>
         /// <param name="name">A name of the property to be added</param>
         /// <param name="type">A simple type that defines the property value</param>
@@ -131,7 +128,7 @@ namespace PipServices.Commons.Validation
         }
 
         /// <summary>
-        ///     Ads a validation rule to this schema
+        /// Ads a validation rule to this schema
         /// </summary>
         /// <param name="rule">a validation rule to be added</param>
         /// <returns>a self reference to the schema for chaining</returns>

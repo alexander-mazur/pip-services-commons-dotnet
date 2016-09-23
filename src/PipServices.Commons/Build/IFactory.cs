@@ -4,7 +4,7 @@ namespace PipServices.Commons.Build
 {
     public interface IFactory
     {
-        bool CanCreate(Locator locator);
-        object Create();
+        bool CanCreate(Descriptor descriptor);
+        object Create(Descriptor descriptor);
     }
 }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PipServices.Commons.Counters
 {
-    public abstract class AbstractCounters : ICounters, ITimingCallback
+    public abstract class CachedCounters : ICounters, ITimingCallback
     {
         private Dictionary<string, Counter> _cache = new Dictionary<string, Counter>();
         private bool _updated = false;
 
-        protected AbstractCounters() { }
+        protected CachedCounters() { }
 
         protected abstract void Save(List<Counter> counters);
 
@@ -41,7 +39,9 @@ namespace PipServices.Commons.Counters
         public Counter Get(string name, int type)
         {
             if (name == null || name.Length == 0)
+            {
                 throw new ArgumentNullException(nameof(name));
+            }
 
             var counter = _cache[name];
 
@@ -57,7 +57,9 @@ namespace PipServices.Commons.Counters
         private void CalculateStats(Counter counter, float value)
         {
             if (counter == null)
+            {
                 throw new ArgumentNullException(nameof(counter));
+            }
 
             counter.Last = value;
             counter.Count = counter.Count != null ? counter.Count + 1 : 1;
@@ -105,7 +107,7 @@ namespace PipServices.Commons.Counters
             _updated = true;
         }
 
-        public void IncrementOne(String name)
+        public void IncrementOne(string name)
         {
             Increment(name, 1);
         }

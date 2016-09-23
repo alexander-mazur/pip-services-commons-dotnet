@@ -4,7 +4,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Build
 {
-    public class CompositeFactory
+    public class CompositeFactory : IFactory
     {
         private List<IFactory> _factories = new List<IFactory>();
 
@@ -39,18 +39,35 @@ namespace PipServices.Commons.Build
             _factories.Remove(factory);
         }
 
-        public bool CanCreate(Locator locator)
+        public bool CanCreate(Descriptor descriptor)
         {
-            if (locator == null)
+            if (descriptor == null)
             {
-                throw new ArgumentNullException(nameof(locator));
+                throw new ArgumentNullException(nameof(descriptor));
             }
 
             // Iterate from the latest factories
             for (int index = _factories.Count - 1; index >= 0; index--)
             {
-                if (_factories[index].CanCreate(locator))
+                if (_factories[index].CanCreate(descriptor))
                     return true;
+            }
+
+            return false;
+        }
+
+        public object Create(Descriptor descriptor)
+        {
+            if (descriptor == null)
+            {
+                throw new ArgumentNullException(nameof(descriptor));
+            }
+
+            // Iterate from the latest factories
+            for (int index = _factories.Count - 1; index >= 0; index--)
+            {
+                if (_factories[index].CanCreate(descriptor))
+                    return _factories[index].Create(descriptor);
             }
 
             return false;

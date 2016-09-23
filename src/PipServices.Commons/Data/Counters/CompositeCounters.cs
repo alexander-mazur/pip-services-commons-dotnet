@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Counters
 {
-    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, ILocateable
+    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescribable
     {
         private List<ICounters> _counters = new List<ICounters>();
-        private static Locator _locator = new Locator("pip-commons", "counters", "composite", "1.0");
+        private static Descriptor _descriptor = new Descriptor("pip-commons", "counters", "composite", "1.0");
 
         public CompositeCounters() { }
 
-        public Locator GetLocator() { return _locator; }
+        public Descriptor GetDescriptor()
+        {
+            return _descriptor;
+        }
 
         public void SetReferences(IReferences references)
         {
-            List<Object> counters = references.GetOptional(new Locator(null, "counters", null, null));
+            var counters = references.GetOptional(new Descriptor(null, "counters", null, null));
             foreach (var counter in counters)
             {
                 if (counter is ICounters)
+                {
                     _counters.Add((ICounters)counter);
+                }
             }
         }
 
@@ -35,7 +38,9 @@ namespace PipServices.Commons.Counters
             foreach (var counter in _counters)
             {
                 if (counter is ITimingCallback)
+                {
                     ((ITimingCallback)counter).EndTiming(name, elapsed);
+                }
             }
         }
 

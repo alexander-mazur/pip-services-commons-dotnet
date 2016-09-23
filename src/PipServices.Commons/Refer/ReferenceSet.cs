@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PipServices.Commons.Refer
 {
     public class ReferenceSet : IReferences
     {
-        private List<ReferenceItem> _items = new List<ReferenceItem>();
+        private List<Reference> _items = new List<Reference>();
 
         public ReferenceSet()
         { }
 
-        public ReferenceSet(params ILocateable[] references)
+        public ReferenceSet(params IDescribable[] references)
         {
             foreach (var reference in references)
             {
@@ -25,15 +23,15 @@ namespace PipServices.Commons.Refer
             return new List<object>(_items);
         }
 
-        public object GetOneBefore(object reference, Locator locator)
+        public object GetOneBefore(object reference, Descriptor descriptor)
         {
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
-            if (locator == null)
+            if (descriptor == null)
             {
-                throw new ArgumentNullException(nameof(locator));
+                throw new ArgumentNullException(nameof(descriptor));
             }
 
             int index = _items.Count - 1;
@@ -42,46 +40,46 @@ namespace PipServices.Commons.Refer
             for (; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Reference.Equals(reference))
+                if (item.Ref.Equals(reference))
                     break;
             }
 
             for (; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Locator.Match(locator))
-                    return item.Reference;
+                if (item.Descriptor.Match(descriptor))
+                    return item.Ref;
             }
 
-            throw new ReferenceNotFoundException(null, locator);
+            throw new ReferenceNotFoundException(null, descriptor);
         }
 
-        public object GetOneOptional(Locator locator)
+        public object GetOneOptional(Descriptor descriptor)
         {
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Locator.Match(locator))
-                    return item.Reference;
+                if (item.Descriptor.Match(descriptor))
+                    return item.Ref;
             }
             return null;
         }
 
-        public object GetOneRequired(Locator locator)
+        public object GetOneRequired(Descriptor descriptor)
         {
-            var reference = GetOneOptional(locator);
+            var reference = GetOneOptional(descriptor);
             if (reference == null)
             {
-                throw new ReferenceNotFoundException(null, locator);
+                throw new ReferenceNotFoundException(null, descriptor);
             }
             return reference;
         }
 
-        public List<object> GetOptional(Locator locator)
+        public List<object> GetOptional(Descriptor descriptor)
         {
-            if (locator == null)
+            if (descriptor == null)
             {
-                throw new ArgumentNullException(nameof(locator));
+                throw new ArgumentNullException(nameof(descriptor));
             }
 
             var references = new List<object>();
@@ -89,19 +87,19 @@ namespace PipServices.Commons.Refer
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Locator.Match(locator))
-                    references.Add(item.Reference);
+                if (item.Descriptor.Match(descriptor))
+                    references.Add(item.Ref);
             }
 
             return references;
         }
 
-        public List<object> GetRequired(Locator locator)
+        public List<object> GetRequired(Descriptor descriptor)
         {
-            var references = GetOptional(locator);
+            var references = GetOptional(descriptor);
             if (references.Count == 0)
             {
-                throw new ReferenceNotFoundException(null, locator);
+                throw new ReferenceNotFoundException(null, descriptor);
             }
             return references;
         }
@@ -114,7 +112,7 @@ namespace PipServices.Commons.Refer
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Reference.Equals(reference))
+                if (item.Ref.Equals(reference))
                 {
                     // Remove from the set
                     _items.RemoveAt(index);
@@ -123,28 +121,28 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public void Set(ILocateable reference)
+        public void Set(IDescribable reference)
         {
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            Set(reference.GetLocator(), reference);
+            Set(reference.GetDescriptor(), reference);
         }
 
-        public void Set(Locator locator, object reference)
+        public void Set(Descriptor descriptor, object reference)
         {
-            if (locator == null)
+            if (descriptor == null)
             {
-                throw new ArgumentNullException(nameof(locator));
+                throw new ArgumentNullException(nameof(descriptor));
             }
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            _items.Add(new ReferenceItem(locator, reference));
+            _items.Add(new Reference(descriptor, reference));
 
             if (reference is IReferenceable)
             {
@@ -152,7 +150,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public static ReferenceSet From(params ILocateable[] references)
+        public static ReferenceSet From(params IDescribable[] references)
         {
             var result = new ReferenceSet();
             foreach (var reference in references)

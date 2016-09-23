@@ -4,12 +4,14 @@ namespace PipServices.Commons.Data
 {
     public class IdGenerator
     {
-        public static string nextShort()
+        private static Random _rand = new Random();
+
+        public static string NextShort()
         {
-            return Math.Floor((decimal)100000000 + new Random().Next() * 899999999).ToString();
+            return Math.Floor((decimal)100000000 + _rand.Next() * 899999999).ToString();
         }
 
-        public static String nextLong()
+        public static string NextLong()
         {
             return Guid.NewGuid().ToString().Replace("-", "");
         }

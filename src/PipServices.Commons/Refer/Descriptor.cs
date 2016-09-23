@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace PipServices.Commons.Refer
 {
-    public class Locator
+    public class Descriptor
     {
         public string Group { get; }
         public string Type { get; }
         public string Id { get; }
         public string Version { get; }
 
-        public Locator(string group, string type, string id, string version)
+        public Descriptor(string group, string type, string id, string version)
         {
             if ("*".Equals(group)) group = null;
             if ("*".Equals(type)) type = null;
@@ -26,32 +22,32 @@ namespace PipServices.Commons.Refer
             Version = version;
         }
 
-        public bool Match(Locator locator)
+        public bool Match(Descriptor descriptor)
         {
             // Matching groups
-            if (Group != null && locator.Group != null
-                && !Group.Equals(locator.Group))
+            if (Group != null && descriptor.Group != null
+                && !Group.Equals(descriptor.Group))
             {
                 return false;
             }
 
             // Matching types
-            if (Type != null && locator.Type != null
-                && !Type.Equals(locator.Type))
+            if (Type != null && descriptor.Type != null
+                && !Type.Equals(descriptor.Type))
             {
                 return false;
             }
 
             // Matching ids
-            if (Id != null && locator.Id != null
-                && !Id.Equals(locator.Id))
+            if (Id != null && descriptor.Id != null
+                && !Id.Equals(descriptor.Id))
             {
                 return false;
             }
 
             // Matching versions
-            if (Version != null && locator.Version != null
-                && !Version.Equals(locator.Version))
+            if (Version != null && descriptor.Version != null
+                && !Version.Equals(descriptor.Version))
             {
                 return false;
             }
@@ -62,9 +58,9 @@ namespace PipServices.Commons.Refer
 
         public override bool Equals(object obj)
         {
-            if (obj is Locator)
+            if (obj is Descriptor)
             {
-                return Match((Locator)obj);
+                return Match((Descriptor)obj);
             }
             return false;
         }
