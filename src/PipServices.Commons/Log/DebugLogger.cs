@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
@@ -45,6 +44,4 @@ namespace PipServices.Commons.Log
             }
         }
     }
-}
-
 }
