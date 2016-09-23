@@ -5,7 +5,7 @@ using PipServices.Commons.Log;
 
 namespace PipServices.Commons.Counters
 {
-    public class LogCounters : CachedCounters, IDescribable, IReferenceable
+    public class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
         private static readonly Descriptor _descriptor = new Descriptor("pip-commons", "counters", "log", "1.0");
         private ILogger _logger;

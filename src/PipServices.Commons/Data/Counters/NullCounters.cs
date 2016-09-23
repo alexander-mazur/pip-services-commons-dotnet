@@ -3,7 +3,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Counters
 {
-    public class NullCounters : ICounters, IDescribable
+    public class NullCounters : ICounters, IDescriptable
     {
         private static readonly Descriptor _descriptor = new Descriptor("pip-commons", "counters", "null", "1.0");
 

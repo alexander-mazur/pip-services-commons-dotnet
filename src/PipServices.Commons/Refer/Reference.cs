@@ -24,7 +24,7 @@ namespace PipServices.Commons.Refer
         public Reference(object reference)
         {
             var locatable = reference as ILocateable;
-            var describable = reference as IDescribable;
+            var describable = reference as IDescriptable;
 
             if (locatable == null && describable == null)
             {

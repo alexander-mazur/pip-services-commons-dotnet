@@ -10,7 +10,7 @@ namespace PipServices.Commons.Refer
         public ReferenceSet()
         { }
 
-        public ReferenceSet(params IDescribable[] references)
+        public ReferenceSet(params IDescriptable[] references)
         {
             foreach (var reference in references)
             {
@@ -121,7 +121,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public void Set(IDescribable reference)
+        public void Set(IDescriptable reference)
         {
             if (reference == null)
             {
@@ -150,7 +150,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public static ReferenceSet From(params IDescribable[] references)
+        public static ReferenceSet From(params IDescriptable[] references)
         {
             var result = new ReferenceSet();
             foreach (var reference in references)

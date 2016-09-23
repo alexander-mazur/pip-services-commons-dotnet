@@ -4,7 +4,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Counters
 {
-    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescribable
+    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
     {
         private List<ICounters> _counters = new List<ICounters>();
         private static Descriptor _descriptor = new Descriptor("pip-commons", "counters", "composite", "1.0");

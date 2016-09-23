@@ -4,7 +4,7 @@ namespace PipServices.Commons.Refer
 {
     public interface IReferences
     {
-        void Set(IDescribable reference);
+        void Set(IDescriptable reference);
         void Set(Descriptor descriptor, object reference);
         void Remove(object reference);
         List<object> GetAll();
