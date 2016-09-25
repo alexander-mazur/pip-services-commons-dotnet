@@ -4,6 +4,9 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Build
 {
+    /// <summary>
+    /// A factory that serves as a registry of factories.
+    /// </summary>
     public class CompositeFactory : IFactory
     {
         private List<IFactory> _factories = new List<IFactory>();
@@ -46,14 +49,7 @@ namespace PipServices.Commons.Build
                 throw new ArgumentNullException(nameof(descriptor));
             }
 
-            // Iterate from the latest factories
-            for (int index = _factories.Count - 1; index >= 0; index--)
-            {
-                if (_factories[index].CanCreate(descriptor))
-                    return true;
-            }
-
-            return false;
+            return _factories.Exists(x => x.CanCreate(descriptor));
         }
 
         public object Create(Descriptor descriptor)
@@ -63,14 +59,13 @@ namespace PipServices.Commons.Build
                 throw new ArgumentNullException(nameof(descriptor));
             }
 
-            // Iterate from the latest factories
-            for (int index = _factories.Count - 1; index >= 0; index--)
-            {
-                if (_factories[index].CanCreate(descriptor))
-                    return _factories[index].Create(descriptor);
-            }
 
-            return false;
+            var factory = _factories.FindLast(x => x.CanCreate(descriptor));
+            if (factory == null)
+            {
+                throw new CreateException(null, descriptor);
+            }
+            return factory.Create(descriptor);
         }
     }
 }

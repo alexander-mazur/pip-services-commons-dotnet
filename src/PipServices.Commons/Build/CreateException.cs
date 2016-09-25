@@ -4,6 +4,9 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Build
 {
+    /// <summary>
+    /// Exception thrown when a component cannot be created by a factory.
+    /// </summary>
     public class CreateException : InternalException
     {
         public CreateException(Exception innerException) :
@@ -12,7 +15,7 @@ namespace PipServices.Commons.Build
         }
 
         public CreateException(string correlationId, Descriptor descriptor) :
-            base(correlationId, "CANNOT_CREATE", descriptor == null ? "" : "Requested component " + descriptor.ToString() + " cannot be created")
+            base(correlationId, "CANNOT_CREATE", "Requested component " + (descriptor == null ? "" : descriptor.ToString()) + " cannot be created")
         {
             if (descriptor != null)
             {
