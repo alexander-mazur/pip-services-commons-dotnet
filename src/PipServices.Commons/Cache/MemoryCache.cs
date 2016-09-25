@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
-using System.Threading;
 
 namespace PipServices.Commons.Cache
 {
@@ -33,7 +34,6 @@ namespace PipServices.Commons.Cache
         {
             _timeout = config.GetAsLongWithDefault("timeout", DefaultTimeout);
             _maxSize = config.GetAsLongWithDefault("max_size", DefaultMaxSize);
-
         }
 
         /// <summary>
@@ -60,7 +60,10 @@ namespace PipServices.Commons.Cache
             try
             {
                 _cache.Remove(key);
-
+            }
+            catch
+            {
+                // Ignore error
             }
             finally
             {
@@ -80,7 +83,7 @@ namespace PipServices.Commons.Cache
                 throw new ArgumentNullException(nameof(key));
             }
 
-            _lock.EnterUpgradeableReadLock();
+            _lock.EnterReadLock();
             try
             {
                 CacheEntry entry;
@@ -88,7 +91,7 @@ namespace PipServices.Commons.Cache
                 {
                     if (entry.IsExpired())
                     {
-                        Remove(key);
+                        Task.Factory.StartNew(() => { Remove(key); });
                         return null;
                     }
                 }
@@ -97,7 +100,7 @@ namespace PipServices.Commons.Cache
             }
             finally
             {
-                _lock.ExitUpgradeableReadLock();
+                _lock.ExitReadLock();
             }
         }
 
@@ -137,14 +140,13 @@ namespace PipServices.Commons.Cache
                 }
                 else
                 {
-                    entry = new CacheEntry(key, value, timeout);
-                    _cache[key] = entry;
+                    _cache[key] = new CacheEntry(key, value, timeout);
                 }
 
                 // cleanup
                 if (_maxSize > 0 && _cache.Count > _maxSize)
                 {
-                    Cleanup();
+                    Task.Factory.StartNew(() => Cleanup());
                 }
 
                 return value;
@@ -161,28 +163,40 @@ namespace PipServices.Commons.Cache
             CacheEntry oldest = null;
             var keysToRemove = new List<string>();
 
-            foreach (var key in _cache.Keys)
+            _lock.EnterWriteLock();
+            try
             {
-                var entry = _cache[key];
+                foreach (var key in _cache.Keys)
+                {
+                    var entry = _cache[key];
 
-                if (entry.IsExpired())
-                {
-                    keysToRemove.Add(key);
+                    if (entry.IsExpired())
+                    {
+                        keysToRemove.Add(key);
+                    }
+                    if (oldest == null || oldest.Expiration > entry.Expiration)
+                    {
+                        oldest = entry;
+                    }
                 }
-                if (oldest == null || oldest.Expiration > entry.Expiration)
+
+                foreach (var key in keysToRemove)
                 {
-                    oldest = entry;
+                    _cache.Remove(key);
+                }
+
+                if (_cache.Count > _maxSize && oldest != null)
+                {
+                    _cache.Remove(oldest.Key);
                 }
             }
-
-            foreach (var key in keysToRemove)
+            catch
             {
-                _cache.Remove(key);
+                // Ignore error. TODO: log??
             }
-
-            if (_cache.Count > _maxSize && oldest != null)
+            finally
             {
-                _cache.Remove(oldest.Key);
+                _lock.ExitWriteLock();
             }
         }
     }
