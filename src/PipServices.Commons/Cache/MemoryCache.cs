@@ -19,9 +19,9 @@ namespace PipServices.Commons.Cache
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
-        private Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
+        private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private long _timeout, _maxSize;
-        private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
         /// <summary>
         /// Creates an instance of local in-memory cache.
