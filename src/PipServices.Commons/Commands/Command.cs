@@ -6,12 +6,21 @@ using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Commands
 {
+    /// <summary>
+    /// Represents a command that implements a command pattern.
+    /// </summary>
     public class Command : ICommand
     {
         public string Name { get; }
         private Schema _schema;
         private IParamExecutable _function;
 
+        /// <summary>
+        /// Creates an instance of Command.
+        /// </summary>
+        /// <param name="name">Name of the command.</param>
+        /// <param name="schema">Schema for command arguments.</param>
+        /// <param name="function">Execution function wrapped in this command.</param>
         public Command(string name, Schema schema, IParamExecutable function)
         {
             if (name == null)
@@ -27,9 +36,14 @@ namespace PipServices.Commons.Commands
             _function = function;
         }
 
+        /// <summary>
+        /// Performs validation of the command arguments.
+        /// </summary>
+        /// <param name="args">Cimmand arguments.</param>
+        /// <returns>A list of errors or empty list if validation was successful.</returns>
         public List<ValidationException> Validate(Parameters args)
         {
-            if(_schema == null)
+            if (_schema == null)
             {
                 return new List<ValidationException>();
             }
@@ -38,6 +52,12 @@ namespace PipServices.Commons.Commands
             return new List<ValidationException>();
         }
 
+        /// <summary>
+        /// Executes the command given specific arguments as input.
+        /// </summary>
+        /// <param name="correlationId">Unique correlation/transaction id.</param>
+        /// <param name="args">Command arguments.</param>
+        /// <returns>Execution result.</returns>
         public object Execute(string correlationId, Parameters args)
         {
             if (_schema != null)

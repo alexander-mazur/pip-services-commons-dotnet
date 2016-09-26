@@ -5,10 +5,20 @@ using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Commands
 {
+    /// <summary>
+    /// Events to receit notifications on command execution results and failures.
+    /// </summary>
     public class Event : IEvent
     {
+        /// <summary>
+        /// Gets listeners that receive notifications for this event.
+        /// </summary>
         public List<IEventListener> Listeners { get; } = new List<IEventListener>();
 
+        /// <summary>
+        /// Creates an instance of Event.
+        /// </summary>
+        /// <param name="name">The name of the event.</param>
         public Event(string name)
         {
             if (name == null)
@@ -18,18 +28,34 @@ namespace PipServices.Commons.Commands
             Name = name;
         }
 
+        /// <summary>
+        /// Gets the name of the event.
+        /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// Adds a listener to receive notifications.
+        /// </summary>
+        /// <param name="listener">The listener to be added.</param>
         public void AddListener(IEventListener listener)
         {
             Listeners.Add(listener);
         }
 
+        /// <summary>
+        /// Removes a listener from event notifications.
+        /// </summary>
+        /// <param name="listener">The listener to remove.</param>
         public void RemoveListener(IEventListener listener)
         {
             Listeners.Remove(listener);
         }
 
+        /// <summary>
+        /// Notifies all listeners about the event.
+        /// </summary>
+        /// <param name="correlationId">Unique correlation/transaction id.</param>
+        /// <param name="args">The event arguments/value.</param>
         public void Notify(string correlationId, Parameters args)
         {
             foreach (var listener in Listeners)

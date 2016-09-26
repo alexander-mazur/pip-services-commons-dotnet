@@ -3,19 +3,34 @@ using PipServices.Commons.Data;
 using PipServices.Commons.Errors;
 using PipServices.Commons.Run;
 using PipServices.Commons.Validation;
-using System.Linq;
 
 namespace PipServices.Commons.Commands
 {
+    /// <summary>
+    /// Handles command registration and execution.
+    /// Enables interceptors to control or modify command behavior.
+    /// </summary>
     public class CommandSet
     {
-        private List<ICommand> Commands { get; } = new List<ICommand>();
+        /// <summary>
+        /// Gets all supported commands.
+        /// </summary>
+        public List<ICommand> Commands { get; } = new List<ICommand>();
+
+        /// <summary>
+        /// Gets all supported events.
+        /// </summary>
         private List<IEvent> Events { get; } = new List<IEvent>();
 
         private Dictionary<string, ICommand> _commandsByName = new Dictionary<string, ICommand>();
         private Dictionary<string, IEvent> _eventsByName = new Dictionary<string, IEvent>();
         private List<ICommandIntercepter> _intercepters = new List<ICommandIntercepter>();
 
+        /// <summary>
+        /// Finds a specific command by its name.
+        /// </summary>
+        /// <param name="command">The command name.</param>
+        /// <returns>A command with the given name.</returns>
         public ICommand FindCommand(string command)
         {
             ICommand value;
@@ -23,6 +38,11 @@ namespace PipServices.Commons.Commands
             return value;
         }
 
+        /// <summary>
+        /// Finds a specific event by its name.
+        /// </summary>
+        /// <param name="ev">The event name.</param>
+        /// <returns>An event with the given name.</returns>
         public IEvent FindEvent(string ev)
         {
             IEvent value;
@@ -30,12 +50,20 @@ namespace PipServices.Commons.Commands
             return value;
         }
 
+        /// <summary>
+        /// Adds a command to the command set.
+        /// </summary>
+        /// <param name="command">The command to add.</param>
         public void AddCommand(ICommand command)
         {
             Commands.Add(command);
             BuildCommandChain(command);
         }
 
+        /// <summary>
+        /// Adds commands to the command set.
+        /// </summary>
+        /// <param name="commands">The commands to add.</param>
         public void AddCommands(IEnumerable<ICommand> commands)
         {
             foreach (var command in commands)
@@ -44,12 +72,20 @@ namespace PipServices.Commons.Commands
             }
         }
 
+        /// <summary>
+        /// Adds an event to the command set.
+        /// </summary>
+        /// <param name="ev">The event to add.</param>
         public void AddEvent(IEvent ev)
         {
             Events.Add(ev);
             _eventsByName[ev.Name] = ev;
         }
 
+        /// <summary>
+        /// Adds events to the command set.
+        /// </summary>
+        /// <param name="events">The events to add.</param>
         public void AddEvents(IEnumerable<IEvent> events)
         {
             foreach (var ev in events)
@@ -58,6 +94,10 @@ namespace PipServices.Commons.Commands
             }
         }
 
+        /// <summary>
+        /// Adds command from another command set to this set.
+        /// </summary>
+        /// <param name="commands">The commands set to add.</param>
         public void AddCommandSet(CommandSet commands)
         {
             foreach (var command in commands.Commands)
@@ -66,12 +106,23 @@ namespace PipServices.Commons.Commands
             }
         }
 
-        public void AddInterceptor(ICommandIntercepter interceptor)
+        /// <summary>
+        /// Adds an intercepter to the command set.
+        /// </summary>
+        /// <param name="intercepter">The intercepter to add.</param>
+        public void AddInterceptor(ICommandIntercepter intercepter)
         {
-            _intercepters.Add(interceptor);
+            _intercepters.Add(intercepter);
             RebuildAllCommandChains();
         }
 
+        /// <summary>
+        /// Executes a command by its name with specified arguments.
+        /// </summary>
+        /// <param name="correlationId">Unique correlation/transaction id.</param>
+        /// <param name="command">Command name.</param>
+        /// <param name="args">Command arguments.</param>
+        /// <returns>Execution result.</returns>
         public object Execute(string correlationId, string command, Parameters args)
         {
             var cref = FindCommand(command);
@@ -98,6 +149,12 @@ namespace PipServices.Commons.Commands
             return cref.Execute(correlationId, args);
         }
 
+        /// <summary>
+        /// Validates command arguments.
+        /// </summary>
+        /// <param name="command">Command name.</param>
+        /// <param name="args">Command arguments.</param>
+        /// <returns>A list of validation errors or an empty list if the arguments are valid.</returns>
         public List<ValidationException> Validate(string command, Parameters args)
         {
             var cref = FindCommand(command);
@@ -114,6 +171,10 @@ namespace PipServices.Commons.Commands
             return cref.Validate(args);
         }
 
+        /// <summary>
+        /// Adds listener to all events.
+        /// </summary>
+        /// <param name="listener">The listener to add.</param>
         public void AddListener(IEventListener listener)
         {
             foreach (var ev in Events)
@@ -122,6 +183,10 @@ namespace PipServices.Commons.Commands
             }
         }
 
+        /// <summary>
+        /// Removes a listener from all events.
+        /// </summary>
+        /// <param name="listener">The listener to remove.</param>
         public void RemoveListener(IEventListener listener)
         {
             foreach (var ev in Events)
@@ -130,6 +195,12 @@ namespace PipServices.Commons.Commands
             }
         }
 
+        /// <summary>
+        /// Notifies all listeners about the event.
+        /// </summary>
+        /// <param name="ev">Event name.</param>
+        /// <param name="correlationId">Correlation/transaction id.</param>
+        /// <param name="args">Event arguments/value.</param>
         public void Notify(string ev, string correlationId, Parameters args)
         {
             var e = FindEvent(ev);
