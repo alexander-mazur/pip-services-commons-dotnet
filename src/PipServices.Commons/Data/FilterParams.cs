@@ -1,39 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace PipServices.Commons.Data
 {
     public class FilterParams : StringValueMap
     {
         public FilterParams() { }
-        public FilterParams(IDictionary<string, string> values)
+
+        public FilterParams(IDictionary map)
         {
-            if (values != null)
-            {
-                foreach (var entry in values)
-                    Set(entry.Key, entry.Value);
-            }
+            SetAsMap(map);
         }
 
-        public FilterParams(IDictionary<string, object> values)
+        public static new FilterParams FromTuples(params object[] values)
         {
-            if (values != null)
-            {
-                foreach (var entry in values)
-                    Set(entry.Key, entry.Value);
-            }
+            var map = StringValueMap.FromTuples(values);
+            return new FilterParams(map);
         }
 
-        public FilterParams(params object[] values)
+        public static new FilterParams FromString(string line)
         {
-            if (values != null)
-                SetTuples(values);
-        }
-
-        public static FilterParams From(params object[] values)
-        {
-            var result = new FilterParams();
-            result.SetTuples(values);
-            return result;
+            var map = StringValueMap.FromString(line);
+            return new FilterParams(map);
         }
     }
 }

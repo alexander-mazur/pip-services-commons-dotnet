@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PipServices.Commons.Convert;
+using System.Text;
 
 namespace PipServices.Commons.Data
 {
@@ -8,52 +10,56 @@ namespace PipServices.Commons.Data
     {
         public StringValueMap() { }
 
-        public StringValueMap(IDictionary<string, string> content)
+        public StringValueMap(IDictionary map)
             : base()
         {
-            if (content != null)
+            SetAsMap(map);
+        }
+
+        public string Get(string name)
+        {
+            if (name == null)
             {
-                foreach (var entry in content)
-                    Add(entry.Key, entry.Value);
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            foreach (var key in Keys)
+            {
+                if (string.Compare(key, name, true) == 0)
+                {
+                    return this[key];
+                }
+            }
+            return null;
+        }
+
+        public void SetAsMap(IDictionary map)
+        {
+            foreach (var key in map.Keys)
+            {
+                this[StringConverter.ToString(key)] = StringConverter.ToNullableString(map[key]);
             }
         }
 
-        public StringValueMap(params object[] values)
+        public object GetAsObject()
         {
-            SetTuples(values);
-        }
-
-        public virtual string Get(string key)
-        {
-            string value = TryGet(key);
-            if (value == null)
-                throw new NullReferenceException("Value with key " + key + " is not defined");
-            return value;
-        }
-
-        public string TryGet(string key)
-        {
-            string value = null;
-            this.TryGetValue(key, out value);
-            return value;
-        }
-
-        public void SetTuples(params object[] values)
-        {
-            for (var i = 0; i < values.Length; i += 2)
+            var result = new Dictionary<string, object>();
+            foreach (var key in Keys)
             {
-                if (i + 1 >= values.Length) break;
-
-                var name = values[i].ToString();
-                var value = values[i + 1];
-
-                Set(name, value);
+                result[key] = this[key];
             }
+            return result;
         }
 
-        public virtual void Set(string key, object value)
+        public void SetAsObject(object value)
         {
-            base[key] = StringConverter.ToNullableString(value);
+            Clear();
+            SetAsMap((IDictionary)MapConverter.ToMap(value));
+        }
+
+        public object GetAsObject(string key)
+        {
+            return Get(key);
         }
 
         public string GetAsNullableString(string key)
@@ -141,6 +147,23 @@ namespace PipServices.Commons.Data
             return FloatConverter.ToFloatWithDefault(value, defaultValue);
         }
 
+        public double? GetAsNullableDouble(string key)
+        {
+            var value = TryGet(key);
+            return DoubleConverter.ToNullableDouble(value);
+        }
+
+        public double GetAsDouble(string key)
+        {
+            return GetAsDoubleWithDefault(key, 0);
+        }
+
+        public double GetAsDoubleWithDefault(string key, double defaultValue = 0)
+        {
+            var value = TryGet(key);
+            return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
+        }
+
         public DateTime? GetAsNullableDateTime(string key)
         {
             var value = TryGet(key);
@@ -192,17 +215,142 @@ namespace PipServices.Commons.Data
             return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
         }
 
-        public void SetAsJson(string key, object value)
+        public T? GetAsNullableType<T>(string key) where T : struct
         {
-            var strValue = JsonConverter.ToJson(value);
-            Set(key, strValue);
+            return TypeConverter.ToNullableType<T>(key);
         }
 
-        public T GetAsJson<T>(string key)
+        public T GetAsType<T>(string key) where T : struct
         {
-            string value = TryGet(key);
-            return JsonConverter.FromJson<T>(value);
+            return TypeConverter.ToType<T>(key);
         }
 
+        public T GetAsTypeWithDefault<T>(string key, T defaultValue) where T : struct
+        {
+            return TypeConverter.ToTypeWithDefault<T>(key, defaultValue);
+        }
+
+        public AnyValue GetAsValue(string key)
+        {
+            return new AnyValue(GetAsObject(key));
+        }
+
+        public AnyValueArray GetAsNullableArray(string key)
+        {
+            var value = GetAsObject(key);
+            return value != null ? new AnyValueArray(value) : null;
+        }
+
+        public AnyValueArray GetAsArray(string key)
+        {
+            return new AnyValueArray(GetAsObject(key));
+        }
+
+        public AnyValueArray GetAsArrayWithDefault(string key, AnyValueArray defaultValue)
+        {
+            var value = GetAsObject(key);
+            return value != null ? new AnyValueArray(value) : defaultValue;
+        }
+
+        public AnyValueMap GetAsNullableMap(string key)
+        {
+            var result = GetAsObject(key);
+            return result != null ? new AnyValueMap(result) : null;
+        }
+
+        public AnyValueMap GetASMap(string key)
+        {
+            return new AnyValueMap(GetAsObject(key));
+        }
+
+        public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)
+        {
+            var result = GetAsNullableMap(key);
+            return result != null ? result : defaultValue;
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            foreach (var key in Keys)
+            {
+                if (builder.Length > 0)
+                {
+                    builder.Append(";");
+                }
+                var value = this[key];
+                if (value != null)
+                {
+                    builder.Append(key + "=" + value);
+                }
+                else
+                {
+                    builder.Append(key);
+                }
+            }
+            return builder.ToString();
+        }
+
+        public object Clone()
+        {
+            return new StringValueMap(this);
+        }
+
+        public static StringValueMap FromTuples(params object[] tuples)
+        {
+            var result = new StringValueMap();
+            for (var i = 0; i < tuples.Length; i += 2)
+            {
+                if (i + 1 >= tuples.Length) break;
+
+                var name = StringConverter.ToString(tuples[i]);
+                var value = StringConverter.ToString(tuples[i + 1]);
+
+                result.Put(name, value);
+            }
+            return result;
+        }
+
+        public static StringValueMap FromString(string line)
+        {
+            var result = new StringValueMap();
+            if (line == null || line.Length == 0) return result;
+
+            var tokens = line.Split(';');
+            foreach (var token in tokens)
+            {
+                if (token.Length == 0) continue;
+                var index = token.IndexOf("=");
+                var key = index > 0 ? token.Substring(0, index).Trim() : token.Trim();
+                var value = index > 0 ? token.Substring(index + 1).Trim() : null;
+                result.Put(key, value);
+            }
+            return result;
+        }
+
+        public static StringValueMap FromMaps(params IDictionary[] maps)
+        {
+            var result = new StringValueMap();
+            if (maps != null && maps.Length > 0)
+            {
+                foreach (var map in maps)
+                {
+                    result.SetAsMap(map);
+                }
+            }
+            return result;
+        }
+
+        private string TryGet(string key)
+        {
+            string value = null;
+            this.TryGetValue(key, out value);
+            return value;
+        }
+
+        public virtual void Put(string key, object value)
+        {
+            base[key] = StringConverter.ToNullableString(value);
+        }
     }
 }
