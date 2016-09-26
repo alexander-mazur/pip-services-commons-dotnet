@@ -1,43 +1,48 @@
 ﻿using PipServices.Commons.Log;
+using System;
 using Xunit;
 
 namespace PipServices.Commons.Test.Log
 {
     public sealed class LoggerFixture
     {
-        private readonly ILogger _logger;
+        private readonly ILogger Logger;
 
         public LoggerFixture(ILogger logger)
         {
-            _logger = logger;
+            Logger = logger;
         }
 
         public void TestLogLevel()
         {
-            Assert.True(_logger.Level >= LogLevel.None);
-            Assert.True(_logger.Level <= LogLevel.Trace);
+            Assert.True(Logger.Level >= LogLevel.None);
+            Assert.True(Logger.Level <= LogLevel.Trace);
         }
 
-        public void TestTextOutput()
+        public void TestSimpleLogging()
         {
-            _logger.Write(null, LogLevel.Fatal, null, "123", new object[] { "Fatal error..."});
-            _logger.Write(null, LogLevel.Error, null, "123", new object[] { "Recoverable error..." });
-            _logger.Write(null, LogLevel.Warn, null, "123", new object[] { "Warning..." });
-            _logger.Write(null, LogLevel.Info, null, "123", new object[] { "Information message..." });
-            _logger.Write(null, LogLevel.Debug, null, "123", new object[] { "Debug message..." });
-            _logger.Write(null, LogLevel.Trace, null, "123", new object[] { "Trace message..." });
+            Logger.Level = LogLevel.Trace;
+
+            Logger.Fatal(null, "Fatal error message");
+            Logger.Error(null, "Error message");
+            Logger.Warn(null, "Warning message");
+            Logger.Info(null, "Information message");
+            Logger.Debug(null, "Debug message");
+            Logger.Trace(null, "Trace message");
         }
 
-        public void TestMixedOutput()
+        public void TestErrorLogging()
         {
-            object obj = new { abc = "ABC" };
-
-            _logger.Write(null, LogLevel.Fatal, null, "123", new[] { 123, "ABC", obj });
-            _logger.Write(null, LogLevel.Error, null, "123", new[] { 123, "ABC", obj });
-            _logger.Write(null, LogLevel.Warn, null, "123", new[] { 123, "ABC", obj });
-            _logger.Write(null, LogLevel.Info, null, "123", new[] { 123, "ABC", obj });
-            _logger.Write(null, LogLevel.Debug, null, "123", new[] { 123, "ABC", obj });
-            _logger.Write(null, LogLevel.Trace, null, "123", new[] { 123, "ABC", obj });
+            try
+            {
+                // Raise an exception
+                throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal("123", ex, "Fatal error");
+                Logger.Error("123", ex, "Recoverable error");
+            }
         }
     }
 }

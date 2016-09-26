@@ -21,15 +21,15 @@ namespace PipServices.Commons.Test.Log
         }
 
         [Fact]
-        public void TestTextOutput()
+        public void TestSimpleLogging()
         {
-            Fixture.TestTextOutput();
+            Fixture.TestSimpleLogging();
         }
 
         [Fact]
-        public void TestMixedOutput()
+        public void TestErrorLogging()
         {
-            Fixture.TestMixedOutput();
+            Fixture.TestErrorLogging();
         }
     }
 }
