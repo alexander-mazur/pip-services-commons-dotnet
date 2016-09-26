@@ -10,6 +10,9 @@ namespace PipServices.Commons.Cache
     /// <summary>
     /// Local in-memory cache that can be used in non-scaled deployments or for testing.
     /// </summary>
+    /// <remarks>
+    /// This class is thread-safe.
+    /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IConfigurable
     {
         private static readonly Descriptor _descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");

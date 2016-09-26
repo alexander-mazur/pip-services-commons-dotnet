@@ -64,25 +64,25 @@ namespace PipServices.Commons.Data
         public T GetAs<T>(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToType<T>(value);
+            return TypeConverter.ToType<T>(value);
         }
 
         public T? GetAsNullable<T>(int index) where T : struct
         {
             var value = Get(index);
-            return ValueConverter.ToNullableType<T>(value);
+            return TypeConverter.ToNullableType<T>(value);
         }
 
         public T GetAsWithDefault<T>(int index, T defaultValue)
         {
             var value = Get(index);
-            return ValueConverter.ToTypeWithDefault<T>(value, defaultValue);
+            return TypeConverter.ToTypeWithDefault<T>(value, defaultValue);
         }
 
         public string GetAsNullableString(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableString(value);
+            return StringConverter.ToNullableString(value);
         }
 
         public string GetAsString(int index)
@@ -93,13 +93,13 @@ namespace PipServices.Commons.Data
         public string GetAsStringWithDefault(int index, string defaultValue = null)
         {
             var value = Get(index);
-            return ValueConverter.ToStringWithDefault(value, defaultValue);
+            return StringConverter.ToStringWithDefault(value, defaultValue);
         }
 
         public bool? GetAsNullableBoolean(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableBoolean(value);
+            return BooleanConverter.ToNullableBoolean(value);
         }
 
         public bool GetAsBoolean(int index)
@@ -110,13 +110,13 @@ namespace PipServices.Commons.Data
         public bool GetAsBooleanWithDefault(int index, bool defaultValue = false)
         {
             var value = Get(index);
-            return ValueConverter.ToBooleanWithDefault(value, defaultValue);
+            return BooleanConverter.ToBooleanWithDefault(value, defaultValue);
         }
 
         public int? GetAsNullableInteger(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableInteger(value);
+            return IntegerConverter.ToNullableInteger(value);
         }
 
         public int GetAsInteger(int index)
@@ -127,13 +127,13 @@ namespace PipServices.Commons.Data
         public int GetAsIntegerWithDefault(int index, int defaultValue = 0)
         {
             var value = Get(index);
-            return ValueConverter.ToIntegerWithDefault(value, defaultValue);
+            return IntegerConverter.ToIntegerWithDefault(value, defaultValue);
         }
 
         public long? GetAsNullableLong(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableLong(value);
+            return LongConverter.ToNullableLong(value);
         }
 
         public long GetAsLong(int index)
@@ -144,13 +144,13 @@ namespace PipServices.Commons.Data
         public long GetAsLongWithDefault(int index, long defaultValue = 0)
         {
             var value = Get(index);
-            return ValueConverter.ToLongWithDefault(value, defaultValue);
+            return LongConverter.ToLongWithDefault(value, defaultValue);
         }
 
         public float? GetAsNullableFloat(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableFloat(value);
+            return FloatConverter.ToNullableFloat(value);
         }
 
         public float GetAsFloat(int index)
@@ -161,13 +161,13 @@ namespace PipServices.Commons.Data
         public float GetAsFloatWithDefault(int index, float defaultValue = 0)
         {
             var value = Get(index);
-            return ValueConverter.ToFloatWithDefault(value, defaultValue);
+            return FloatConverter.ToFloatWithDefault(value, defaultValue);
         }
 
         public DateTime? GetAsNullableDateTime(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableDateTime(value);
+            return DateTimeConverter.ToNullableDateTime(value);
         }
 
         public DateTime GetAsDateTime(int index)
@@ -178,13 +178,13 @@ namespace PipServices.Commons.Data
         public DateTime GetAsDateTimeWithDefault(int index, DateTime? defaultValue = null)
         {
             var value = Get(index);
-            return ValueConverter.ToDateTimeWithDefault(value, defaultValue);
+            return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
         }
 
         public TimeSpan? GetAsNullableTimeSpan(int index)
         {
             var value = Get(index);
-            return ValueConverter.ToNullableTimeSpan(value);
+            return TimeSpanConverter.ToNullableTimeSpan(value);
         }
 
         public TimeSpan GetAsTimeSpan(int index)
@@ -195,13 +195,13 @@ namespace PipServices.Commons.Data
         public TimeSpan GetAsTimeSpanWithDefault(int index, TimeSpan? defaultValue = null)
         {
             var value = Get(index);
-            return ValueConverter.ToTimeSpanWithDefault(value, defaultValue);
+            return TimeSpanConverter.ToTimeSpanWithDefault(value, defaultValue);
         }
 
         public T? GetAsNullableEnum<T>(int index) where T : struct
         {
             var value = Get(index);
-            return ValueConverter.ToNullableEnum<T>(value);
+            return EnumConverter.ToNullableEnum<T>(value);
         }
 
         public T GetAsEnum<T>(int index)
@@ -212,16 +212,16 @@ namespace PipServices.Commons.Data
         public T GetAsEnumWithDefault<T>(int index, T defaultValue = default(T))
         {
             var value = Get(index);
-            return ValueConverter.ToEnumWithDefault<T>(value, defaultValue);
+            return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
         }
 
         public new bool Contains(object value)
         {
-            var strValue = ValueConverter.ToNullableString(value);
+            var strValue = StringConverter.ToNullableString(value);
 
             foreach (var thisValue in this)
             {
-                var thisStrValue = ValueConverter.ToNullableString(thisValue);
+                var thisStrValue = StringConverter.ToNullableString(thisValue);
                 if (strValue == thisStrValue)
                     return true;
             }
@@ -231,13 +231,13 @@ namespace PipServices.Commons.Data
 
         public bool ContainsAs<T>(object value)
         {
-            var typedValue = ValueConverter.ToType<T>(value);
-            var strValue = ValueConverter.ToNullableString(typedValue);
+            var typedValue = TypeConverter.ToType<T>(value);
+            var strValue = StringConverter.ToNullableString(typedValue);
 
             foreach (var thisValue in this)
             {
-                var thisTypedValue = ValueConverter.ToNullableString(thisValue);
-                var thisStrValue = ValueConverter.ToNullableString(thisTypedValue);
+                var thisTypedValue = StringConverter.ToNullableString(thisValue);
+                var thisStrValue = StringConverter.ToNullableString(thisTypedValue);
                 if (strValue == thisStrValue)
                     return true;
             }
@@ -252,7 +252,7 @@ namespace PipServices.Commons.Data
             {
                 if (index > 0)
                     builder.Append(',');
-                builder.Append(ValueConverter.ToStringWithDefault(base[index], ""));
+                builder.Append(StringConverter.ToStringWithDefault(base[index], ""));
             }
             return builder.ToString();
         }

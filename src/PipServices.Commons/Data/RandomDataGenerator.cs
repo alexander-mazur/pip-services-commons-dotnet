@@ -12,8 +12,8 @@ namespace PipServices.Commons.Data
 
         public virtual T Clone(T item)
         {
-            var temp = DataConverter.Serialize(item);
-            return DataConverter.DeserializeAs<T>(temp);
+            var temp = JsonConverter.ToJson(item);
+            return JsonConverter.FromJson<T>(temp);
         }
 
         public List<T> CreateList(int minSize, int maxSize = 0, DataReferences references = null)

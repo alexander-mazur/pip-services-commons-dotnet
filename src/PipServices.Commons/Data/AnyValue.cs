@@ -35,7 +35,7 @@ namespace PipServices.Commons.Data
 
         public string GetAsNullableString()
         {
-            return ValueConverter.ToNullableString(_value);
+            return StringConverter.ToNullableString(_value);
         }
 
         public string GetAsString()
@@ -45,12 +45,12 @@ namespace PipServices.Commons.Data
 
         public string GetAsStringWithDefault(string defaultValue = null)
         {
-            return ValueConverter.ToStringWithDefault(_value, defaultValue);
+            return StringConverter.ToStringWithDefault(_value, defaultValue);
         }
 
         public bool? GetAsNullableBoolean()
         {
-            return ValueConverter.ToNullableBoolean(_value);
+            return BooleanConverter.ToNullableBoolean(_value);
         }
 
         public bool GetAsBoolean()
@@ -60,12 +60,12 @@ namespace PipServices.Commons.Data
 
         public bool GetAsBooleanWithDefault(bool defaultValue = false)
         {
-            return ValueConverter.ToBooleanWithDefault(_value, defaultValue);
+            return BooleanConverter.ToBooleanWithDefault(_value, defaultValue);
         }
 
         public int? GetAsNullableInteger()
         {
-            return ValueConverter.ToNullableInteger(_value);
+            return IntegerConverter.ToNullableInteger(_value);
         }
 
         public int GetAsInteger()
@@ -75,12 +75,12 @@ namespace PipServices.Commons.Data
 
         public int GetAsIntegerWithDefault(int defaultValue = 0)
         {
-            return ValueConverter.ToIntegerWithDefault(_value, defaultValue);
+            return IntegerConverter.ToIntegerWithDefault(_value, defaultValue);
         }
 
         public long? GetAsNullableLong()
         {
-            return ValueConverter.ToNullableLong(_value);
+            return LongConverter.ToNullableLong(_value);
         }
 
         public long GetAsLong()
@@ -90,12 +90,12 @@ namespace PipServices.Commons.Data
 
         public long GetAsLongWithDefault(long defaultValue = 0)
         {
-            return ValueConverter.ToLongWithDefault(_value, defaultValue);
+            return LongConverter.ToLongWithDefault(_value, defaultValue);
         }
 
         public float? GetAsNullableFloat()
         {
-            return ValueConverter.ToNullableFloat(_value);
+            return FloatConverter.ToNullableFloat(_value);
         }
 
         public float GetAsFloat()
@@ -105,12 +105,12 @@ namespace PipServices.Commons.Data
 
         public float GetAsFloatWithDefault(float defaultValue = 0)
         {
-            return ValueConverter.ToFloatWithDefault(_value, defaultValue);
+            return FloatConverter.ToFloatWithDefault(_value, defaultValue);
         }
 
         public DateTime? GetAsNullableDateTime()
         {
-            return ValueConverter.ToNullableDateTime(_value);
+            return DateTimeConverter.ToNullableDateTime(_value);
         }
 
         public DateTime GetAsDateTime()
@@ -120,12 +120,12 @@ namespace PipServices.Commons.Data
 
         public DateTime GetAsDateTimeWithDefault(DateTime? defaultValue = null)
         {
-            return ValueConverter.ToDateTimeWithDefault(_value, defaultValue);
+            return DateTimeConverter.ToDateTimeWithDefault(_value, defaultValue);
         }
 
         public TimeSpan? GetAsNullableTimeSpan()
         {
-            return ValueConverter.ToNullableTimeSpan(_value);
+            return TimeSpanConverter.ToNullableTimeSpan(_value);
         }
 
         public TimeSpan GetAsTimeSpan()
@@ -135,12 +135,12 @@ namespace PipServices.Commons.Data
 
         public TimeSpan GetAsTimeSpanWithDefault(TimeSpan? defaultValue = null)
         {
-            return ValueConverter.ToTimeSpanWithDefault(_value, defaultValue);
+            return TimeSpanConverter.ToTimeSpanWithDefault(_value, defaultValue);
         }
 
         public T? GetAsNullableEnum<T>() where T : struct
         {
-            return ValueConverter.ToNullableEnum<T>(_value);
+            return EnumConverter.ToNullableEnum<T>(_value);
         }
 
         public T GetAsEnum<T>()
@@ -150,18 +150,18 @@ namespace PipServices.Commons.Data
 
         public T GetAsEnumWithDefault<T>(T defaultValue = default(T))
         {
-            return ValueConverter.ToEnumWithDefault<T>(_value, defaultValue);
+            return EnumConverter.ToEnumWithDefault<T>(_value, defaultValue);
         }
 
         public void SetAsJson(object value)
         {
-            _value = DataConverter.Serialize(value);
+            _value = JsonConverter.ToJson(value);
         }
 
         public T GetAsJson<T>()
         {
-            string value = ValueConverter.ToNullableString(_value);
-            return DataConverter.DeserializeAs<T>(value);
+            string value = StringConverter.ToNullableString(_value);
+            return JsonConverter.FromJson<T>(value);
         }
 
         public override bool Equals(object obj)
@@ -171,7 +171,7 @@ namespace PipServices.Commons.Data
 
             obj = obj is AnyValue ? ((AnyValue)obj)._value : obj;
 
-            return ValueConverter.ToString(_value) == ValueConverter.ToString(obj);
+            return StringConverter.ToString(_value) == StringConverter.ToString(obj);
         }
 
         public bool EqualsAs<T>(object obj)
@@ -181,18 +181,18 @@ namespace PipServices.Commons.Data
 
             obj = obj is AnyValue ? ((AnyValue)obj)._value : obj;
 
-            var value1 = ValueConverter.ToType<T>(_value);
-            var value2 = ValueConverter.ToType<T>(obj);
+            var value1 = TypeConverter.ToType<T>(_value);
+            var value2 = TypeConverter.ToType<T>(obj);
 
             if (value1 == null && value2 == null) return true;
             if (value1 == null || _value == null) return false;
 
-            return ValueConverter.ToString(value1) == ValueConverter.ToString(value2);
+            return StringConverter.ToString(value1) == StringConverter.ToString(value2);
         }
 
         public override string ToString()
         {
-            return ValueConverter.ToString(_value);
+            return StringConverter.ToString(_value);
         }
 
         public override int GetHashCode()
