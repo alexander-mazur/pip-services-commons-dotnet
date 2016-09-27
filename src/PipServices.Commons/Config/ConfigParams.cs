@@ -64,7 +64,7 @@ namespace PipServices.Commons.Config
                     key = section;
                 }
 
-                Put(key, entry.Value);
+                this[key] = entry.Value;
             }
         }
 

@@ -19,7 +19,7 @@ namespace PipServices.Commons.Test.Errors
             _descr.StackTrace = "stackTrace";
 
             var map = new StringValueMap();
-            map.Put("key", "value");
+            map["key"] = "value";
             _descr.Details = map;
         }
 

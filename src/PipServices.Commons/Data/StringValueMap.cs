@@ -59,7 +59,7 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(string key, object value)
         {
-            Put(key, StringConverter.ToNullableString(value));
+            this[key] = StringConverter.ToNullableString(value);
         }
 
         public object GetAsObject(string key)
@@ -243,29 +243,29 @@ namespace PipServices.Commons.Data
         public AnyValueArray GetAsNullableArray(string key)
         {
             var value = GetAsObject(key);
-            return value != null ? new AnyValueArray(value) : null;
+            return value != null ? AnyValueArray.FromValue(value) : null;
         }
 
         public AnyValueArray GetAsArray(string key)
         {
-            return new AnyValueArray(GetAsObject(key));
+            return AnyValueArray.FromValue(GetAsObject(key));
         }
 
         public AnyValueArray GetAsArrayWithDefault(string key, AnyValueArray defaultValue)
         {
-            var value = GetAsObject(key);
-            return value != null ? new AnyValueArray(value) : defaultValue;
+            var value = GetAsNullableArray(key);
+            return value != null ? value : defaultValue;
         }
 
         public AnyValueMap GetAsNullableMap(string key)
         {
             var result = GetAsObject(key);
-            return result != null ? new AnyValueMap(result) : null;
+            return result != null ? AnyValueMap.FromValue(result) : null;
         }
 
-        public AnyValueMap GetASMap(string key)
+        public AnyValueMap GetAsMap(string key)
         {
-            return new AnyValueMap(GetAsObject(key));
+            return AnyValueMap.FromValue(GetAsObject(key));
         }
 
         public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)
@@ -311,7 +311,7 @@ namespace PipServices.Commons.Data
                 var name = StringConverter.ToString(tuples[i]);
                 var value = StringConverter.ToString(tuples[i + 1]);
 
-                result.Put(name, value);
+                result[name] =value;
             }
             return result;
         }
@@ -328,7 +328,7 @@ namespace PipServices.Commons.Data
                 var index = token.IndexOf("=");
                 var key = index > 0 ? token.Substring(0, index).Trim() : token.Trim();
                 var value = index > 0 ? token.Substring(index + 1).Trim() : null;
-                result.Put(key, value);
+                result[key] = value;
             }
             return result;
         }
@@ -351,11 +351,6 @@ namespace PipServices.Commons.Data
             string value = null;
             this.TryGetValue(key, out value);
             return value;
-        }
-
-        public virtual void Put(string key, object value)
-        {
-            base[key] = StringConverter.ToNullableString(value);
         }
     }
 }

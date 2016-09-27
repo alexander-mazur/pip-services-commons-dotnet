@@ -6,83 +6,59 @@ using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data
 {
-    public class AnyValueArray : List<object>
+    public class AnyValueArray : List<object>, ICloneable
     {
         public AnyValueArray()
         { }
 
-        public AnyValueArray(object value)
+        public AnyValueArray(object[] values)
         {
-            if (value is IEnumerable)
-            {
-                foreach (var item in (IEnumerable)value)
-                    Add(item);
-            }
-            else if (value != null)
-            {
-                Add(value);
-            }
+            SetAsArray(values);
         }
 
         public AnyValueArray(IEnumerable values)
         {
-            foreach (var value in values)
-                Add(value);
+            SetAsArray(values);
         }
 
-        public AnyValueArray(params object[] values)
+        public object GetAsObject()
         {
-            foreach (var value in values)
-                Add(value);
+            return new List<object>(this);
         }
 
-        public AnyValueArray(string values, char[] separators, StringSplitOptions options)
+        public void SetAsObject(object value)
         {
-            if (string.IsNullOrWhiteSpace(values) == false)
+            Clear();
+            SetAsArray(ArrayConverter.ToArray(value));
+        }
+
+        public void SetAsArray(object[] values)
+        {
+            AddRange(values);
+        }
+
+        public void SetAsArray(IEnumerable values)
+        {
+            foreach (var value in values)
             {
-                var items = values.Split(separators, options);
-                foreach (var item in items)
-                    Add(item);
+                Add(value);
             }
         }
 
-        public AnyValueArray(string values, params char[] separators)
-            : this(values, separators, StringSplitOptions.None)
-        {
-        }
-
-        public object Get(int index)
+        public object GetAsObject(int index)
         {
             return base[index];
         }
 
-        public virtual void Set(int index, object value)
+        public void SetAsObject(int index, object value)
         {
             base[index] = value;
         }
 
-        public T GetAs<T>(int index)
-        {
-            var value = Get(index);
-            return TypeConverter.ToType<T>(value);
-        }
-
-        public T? GetAsNullable<T>(int index) where T : struct
-        {
-            var value = Get(index);
-            return TypeConverter.ToNullableType<T>(value);
-        }
-
-        public T GetAsWithDefault<T>(int index, T defaultValue)
-        {
-            var value = Get(index);
-            return TypeConverter.ToTypeWithDefault<T>(value, defaultValue);
-        }
 
         public string GetAsNullableString(int index)
         {
-            var value = Get(index);
-            return StringConverter.ToNullableString(value);
+            return StringConverter.ToNullableString(this[index]);
         }
 
         public string GetAsString(int index)
@@ -92,14 +68,12 @@ namespace PipServices.Commons.Data
 
         public string GetAsStringWithDefault(int index, string defaultValue = null)
         {
-            var value = Get(index);
-            return StringConverter.ToStringWithDefault(value, defaultValue);
+            return StringConverter.ToStringWithDefault(this[index], defaultValue);
         }
 
         public bool? GetAsNullableBoolean(int index)
         {
-            var value = Get(index);
-            return BooleanConverter.ToNullableBoolean(value);
+            return BooleanConverter.ToNullableBoolean(this[index]);
         }
 
         public bool GetAsBoolean(int index)
@@ -109,14 +83,12 @@ namespace PipServices.Commons.Data
 
         public bool GetAsBooleanWithDefault(int index, bool defaultValue = false)
         {
-            var value = Get(index);
-            return BooleanConverter.ToBooleanWithDefault(value, defaultValue);
+            return BooleanConverter.ToBooleanWithDefault(this[index], defaultValue);
         }
 
         public int? GetAsNullableInteger(int index)
         {
-            var value = Get(index);
-            return IntegerConverter.ToNullableInteger(value);
+            return IntegerConverter.ToNullableInteger(this[index]);
         }
 
         public int GetAsInteger(int index)
@@ -126,14 +98,12 @@ namespace PipServices.Commons.Data
 
         public int GetAsIntegerWithDefault(int index, int defaultValue = 0)
         {
-            var value = Get(index);
-            return IntegerConverter.ToIntegerWithDefault(value, defaultValue);
+            return IntegerConverter.ToIntegerWithDefault(this[index], defaultValue);
         }
 
         public long? GetAsNullableLong(int index)
         {
-            var value = Get(index);
-            return LongConverter.ToNullableLong(value);
+            return LongConverter.ToNullableLong(this[index]);
         }
 
         public long GetAsLong(int index)
@@ -143,14 +113,12 @@ namespace PipServices.Commons.Data
 
         public long GetAsLongWithDefault(int index, long defaultValue = 0)
         {
-            var value = Get(index);
-            return LongConverter.ToLongWithDefault(value, defaultValue);
+            return LongConverter.ToLongWithDefault(this[index], defaultValue);
         }
 
         public float? GetAsNullableFloat(int index)
         {
-            var value = Get(index);
-            return FloatConverter.ToNullableFloat(value);
+            return FloatConverter.ToNullableFloat(this[index]);
         }
 
         public float GetAsFloat(int index)
@@ -160,14 +128,27 @@ namespace PipServices.Commons.Data
 
         public float GetAsFloatWithDefault(int index, float defaultValue = 0)
         {
-            var value = Get(index);
-            return FloatConverter.ToFloatWithDefault(value, defaultValue);
+            return FloatConverter.ToFloatWithDefault(this[index], defaultValue);
+        }
+
+        public double? GetAsNullableDouble(int index)
+        {
+            return DoubleConverter.ToNullableDouble(this[index]);
+        }
+
+        public double GetAsDouble(int index)
+        {
+            return GetAsDoubleWithDefault(index, 0);
+        }
+
+        public double GetAsDoubleWithDefault(int index, double defaultValue = 0)
+        {
+            return DoubleConverter.ToDoubleWithDefault(this[index], defaultValue);
         }
 
         public DateTime? GetAsNullableDateTime(int index)
         {
-            var value = Get(index);
-            return DateTimeConverter.ToNullableDateTime(value);
+            return DateTimeConverter.ToNullableDateTime(this[index]);
         }
 
         public DateTime GetAsDateTime(int index)
@@ -177,14 +158,12 @@ namespace PipServices.Commons.Data
 
         public DateTime GetAsDateTimeWithDefault(int index, DateTime? defaultValue = null)
         {
-            var value = Get(index);
-            return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
+            return DateTimeConverter.ToDateTimeWithDefault(this[index], defaultValue);
         }
 
         public TimeSpan? GetAsNullableTimeSpan(int index)
         {
-            var value = Get(index);
-            return TimeSpanConverter.ToNullableTimeSpan(value);
+            return TimeSpanConverter.ToNullableTimeSpan(this[index]);
         }
 
         public TimeSpan GetAsTimeSpan(int index)
@@ -194,14 +173,12 @@ namespace PipServices.Commons.Data
 
         public TimeSpan GetAsTimeSpanWithDefault(int index, TimeSpan? defaultValue = null)
         {
-            var value = Get(index);
-            return TimeSpanConverter.ToTimeSpanWithDefault(value, defaultValue);
+            return TimeSpanConverter.ToTimeSpanWithDefault(this[index], defaultValue);
         }
 
         public T? GetAsNullableEnum<T>(int index) where T : struct
         {
-            var value = Get(index);
-            return EnumConverter.ToNullableEnum<T>(value);
+            return EnumConverter.ToNullableEnum<T>(this[index]);
         }
 
         public T GetAsEnum<T>(int index)
@@ -211,8 +188,62 @@ namespace PipServices.Commons.Data
 
         public T GetAsEnumWithDefault<T>(int index, T defaultValue = default(T))
         {
-            var value = Get(index);
-            return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
+            return EnumConverter.ToEnumWithDefault<T>(this[index], defaultValue);
+        }
+
+        public T GetATypes<T>(int index)
+        {
+
+            return TypeConverter.ToType<T>(this[index]);
+        }
+
+        public T? GetAsNullableType<T>(int index) where T : struct
+        {
+            return TypeConverter.ToNullableType<T>(this[index]);
+        }
+
+        public T GetAsNullableTypeWithDefault<T>(int index, T defaultValue)
+        {
+            return TypeConverter.ToTypeWithDefault<T>(this[index], defaultValue);
+        }
+
+        public AnyValue GetAsValue(int index)
+        {
+            return new AnyValue(this[index]);
+        }
+
+        public AnyValueArray GetAsNullableArray(int index)
+        {
+            var value = GetAsObject(index);
+            return value != null ? new AnyValueArray(new[] { value }) : null;
+        }
+
+        public AnyValueArray GetAsArray(int index)
+        {
+            return new AnyValueArray(new[] { this[index] });
+        }
+
+        public AnyValueArray GetAsArrayWithDefault(int index, AnyValueArray defaultValue)
+        {
+            var result = GetAsNullableArray(index);
+            return result != null ? result : defaultValue;
+        }
+
+        public AnyValueMap GetAsNullableMap(int index)
+        {
+            var value = GetAsObject(index);
+            return value != null ? AnyValueMap.FromValue(value) : null;
+        }
+
+        public AnyValueMap GetAsMap(int index)
+        {
+            return AnyValueMap.FromValue(GetAsObject(index));
+        }
+
+        public AnyValueMap GetAsMapWithDefault(int index, AnyValueMap defaultValue)
+        {
+            var result = GetAsNullableMap(index);
+            return result != null ? result : defaultValue;
         }
 
         public new bool Contains(object value)
@@ -223,7 +254,9 @@ namespace PipServices.Commons.Data
             {
                 var thisStrValue = StringConverter.ToNullableString(thisValue);
                 if (strValue == thisStrValue)
+                {
                     return true;
+                }
             }
 
             return true;
@@ -239,7 +272,9 @@ namespace PipServices.Commons.Data
                 var thisTypedValue = StringConverter.ToNullableString(thisValue);
                 var thisStrValue = StringConverter.ToNullableString(thisTypedValue);
                 if (strValue == thisStrValue)
+                {
                     return true;
+                }
             }
 
             return true;
@@ -251,10 +286,61 @@ namespace PipServices.Commons.Data
             for (var index = 0; index < Count; index++)
             {
                 if (index > 0)
+                {
                     builder.Append(',');
+                }
                 builder.Append(StringConverter.ToStringWithDefault(base[index], ""));
             }
             return builder.ToString();
+        }
+
+        public object Clone()
+        {
+            return new AnyValueArray(this);
+        }
+
+        public static AnyValueArray From(params object[] values)
+        {
+            return new AnyValueArray(values);
+        }
+
+        public static AnyValueArray FromValue(object value)
+        {
+            var values = ArrayConverter.ToNullableArray(value);
+            return new AnyValueArray(values);
+        }
+
+        public static AnyValueArray FromString(string value, char separator, bool removeDuplicates)
+        {
+            var result = new AnyValueArray();
+            HashSet<string> hash = null;
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return result;
+            }
+
+            var items = value.Split(separator);
+            foreach (var item in items)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    if (removeDuplicates)
+                    {
+                        if (hash == null) hash = new HashSet<string>();
+                        if (hash.Contains(item)) continue;
+                        hash.Add(item);
+                    }
+                    result.Add(item != null ? new AnyValue(item) : null);
+                }
+            }
+
+            return result;
+        }
+
+        public static AnyValueArray FromString(string value, char separator)
+        {
+            return FromString(value, separator, false);
         }
     }
 }

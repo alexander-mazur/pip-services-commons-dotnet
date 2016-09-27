@@ -1,77 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data
 {
-    public class AnyValueMap : Dictionary<string, object>
+    public class AnyValueMap : Dictionary<string, object>, ICloneable
     {
         public AnyValueMap() { }
 
-        public AnyValueMap(IDictionary<string, object> content)
-            : base(content)
+        public AnyValueMap(IDictionary<string, object> values)
+            : base(values)
         { }
 
-        public AnyValueMap(params object[] values)
+        public AnyValueMap(IDictionary values)
         {
-            SetTuples(values);
+            SetAsMap(values);
         }
 
         public virtual object Get(string key)
         {
-            object value = TryGet(key);
+            var value = TryGet(key);
             if (value == null)
+            {
                 throw new NullReferenceException("Value with key " + key + " is not defined");
+            }
             return value;
         }
 
-        public object TryGet(string key)
+        protected object TryGet(string key)
         {
             object value = null;
-            this.TryGetValue(key, out value);
+            TryGetValue(key, out value);
             return value;
+
         }
 
-        public T GetAs<T>(string key)
+        public void SetAsMap(IDictionary map)
         {
-            var value = TryGet(key);
-            return TypeConverter.ToType<T>(value);
-        }
-
-        public T? GetAsNullable<T>(string key) where T : struct
-        {
-            var value = TryGet(key);
-            return TypeConverter.ToNullableType<T>(value);
-        }
-
-        public T GetAsWithDefault<T>(string key, T defaultValue)
-        {
-            var value = TryGet(key);
-            return TypeConverter.ToTypeWithDefault<T>(value, defaultValue);
-        }
-
-        public void SetTuples(params object[] values)
-        {
-            for (var i = 0; i < values.Length; i += 2)
+            if (map == null || map.Count == 0) return;
+            foreach (var key in map.Keys)
             {
-                if (i + 1 >= values.Length) break;
-
-                var name = values[i].ToString();
-                var value = values[i + 1];
-
-                Set(name, value);
+                Add(StringConverter.ToString(key), map[key]);
             }
         }
 
-        public virtual void Set(IDictionary<string, object> values)
+        public object GetAsObject()
         {
-            foreach (var entry in values)
-                Set(entry.Key, entry.Value);
+            return new Dictionary<string, object>(this);
         }
 
-        public virtual void Set(string key, object value)
+        public object GetAsObject(string key)
         {
-            base[key] = value;
+            return TryGet(key);
+        }
+
+        public void SetAsObject(object value)
+        {
+            Clear();
+            SetAsMap((IDictionary)MapConverter.ToMap(value));
         }
 
         public string GetAsNullableString(string key)
@@ -159,6 +146,23 @@ namespace PipServices.Commons.Data
             return FloatConverter.ToFloatWithDefault(value, defaultValue);
         }
 
+        public double? GetAsNullableDouble(string key)
+        {
+            var value = TryGet(key);
+            return DoubleConverter.ToNullableDouble(value);
+        }
+
+        public double GetAsDouble(string key)
+        {
+            return GetAsDoubleWithDefault(key, 0);
+        }
+
+        public double GetAsDoubleWithDefault(string key, double defaultValue = 0)
+        {
+            var value = TryGet(key);
+            return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
+        }
+
         public DateTime? GetAsNullableDateTime(string key)
         {
             var value = TryGet(key);
@@ -210,5 +214,108 @@ namespace PipServices.Commons.Data
             return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
         }
 
+        public T GetAsType<T>(string key)
+        {
+            var value = TryGet(key);
+            return TypeConverter.ToType<T>(value);
+        }
+
+        public T? GetAsNullableType<T>(string key) where T : struct
+        {
+            var value = TryGet(key);
+            return TypeConverter.ToNullableType<T>(value);
+        }
+
+        public T GetAsTypeWithDefault<T>(string key, T defaultValue)
+        {
+            var value = TryGet(key);
+            return TypeConverter.ToTypeWithDefault<T>(value, defaultValue);
+        }
+
+        public AnyValue GetAsValue(string key)
+        {
+            return new AnyValue(GetAsObject(key));
+        }
+
+        public AnyValueArray GetAsNullableArray(string key)
+        {
+            var value = GetAsObject(key);
+            return value != null ? AnyValueArray.From(value) : null;
+        }
+
+        public AnyValueArray GetAsArray(string key)
+        {
+            var value = GetAsObject(key);
+            return AnyValueArray.FromValue(key);
+        }
+
+        public AnyValueArray GetAsArrayWithDefault(string key, AnyValueArray defaultValue)
+        {
+            var result = GetAsNullableArray(key);
+            return result != null ? result : defaultValue;
+        }
+
+        public AnyValueMap GetAsNullableMap(string key)
+        {
+            var value = GetAsObject(key);
+            return value != null ? AnyValueMap.FromValue(value) : null;
+        }
+
+        public AnyValueMap GetAsMap(string key)
+        {
+            var value = GetAsObject(key);
+            return AnyValueMap.FromValue(value);
+        }
+
+        public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)
+        {
+            var result = GetAsNullableMap(key);
+            return result != null ? result : defaultValue;
+        }
+
+        public object Clone()
+        {
+            return new AnyValueMap((IDictionary<string, object>)this);
+        }
+
+        public static AnyValueMap FromValue(object value)
+        {
+            var result = new AnyValueMap();
+            result.SetAsObject(value);
+            return result;
+        }
+
+        public static AnyValueMap FromTuplesArray(params object[] tuples)
+        {
+            var result = new AnyValueMap();
+            result.SetTuples(tuples);
+            return result;
+        }
+
+        public static AnyValueMap FromMaps(params IDictionary[] maps)
+        {
+            var result = new AnyValueMap();
+            if (maps != null && maps.Length > 0)
+            {
+                foreach (IDictionary map in maps)
+                {
+                    result.SetAsMap(map);
+                }
+            }
+            return result;
+        }
+
+        private void SetTuples(params object[] values)
+        {
+            for (var i = 0; i < values.Length; i += 2)
+            {
+                if (i + 1 >= values.Length) break;
+
+                var name = values[i].ToString();
+                var value = values[i + 1];
+
+                Add(name, value);
+            }
+        }
     }
 }
