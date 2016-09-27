@@ -1,85 +1,192 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using PipServices.Commons.Data.Mapper;
+using System.Linq;
+using System.ComponentModel;
+using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Convert
 {
     public class RecursiveMapConverter
     {
-        private static IList<object> ListToMap(IEnumerable list)
+        private static DynamicMap ObjectToMap(object value)
         {
-            var result = new List<object>();
-            foreach (object item in list)
+            if (value == null) return null;
+
+            var result = new DynamicMap();
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(value))
             {
-                result.Add(ValueToMap(item));
+                var propValue = prop.GetValue(value);
+
+                // Recursive conversion
+                propValue = ValueToMap(propValue);
+
+                result.Add(prop.Name, propValue);
             }
             return result;
         }
 
-        private static Dictionary<string, object> MapToMap(IDictionary dictionary)
+        private static object[] ArrayToMap(IEnumerable<object> value)
         {
-            var result = new Dictionary<string, object>();
-            foreach (var key in dictionary.Keys)
-            {
-                result[StringConverter.ToString(key)] = ValueToMap(dictionary[key]);
-            }
+            var result = value as object[] ?? value.ToArray();
+
+            for (var index = 0; index < result.Length; index++)
+                result[index] = ValueToMap(result[index]);
+
             return result;
+        }
+
+        private static DynamicMap MapToMap(IDictionary<string, object> value)
+        {
+            var result = new DynamicMap();
+
+            foreach (var key in value.Keys)
+                result[key] = ValueToMap(value[key]);
+
+            return result;
+        }
+
+        private static DynamicMap ObjectMapToMap(IDictionary<object, object> value)
+        {
+            var result = new DynamicMap();
+
+            foreach (string key in value.Keys)
+                result[key] = ValueToMap(value[key]);
+
+            return result;
+        }
+
+        private static object ExtensionToMap(object value)
+        {
+            if (value == null) return null;
+
+            var valueType = value.GetType().Name;
+
+            // TODO: .NET Core does not support ExtensionDataObject
+            // Convert extension objects
+            //if (valueType == "ExtensionDataObject")
+            //{
+            //    var extResult = new DynamicMap();
+
+            //    var membersProperty = typeof(ExtensionDataObject).GetProperty(
+            //        "Members", BindingFlags.NonPublic | BindingFlags.Instance);
+            //    var members = (IList)membersProperty.GetValue(value, null);
+
+            //    foreach (var member in members)
+            //    {
+            //        var memberNameProperty = member.GetType().GetProperty("Name");
+            //        var memberName = (string)memberNameProperty.GetValue(member, null);
+
+            //        var memberValueProperty = member.GetType().GetProperty("Value");
+            //        var memberValue = memberValueProperty.GetValue(member, null);
+            //        memberValue = ExtensionToMap(memberValue);
+
+            //        extResult.Add(memberName, memberValue);
+            //    }
+
+            //    return extResult;
+            //}
+
+            // Convert classes
+            if (valueType.StartsWith("ClassDataNode"))
+            {
+                var classResult = new DynamicMap();
+
+                var membersProperty = value.GetType().GetTypeInfo().GetProperty(
+                    "Members", BindingFlags.NonPublic | BindingFlags.Instance);
+                var members = (IList)membersProperty.GetValue(value, null);
+
+                foreach (var member in members)
+                {
+                    var memberNameProperty = member.GetType().GetTypeInfo().GetProperty("Name");
+                    var memberName = (string)memberNameProperty.GetValue(member, null);
+
+                    var memberValueProperty = member.GetType().GetTypeInfo().GetProperty("Value");
+                    var memberValue = memberValueProperty.GetValue(member, null);
+                    memberValue = ExtensionToMap(memberValue);
+
+                    classResult.Add(memberName, memberValue);
+                }
+
+                return classResult;
+            }
+
+            // Convert collections and arrays
+            if (valueType.StartsWith("CollectionDataNode"))
+            {
+                var itemsProperty = value.GetType().GetTypeInfo().GetProperty(
+                    "Items", BindingFlags.NonPublic | BindingFlags.Instance);
+                var items = (IList)itemsProperty.GetValue(value, null);
+
+                var arrayResult = new object[items.Count];
+
+                for (var index = 0; index < items.Count; index++)
+                    arrayResult[index] = ExtensionToMap(items[index]);
+
+                return arrayResult;
+            }
+
+            // Convert values
+            if (valueType.StartsWith("DataNode"))
+            {
+                var dataValueProperty = value.GetType().GetTypeInfo().GetProperty("Value");
+                var valueResult = dataValueProperty.GetValue(value, null);
+                valueResult = ExtensionToMap(valueResult);
+                return valueResult;
+            }
+
+            return value;
         }
 
         private static object ValueToMap(object value)
         {
             if (value == null) return null;
 
-            var type = value.GetType();
-            var typeInfo = type.GetTypeInfo();
+            // Skip converted values
+            if (value is DynamicMap) return value;
 
-            if (typeInfo.IsPrimitive)
-            {
-                return value;
-            }
+            // Skip expected non-primitive values
+            if (value is string || value is Type) return value;
 
-            if (value is IDictionary)
-            {
-                return MapToMap((IDictionary)value);
-            }
+            var valueType = value.GetType().GetTypeInfo();
 
-            if (value is IEnumerable)
-            {
-                return ListToMap((IEnumerable)value);
-            }
+            // Skip primitive values
+            if (valueType.IsPrimitive || valueType.IsValueType) return value;
+            // Skip Json.Net values
+            if (valueType.Name == "JValue") return value;
 
-            try
-            {
-                return ObjectMapper.MapTo<Dictionary<string, object>>(value);
-            }
-            catch
-            {
-                return value;
-            }
+            if (value is IDictionary<string, object>)
+                return MapToMap((IDictionary<string, object>)value);
+
+            if (value is IDictionary<object, object>)
+                return ObjectMapToMap((IDictionary<object, object>)value);
+
+            // Convert arrays
+            if (value is IEnumerable<object> && valueType.Name != "JObject")
+                return ArrayToMap((IEnumerable<object>)value);
+
+            // TODO: .NET Core does not support ExtensionDataObject
+            // Convert partial updates
+            //if (value is PartialUpdates)
+            //    return ExtensionToMap(((PartialUpdates)value).ExtensionData);
+
+            return ObjectToMap(value);
         }
 
-
-        public static IDictionary<string, object> ToNullableMap(object value)
+        public static DynamicMap ToNullableMap(object value)
         {
-            var result = ValueToMap(value);
-            if (value is IDictionary)
-            {
-                return (IDictionary<string, object>)value;
-            }
-            return null;
+            return ValueToMap(value) as DynamicMap;
         }
 
-        public static IDictionary<string, object> ToMap(object value)
+        public static DynamicMap ToMap(object value)
         {
-            var result = ToNullableMap(value);
-            return result != null ? result : new Dictionary<string, object>();
+            return ValueToMap(value) as DynamicMap ?? new DynamicMap();
         }
 
-        public static IDictionary<string, object> ToMapWithDefault(object value, Dictionary<string, object> defaultValue)
+        public static DynamicMap ToMapWithDefault(object value, DynamicMap defaultValue = null)
         {
-            var result = ToNullableMap(value);
-            return result != null ? result : defaultValue;
+            return ValueToMap(value) as DynamicMap ?? defaultValue;
         }
     }
 }

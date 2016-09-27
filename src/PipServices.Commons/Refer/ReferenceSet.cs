@@ -14,7 +14,7 @@ namespace PipServices.Commons.Refer
         {
             foreach (var reference in references)
             {
-                Set(reference);
+                Put(reference);
             }
         }
 
@@ -23,15 +23,15 @@ namespace PipServices.Commons.Refer
             return new List<object>(_items);
         }
 
-        public object GetOneBefore(object reference, Descriptor descriptor)
+        public object GetOneBefore(object reference, object locator)
         {
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
-            if (descriptor == null)
+            if (locator == null)
             {
-                throw new ArgumentNullException(nameof(descriptor));
+                throw new ArgumentNullException(nameof(locator));
             }
 
             int index = _items.Count - 1;
@@ -40,46 +40,46 @@ namespace PipServices.Commons.Refer
             for (; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Ref.Equals(reference))
+                if (item.Refer.Equals(reference))
                     break;
             }
 
             for (; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Descriptor.Match(descriptor))
-                    return item.Ref;
+                if (item.Locate(locator))
+                    return item.Refer;
             }
 
-            throw new ReferenceNotFoundException(null, descriptor);
+            throw new ReferenceNotFoundException(null, locator);
         }
 
-        public object GetOneOptional(Descriptor descriptor)
+        public object GetOneOptional(object locator)
         {
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Descriptor.Match(descriptor))
-                    return item.Ref;
+                if (item.Locate(locator))
+                    return item.Refer;
             }
             return null;
         }
 
-        public object GetOneRequired(Descriptor descriptor)
+        public object GetOneRequired(object locator)
         {
-            var reference = GetOneOptional(descriptor);
+            var reference = GetOneOptional(locator);
             if (reference == null)
             {
-                throw new ReferenceNotFoundException(null, descriptor);
+                throw new ReferenceNotFoundException(null, locator);
             }
             return reference;
         }
 
-        public List<object> GetOptional(Descriptor descriptor)
+        public List<object> GetOptional(object locator)
         {
-            if (descriptor == null)
+            if (locator == null)
             {
-                throw new ArgumentNullException(nameof(descriptor));
+                throw new ArgumentNullException(nameof(locator));
             }
 
             var references = new List<object>();
@@ -87,67 +87,71 @@ namespace PipServices.Commons.Refer
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Descriptor.Match(descriptor))
-                    references.Add(item.Ref);
+                if (item.Locate(locator))
+                    references.Add(item.Refer);
             }
 
             return references;
         }
 
-        public List<object> GetRequired(Descriptor descriptor)
+        public List<object> GetRequired(object locator)
         {
-            var references = GetOptional(descriptor);
+            var references = GetOptional(locator);
             if (references.Count == 0)
             {
-                throw new ReferenceNotFoundException(null, descriptor);
+                throw new ReferenceNotFoundException(null, locator);
             }
             return references;
         }
 
-        public void Remove(object reference)
+        public object Remove(object locator)
         {
-            if (reference == null) return;
+            if (locator == null) return null;
 
 
             for (int index = _items.Count - 1; index >= 0; index--)
             {
                 var item = _items[index];
-                if (item.Ref.Equals(reference))
+                if (item.Locate(locator))
                 {
                     // Remove from the set
                     _items.RemoveAt(index);
-                    break;
+                    return item.Refer;
                 }
             }
+            return null;
         }
 
-        public void Set(IDescriptable reference)
+        public void Put(object reference)
         {
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            Set(reference.GetDescriptor(), reference);
+            var r = reference as Reference;
+            if(r != null)
+            {
+                _items.Add(r);
+            }
+            else
+            {
+                _items.Add(new Reference(reference));
+            }
         }
 
-        public void Set(Descriptor descriptor, object reference)
+        public void Put(object locator, object reference)
         {
-            if (descriptor == null)
+            if (locator == null)
             {
-                throw new ArgumentNullException(nameof(descriptor));
+                throw new ArgumentNullException(nameof(locator));
             }
             if (reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            _items.Add(new Reference(descriptor, reference));
-
-            if (reference is IReferenceable)
-            {
-                ((IReferenceable)reference).SetReferences(this);
-            }
+            _items.Add(new Reference(locator, reference));
         }
 
         public static ReferenceSet From(params IDescriptable[] references)
@@ -155,7 +159,7 @@ namespace PipServices.Commons.Refer
             var result = new ReferenceSet();
             foreach (var reference in references)
             {
-                result.Set(reference);
+                result.Put(reference);
             }
             return result;
         }

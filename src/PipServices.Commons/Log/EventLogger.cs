@@ -3,7 +3,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class EventLogger : AbstractLogger
+    public sealed class EventLogger : Logger
     {
         protected override void PerformWrite(string correlationId, LogLevel level, Exception error, string message)
         {

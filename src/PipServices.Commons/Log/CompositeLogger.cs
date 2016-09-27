@@ -4,7 +4,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class CompositeLogger : AbstractLogger
+    public sealed class CompositeLogger : Logger
     {
         //private readonly AppInsightsLogger _appInsightsLogger = new AppInsightsLogger();
         private readonly DebugLogger _debugLogger = new DebugLogger();

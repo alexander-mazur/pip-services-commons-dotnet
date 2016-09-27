@@ -65,6 +65,11 @@ namespace PipServices.Commons.Refer
             return false;
         }
 
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
         public override string ToString()
         {
             var builder = new StringBuilder();

@@ -153,17 +153,6 @@ namespace PipServices.Commons.Data
             return EnumConverter.ToEnumWithDefault<T>(_value, defaultValue);
         }
 
-        public void SetAsJson(object value)
-        {
-            _value = JsonConverter.ToJson(value);
-        }
-
-        public T GetAsJson<T>()
-        {
-            string value = StringConverter.ToNullableString(_value);
-            return JsonConverter.FromJson<T>(value);
-        }
-
         public override bool Equals(object obj)
         {
             if (obj == null && _value == null) return true;

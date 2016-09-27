@@ -3,7 +3,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class NullLogger : AbstractLogger
+    public sealed class NullLogger : Logger
     {
         static NullLogger()
         {

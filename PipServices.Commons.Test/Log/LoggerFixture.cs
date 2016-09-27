@@ -15,7 +15,7 @@ namespace PipServices.Commons.Test.Log
 
         public void TestLogLevel()
         {
-            Assert.True(Logger.Level >= LogLevel.None);
+            Assert.True(Logger.Level >= LogLevel.Nothing);
             Assert.True(Logger.Level <= LogLevel.Trace);
         }
 

@@ -10,12 +10,12 @@ namespace PipServices.Commons.Refer
         {
         }
 
-        public ReferenceNotFoundException(string correlationId, Descriptor descriptor) :
-            base(correlationId, "REF_NOT_FOUND", descriptor == null ? "" : "Reference to " + descriptor.ToString() + " was not found")
+        public ReferenceNotFoundException(string correlationId, object locator) :
+            base(correlationId, "REF_NOT_FOUND", locator == null ? "" : "Reference to " + locator.ToString() + " was not found")
         {
-            if (descriptor != null)
+            if (locator != null)
             {
-                WithDetails(descriptor);
+                WithDetails("locator", locator);
             }
         }
     }

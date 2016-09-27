@@ -3,7 +3,7 @@ using System.Text;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class DebugLogger : AbstractLogger
+    public sealed class DebugLogger : Logger
     {
         protected override void PerformWrite(string correlationId, LogLevel level, Exception error, string message)
         {

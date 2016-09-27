@@ -77,7 +77,7 @@ namespace PipServices.Commons.Commands
             {
                 throw new InvocationException(
                     correlationId, "EXEC_FAILED", "Execution " + Name + " failed: " + ex, ex)
-                    .WithDetails(Name);
+                    .WithDetails("command", Name);
             }
         }
     }

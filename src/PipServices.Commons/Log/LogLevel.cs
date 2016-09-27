@@ -5,7 +5,7 @@
         /// <summary>
         ///     Nothing to be logged
         /// </summary>
-        None = 0,
+        Nothing = 0,
 
         /// <summary>
         ///     Logs only fatal errors that cause microservice to fail

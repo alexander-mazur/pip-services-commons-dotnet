@@ -132,7 +132,7 @@ namespace PipServices.Commons.Commands
                     correlationId,
                     "CMD_NOT_FOUND",
                     "Request command does not exist")
-                    .WithDetails(command);
+                    .WithDetails("command", command);
             }
 
             if (correlationId == null)
@@ -164,7 +164,7 @@ namespace PipServices.Commons.Commands
                 errors.Add((ValidationException)new ValidationException(
                     "CMD_NOT_FOUND",
                     "Request command does not exist")
-                    .WithDetails(command));
+                    .WithDetails("command", command));
                 return errors;
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Errors
 {
@@ -12,7 +13,7 @@ namespace PipServices.Commons.Errors
         public string Category { get; set; }
         public string CorrelationId { get; set; }
         public string Cause { get; set; }
-        public object[] Details { get; set; }
+        public StringValueMap Details { get; set; }
         public string Code { get; set; } = "Unknown";
         public int Status { get; set; } = 500;
         public new string StackTrace
@@ -57,9 +58,13 @@ namespace PipServices.Commons.Errors
             return this;
         }
 
-        public ApplicationException WithDetails(params object[] details)
+        public ApplicationException WithDetails(string key, object value)
         {
-            Details = details;
+            if(Details == null)
+            {
+                Details = new StringValueMap();
+            }
+            Details.SetAsObject(key, value);
             return this;
         }
 

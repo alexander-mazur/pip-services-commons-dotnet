@@ -57,6 +57,11 @@ namespace PipServices.Commons.Data
             SetAsMap((IDictionary)MapConverter.ToMap(value));
         }
 
+        public void SetAsObject(string key, object value)
+        {
+            Put(key, StringConverter.ToNullableString(value));
+        }
+
         public object GetAsObject(string key)
         {
             return Get(key);

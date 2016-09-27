@@ -3,7 +3,7 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class ConsoleLogger : AbstractLogger
+    public sealed class ConsoleLogger : Logger
     {
         static ConsoleLogger()
         {
@@ -14,13 +14,13 @@ namespace PipServices.Commons.Log
         {
             if (Level < level) return;
 
-            var output = LogFormatter.Format(level, message);
-            if (correlationId != null)
-                output += ", correlated to " + correlationId;
+            ////var output = LogFormatter.Format(level, message);
+            //if (correlationId != null)
+            //    output += ", correlated to " + correlationId;
 
-            if (level >= LogLevel.Fatal && level <= LogLevel.Warn)
-                Console.Error.WriteLine(output);
-            else Console.Out.WriteLine(output);
+            //if (level >= LogLevel.Fatal && level <= LogLevel.Warn)
+            //    Console.Error.WriteLine(output);
+            //else Console.Out.WriteLine(output);
         }
     }
 }

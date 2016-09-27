@@ -42,30 +42,30 @@ namespace PipServices.Commons.Build
             _factories.Remove(factory);
         }
 
-        public bool CanCreate(Descriptor descriptor)
+        public bool CanCreate(object locator)
         {
-            if (descriptor == null)
+            if (locator == null)
             {
-                throw new ArgumentNullException(nameof(descriptor));
+                throw new ArgumentNullException(nameof(locator));
             }
 
-            return _factories.Exists(x => x.CanCreate(descriptor));
+            return _factories.Exists(x => x.CanCreate(locator));
         }
 
-        public object Create(Descriptor descriptor)
+        public object Create(object locator)
         {
-            if (descriptor == null)
+            if (locator == null)
             {
-                throw new ArgumentNullException(nameof(descriptor));
+                throw new ArgumentNullException(nameof(locator));
             }
 
 
-            var factory = _factories.FindLast(x => x.CanCreate(descriptor));
+            var factory = _factories.FindLast(x => x.CanCreate(locator));
             if (factory == null)
             {
-                throw new CreateException(null, descriptor);
+                throw new CreateException(null, locator);
             }
-            return factory.Create(descriptor);
+            return factory.Create(locator);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Errors
 {
@@ -19,7 +20,7 @@ namespace PipServices.Commons.Errors
         public string Message { get; set; }
 
         [DataMember(Name = "details")]
-        public object[] Details { get; set; }
+        public StringValueMap Details { get; set; }
 
         [DataMember(Name = "correlation_id")]
         public string CorrelationId { get; set; }
@@ -64,8 +65,8 @@ namespace PipServices.Commons.Errors
 
             error
                 .WithCause(Cause)
-                .WithStackTrace(StackTrace)
-                .WithDetails(Details);
+                .WithStackTrace(StackTrace);
+            error.Details = Details;
 
             return error;
         }

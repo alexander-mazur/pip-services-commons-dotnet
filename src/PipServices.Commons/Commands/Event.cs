@@ -70,7 +70,7 @@ namespace PipServices.Commons.Commands
                         correlationId,
                         "EXEC_FAILED",
                         "Raising event " + Name + " failed: " + ex, ex)
-                        .WithDetails(Name);
+                        .WithDetails("event", Name);
                 }
             }
         }
