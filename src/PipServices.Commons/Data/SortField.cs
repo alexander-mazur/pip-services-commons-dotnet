@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PipServices.Commons.Data
+﻿namespace PipServices.Commons.Data
 {
     public class SortField
     {
@@ -15,6 +10,5 @@ namespace PipServices.Commons.Data
             Name = name;
             Ascending = ascending;
         }
-
     }
 }
