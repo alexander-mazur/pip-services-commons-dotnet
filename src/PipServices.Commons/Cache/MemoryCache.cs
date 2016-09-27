@@ -98,7 +98,7 @@ namespace PipServices.Commons.Cache
                         return null;
                     }
                 }
-                return entry.Value;
+                return entry?.Value;
 
             }
             finally
