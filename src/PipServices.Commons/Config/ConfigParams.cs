@@ -12,7 +12,8 @@ namespace PipServices.Commons.Config
         /// <summary>
         /// Creates an instance of ConfigParams.
         /// </summary>
-        public ConfigParams() { }
+        public ConfigParams()
+        { }
 
         /// <summary>
         /// Creates an instance of ConfigParams.
@@ -45,12 +46,12 @@ namespace PipServices.Commons.Config
             return string.IsNullOrWhiteSpace(name) || name.StartsWith("#") || name.StartsWith("!");
         }
 
-        public void AddSection(string section, IDictionary<string, string> content)
+        public void AddSection(string section, ConfigParams sectionParams)
         {
             // "Shadow" section names starts with # or !
             section = IsShadowName(section) ? string.Empty : section;
 
-            foreach (var entry in content)
+            foreach (var entry in sectionParams)
             {
                 // Shadow key names
                 var key = IsShadowName(entry.Key) ? string.Empty : entry.Key;
@@ -81,19 +82,19 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public ConfigParams FromTuples(params object[] tuples)
+        public static new ConfigParams FromTuples(params object[] tuples)
         {
             var map = StringValueMap.FromTuples(tuples);
             return new ConfigParams(map);
         }
 
-        public ConfigParams FromString(string line)
+        public static new ConfigParams FromString(string line)
         {
             var map = StringValueMap.FromString(line);
             return new ConfigParams(map);
         }
 
-        public ConfigParams MergeConfigs(ConfigParams config)
+        public static ConfigParams MergeConfigs(ConfigParams config)
         {
             var map = StringValueMap.FromMaps(config);
             return new ConfigParams(map);

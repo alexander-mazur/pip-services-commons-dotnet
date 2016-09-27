@@ -17,10 +17,7 @@ namespace PipServices.Commons.Build
         public CreateException(string correlationId, object locator) :
             base(correlationId, "CANNOT_CREATE", "Requested component " + (locator == null ? "" : locator.ToString()) + " cannot be created")
         {
-            if (locator != null)
-            {
-                WithDetails("locator", locator);
-            }
+            WithDetails("locator", locator);
         }
 
         public CreateException(string correlationId, string message) :

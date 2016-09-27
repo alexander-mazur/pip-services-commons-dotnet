@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Text;
 using System.Collections.Generic;
 using PipServices.Commons.Convert;
-using System.Text;
 
 namespace PipServices.Commons.Data
 {
     public class StringValueMap : Dictionary<string, string>
     {
-        public StringValueMap() { }
+        public StringValueMap()
+        { }
 
         public StringValueMap(IDictionary map)
             : base()
@@ -311,7 +312,7 @@ namespace PipServices.Commons.Data
                 var name = StringConverter.ToString(tuples[i]);
                 var value = StringConverter.ToString(tuples[i + 1]);
 
-                result[name] =value;
+                result[name] = value;
             }
             return result;
         }
@@ -349,7 +350,7 @@ namespace PipServices.Commons.Data
         private string TryGet(string key)
         {
             string value = null;
-            this.TryGetValue(key, out value);
+            TryGetValue(key, out value);
             return value;
         }
     }

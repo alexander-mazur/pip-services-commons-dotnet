@@ -248,9 +248,9 @@ namespace PipServices.Commons.Run
             return JsonConverter.ToJson(this);
         }
 
-        public static Parameters FromTuples(params object[] tuples)
+        public static new Parameters FromTuples(params object[] tuples)
         {
-            return new Parameters(AnyValueMap.FromTuplesArray(tuples));
+            return new Parameters(AnyValueMap.FromTuples(tuples));
         }
 
         public static Parameters MergeParams(params Parameters[] parameters)

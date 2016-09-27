@@ -169,17 +169,15 @@ namespace PipServices.Commons.Cache
             _lock.EnterWriteLock();
             try
             {
-                foreach (var key in _cache.Keys)
+                foreach (var entry in _cache)
                 {
-                    var entry = _cache[key];
-
-                    if (entry.IsExpired())
+                    if (entry.Value.IsExpired())
                     {
-                        keysToRemove.Add(key);
+                        keysToRemove.Add(entry.Key);
                     }
-                    if (oldest == null || oldest.Expiration > entry.Expiration)
+                    if (oldest == null || oldest.Expiration > entry.Value.Expiration)
                     {
-                        oldest = entry;
+                        oldest = entry.Value;
                     }
                 }
 

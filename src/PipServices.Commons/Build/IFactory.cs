@@ -1,6 +1,4 @@
-﻿using PipServices.Commons.Refer;
-
-namespace PipServices.Commons.Build
+﻿namespace PipServices.Commons.Build
 {
     public interface IFactory
     {

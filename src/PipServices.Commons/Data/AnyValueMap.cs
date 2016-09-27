@@ -61,6 +61,11 @@ namespace PipServices.Commons.Data
             SetAsMap((IDictionary)MapConverter.ToMap(value));
         }
 
+        public void SetAsObject(string key, object value)
+        {
+            this[key] = value;
+        }
+
         public string GetAsNullableString(string key)
         {
             var value = TryGet(key);
@@ -285,10 +290,23 @@ namespace PipServices.Commons.Data
             return result;
         }
 
-        public static AnyValueMap FromTuplesArray(params object[] tuples)
+        public static AnyValueMap FromTuples(params object[] tuples)
         {
             var result = new AnyValueMap();
-            result.SetTuples(tuples);
+            if(tuples == null || tuples.Length == 0)
+            {
+                return result;
+            }
+            for (var index = 0; index < tuples.Length; index += 2)
+            {
+                if (index + 1 >= tuples.Length) break;
+
+                var name = StringConverter.ToString(tuples[index]);
+                var value = tuples[index + 1];
+
+                result.SetAsObject(name, value);
+            }
+
             return result;
         }
 
