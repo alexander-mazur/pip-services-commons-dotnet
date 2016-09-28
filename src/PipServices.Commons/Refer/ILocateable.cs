@@ -2,6 +2,6 @@
 {
     public interface ILocateable
     {
-        bool Locate(object descriptor);
+        bool Locate(object locator);
     }
 }

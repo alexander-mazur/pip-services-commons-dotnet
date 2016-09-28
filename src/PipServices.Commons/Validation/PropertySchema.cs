@@ -7,6 +7,33 @@ namespace PipServices.Commons.Validation
         private readonly List<IPropertyValidationRule> _rules = new List<IPropertyValidationRule>();
 
         /// <summary>
+        /// The property name
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// The array flag
+        /// </summary>
+        public bool IsArray { get; }
+
+        /// <summary>
+        /// The optional flag
+        /// </summary>
+        public bool IsOptional { get; }
+
+        /// <summary>
+        /// The simple type to define property value.
+        /// Supported the following types: 'int', 'float', 'long', 'number'
+        /// 'string', 'boolean', 'object', 'array', 'map', 'TypeName'
+        /// </summary>
+        public string Type { get; }
+
+        /// <summary>
+        /// The complex value schema
+        /// </summary>
+        public Schema Schema { get; }
+
+        /// <summary>
         ///  Creates instance of the object property schema defined by a simple type
         /// </summary>
         /// <param name="name">The name of the property</param>
@@ -45,33 +72,6 @@ namespace PipServices.Commons.Validation
             if (rules != null)
                 _rules.AddRange(rules);
         }
-
-        /// <summary>
-        /// The property name
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// The array flag
-        /// </summary>
-        public bool IsArray { get; }
-
-        /// <summary>
-        /// The optional flag
-        /// </summary>
-        public bool IsOptional { get; }
-
-        /// <summary>
-        /// The simple type to define property value.
-        /// Supported the following types: 'int', 'float', 'long', 'number'
-        /// 'string', 'boolean', 'object', 'array', 'map', 'TypeName'
-        /// </summary>
-        public string Type { get; }
-
-        /// <summary>
-        /// The complex value schema
-        /// </summary>
-        public Schema Schema { get; }
 
         /// <summary>
         /// The collection of validation rules
