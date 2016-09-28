@@ -1,43 +1,37 @@
 ﻿using System;
-using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
+using System.Collections.Generic;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class CompositeLogger : Logger
+    public sealed class CompositeLogger : Logger, IReferenceable, IDescriptable
     {
-        //private readonly AppInsightsLogger _appInsightsLogger = new AppInsightsLogger();
-        private readonly DebugLogger _debugLogger = new DebugLogger();
-        private readonly EventLogger _eventLogger = new EventLogger();
+        private static Descriptor _locator = new Descriptor("pip-commons", "logger", "composite", "1.0");
+        private List<ILogger> _loggers = new List<ILogger>();
 
-        public CompositeLogger(IReferences references = null)
-            : base(references)
+        public Descriptor GetDescriptor()
         {
-            if (references != null)
-                SetReferences(references);
+            return _locator;
         }
 
-        public new void SetReferences(IReferences references)
+        public void SetReferences(IReferences references)
         {
-            _debugLogger.SetReferences(references);
-            _eventLogger.SetReferences(references);
-            //_appInsightsLogger.SetReferences(references);
+            var loggers = references.GetOptional(new Descriptor(null, "logger", null, null));
+            foreach (var logger in loggers)
+            {
+                if (logger is ILogger)
+                {
+                    _loggers.Add((ILogger)logger);
+                }
+            }
         }
 
-        public override void Configure(ConfigParams config)
+        protected override void Write(LogLevel level, string correlationId, Exception error, string message, params object[] args)
         {
-            base.Configure(config);
-
-            _debugLogger.Configure(config);
-            _eventLogger.Configure(config);
-            //_appInsightsLogger.Configure(config);
-        }
-
-        protected override void PerformWrite(string correlationId, LogLevel level, Exception error, string message)
-        {
-            _debugLogger.Write(correlationId, level, error, message);
-            _eventLogger.Write(correlationId, level, error, message);
-            //_appInsightsLogger.Write(correlationId, level, error, message);
+            foreach (var logger in _loggers)
+            {
+                logger.Log(level, correlationId, error, message, args);
+            }
         }
     }
 }

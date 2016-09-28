@@ -85,7 +85,7 @@ namespace PipServices.Commons.Net
             return GetProtocol() + "://" + GetHost() + ":" + GetPort();
         }
 
-        public static ConnectionParams FromString(string line)
+        public static new ConnectionParams FromString(string line)
         {
             var map = StringValueMap.FromString(line);
             return new ConnectionParams(map);
