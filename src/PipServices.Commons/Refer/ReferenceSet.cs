@@ -5,7 +5,7 @@ namespace PipServices.Commons.Refer
 {
     public class ReferenceSet : IReferences
     {
-        private List<Reference> _items = new List<Reference>();
+        private readonly List<Reference> _items = new List<Reference>();
 
         public ReferenceSet()
         { }
@@ -34,7 +34,7 @@ namespace PipServices.Commons.Refer
                 throw new ArgumentNullException(nameof(locator));
             }
 
-            int index = _items.Count - 1;
+            var index = _items.Count - 1;
 
             // Locate prior reference
             for (; index >= 0; index--)
@@ -130,14 +130,8 @@ namespace PipServices.Commons.Refer
             }
 
             var r = reference as Reference;
-            if(r != null)
-            {
-                _items.Add(r);
-            }
-            else
-            {
-                _items.Add(new Reference(reference));
-            }
+
+            _items.Add(r ?? new Reference(reference));
         }
 
         public void Put(object locator, object reference)
