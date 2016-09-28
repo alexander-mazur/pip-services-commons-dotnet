@@ -10,8 +10,7 @@ namespace PipServices.Commons.Errors
     {
         private string _stackTrace;
 
-        public string Category { get; set; }
-        public string CorrelationId { get; set; }
+        public string Category { get; set; }        public string CorrelationId { get; set; }
         public string Cause { get; set; }
         public StringValueMap Details { get; set; }
         public string Code { get; set; } = "Unknown";
