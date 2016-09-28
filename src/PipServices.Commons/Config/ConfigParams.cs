@@ -82,13 +82,13 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public static new ConfigParams FromTuples(params object[] tuples)
+        public new static ConfigParams FromTuples(params object[] tuples)
         {
             var map = StringValueMap.FromTuples(tuples);
             return new ConfigParams(map);
         }
 
-        public static new ConfigParams FromString(string line)
+        public new static ConfigParams FromString(string line)
         {
             var map = StringValueMap.FromString(line);
             return new ConfigParams(map);

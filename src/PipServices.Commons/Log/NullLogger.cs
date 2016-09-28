@@ -45,12 +45,10 @@ namespace PipServices.Commons.Log
 
         public void Info(string correlationId, string message, params object[] args)
         {
-            throw new NotImplementedException();
         }
 
         public void Info(string correlationId, Exception error, string message = null, params object[] args)
         {
-            throw new NotImplementedException();
         }
 
         public void Log(LogLevel level, string correlationId, Exception error, string message, params object[] args)
