@@ -5,7 +5,7 @@ namespace PipServices.Commons.Data
 {
     public class AnyValue : ICloneable
     {
-        public object Value { get; set; }
+        public object Value { get; private set; }
 
         public AnyValue(object value = null)
         {
@@ -215,7 +215,8 @@ namespace PipServices.Commons.Data
 
         public override int GetHashCode()
         {
-            return Value != null ? Value.GetHashCode() : 0;
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
+            return Value?.GetHashCode() ?? 0;
         }
 
         public object Clone()
