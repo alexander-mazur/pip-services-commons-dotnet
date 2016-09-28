@@ -160,7 +160,7 @@ namespace PipServices.Commons.Run
         public Parameters GetAsParametersWithDefault(string key, Parameters defaultValue)
         {
             var result = GetAsNullableParameters(key);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public bool Contains(string key)

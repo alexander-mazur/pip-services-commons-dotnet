@@ -257,7 +257,7 @@ namespace PipServices.Commons.Data
         public AnyValueArray GetAsArrayWithDefault(string key, AnyValueArray defaultValue)
         {
             var result = GetAsNullableArray(key);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public AnyValueMap GetAsNullableMap(string key)
@@ -275,7 +275,7 @@ namespace PipServices.Commons.Data
         public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)
         {
             var result = GetAsNullableMap(key);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public object Clone()

@@ -38,13 +38,13 @@ namespace PipServices.Commons.Convert
         public static IList<object> ToArray(object value)
         {
             var result = ToNullableArray(value);
-            return result != null ? result : new List<object>();
+            return result ?? new List<object>();
         }
 
         public static IList<object> ToArrayWithDefault(object value, IList<object> defaultValue)
         {
             var result = ToNullableArray(value);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
     }
 }

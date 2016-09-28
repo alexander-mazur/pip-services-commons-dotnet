@@ -272,7 +272,7 @@ namespace PipServices.Commons.Data
         public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)
         {
             var result = GetAsNullableMap(key);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public override string ToString()

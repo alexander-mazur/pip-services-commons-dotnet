@@ -51,13 +51,13 @@ namespace PipServices.Commons.Convert
         public static IDictionary<string, object> ToMap(string value)
         {
             var result = ToNullableMap(value);
-            return result != null ? result : new Dictionary<string, object>();
+            return result ?? new Dictionary<string, object>();
         }
 
         public static IDictionary<string, object> ToMapWithDefault(string value, IDictionary<string, object> defaultValue)
         {
             var result = ToNullableMap(value);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
     }
 }

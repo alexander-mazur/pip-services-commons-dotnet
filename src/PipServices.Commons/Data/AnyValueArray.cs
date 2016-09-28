@@ -226,7 +226,7 @@ namespace PipServices.Commons.Data
         public AnyValueArray GetAsArrayWithDefault(int index, AnyValueArray defaultValue)
         {
             var result = GetAsNullableArray(index);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public AnyValueMap GetAsNullableMap(int index)
@@ -243,7 +243,7 @@ namespace PipServices.Commons.Data
         public AnyValueMap GetAsMapWithDefault(int index, AnyValueMap defaultValue)
         {
             var result = GetAsNullableMap(index);
-            return result != null ? result : defaultValue;
+            return result ?? defaultValue;
         }
 
         public new bool Contains(object value)
