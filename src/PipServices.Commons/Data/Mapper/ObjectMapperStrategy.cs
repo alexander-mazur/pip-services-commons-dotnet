@@ -6,6 +6,16 @@ namespace PipServices.Commons.Data.Mapper
 {
     internal sealed class ObjectMapperStrategy : IObjectMapperStrategy
     {
+        private bool IsPrimitiveType(object obj)
+        {
+            var type = obj.GetType();
+
+            return type == typeof(string) || type == typeof(int) || type == typeof(long) || type == typeof(decimal) ||
+                   type == typeof(char) || type == typeof(decimal) || type == typeof(bool) || type == typeof(byte) ||
+                   type == typeof(double) || type == typeof(float) || type == typeof(sbyte) || type == typeof(short) ||
+                   type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort);
+        }
+
         public void Transfer<TS, TT>(IObjectMapper mapper, TS objectSource, TT objectTarget,
             PropertyInfo propertyInfoSource, PropertyInfo propertyInfoTarget)
             where TS : class
@@ -65,19 +75,31 @@ namespace PipServices.Commons.Data.Mapper
 
                         foreach (var entrySource in source)
                         {
-                            if (entrySource == null)
+                            if (entrySource == null || method == null)
                                 continue;
 
-                            var methodInfo = mapper.GetType().GetTypeInfo().GetMethod(nameof(mapper.Transfer));
-                            var genericMethodInfo = methodInfo.MakeGenericMethod(entrySourceType, entryTargetType);
-                            var entryTarget = genericMethodInfo.Invoke(mapper, new[] { entrySource });
-
-                            var parameters = new[]
+                            if (IsPrimitiveType(entrySource))
                             {
-                                entryTarget
-                            };
+                                var parameters = new[]
+                                {
+                                    entrySource
+                                };
 
-                            method.Invoke(propertyValueTarget, parameters);
+                                method.Invoke(propertyValueTarget, parameters);
+                            }
+                            else
+                            {
+                                var methodInfo = mapper.GetType().GetTypeInfo().GetMethod(nameof(mapper.Transfer));
+                                var genericMethodInfo = methodInfo.MakeGenericMethod(entrySourceType, entryTargetType);
+                                var entryTarget = genericMethodInfo.Invoke(mapper, new[] { entrySource });
+
+                                var parameters = new[]
+                                {
+                                    entryTarget
+                                };
+
+                                method.Invoke(propertyValueTarget, parameters);
+                            }
                         }
                     }
                     else
