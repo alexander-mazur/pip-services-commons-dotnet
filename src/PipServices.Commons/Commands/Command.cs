@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using PipServices.Commons.Run;
 using PipServices.Commons.Validation;
 using PipServices.Commons.Errors;
@@ -12,8 +14,8 @@ namespace PipServices.Commons.Commands
     public class Command : ICommand
     {
         public string Name { get; }
-        private Schema _schema;
-        private IParamExecutable _function;
+        private readonly Schema _schema;
+        private readonly IParamExecutable _function;
 
         /// <summary>
         /// Creates an instance of Command.
@@ -57,8 +59,9 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="args">Command arguments.</param>
+        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public object Execute(string correlationId, Parameters args)
+        public async Task<object> ExecuteAsync(string correlationId, Parameters args, CancellationToken token)
         {
             if (_schema != null)
             {
@@ -71,7 +74,7 @@ namespace PipServices.Commons.Commands
 
             try
             {
-                return _function.Execute(correlationId, args);
+                return await _function.ExecuteAsync(correlationId, args, token);
             }
             catch (Exception ex)
             {

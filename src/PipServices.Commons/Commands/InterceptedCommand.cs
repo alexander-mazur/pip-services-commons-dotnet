@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using PipServices.Commons.Run;
 using PipServices.Commons.Validation;
 
@@ -9,8 +11,8 @@ namespace PipServices.Commons.Commands
     /// </summary>
     public class InterceptedCommand : ICommand
     {
-        private ICommandIntercepter _intercepter;
-        private ICommand _next;
+        private readonly ICommandIntercepter _intercepter;
+        private readonly ICommand _next;
 
         /// <summary>
         /// Creates an instance of intercepted command.
@@ -36,10 +38,11 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="args">Command arguments.</param>
+        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public object Execute(string correlationId, Parameters args)
+        public Task<object> ExecuteAsync(string correlationId, Parameters args, CancellationToken token)
         {
-            return _intercepter.Execute(correlationId, _next, args);
+            return _intercepter.ExecuteAsync(correlationId, _next, args, token);
         }
 
         /// <summary>

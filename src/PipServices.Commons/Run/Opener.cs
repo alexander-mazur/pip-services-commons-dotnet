@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
     public class Opener
     {
-        public void Open(string correlationId, IEnumerable<object> components)
+        public async Task OpenAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
         {
             if (components == null) return;
 
@@ -13,7 +15,7 @@ namespace PipServices.Commons.Run
                 var openable = component as IOpenable;
                 if (openable != null)
                 {
-                    openable.Open(correlationId);
+                    await openable.OpenAsync(correlationId, token);
                 }
             }
         }

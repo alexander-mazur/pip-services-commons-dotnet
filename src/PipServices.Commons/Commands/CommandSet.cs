@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using PipServices.Commons.Data;
 using PipServices.Commons.Errors;
 using PipServices.Commons.Run;
@@ -22,9 +24,9 @@ namespace PipServices.Commons.Commands
         /// </summary>
         private List<IEvent> Events { get; } = new List<IEvent>();
 
-        private Dictionary<string, ICommand> _commandsByName = new Dictionary<string, ICommand>();
-        private Dictionary<string, IEvent> _eventsByName = new Dictionary<string, IEvent>();
-        private List<ICommandIntercepter> _intercepters = new List<ICommandIntercepter>();
+        private readonly Dictionary<string, ICommand> _commandsByName = new Dictionary<string, ICommand>();
+        private readonly Dictionary<string, IEvent> _eventsByName = new Dictionary<string, IEvent>();
+        private readonly List<ICommandIntercepter> _intercepters = new List<ICommandIntercepter>();
 
         /// <summary>
         /// Finds a specific command by its name.
@@ -122,8 +124,9 @@ namespace PipServices.Commons.Commands
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="command">Command name.</param>
         /// <param name="args">Command arguments.</param>
+        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public object Execute(string correlationId, string command, Parameters args)
+        public Task<object> ExecuteAsync(string correlationId, string command, Parameters args, CancellationToken token)
         {
             var cref = FindCommand(command);
             if (cref == null)
@@ -146,7 +149,7 @@ namespace PipServices.Commons.Commands
                 throw errors[0];
             }
 
-            return cref.Execute(correlationId, args);
+            return cref.ExecuteAsync(correlationId, args, token);
         }
 
         /// <summary>

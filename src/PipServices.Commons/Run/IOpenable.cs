@@ -1,7 +1,10 @@
-﻿namespace PipServices.Commons.Run
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace PipServices.Commons.Run
 {
     public interface IOpenable
     {
-        void Open(string correlationId);
+        Task OpenAsync(string correlationId, CancellationToken token);
     }
 }

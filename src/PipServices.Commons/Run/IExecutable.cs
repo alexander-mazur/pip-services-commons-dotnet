@@ -1,7 +1,10 @@
-﻿namespace PipServices.Commons.Run
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace PipServices.Commons.Run
 {
     public interface IExecutable
     {
-        object Execute(string correlationId);
+        Task<object> ExecuteAsync(string correlationId, CancellationToken token);
     }
 }
