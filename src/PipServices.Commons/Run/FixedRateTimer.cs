@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
@@ -31,15 +32,18 @@ namespace PipServices.Commons.Run
                     _timer = null;
                 }
 
-                _timer = new Timer((state) =>
-                {
-                    Task.Notify("pip-commons-timer");
-                }, null, Delay, Interval);
+                _timer = new Timer(
+                    (state) => 
+                    {
+                        Task.NotifyAsync("pip-commons-timer");
+                    }, 
+                    null, Delay, Interval
+                );
                 Started = true;
             }
         }
 
-        public void Close(string correlationId)
+        public async Task CloseAsync(string correlationId)
         {
             lock (_syncRoot)
             {
@@ -49,6 +53,8 @@ namespace PipServices.Commons.Run
                     _timer = null;
                 }
             }
+
+            await System.Threading.Tasks.Task.Delay(0);
         }
     }
 }

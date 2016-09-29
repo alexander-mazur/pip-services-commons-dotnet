@@ -2,6 +2,6 @@
 {
     public interface IStringIdentifiable : IIdentifiable<string>
     {
-        void SetId(string value);
+        new string Id { get;  set; }
     }
 }

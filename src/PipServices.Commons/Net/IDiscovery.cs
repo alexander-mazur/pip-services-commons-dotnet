@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Net
 {
     public interface IDiscovery
     {
-        void Register(ConnectionParams endpoint);
-        ConnectionParams Resolve(IList<ConnectionParams> endpoints);
-        IList<ConnectionParams> ResolveAll(IList<ConnectionParams> endpoints);
+        Task RegisterAsync(ConnectionParams endpoint);
+        Task<ConnectionParams> ResolveAsync(IList<ConnectionParams> endpoints);
+        Task<IList<ConnectionParams>> ResolveAllAsync(IList<ConnectionParams> endpoints);
     }
 }

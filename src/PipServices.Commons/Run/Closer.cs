@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
     public class Closer
     {
-        public void Close(string correlationId, IEnumerable<object> components)
+        public async Task CloseAsync(string correlationId, IEnumerable<object> components)
         {
             if (components == null) return;
 
@@ -13,7 +14,7 @@ namespace PipServices.Commons.Run
                 var closable = component as IClosable;
                 if(closable != null)
                 {
-                    closable.Close(correlationId);
+                    await closable.CloseAsync(correlationId);
                 }
             }
         }

@@ -2,6 +2,6 @@
 {
     public interface IIdentifiable<T>
     {
-        T GetId();
+        T Id { get; }
     }
 }

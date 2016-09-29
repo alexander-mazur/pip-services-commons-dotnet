@@ -1,7 +1,9 @@
-﻿namespace PipServices.Commons.Run
+﻿using System.Threading.Tasks;
+
+namespace PipServices.Commons.Run
 {
     public interface INotifiable
     {
-        void Notify(string correlationId);
+        Task NotifyAsync(string correlationId);
     }
 }

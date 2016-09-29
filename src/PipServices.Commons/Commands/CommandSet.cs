@@ -209,7 +209,7 @@ namespace PipServices.Commons.Commands
             var e = FindEvent(ev);
             if (e != null)
             {
-                e.Notify(correlationId, args);
+                e.NotifyAsync(correlationId, args);
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PipServices.Commons.Run;
 using PipServices.Commons.Errors;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Commands
 {
@@ -56,7 +57,7 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="args">The event arguments/value.</param>
-        public void Notify(string correlationId, Parameters args)
+        public async Task NotifyAsync(string correlationId, Parameters args)
         {
             foreach (var listener in Listeners)
             {
@@ -73,6 +74,8 @@ namespace PipServices.Commons.Commands
                         .WithDetails("event", Name);
                 }
             }
+
+            await Task.Delay(0);
         }
     }
 }

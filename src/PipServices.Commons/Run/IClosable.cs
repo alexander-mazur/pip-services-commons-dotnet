@@ -1,7 +1,9 @@
-﻿namespace PipServices.Commons.Run
+﻿using System.Threading.Tasks;
+
+namespace PipServices.Commons.Run
 {
     public interface IClosable
     {
-        void Close(string correlationId);
+        Task CloseAsync(string correlationId);
     }
 }

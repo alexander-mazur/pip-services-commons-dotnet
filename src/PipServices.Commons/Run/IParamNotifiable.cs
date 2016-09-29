@@ -1,7 +1,9 @@
-﻿namespace PipServices.Commons.Run
+﻿using System.Threading.Tasks;
+
+namespace PipServices.Commons.Run
 {
     public interface IParamNotifiable
     {
-        void Notify(string correlationId, Parameters args);
+        Task NotifyAsync(string correlationId, Parameters args);
     }
 }

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
     public class Notifier
     {
-        public void Notify(string correlationId, IEnumerable<object> components)
+        public async Task NotifyAsync(string correlationId, IEnumerable<object> components)
         {
-            Notify(correlationId, components, new Parameters());
+            await NotifyAsync(correlationId, components, new Parameters());
         }
 
-        public void Notify(string correlationId, IEnumerable<object> components, Parameters args)
+        public async Task NotifyAsync(string correlationId, IEnumerable<object> components, Parameters args)
         {
             if (components == null) return;
 
@@ -19,14 +20,14 @@ namespace PipServices.Commons.Run
 
                 if (notifiable != null)
                 {
-                    notifiable.Notify(correlationId);
+                    await notifiable.NotifyAsync(correlationId);
                     continue;
                 }
 
                 var paramNotifiable = component as IParamNotifiable;
                 if (paramNotifiable != null)
                 {
-                    paramNotifiable.Notify(correlationId, args);
+                    await paramNotifiable.NotifyAsync(correlationId, args);
                 }
             }
         }
