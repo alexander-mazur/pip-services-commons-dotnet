@@ -43,7 +43,7 @@ namespace PipServices.Commons.Run
             }
         }
 
-        public async Task CloseAsync(string correlationId)
+        public async Task CloseAsync(string correlationId, CancellationToken token)
         {
             lock (_syncRoot)
             {
@@ -54,7 +54,7 @@ namespace PipServices.Commons.Run
                 }
             }
 
-            await System.Threading.Tasks.Task.Delay(0);
+            await System.Threading.Tasks.Task.Delay(0, token);
         }
     }
 }
