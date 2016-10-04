@@ -73,10 +73,10 @@ namespace PipServices.Commons.Refer
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.Append(Group != null ? Group : "*")
-                .Append(":").Append(Type != null ? Type : "*")
-                .Append(":").Append(Id != null ? Id : "*")
-                .Append(":").Append(Version != null ? Version : "*");
+            builder.Append(Group ?? "*")
+                .Append(":").Append(Type ?? "*")
+                .Append(":").Append(Id ?? "*")
+                .Append(":").Append(Version ?? "*");
             return builder.ToString();
         }
     }
