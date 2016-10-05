@@ -22,38 +22,36 @@ namespace PipServices.Commons.Refer
             Version = version;
         }
 
+        private bool MatchField(string field1, string field2)
+        {
+            return field1 == null
+                   || field2 == null
+                   || field1.Equals(field2);
+        }
+
         public bool Match(Descriptor descriptor)
         {
-            // Matching groups
-            if (Group != null && descriptor.Group != null
-                && !Group.Equals(descriptor.Group))
-            {
-                return false;
-            }
+            return MatchField(Group, descriptor.Group)
+                   && MatchField(Type, descriptor.Type)
+                   && MatchField(Id, descriptor.Id)
+                   && MatchField(Version, descriptor.Version);
+        }
 
-            // Matching types
-            if (Type != null && descriptor.Type != null
-                && !Type.Equals(descriptor.Type))
-            {
+        private bool ExactMatchField(string field1, string field2)
+        {
+            if (field1 == null && field2 == null)
+                return true;
+            if (field1 == null || field2 == null)
                 return false;
-            }
+            return field1.Equals(field2);
+        }
 
-            // Matching ids
-            if (Id != null && descriptor.Id != null
-                && !Id.Equals(descriptor.Id))
-            {
-                return false;
-            }
-
-            // Matching versions
-            if (Version != null && descriptor.Version != null
-                && !Version.Equals(descriptor.Version))
-            {
-                return false;
-            }
-
-            // All checks are passed...
-            return true;
+        public bool ExactMatch(Descriptor descriptor)
+        {
+            return ExactMatchField(Group, descriptor.Group)
+                && ExactMatchField(Type, descriptor.Type)
+                && ExactMatchField(Id, descriptor.Id)
+                && ExactMatchField(Version, descriptor.Version);
         }
 
         public override bool Equals(object obj)

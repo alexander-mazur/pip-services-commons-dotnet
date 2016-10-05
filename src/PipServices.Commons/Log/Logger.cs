@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Text;
 using PipServices.Commons.Config;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public abstract class Logger : ILogger, IConfigurable
+    public abstract class Logger : ILogger, IReconfigurable
     {
         public LogLevel Level { get; set; }
 

@@ -13,7 +13,7 @@ namespace PipServices.Commons.Cache
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public class MemoryCache : ICache, IDescriptable, IConfigurable
+    public class MemoryCache : ICache, IDescriptable, IReconfigurable
     {
         private static readonly Descriptor _descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
         private readonly long DefaultTimeout = 60000;
