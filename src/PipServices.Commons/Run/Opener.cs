@@ -6,7 +6,7 @@ namespace PipServices.Commons.Run
 {
     public class Opener
     {
-        public async Task OpenAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
+        public static async Task OpenAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
         {
             if (components == null) return;
 

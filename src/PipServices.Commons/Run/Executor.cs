@@ -6,12 +6,12 @@ namespace PipServices.Commons.Run
 {
     public class Executor
     {
-        public async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
+        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
         {
             return await ExecuteAsync(correlationId, components, new Parameters(), token);
         }
 
-        public async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, Parameters args, CancellationToken token)
+        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, Parameters args, CancellationToken token)
         {
             var results = new List<object>();
             if (components == null) return results;

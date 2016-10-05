@@ -6,7 +6,7 @@ namespace PipServices.Commons.Run
 {
     public class Closer
     {
-        public async Task CloseAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
+        public static async Task CloseAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
         {
             if (components == null) return;
 
