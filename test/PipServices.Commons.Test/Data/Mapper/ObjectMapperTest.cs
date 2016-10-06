@@ -69,7 +69,7 @@ namespace PipServices.Commons.Test.Data.Mapper
             Assert.Equal(objectA.Property2, objectB.Property2);
             Assert.Equal(objectA.Property3, objectB.Property3);
 
-            Assert.NotSame(objectA.Property4, objectB.Property4);
+            Assert.Null(objectB.Property4);
 
             Assert.Equal(0, objectB.Property5);
         }

@@ -83,7 +83,9 @@ namespace PipServices.Commons.Count
                 throw new ArgumentNullException(nameof(name));
 
             lock (_lock) {
-                var counter = _cache[name];
+                Counter counter;
+
+                _cache.TryGetValue(name, out counter);
 
                 if (counter == null || counter.Type != type)
                 {
@@ -101,7 +103,7 @@ namespace PipServices.Commons.Count
                 throw new ArgumentNullException(nameof(counter));
 
             counter.Last = value;
-            counter.Count = counter.Count + 1;
+            counter.Count = counter.Count + 1 ?? 1;
             counter.Max= counter.Max.HasValue ? Math.Max(counter.Max.Value, value) : value;
             counter.Min = counter.Min.HasValue ? Math.Min(counter.Min.Value, value) : value;
             counter.Average = (counter.Average.HasValue && counter.Count > 1 ? (counter.Average*(counter.Count - 1) + value)/counter.Count : value);
@@ -205,7 +207,7 @@ namespace PipServices.Commons.Count
         public void Increment(string name, int value)
         {
             var counter = Get(name, CounterType.Increment);
-            counter.Count = counter.Count + value;
+            counter.Count = counter.Count.HasValue ? counter.Count + value : value;
             Update();
         }
     }

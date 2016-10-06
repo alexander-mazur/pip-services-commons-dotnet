@@ -5,7 +5,7 @@ namespace PipServices.Commons.Count
     /**
      * Provides callback to end measuring execution time interface and update interval counter.
      */
-    public class Timing
+    public class Timing : IDisposable
     {
         private readonly int _start;
         private readonly ITimingCallback _callback;
@@ -40,6 +40,11 @@ namespace PipServices.Commons.Count
             double elapsed = Environment.TickCount - _start;
 
             _callback.EndTiming(_counter, elapsed);
+        }
+
+        public void Dispose()
+        {
+            EndTiming();
         }
     }
 }
