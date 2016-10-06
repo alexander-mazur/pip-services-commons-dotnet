@@ -6,9 +6,6 @@ namespace PipServices.Commons.Log
     public class DefaultLoggerFactory : IFactory, IDescriptable
     {
         private static readonly Descriptor ThisDescriptor = new Descriptor("pip-commons", "factory", "logger", "1.0");
-        private static readonly Descriptor ConsoleLoggerDescriptor = new Descriptor("pip-commons", "logger", "console", "1.0");
-        private static readonly Descriptor CompositeLoggerDescriptor = new Descriptor("pip-commons", "logger", "composite", "1.0");
-        private static readonly Descriptor NullLoggerDescriptor = new Descriptor("pip-commons", "logger", "null", "1.0");
 
         public bool CanCreate(object locator)
         {
@@ -16,13 +13,13 @@ namespace PipServices.Commons.Log
             if (descriptor == null)
                 return false;
             
-            if (descriptor.Match(NullLoggerDescriptor))
+            if (descriptor.Match(NullLogger.Descriptor))
                 return true;
 
-            if (descriptor.Match(ConsoleLoggerDescriptor))
+            if (descriptor.Match(ConsoleLogger.Descriptor))
                 return true;
 
-            if (descriptor.Match(CompositeLoggerDescriptor))
+            if (descriptor.Match(CompositeLogger.Descriptor))
                 return true;
 
             return false;
@@ -34,13 +31,13 @@ namespace PipServices.Commons.Log
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullLoggerDescriptor))
+            if (descriptor.Match(NullLogger.Descriptor))
                 return new NullLogger();
             
-            if (descriptor.Match(ConsoleLoggerDescriptor))
+            if (descriptor.Match(ConsoleLogger.Descriptor))
                 return new ConsoleLogger();
 
-            if (descriptor.Match(CompositeLoggerDescriptor))
+            if (descriptor.Match(CompositeLogger.Descriptor))
                 return new CompositeLogger();
 
             return null;

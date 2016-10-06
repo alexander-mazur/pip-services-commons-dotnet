@@ -15,7 +15,9 @@ namespace PipServices.Commons.Cache
     /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IReconfigurable
     {
-        private static readonly Descriptor _descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory",
+            "1.0");
+
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
@@ -42,10 +44,10 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Gets the component descriptor.
         /// </summary>
-        /// <returns>The component <see cref="Descriptor"/></returns>
+        /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public Descriptor GetDescriptor()
         {
-            return _descriptor;
+            return Descriptor;
         }
 
         /// <summary>

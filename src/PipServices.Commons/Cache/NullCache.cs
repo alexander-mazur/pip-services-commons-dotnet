@@ -9,15 +9,15 @@ namespace PipServices.Commons.Cache
     /// </summary>
     public class NullCache : ICache, IDescriptable
     {
-        private static readonly Descriptor _descriptor = new Descriptor("pip-services-common", "cache", "null", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "null", "1.0");
 
         /// <summary>
         /// Gets the component descriptor.
         /// </summary>
-        /// <returns>The component <see cref="Descriptor"/></returns>
+        /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public Descriptor GetDescriptor()
         {
-            return _descriptor;
+            return Descriptor;
         }
 
         /// <summary>

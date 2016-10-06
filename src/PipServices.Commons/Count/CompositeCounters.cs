@@ -6,11 +6,11 @@ namespace PipServices.Commons.Count
 {
     public sealed class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
     {
-        private static readonly Descriptor Locator = new Descriptor("pip-commons", "counters", "composite", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "counters", "composite", "1.0");
 
         private readonly IList<ICounters> _counters = new List<ICounters>();
 
-        public Descriptor GetDescriptor() { return Locator; }
+        public Descriptor GetDescriptor() { return Descriptor; }
 
         public void SetReferences(IReferences references)
         {

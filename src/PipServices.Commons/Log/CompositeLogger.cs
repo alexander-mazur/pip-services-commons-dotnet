@@ -6,7 +6,8 @@ namespace PipServices.Commons.Log
 {
     public sealed class CompositeLogger : Logger, IReferenceable, IDescriptable
     {
-        private static readonly Descriptor _locator = new Descriptor("pip-commons", "logger", "composite", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "composite", "1.0");
+
         private readonly List<ILogger> _loggers = new List<ILogger>();
 
         public CompositeLogger()
@@ -20,7 +21,7 @@ namespace PipServices.Commons.Log
 
         public Descriptor GetDescriptor()
         {
-            return _locator;
+            return Descriptor;
         }
 
         public void SetReferences(IReferences references)

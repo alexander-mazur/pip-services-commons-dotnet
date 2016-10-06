@@ -6,11 +6,11 @@ namespace PipServices.Commons.Log
 {
     public class ConsoleLogger : Logger, IDescriptable
     {
-        private static Descriptor _locator = new Descriptor("pip-commons", "logger", "console", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "console", "1.0");
 
         public Descriptor GetDescriptor()
         {
-            return _locator;
+            return Descriptor;
         }
 
         protected string ComposeError(Exception error)

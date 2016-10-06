@@ -1,5 +1,4 @@
-﻿using System;
-using PipServices.Commons.Build;
+﻿using PipServices.Commons.Build;
 using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
@@ -7,9 +6,6 @@ namespace PipServices.Commons.Count
     public sealed class DefaultCountersFactory : IFactory, IDescriptable
     {
         private static readonly Descriptor ThisDescriptor = new Descriptor("pip-commons", "factory", "counters", "1.0");
-        private static readonly Descriptor LogCounterDescriptor = new Descriptor("pip-commons", "counters", "log", "1.0");
-        private static readonly Descriptor CompositeCounterDescriptor = new Descriptor("pip-commons", "counters", "composite", "1.0");
-        private static readonly Descriptor NullCounterDescriptor = new Descriptor("pip-commons", "counters", "null", "1.0");
 
         public Descriptor GetDescriptor()
         {
@@ -23,13 +19,13 @@ namespace PipServices.Commons.Count
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCounterDescriptor))
+            if (descriptor.Match(NullCounters.Descriptor))
                 return true;
 
-            if (descriptor.Match(LogCounterDescriptor))
+            if (descriptor.Match(LogCounters.Descriptor))
                 return true;
 
-            if (descriptor.Match(CompositeCounterDescriptor))
+            if (descriptor.Match(CompositeCounters.Descriptor))
                 return true;
 
             return false;
@@ -42,13 +38,13 @@ namespace PipServices.Commons.Count
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCounterDescriptor))
+            if (descriptor.Match(NullCounters.Descriptor))
                 return new NullCounters();
 
-            if (descriptor.Match(LogCounterDescriptor))
+            if (descriptor.Match(LogCounters.Descriptor))
                 return new LogCounters();
 
-            if (descriptor.Match(CompositeCounterDescriptor))
+            if (descriptor.Match(CompositeCounters.Descriptor))
                 return new CompositeCounters();
 
             return null;

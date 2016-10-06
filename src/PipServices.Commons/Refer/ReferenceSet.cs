@@ -6,6 +6,7 @@ namespace PipServices.Commons.Refer
     public class ReferenceSet : IReferences
     {
         private readonly List<Reference> _items = new List<Reference>();
+        private object _lock = new object();
 
         public ReferenceSet()
         { }
@@ -36,19 +37,22 @@ namespace PipServices.Commons.Refer
 
             var index = _items.Count - 1;
 
-            // Locate prior reference
-            for (; index >= 0; index--)
+            lock (_lock)
             {
-                var item = _items[index];
-                if (item.Refer.Equals(reference))
-                    break;
-            }
+                // Locate prior reference
+                for (; index >= 0; index--)
+                {
+                    var item = _items[index];
+                    if (item.Refer.Equals(reference))
+                        break;
+                }
 
-            for (; index >= 0; index--)
-            {
-                var item = _items[index];
-                if (item.Locate(locator))
-                    return item.Refer;
+                for (; index >= 0; index--)
+                {
+                    var item = _items[index];
+                    if (item.Locate(locator))
+                        return item.Refer;
+                }
             }
 
             throw new ReferenceNotFoundException(null, locator);
@@ -84,11 +88,14 @@ namespace PipServices.Commons.Refer
 
             var references = new List<object>();
 
-            for (int index = _items.Count - 1; index >= 0; index--)
+            lock (_lock)
             {
-                var item = _items[index];
-                if (item.Locate(locator))
-                    references.Add(item.Refer);
+                for (int index = _items.Count - 1; index >= 0; index--)
+                {
+                    var item = _items[index];
+                    if (item.Locate(locator))
+                        references.Add(item.Refer);
+                }
             }
 
             return references;
@@ -108,17 +115,20 @@ namespace PipServices.Commons.Refer
         {
             if (locator == null) return null;
 
-
-            for (int index = _items.Count - 1; index >= 0; index--)
+            lock (_lock)
             {
-                var item = _items[index];
-                if (item.Locate(locator))
+                for (int index = _items.Count - 1; index >= 0; index--)
                 {
-                    // Remove from the set
-                    _items.RemoveAt(index);
-                    return item.Refer;
+                    var item = _items[index];
+                    if (item.Locate(locator))
+                    {
+                        // Remove from the set
+                        _items.RemoveAt(index);
+                        return item.Refer;
+                    }
                 }
             }
+
             return null;
         }
 
@@ -131,7 +141,10 @@ namespace PipServices.Commons.Refer
 
             var r = reference as Reference;
 
-            _items.Add(r ?? new Reference(reference));
+            lock (_lock)
+            {
+                _items.Add(r ?? new Reference(reference));
+            }
         }
 
         public void Put(object locator, object reference)
@@ -145,7 +158,10 @@ namespace PipServices.Commons.Refer
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            _items.Add(new Reference(locator, reference));
+            lock (_lock)
+            {
+                _items.Add(new Reference(locator, reference));
+            }
         }
 
         public static ReferenceSet From(params IDescriptable[] references)

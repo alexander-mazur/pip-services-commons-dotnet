@@ -9,13 +9,13 @@ namespace PipServices.Commons.Count
 {
     public sealed class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
-        public static readonly Descriptor Locator = new Descriptor("pip-counters", "counters", "log", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-counters", "counters", "log", "1.0");
 
         private ILogger _logger;
 
         public Descriptor GetDescriptor()
         {
-            return Locator;
+            return Descriptor;
         }
 
         public void SetReferences(IReferences references)

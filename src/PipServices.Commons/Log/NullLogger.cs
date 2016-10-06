@@ -5,14 +5,13 @@ namespace PipServices.Commons.Log
 {
     public sealed class NullLogger : ILogger, IDescriptable
     {
-        private static Descriptor _locator = new Descriptor("pip-commons", "logger", "null", "1.0");
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "null", "1.0");
 
         public Descriptor GetDescriptor()
         {
-            return _locator;
+            return Descriptor;
         }
-
-
+        
         public LogLevel Level
         {
             get { return LogLevel.Nothing; }
