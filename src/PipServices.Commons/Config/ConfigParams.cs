@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PipServices.Commons.Data;
 using System.Collections;
+using System.Linq;
+using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Config
 {
@@ -96,7 +99,13 @@ namespace PipServices.Commons.Config
 
         public static ConfigParams MergeConfigs(ConfigParams config)
         {
-            var map = StringValueMap.FromMaps(config);
+            var map = FromMaps(config);
+            return new ConfigParams(map);
+        }
+
+        public static ConfigParams FromObject(object value)
+        {
+            var map = MapConverter.ToMap(value);
             return new ConfigParams(map);
         }
     }

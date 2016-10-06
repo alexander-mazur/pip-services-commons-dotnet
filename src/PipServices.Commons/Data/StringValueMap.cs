@@ -55,7 +55,7 @@ namespace PipServices.Commons.Data
         public void SetAsObject(object value)
         {
             Clear();
-            SetAsMap((IDictionary)MapConverter.ToMap(value));
+            SetAsMap((IDictionary)MapConverter.ToGenericMap(value));
         }
 
         public void SetAsObject(string key, object value)
