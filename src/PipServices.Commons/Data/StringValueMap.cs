@@ -320,7 +320,8 @@ namespace PipServices.Commons.Data
         public static StringValueMap FromString(string line)
         {
             var result = new StringValueMap();
-            if (line == null || line.Length == 0) return result;
+            if (string.IsNullOrWhiteSpace(line))
+                return result;
 
             var tokens = line.Split(';');
             foreach (var token in tokens)

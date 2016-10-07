@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using PipServices.Commons.Data;
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Config
@@ -25,6 +24,34 @@ namespace PipServices.Commons.Config
         public ConfigParams(IDictionary content)
             : base(content)
         { }
+
+        public IEnumerable<string> GetSectionNames()
+        {
+            var sections = new List<string>();
+
+            foreach (var key in Keys)
+            {
+                var pos = key.IndexOf('.');
+
+                var subKey = (pos > 0) ? key.Substring(0, pos) : key;
+
+                // Perform case sensitive search
+                var found = false;
+                foreach (var section in sections)
+                {
+                    if (!section.Equals(subKey, StringComparison.CurrentCultureIgnoreCase))
+                        continue;
+
+                    found = true;
+                    break;
+                }
+
+                if (!found)
+                    sections.Add(subKey);
+            }
+
+            return sections;
+        }
 
         public ConfigParams GetSection(string section)
         {
