@@ -17,7 +17,7 @@ namespace PipServices.Commons.Config
                 using (var reader = new StreamReader(File.OpenRead(path)))
                 {
                     var deserializer = new Deserializer();
-                    return deserializer.Deserialize(reader);
+                    return deserializer.Deserialize<dynamic>(reader);
                 }
             }
             catch (Exception ex)

@@ -1,15 +1,21 @@
 ﻿using System;
+using Newtonsoft.Json;
 using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data
 {
     public class AnyValue : ICloneable
     {
+        private static long SerialVersionUid { get; } = 8543060319681670938L;
+
+        [JsonProperty("value")]
         public object Value { get; private set; }
 
         public AnyValue(object value = null)
         {
-            Value = value;
+            var anyValue = value as AnyValue;
+
+            Value = anyValue != null ? anyValue.Value : value;
         }
 
         public AnyValue(AnyValue value)

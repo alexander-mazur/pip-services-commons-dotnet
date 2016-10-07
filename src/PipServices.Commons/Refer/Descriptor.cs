@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Refer
 {
@@ -76,6 +78,22 @@ namespace PipServices.Commons.Refer
                 .Append(":").Append(Id ?? "*")
                 .Append(":").Append(Version ?? "*");
             return builder.ToString();
+        }
+
+        public static Descriptor FromString(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            var tokens = value.Split(':');
+
+            if (tokens.Length != 4)
+            {
+                throw new ConfigException(null, "BAD_DESCRIPTOR", "Descriptor " + value + " is in wrong format")
+                    .WithDetails("descriptor", value);
+            }
+
+            return new Descriptor(tokens[0].Trim(), tokens[1].Trim(), tokens[2].Trim(), tokens[3].Trim());
         }
     }
 }
