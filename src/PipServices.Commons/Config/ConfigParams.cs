@@ -124,9 +124,9 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public static ConfigParams MergeConfigs(ConfigParams config)
+        public static ConfigParams MergeConfigs(params IDictionary[] configs)
         {
-            var map = FromMaps(config);
+            var map = FromMaps(configs);
             return new ConfigParams(map);
         }
 
