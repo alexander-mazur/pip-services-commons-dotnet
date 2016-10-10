@@ -49,7 +49,7 @@ namespace PipServices.Commons.Errors
 
         public ApplicationException WithCause(Exception cause)
         {
-            Cause = cause != null ? cause.Message : null;
+            Cause = cause?.Message;
             return this;
         }
 

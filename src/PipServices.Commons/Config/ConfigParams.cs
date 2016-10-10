@@ -1,6 +1,5 @@
 ﻿using System;
 using PipServices.Commons.Data;
-using System.Collections;
 using System.Collections.Generic;
 using PipServices.Commons.Convert;
 
@@ -23,7 +22,7 @@ namespace PipServices.Commons.Config
         /// Creates an instance of ConfigParams.
         /// </summary>
         /// <param name="content">Existing map to copy keys/values from.</param>
-        public ConfigParams(IDictionary content)
+        public ConfigParams(IDictionary<string, object> content)
             : base(content)
         { }
 
@@ -126,7 +125,7 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public static ConfigParams MergeConfigs(params IDictionary[] configs)
+        public static ConfigParams MergeConfigs(params IDictionary<string, object>[] configs)
         {
             var map = FromMaps(configs);
             return new ConfigParams(map);

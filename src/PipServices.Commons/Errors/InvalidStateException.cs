@@ -9,15 +9,19 @@ namespace PipServices.Commons.Errors
     public class InvalidStateException : ApplicationException
     {
         public InvalidStateException(Exception innerException) : 
-            base(ErrorCategory.InvalidState, null, null, null, innerException)
+            base(ErrorCategory.InvalidState, null, null, null)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
 
         public InvalidStateException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.InvalidState, correlationId, code, message, innerException)
+            base(ErrorCategory.InvalidState, correlationId, code, message)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
     }
 }

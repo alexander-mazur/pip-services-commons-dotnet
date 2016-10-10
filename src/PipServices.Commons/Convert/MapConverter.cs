@@ -17,16 +17,6 @@ namespace PipServices.Commons.Convert
             return result;
         }
 
-        private static IDictionary MapToMap(IDictionary<string, object> dictionary)
-        {
-            var result = new Dictionary<string, object>();
-            foreach (var key in dictionary.Keys)
-            {
-                result[StringConverter.ToString(key)] = dictionary[key];
-            }
-            return result;
-        }
-
         private static IDictionary<string, object> EnumerableToMap(IEnumerable enumerable)
         {
             var result = new Dictionary<string, object>();
@@ -72,12 +62,6 @@ namespace PipServices.Commons.Convert
             var result = ToNullableMap(value);
             return result ?? new Dictionary<string, object>();
         }
-
-        //public static IDictionary ToMap(object value)
-        //{
-        //    var result = MapToMap(ToNullableMap(value));
-        //    return result ?? new Dictionary<string, object>();
-        //}
 
         public static IDictionary<string, object> ToMapWithDefault(object value, Dictionary<string, object> defaultValue)
         {

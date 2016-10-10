@@ -8,15 +8,19 @@ namespace PipServices.Commons.Errors
     public class InvocationException : ApplicationException
     {
         public InvocationException(Exception innerException) : 
-            base(ErrorCategory.FailedInvocation, null, null, null, innerException)
+            base(ErrorCategory.FailedInvocation, null, null, null)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
 
         public InvocationException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.FailedInvocation, correlationId, code, message, innerException)
+            base(ErrorCategory.FailedInvocation, correlationId, code, message)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using PipServices.Commons.Data;
 using PipServices.Commons.Errors;
 using PipServices.Commons.Run;
-using PipServices.Commons.Validation;
+using PipServices.Commons.Validate;
 
 namespace PipServices.Commons.Commands
 {

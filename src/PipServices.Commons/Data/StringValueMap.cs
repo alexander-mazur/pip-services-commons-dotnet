@@ -6,12 +6,12 @@ using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data
 {
-    public class StringValueMap : Dictionary<string, string>
+    public class StringValueMap : Dictionary<string, object>
     {
         public StringValueMap()
         { }
 
-        public StringValueMap(IDictionary map)
+        public StringValueMap(IDictionary<string, object> map)
             : base()
         {
             SetAsMap(map);
@@ -28,13 +28,13 @@ namespace PipServices.Commons.Data
             {
                 if (string.Compare(key, name, true) == 0)
                 {
-                    return this[key];
+                    return this[key].ToString();
                 }
             }
             return null;
         }
 
-        public void SetAsMap(IDictionary map)
+        public void SetAsMap(IDictionary<string, object> map)
         {
             foreach (var key in map.Keys)
             {
@@ -55,7 +55,7 @@ namespace PipServices.Commons.Data
         public void SetAsObject(object value)
         {
             Clear();
-            SetAsMap((IDictionary)MapConverter.ToGenericMap(value));
+            SetAsMap(MapConverter.ToMap(value));
         }
 
         public void SetAsObject(string key, object value)
@@ -335,7 +335,7 @@ namespace PipServices.Commons.Data
             return result;
         }
 
-        public static StringValueMap FromMaps(params IDictionary[] maps)
+        public static StringValueMap FromMaps(params IDictionary<string, object>[] maps)
         {
             var result = new StringValueMap();
             if (maps != null && maps.Length > 0)
@@ -350,9 +350,9 @@ namespace PipServices.Commons.Data
 
         private string TryGet(string key)
         {
-            string value = null;
+            object value;
             TryGetValue(key, out value);
-            return value;
+            return value?.ToString();
         }
     }
 }

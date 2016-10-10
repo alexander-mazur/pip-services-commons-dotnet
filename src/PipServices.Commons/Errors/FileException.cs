@@ -8,15 +8,19 @@ namespace PipServices.Commons.Errors
     public class FileException : ApplicationException
     {
         public FileException(Exception innerException) : 
-            base(ErrorCategory.NoFileAccess, null, null, null, innerException)
+            base(ErrorCategory.NoFileAccess, null, null, null)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
 
         public FileException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.NoFileAccess, correlationId, code, message, innerException)
+            base(ErrorCategory.NoFileAccess, correlationId, code, message)
         {
             Status = 500;
+
+            WithCause(innerException);
         }
     }
 }

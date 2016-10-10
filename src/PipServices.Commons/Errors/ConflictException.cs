@@ -8,15 +8,19 @@ namespace PipServices.Commons.Errors
     public class ConflictException : ApplicationException
     {
         public ConflictException(Exception innerException) :
-            base(ErrorCategory.Conflict, null, null, null, innerException)
+            base(ErrorCategory.Conflict, null, null, null)
         {
             Status = 409;
+
+            WithCause(innerException);
         }
 
         public ConflictException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.Conflict, correlationId, code, message, innerException)
+            base(ErrorCategory.Conflict, correlationId, code, message)
         {
             Status = 409;
+
+            WithCause(innerException);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using PipServices.Commons.Config;
 using PipServices.Commons.Data;
 
@@ -10,7 +10,7 @@ namespace PipServices.Commons.Net
         public ConnectionParams()
         { }
 
-        public ConnectionParams(IDictionary map) : base(map)
+        public ConnectionParams(IDictionary<string, object> map) : base(map)
         { }
 
         public bool UseDiscovery()
@@ -21,7 +21,7 @@ namespace PipServices.Commons.Net
         public string GetDiscoveryName()
         {
             var discover = GetAsNullableString("discover");
-            return discover != null ? discover : GetAsNullableString("discovery");
+            return discover ?? GetAsNullableString("discovery");
         }
 
         public void SetDiscoveryName(string value)
@@ -42,7 +42,7 @@ namespace PipServices.Commons.Net
         public string GetHost()
         {
             var host = GetAsNullableString("host");
-            host = host != null ? host : GetAsNullableString("ip");
+            host = host ?? GetAsNullableString("ip");
             return host;
         }
 
@@ -86,7 +86,7 @@ namespace PipServices.Commons.Net
             return GetProtocol() + "://" + GetHost() + ":" + GetPort();
         }
 
-        public static new ConnectionParams FromString(string line)
+        public new static ConnectionParams FromString(string line)
         {
             var map = StringValueMap.FromString(line);
             return new ConnectionParams(map);

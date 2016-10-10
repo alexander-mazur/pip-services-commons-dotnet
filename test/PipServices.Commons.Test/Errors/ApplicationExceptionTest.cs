@@ -16,19 +16,20 @@ namespace PipServices.Commons.Test.Errors
 
         public ApplicationExceptionTest()
         {
-            _ex = new Exception();
+            _ex = new Exception("Couse exception");
 
-            _appEx = new ApplicationException(Category, CorrelationId, Code, Message, _ex);
+            _appEx = new ApplicationException(Category, CorrelationId, Code, Message);
         }
 
         [Fact]
-        public void Constructor_InnerException_IsOk()
+        public void Constructor_WithCouse_IsOk()
         {
             var ex = new Exception();
 
-            var _appEx = new ApplicationException(ex);
+            var appEx = new ApplicationException();
+            appEx.WithCause(ex);
 
-            Assert.Equal(ex, _appEx.InnerException);
+            Assert.Equal(ex.Message, appEx.Cause);
         }
 
         [Fact]
@@ -38,7 +39,6 @@ namespace PipServices.Commons.Test.Errors
             Assert.Equal(CorrelationId, _appEx.CorrelationId);
             Assert.Equal(Code, _appEx.Code);
             Assert.Equal(Message, _appEx.Message);
-            Assert.Equal(_ex, _appEx.InnerException);
         }
 
         [Fact]
@@ -66,12 +66,12 @@ namespace PipServices.Commons.Test.Errors
         [Fact]
         public void WithCause_Check_IsOk()
         {
-            var newCause = "newCause";
+            var newCause = new Exception("newCause");
 
             var appEx = _appEx.WithCause(newCause);
 
             Assert.Equal(_appEx, appEx);
-            Assert.Equal(newCause, appEx.Cause);
+            Assert.Equal(newCause.Message, appEx.Cause);
         }
 
         [Fact]
