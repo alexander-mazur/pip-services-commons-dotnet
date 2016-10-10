@@ -3,6 +3,8 @@ using System.Globalization;
 
 namespace PipServices.Commons.Convert
 {
+    // Todo: Change DateTime to DataTimeOffset
+
     /// <summary>
     /// Converts objects to DateTime.
     /// </summary>

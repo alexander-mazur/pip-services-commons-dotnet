@@ -8,6 +8,7 @@ namespace PipServices.Commons.Convert
     /// </summary>
     public class ArrayConverter
     {
+        // Todo: Add map to array conversion
         public static IList<object> ToNullableArray(object value)
         {
             // Return null when nothing found

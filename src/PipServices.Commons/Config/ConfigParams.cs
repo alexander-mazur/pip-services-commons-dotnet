@@ -6,6 +6,8 @@ using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Config
 {
+    // Todo: FromObject shall be recursive (match java)
+
     /// <summary>
     /// Map with configuration parameters that use complex keys with dot notation and simple string values.
     /// </summary>

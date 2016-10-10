@@ -78,6 +78,8 @@ namespace PipServices.Commons.Commands
             }
             catch (Exception ex)
             {
+                // Todo: Wrap exception
+
                 throw new InvocationException(
                     correlationId, "EXEC_FAILED", "Execution " + Name + " failed: " + ex, ex)
                     .WithDetails("command", Name);

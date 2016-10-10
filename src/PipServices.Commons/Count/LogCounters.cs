@@ -7,6 +7,8 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
+    // Todo: Use composite logger
+
     public sealed class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
         public static Descriptor Descriptor { get; } = new Descriptor("pip-counters", "counters", "log", "1.0");

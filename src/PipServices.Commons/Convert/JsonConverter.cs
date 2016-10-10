@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 
 namespace PipServices.Commons.Convert
 {
+    // Todo: Make sure there are no Newtonsoft classes left after tge conversion
+
     /// <summary>
     /// Converts objects to/from Json format.
     /// </summary>

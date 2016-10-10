@@ -33,10 +33,11 @@ namespace PipServices.Commons.Convert
             var index = 0;
             foreach (var obj in enumerable)
             {
-                result[StringConverter.ToString(index++)] = obj;
+                result[(index++).ToString()] = obj;
             }
             return result;
         }
+
         public static IDictionary<string, object> ToNullableMap(object value)
         {
             if (value == null) return null;
@@ -66,17 +67,17 @@ namespace PipServices.Commons.Convert
             }
         }
 
-        public static IDictionary<string, object> ToGenericMap(object value)
+        public static IDictionary<string, object> ToMap(object value)
         {
             var result = ToNullableMap(value);
             return result ?? new Dictionary<string, object>();
         }
 
-        public static IDictionary ToMap(object value)
-        {
-            var result = MapToMap(ToNullableMap(value));
-            return result ?? new Dictionary<string, object>();
-        }
+        //public static IDictionary ToMap(object value)
+        //{
+        //    var result = MapToMap(ToNullableMap(value));
+        //    return result ?? new Dictionary<string, object>();
+        //}
 
         public static IDictionary<string, object> ToMapWithDefault(object value, Dictionary<string, object> defaultValue)
         {

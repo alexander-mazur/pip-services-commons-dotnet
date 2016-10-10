@@ -8,6 +8,8 @@ using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Convert
 {
+    // Todo: Restore and complete the implementation. Make sure it converts NewtonSoft and ExtensionObject 
+
     //public class RecursiveMapConverter
     //{
     //    private static DynamicMap ObjectToMap(object value)

@@ -36,9 +36,8 @@
                 };
             }
 
-            error
-                .WithCause(description.Cause)
-                .WithStackTrace(description.StackTrace);
+            error.Cause = description.Cause;
+            error.StackTrace = description.StackTrace;
             error.Details = description.Details;
 
             return error;

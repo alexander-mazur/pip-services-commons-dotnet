@@ -1,5 +1,7 @@
 ﻿namespace PipServices.Commons.Cache
 {
+    // Todo: Add correlation ids
+
     /// <summary>
     /// Transient cache used to bypass persistence to increase system performance.
     /// </summary>

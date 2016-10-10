@@ -4,6 +4,7 @@ using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Net
 {
+    // Todo: Move to pip-services-net
     public class ConnectionParams : ConfigParams
     {
         public ConnectionParams()

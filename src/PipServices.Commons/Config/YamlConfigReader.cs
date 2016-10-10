@@ -29,7 +29,7 @@ namespace PipServices.Commons.Config
 
                     )
                     .WithDetails("path", path)
-                    .WithCause(ex.Message);
+                    .WithCause(ex);
             }
         }
 

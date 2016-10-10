@@ -7,6 +7,9 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Cache
 {
+    // Todo: Add correlation ids
+    // Todo: Add ICleanable
+
     /// <summary>
     /// Local in-memory cache that can be used in non-scaled deployments or for testing.
     /// </summary>

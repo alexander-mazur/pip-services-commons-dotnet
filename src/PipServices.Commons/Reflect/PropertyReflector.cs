@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace PipServices.Commons.Reflect
 {
+    // Todo: Add HasProperty
+    // Todo: Process public fields
+
     public class PropertyReflector
     {
         public static object GetProperty(string obj, string name)

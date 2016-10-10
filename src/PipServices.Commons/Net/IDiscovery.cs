@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace PipServices.Commons.Net
 {
+    // Todo: Move to pip-services-net
     public interface IDiscovery
     {
         Task RegisterAsync(ConnectionParams endpoint);

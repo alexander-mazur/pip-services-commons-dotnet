@@ -1,7 +1,7 @@
 ﻿using System;
 using PipServices.Commons.Errors;
 
-namespace PipServices.Commons.Validation
+namespace PipServices.Commons.Validate
 {
     public class ValidationException : BadRequestException
     {

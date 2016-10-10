@@ -2,6 +2,7 @@
 
 namespace PipServices.Commons.Refer
 {
+    // Todo: Add location by type
     public class Reference : ILocateable
     {
         public object Locator { get; }

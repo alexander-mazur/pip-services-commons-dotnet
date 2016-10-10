@@ -8,6 +8,8 @@ namespace PipServices.Commons.Convert
     /// </summary>
     public static class TypeConverter
     {
+        // Todo: Add support for TypeCodes
+
         public static T? ToNullableType<T>(object value) where T : struct
         {
             if (value == null) return null;
