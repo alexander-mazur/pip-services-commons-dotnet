@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
-    public class ICleanable
+    public interface ICleanable
     {
-        // Todo: Complete implementation
+        Task ClearAsync(string correlationId, CancellationToken token);
     }
 }
