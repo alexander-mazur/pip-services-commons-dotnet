@@ -28,7 +28,7 @@ namespace PipServices.Commons.Cache
             var descriptor = locator as Descriptor;
 
             if (descriptor == null)
-                return false;
+                return null;
 
             if (descriptor.Match(NullCache.Descriptor))
                 return new NullCache();

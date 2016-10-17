@@ -36,7 +36,7 @@ namespace PipServices.Commons.Count
             var descriptor = locator as Descriptor;
 
             if (descriptor == null)
-                return false;
+                return null;
 
             if (descriptor.Match(NullCounters.Descriptor))
                 return new NullCounters();

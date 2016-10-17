@@ -5,8 +5,8 @@ namespace PipServices.Commons.Refer
 {
     public class ReferenceSet : IReferences
     {
-        private readonly List<Reference> _items = new List<Reference>();
-        private object _lock = new object();
+        protected readonly List<Reference> References = new List<Reference>();
+        private readonly object _lock = new object();
 
         public ReferenceSet()
         { }
@@ -21,7 +21,17 @@ namespace PipServices.Commons.Refer
 
         public List<object> GetAll()
         {
-            return new List<object>(_items);
+            return new List<object>(References);
+        }
+
+        /**
+         * Attempts to resolve missing reference
+         * @param locator a locator to find references
+         * @return resolved reference or <code>null<code>
+         */
+        protected virtual object ResolveMissing(object locator)
+        {
+            return null;
         }
 
         public object GetOneBefore(object reference, object locator)
@@ -35,21 +45,21 @@ namespace PipServices.Commons.Refer
                 throw new ArgumentNullException(nameof(locator));
             }
 
-            var index = _items.Count - 1;
+            var index = References.Count - 1;
 
             lock (_lock)
             {
                 // Locate prior reference
                 for (; index >= 0; index--)
                 {
-                    var item = _items[index];
+                    var item = References[index];
                     if (item.Refer.Equals(reference))
                         break;
                 }
 
                 for (; index >= 0; index--)
                 {
-                    var item = _items[index];
+                    var item = References[index];
                     if (item.Locate(locator))
                         return item.Refer;
                 }
@@ -60,22 +70,27 @@ namespace PipServices.Commons.Refer
 
         public object GetOneOptional(object locator)
         {
-            for (int index = _items.Count - 1; index >= 0; index--)
+            lock (_lock)
             {
-                var item = _items[index];
-                if (item.Locate(locator))
-                    return item.Refer;
+                for (var index = References.Count - 1; index >= 0; index--)
+                {
+                    var item = References[index];
+                    if (item.Locate(locator))
+                        return item.Refer;
+                }
+                return null;
             }
-            return null;
         }
 
         public object GetOneRequired(object locator)
         {
-            var reference = GetOneOptional(locator);
+            var reference = GetOneOptional(locator) ?? ResolveMissing(locator);
+
             if (reference == null)
             {
                 throw new ReferenceNotFoundException(null, locator);
             }
+
             return reference;
         }
 
@@ -90,9 +105,9 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                for (int index = _items.Count - 1; index >= 0; index--)
+                for (int index = References.Count - 1; index >= 0; index--)
                 {
-                    var item = _items[index];
+                    var item = References[index];
                     if (item.Locate(locator))
                         references.Add(item.Refer);
                 }
@@ -104,9 +119,22 @@ namespace PipServices.Commons.Refer
         public List<object> GetRequired(object locator)
         {
             var references = GetOptional(locator);
+
+            // Try to resolve missing dependency
             if (references.Count == 0)
             {
-                throw new ReferenceNotFoundException(null, locator);
+                var reference = ResolveMissing(locator);
+
+                lock (_lock)
+                {
+                    if (reference != null)
+                        references.Add(reference);
+                }
+            }
+
+            if (references.Count == 0)
+            {
+                throw new ReferenceException(null, locator);
             }
             return references;
         }
@@ -117,13 +145,13 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                for (int index = _items.Count - 1; index >= 0; index--)
+                for (int index = References.Count - 1; index >= 0; index--)
                 {
-                    var item = _items[index];
+                    var item = References[index];
                     if (item.Locate(locator))
                     {
                         // Remove from the set
-                        _items.RemoveAt(index);
+                        References.RemoveAt(index);
                         return item.Refer;
                     }
                 }
@@ -143,7 +171,7 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                _items.Add(r ?? new Reference(reference));
+                References.Add(r ?? new Reference(reference));
             }
         }
 
@@ -160,7 +188,7 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                _items.Add(new Reference(locator, reference));
+                References.Add(new Reference(locator, reference));
             }
         }
 

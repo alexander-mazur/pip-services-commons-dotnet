@@ -29,7 +29,7 @@ namespace PipServices.Commons.Log
         {
             var descriptor = locator as Descriptor;
             if (descriptor == null)
-                return false;
+                return null;
 
             if (descriptor.Match(NullLogger.Descriptor))
                 return new NullLogger();
