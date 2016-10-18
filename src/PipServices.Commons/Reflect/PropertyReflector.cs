@@ -1,50 +1,213 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 
 namespace PipServices.Commons.Reflect
 {
-    // Todo: Add HasProperty
-    // Todo: Process public fields
-
     public class PropertyReflector
     {
-        public static object GetProperty(string obj, string name)
+        private static bool MatchField(FieldInfo field, string name)
         {
-            if(obj == null)
+            return field.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                && field.IsPublic && !field.IsStatic;
+        }
+
+        private static bool MatchPropertyGetter(PropertyInfo property, string name)
+        {
+            MethodInfo method = property.GetGetMethod();
+
+            return property.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                && method.IsPublic && !method.IsStatic
+                && !method.IsAbstract;
+        }
+
+        private static bool MatchPropertySetter(PropertyInfo property, string name)
+        {
+            MethodInfo method = property.GetSetMethod();
+            return property.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                && method.IsPublic && !method.IsStatic
+                && !method.IsAbstract;
+        }
+
+        public static bool HasProperty(object obj, string name)
+        {
+            if (obj == null)
+                throw new NullReferenceException("Object cannot be null");
+            if (name == null)
+                throw new NullReferenceException("Property name cannot be null");
+
+            Type objType = obj.GetType();
+
+            // Search in fields
+            foreach (FieldInfo field in objType.GetRuntimeFields())
             {
-                throw new ArgumentNullException(nameof(obj));
+                if (MatchField(field, field.Name))
+                    return true;
             }
-            if(name == null)
+
+            // Search in properties
+            foreach (PropertyInfo property in objType.GetRuntimeProperties())
             {
-                throw new ArgumentNullException(nameof(name));
+                if (MatchPropertyGetter(property, property.Name))
+                    return true;
             }
-            var typeInfo = obj.GetType().GetTypeInfo();
-            return typeInfo.GetProperty(name).GetValue(obj);
+
+            return false;
+        }
+
+        public static object GetProperty(object obj, string name)
+        {
+            if (obj == null)
+                throw new NullReferenceException("Object cannot be null");
+            if (name == null)
+                throw new NullReferenceException("Property name cannot be null");
+
+            Type objType = obj.GetType();
+
+            // Search in fields
+            foreach (FieldInfo field in objType.GetRuntimeFields())
+            {
+                try
+                {
+                    if (MatchField(field, name))
+                        return field.GetValue(obj);
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
+            }
+
+            // Search in properties
+            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            {
+                try
+                {
+                    if (MatchPropertyGetter(property, name))
+                        return property.GetValue(obj);
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
+            }
+
+            return null;
+        }
+
+        public static List<string> GetPropertyNames(object obj)
+        {
+            if (obj == null)
+                throw new NullReferenceException("Object cannot be null");
+
+            List<string> properties = new List<string>();
+
+            Type objType = obj.GetType();
+
+            // Get all fields
+            foreach (FieldInfo field in objType.GetRuntimeFields())
+            {
+                if (MatchField(field, field.Name))
+                    properties.Add(field.Name);
+            }
+
+            // Get all properties
+            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            {
+                if (MatchPropertyGetter(property, property.Name))
+                    properties.Add(property.Name);
+            }
+
+            return properties;
+        }
+
+        public static Dictionary<string, object> GetProperties(object obj)
+        {
+            Dictionary<string, object> map = new Dictionary<string, object>();
+
+            Type objType = obj.GetType();
+
+            // Get all fields
+            foreach (FieldInfo field in objType.GetRuntimeFields())
+            {
+                try
+                {
+                    if (MatchField(field, field.Name))
+                        map.Add(field.Name, field.GetValue(obj));
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
+            }
+
+            // Get all properties
+            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            {
+                try
+                {
+                    if (MatchPropertyGetter(property, property.Name))
+                        map.Add(property.Name, property.GetValue(obj));
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
+            }
+
+            return map;
         }
 
         public static void SetProperty(object obj, string name, object value)
         {
             if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
+                throw new NullReferenceException("Object cannot be null");
             if (name == null)
+                throw new NullReferenceException("Property name cannot be null");
+
+            Type objType = obj.GetType();
+
+            // Search in fields
+            foreach (FieldInfo field in objType.GetRuntimeFields())
             {
-                throw new ArgumentNullException(nameof(name));
+                try
+                {
+                    if (MatchField(field, name))
+                    {
+                        field.SetValue(obj, value);
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
             }
-            var typeInfo = obj.GetType().GetTypeInfo();
-            typeInfo.GetProperty(name).SetValue(obj, value);
+
+            // Search in properties
+            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            {
+                try
+                {
+                    if (MatchPropertyGetter(property, name))
+                    {
+                        property.SetValue(obj, value);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Ignore exception
+                }
+            }
         }
 
         public static void SetProperties(object obj, Dictionary<string, object> values)
         {
             if (values == null || values.Count == 0) return;
-            foreach (var key in values.Keys)
+
+            foreach (var entry in values)
             {
-                SetProperty(obj, key, values[key]);
+                SetProperty(obj, entry.Key, entry.Value);
             }
         }
     }
