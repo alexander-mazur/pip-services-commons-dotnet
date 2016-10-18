@@ -175,7 +175,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public void Put(object locator, object reference)
+        public void Put(object reference, object locator)
         {
             if (locator == null)
             {
