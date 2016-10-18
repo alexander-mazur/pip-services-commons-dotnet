@@ -4,7 +4,7 @@ namespace PipServices.Commons.Validate
 {
     public class ExcludedRule : IValidationRule
     {
-        public object[] _values;
+        private readonly object[] _values;
 
         public ExcludedRule(params object[] values)
         {
@@ -13,7 +13,7 @@ namespace PipServices.Commons.Validate
 
         public void Validate(string path, Schema schema, object value, List<ValidationResult> results)
         {
-            bool found = false;
+            var found = false;
             foreach (var thisValue in _values)
             {
                 if (thisValue != null && thisValue.Equals(value))

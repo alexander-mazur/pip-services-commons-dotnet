@@ -1,50 +1,38 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 namespace PipServices.Commons.Validate
 {
     public class Schema
     {
-        private bool _required = false;
-        private List<IValidationRule> _rules;
-
         public Schema() { }
 
         public Schema(bool required, List<IValidationRule> rules)
         {
-            _required = required;
-            _rules = rules;
+            IsRequired = required;
+            Rules = rules;
         }
 
-        public bool IsRequired
-        {
-            get { return _required; }
-            set { _required = value; }
-        }
+        public bool IsRequired { get; set; }
 
-        public List<IValidationRule> Rules
-        {
-            get { return _rules; }
-            set { _rules = value; }
-        }
+        public List<IValidationRule> Rules { get; set; }
 
         public Schema MakeRequired()
         {
-            _required = true;
+            IsRequired = true;
             return this;
         }
 
         public Schema MakeOptional()
         {
-            _required = false;
+            IsRequired = false;
             return this;
         }
 
         public Schema WithRule(IValidationRule rule)
         {
-            _rules = _rules ?? new List<IValidationRule>();
-            _rules.Add(rule);
+            Rules = Rules ?? new List<IValidationRule>();
+            Rules.Add(rule);
             return this;
         }
 
@@ -53,7 +41,7 @@ namespace PipServices.Commons.Validate
             if (value == null)
             {
                 // Check for required values
-                if (_required)
+                if (IsRequired)
                     results.Add(
                         new ValidationResult(
                             path,
@@ -68,9 +56,9 @@ namespace PipServices.Commons.Validate
             else
             {
                 // Check validation rules
-                if (_rules != null)
+                if (Rules != null)
                 {
-                    foreach (var rule in _rules)
+                    foreach (var rule in Rules)
                         rule.Validate(path, this, value, results);
                 }
             }
@@ -82,9 +70,9 @@ namespace PipServices.Commons.Validate
             if (type == null) return;
 
             // Perform validation against schema
-            if (type is Schema)
+            var schema = type as Schema;
+            if (schema != null)
             {
-                Schema schema = (Schema)type;
                 schema.PerformValidation(path, value, results);
                 return;
             }
@@ -92,7 +80,7 @@ namespace PipServices.Commons.Validate
             // If value is null then skip
             if (value == null) return;
 
-            Type valueType = value.GetType();
+            var valueType = value.GetType();
 
             // Match types
             if (valueType.Equals(type)) return;
@@ -113,7 +101,7 @@ namespace PipServices.Commons.Validate
 
         public List<ValidationResult> Validate(object value)
         {
-            List<ValidationResult> results = new List<ValidationResult>();
+            var results = new List<ValidationResult>();
             PerformValidation("", value, results);
             return results;
         }

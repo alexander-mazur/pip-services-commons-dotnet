@@ -1,33 +1,30 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using Xunit;
+using PipServices.Commons.Validate;
 
-//namespace PipServices.Commons.Test.Validate
-//{
-//    [TestClass]
-//    public class InclusionRulesTest
-//    {
-//        [TestMethod]
-//        public void TestIncludedRule()
-//        {
-//            Schema schema = new Schema().WithRule(new IncludedRule("AAA", "BBB", "CCC", null));
-//            List<ValidationResult> results = schema.Validate("AAA");
-//            Assert.AreEqual(0, results.Count);
+namespace PipServices.Commons.Test.Validate
+{
+    public class InclusionRulesTest
+    {
+        [Fact]
+        public void TestIncludedRule()
+        {
+            var schema = new Schema().WithRule(new IncludedRule("AAA", "BBB", "CCC", null));
+            var results = schema.Validate("AAA");
+            Assert.Equal(0, results.Count);
 
-//            results = schema.Validate("ABC");
-//            Assert.AreEqual(1, results.Count);
-//        }
+            results = schema.Validate("ABC");
+            Assert.Equal(1, results.Count);
+        }
 
-//        [TestMethod]
-//        public void TestExcludedRule()
-//        {
-//            Schema schema = new Schema().WithRule(new ExcludedRule("AAA", "BBB", "CCC", null));
-//            List<ValidationResult> results = schema.Validate("AAA");
-//            Assert.AreEqual(1, results.Count);
+        [Fact]
+        public void TestExcludedRule()
+        {
+            var schema = new Schema().WithRule(new ExcludedRule("AAA", "BBB", "CCC", null));
+            var results = schema.Validate("AAA");
+            Assert.Equal(1, results.Count);
 
-//            results = schema.Validate("ABC");
-//            Assert.AreEqual(0, results.Count);
-//        }
-//    }
-//}
+            results = schema.Validate("ABC");
+            Assert.Equal(0, results.Count);
+        }
+    }
+}

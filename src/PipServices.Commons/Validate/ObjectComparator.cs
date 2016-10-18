@@ -43,8 +43,8 @@ namespace PipServices.Commons.Validate
 
         public static bool Less(object value1, object value2)
         {
-            double? number1 = DoubleConverter.ToNullableDouble(value1);
-            double? number2 = DoubleConverter.ToNullableDouble(value2);
+            var number1 = DoubleConverter.ToNullableDouble(value1);
+            var number2 = DoubleConverter.ToNullableDouble(value2);
 
             if (number1 == null || number2 == null)
                 return false;
@@ -54,8 +54,8 @@ namespace PipServices.Commons.Validate
 
         public static bool More(object value1, object value2)
         {
-            double? number1 = DoubleConverter.ToNullableDouble(value1);
-            double? number2 = DoubleConverter.ToNullableDouble(value2);
+            var number1 = DoubleConverter.ToNullableDouble(value1);
+            var number2 = DoubleConverter.ToNullableDouble(value2);
 
             if (number1 == null || number2 == null)
                 return false;
@@ -70,8 +70,8 @@ namespace PipServices.Commons.Validate
             if (value1 == null || value2 == null)
                 return false;
 
-            string string1 = value1.ToString();
-            string string2 = value2.ToString();
+            var string1 = value1.ToString();
+            var string2 = value2.ToString();
             return Regex.IsMatch(string1, string2);
         }
     }

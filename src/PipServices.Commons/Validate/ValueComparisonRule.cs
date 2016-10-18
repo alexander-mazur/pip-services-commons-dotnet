@@ -4,8 +4,8 @@ namespace PipServices.Commons.Validate
 {
     public class ValueComparisonRule : IValidationRule
     {
-        private string _operation;
-        private object _value;
+        private readonly string _operation;
+        private readonly object _value;
 
         public ValueComparisonRule(string operation, object value)
         {

@@ -4,7 +4,7 @@ namespace PipServices.Commons.Validate
 {
     public class IncludedRule : IValidationRule
     {
-        public object[] _values;
+        private readonly object[] _values;
 
         public IncludedRule(params object[] values)
         {

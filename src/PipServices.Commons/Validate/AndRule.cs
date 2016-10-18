@@ -4,7 +4,7 @@ namespace PipServices.Commons.Validate
 {
     public class AndRule : IValidationRule
     {
-        private IValidationRule[] _rules;
+        private readonly IValidationRule[] _rules;
 
         public AndRule(params IValidationRule[] rules)
         {
@@ -15,7 +15,7 @@ namespace PipServices.Commons.Validate
         {
             if (_rules == null) return;
 
-            foreach (IValidationRule rule in _rules)
+            foreach (var rule in _rules)
                 rule.Validate(path, schema, value, results);
         }
 

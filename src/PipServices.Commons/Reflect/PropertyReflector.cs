@@ -14,7 +14,7 @@ namespace PipServices.Commons.Reflect
 
         private static bool MatchPropertyGetter(PropertyInfo property, string name)
         {
-            MethodInfo method = property.GetGetMethod();
+            var method = property.GetGetMethod();
 
             return property.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
                 && method.IsPublic && !method.IsStatic
@@ -23,7 +23,7 @@ namespace PipServices.Commons.Reflect
 
         private static bool MatchPropertySetter(PropertyInfo property, string name)
         {
-            MethodInfo method = property.GetSetMethod();
+            var method = property.GetSetMethod();
             return property.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
                 && method.IsPublic && !method.IsStatic
                 && !method.IsAbstract;
@@ -36,17 +36,17 @@ namespace PipServices.Commons.Reflect
             if (name == null)
                 throw new NullReferenceException("Property name cannot be null");
 
-            Type objType = obj.GetType();
+            var objType = obj.GetType();
 
             // Search in fields
-            foreach (FieldInfo field in objType.GetRuntimeFields())
+            foreach (var field in objType.GetRuntimeFields())
             {
                 if (MatchField(field, field.Name))
                     return true;
             }
 
             // Search in properties
-            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            foreach (var property in objType.GetRuntimeProperties())
             {
                 if (MatchPropertyGetter(property, property.Name))
                     return true;
@@ -62,10 +62,10 @@ namespace PipServices.Commons.Reflect
             if (name == null)
                 throw new NullReferenceException("Property name cannot be null");
 
-            Type objType = obj.GetType();
+            var objType = obj.GetType();
 
             // Search in fields
-            foreach (FieldInfo field in objType.GetRuntimeFields())
+            foreach (var field in objType.GetRuntimeFields())
             {
                 try
                 {
@@ -79,7 +79,7 @@ namespace PipServices.Commons.Reflect
             }
 
             // Search in properties
-            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            foreach (var property in objType.GetRuntimeProperties())
             {
                 try
                 {
@@ -100,19 +100,19 @@ namespace PipServices.Commons.Reflect
             if (obj == null)
                 throw new NullReferenceException("Object cannot be null");
 
-            List<string> properties = new List<string>();
+            var properties = new List<string>();
 
-            Type objType = obj.GetType();
+            var objType = obj.GetType();
 
             // Get all fields
-            foreach (FieldInfo field in objType.GetRuntimeFields())
+            foreach (var field in objType.GetRuntimeFields())
             {
                 if (MatchField(field, field.Name))
                     properties.Add(field.Name);
             }
 
             // Get all properties
-            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            foreach (var property in objType.GetRuntimeProperties())
             {
                 if (MatchPropertyGetter(property, property.Name))
                     properties.Add(property.Name);
@@ -123,12 +123,12 @@ namespace PipServices.Commons.Reflect
 
         public static Dictionary<string, object> GetProperties(object obj)
         {
-            Dictionary<string, object> map = new Dictionary<string, object>();
+            var map = new Dictionary<string, object>();
 
-            Type objType = obj.GetType();
+            var objType = obj.GetType();
 
             // Get all fields
-            foreach (FieldInfo field in objType.GetRuntimeFields())
+            foreach (var field in objType.GetRuntimeFields())
             {
                 try
                 {
@@ -142,7 +142,7 @@ namespace PipServices.Commons.Reflect
             }
 
             // Get all properties
-            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            foreach (var property in objType.GetRuntimeProperties())
             {
                 try
                 {
@@ -165,10 +165,10 @@ namespace PipServices.Commons.Reflect
             if (name == null)
                 throw new NullReferenceException("Property name cannot be null");
 
-            Type objType = obj.GetType();
+            var objType = obj.GetType();
 
             // Search in fields
-            foreach (FieldInfo field in objType.GetRuntimeFields())
+            foreach (var field in objType.GetRuntimeFields())
             {
                 try
                 {
@@ -185,7 +185,7 @@ namespace PipServices.Commons.Reflect
             }
 
             // Search in properties
-            foreach (PropertyInfo property in objType.GetRuntimeProperties())
+            foreach (var property in objType.GetRuntimeProperties())
             {
                 try
                 {

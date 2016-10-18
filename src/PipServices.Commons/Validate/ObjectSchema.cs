@@ -6,50 +6,41 @@ namespace PipServices.Commons.Validate
 {
     public class ObjectSchema : Schema
     {
-        private List<PropertySchema> _properties;
-        private bool _allowUndefined = false;
+        public List<PropertySchema> Properties { get; set; }
 
-        public ObjectSchema() { }
-
-        public List<PropertySchema> Properties
-        {
-            get { return _properties; }
-            set { _properties = value; }
-        }
-
-        public bool IsUndefinedAllowed
-        {
-            get { return _allowUndefined; }
-            set { _allowUndefined = value; }
-        }
+        public bool IsUndefinedAllowed { get; set; }
 
         public ObjectSchema AllowUndefined(bool value)
         {
-            _allowUndefined = value;
+            IsUndefinedAllowed = value;
             return this;
         }
 
         public ObjectSchema WithProperty(PropertySchema schema)
         {
-            _properties = _properties ?? new List<PropertySchema>();
-            _properties.Add(schema);
+            Properties = Properties ?? new List<PropertySchema>();
+            Properties.Add(schema);
             return this;
         }
 
         public ObjectSchema WithRequiredProperty(string name, object type, params IValidationRule[] rules)
         {
-            _properties = _properties ?? new List<PropertySchema>();
-            PropertySchema schema = new PropertySchema(name, type);
-            schema.Rules = new List<IValidationRule>(rules);
+            Properties = Properties ?? new List<PropertySchema>();
+            var schema = new PropertySchema(name, type)
+            {
+                Rules = new List<IValidationRule>(rules)
+            };
             schema.MakeRequired();
             return WithProperty(schema);
         }
 
         public ObjectSchema WithOptionalProperty(string name, object type, params IValidationRule[] rules)
         {
-            _properties = _properties ?? new List<PropertySchema>();
-            PropertySchema schema = new PropertySchema(name, type);
-            schema.Rules = new List<IValidationRule>(rules);
+            Properties = Properties ?? new List<PropertySchema>();
+            var schema = new PropertySchema(name, type)
+            {
+                Rules = new List<IValidationRule>(rules)
+            };
             schema.MakeOptional();
             return WithProperty(schema);
         }
@@ -60,7 +51,7 @@ namespace PipServices.Commons.Validate
 
             if (value == null) return;
 
-            Dictionary<string, object> properties = PropertyReflector.GetProperties(value);
+            var properties = PropertyReflector.GetProperties(value);
 
             // Process defined properties
             if (Properties != null)

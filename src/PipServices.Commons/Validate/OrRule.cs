@@ -4,7 +4,7 @@ namespace PipServices.Commons.Validate
 {
     public class OrRule : IValidationRule
     {
-        private IValidationRule[] _rules;
+        private readonly IValidationRule[] _rules;
 
         public OrRule(params IValidationRule[] rules)
         {
@@ -15,9 +15,9 @@ namespace PipServices.Commons.Validate
         {
             if (_rules == null) return;
 
-            List<ValidationResult> localResults = new List<ValidationResult>();
+            var localResults = new List<ValidationResult>();
 
-            foreach (IValidationRule rule in _rules)
+            foreach (var rule in _rules)
                 rule.Validate(path, schema, value, localResults);
 
             if (localResults.Count == _rules.Length)

@@ -5,7 +5,7 @@ namespace PipServices.Commons.Validate
 {
     public class OnlyOneExistRule : IValidationRule
     {
-        private string[] _properties;
+        private readonly string[] _properties;
 
         public OnlyOneExistRule(params string[] properties)
         {
@@ -14,10 +14,10 @@ namespace PipServices.Commons.Validate
 
         public void Validate(string path, Schema schema, object value, List<ValidationResult> results)
         {
-            List<string> found = new List<string>();
-            foreach (string property in _properties)
+            var found = new List<string>();
+            foreach (var property in _properties)
             {
-                object propertyValue = PropertyReflector.GetProperty(value, property);
+                var propertyValue = PropertyReflector.GetProperty(value, property);
                 if (propertyValue != null)
                     found.Add(property);
             }

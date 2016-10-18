@@ -5,9 +5,9 @@ namespace PipServices.Commons.Validate
 {
     public class PropertiesComparisonRule : IValidationRule
     {
-        private string _property1;
-        private string _property2;
-        private string _operation;
+        private readonly string _property1;
+        private readonly string _property2;
+        private readonly string _operation;
 
         public PropertiesComparisonRule(string property1, string operation, string property2)
         {
@@ -18,8 +18,8 @@ namespace PipServices.Commons.Validate
 
         public void Validate(string path, Schema schema, object value, List<ValidationResult> results)
         {
-            object value1 = PropertyReflector.GetProperty(value, _property1);
-            object value2 = PropertyReflector.GetProperty(value, _property2);
+            var value1 = PropertyReflector.GetProperty(value, _property1);
+            var value2 = PropertyReflector.GetProperty(value, _property2);
 
             if (!ObjectComparator.Compare(value1, _operation, value2))
             {

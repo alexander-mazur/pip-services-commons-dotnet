@@ -19,13 +19,13 @@ namespace PipServices.Commons.Validate
 
         public static string ComposeMessage(List<ValidationResult> results)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.Append("Validation failed");
 
             if (results != null && results.Count > 0)
             {
-                bool first = true;
-                foreach (ValidationResult result in results)
+                var first = true;
+                foreach (var result in results)
                 {
                     if (result.Type != ValidationResultType.Information)
                     {

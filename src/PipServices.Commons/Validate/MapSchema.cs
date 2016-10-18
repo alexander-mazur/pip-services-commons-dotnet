@@ -22,12 +22,12 @@ namespace PipServices.Commons.Validate
 
             if (value == null) return;
 
-            if (value is IDictionary)
+            var map = value as IDictionary;
+            if (map != null)
             {
-                IDictionary map = (IDictionary)value;
                 foreach (var key in map.Keys)
                 {
-                    string elementPath = string.IsNullOrWhiteSpace(path)
+                    var elementPath = string.IsNullOrWhiteSpace(path)
                         ? key.ToString() : path + "." + key;
 
                     PerformTypeValidation(elementPath, KeyType, key, results);

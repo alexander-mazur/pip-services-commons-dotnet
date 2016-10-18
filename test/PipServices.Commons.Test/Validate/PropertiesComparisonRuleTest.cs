@@ -1,27 +1,24 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using Xunit;
+using PipServices.Commons.Validate;
 
-//namespace PipServices.Commons.Test.Validate
-//{
-//[TestClass]
-//public class PropertiesComparisonRuleTest
-//{
-//    [TestMethod]
-//    public void TestPropertiesComparison()
-//    {
-//        TestObject obj = new TestObject();
-//        Schema schema = new Schema().WithRule(new PropertiesComparisonRule("StringProperty", "EQ", "NullProperty"));
+namespace PipServices.Commons.Test.Validate
+{
+    public class PropertiesComparisonRuleTest
+    {
+        [Fact]
+        public void TestPropertiesComparison()
+        {
+            var obj = new TestObject();
+            var schema = new Schema().WithRule(new PropertiesComparisonRule("StringProperty", "EQ", "NullProperty"));
 
-//        obj.StringProperty = "ABC";
-//        obj.NullProperty = "ABC";
-//        List<ValidationResult> results = schema.Validate(obj);
-//        Assert.AreEqual(0, results.Count);
+            obj.StringProperty = "ABC";
+            obj.NullProperty = "ABC";
+            var results = schema.Validate(obj);
+            Assert.Equal(0, results.Count);
 
-//        obj.NullProperty = "XYZ";
-//        results = schema.Validate(obj);
-//        Assert.AreEqual(1, results.Count);
-//    }
-//}
-//}
+            obj.NullProperty = "XYZ";
+            results = schema.Validate(obj);
+            Assert.Equal(1, results.Count);
+        }
+    }
+}

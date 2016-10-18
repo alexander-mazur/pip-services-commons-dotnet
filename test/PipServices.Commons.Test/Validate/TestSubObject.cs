@@ -8,7 +8,7 @@
         }
 
         public string Id { get; set; }
-        public float floatField = 432;
+        public float FloatField = 432;
         public object NullProperty { get; set; } = null;
     }
 }

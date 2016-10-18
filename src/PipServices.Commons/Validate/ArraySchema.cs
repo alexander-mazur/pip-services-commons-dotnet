@@ -20,13 +20,13 @@ namespace PipServices.Commons.Validate
 
             if (value == null) return;
 
-            if (value is IEnumerable)
+            var list = value as IEnumerable;
+            if (list != null)
             {
-                IEnumerable list = (IEnumerable)value;
-                int index = 0;
+                var index = 0;
                 foreach (var element in list)
                 {
-                    string elementPath = string.IsNullOrWhiteSpace(path)
+                    var elementPath = string.IsNullOrWhiteSpace(path)
                         ? index.ToString() : path + "." + index;
                     PerformTypeValidation(elementPath, ValueType, element, results);
                     index++;
