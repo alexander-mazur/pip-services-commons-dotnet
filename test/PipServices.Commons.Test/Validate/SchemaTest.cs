@@ -40,7 +40,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", null)
                 .WithOptionalProperty("IntArrayProperty", null)
                 .WithOptionalProperty("StringListProperty", null)
-                .WithOptionalProperty("DictProperty", null)
+                .WithOptionalProperty("MapProperty", null)
                 .WithOptionalProperty("SubObjectProperty", null)
                 .WithOptionalProperty("SubArrayProperty", null);
 
@@ -58,7 +58,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithRequiredProperty("NullProperty", null)
                 .WithRequiredProperty("IntArrayProperty", null)
                 .WithRequiredProperty("StringListProperty", null)
-                .WithRequiredProperty("DictProperty", null)
+                .WithRequiredProperty("MapProperty", null)
                 .WithRequiredProperty("SubObjectProperty", null)
                 .WithRequiredProperty("SubArrayProperty", null);
 
@@ -77,7 +77,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", typeof(object))
                 .WithRequiredProperty("IntArrayProperty", typeof(int[]))
                 .WithRequiredProperty("StringListProperty", typeof(List<string>))
-                .WithRequiredProperty("DictProperty", typeof(Dictionary<string, int>))
+                .WithRequiredProperty("MapProperty", typeof(Dictionary<string, int>))
                 .WithRequiredProperty("SubObjectProperty", typeof(TestSubObject))
                 .WithRequiredProperty("SubArrayProperty", typeof(TestSubObject[]));
 
@@ -95,7 +95,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", "Object")
                 .WithRequiredProperty("IntArrayProperty", "Int32[]")
                 .WithRequiredProperty("StringListProperty", "List`1")
-                .WithRequiredProperty("DictProperty", "Dictionary`2")
+                .WithRequiredProperty("MapProperty", "Dictionary`2")
                 .WithRequiredProperty("SubObjectProperty", "TestSubObject")
                 .WithRequiredProperty("SubArrayProperty", "TestSubObject[]");
 
@@ -118,7 +118,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", "Object")
                 .WithRequiredProperty("IntArrayProperty", "Int32[]")
                 .WithRequiredProperty("StringListProperty", "List`1")
-                .WithRequiredProperty("DictProperty", "Dictionary`2")
+                .WithRequiredProperty("MapProperty", "Dictionary`2")
                 .WithRequiredProperty("SubObjectProperty", subSchema)
                 .WithRequiredProperty("SubArrayProperty", "TestSubObject[]");
 
@@ -141,7 +141,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", "Object")
                 .WithRequiredProperty("IntArrayProperty", new ArraySchema("Int32"))
                 .WithRequiredProperty("StringListProperty", new ArraySchema("String"))
-                .WithRequiredProperty("DictProperty", new MapSchema("String", "Int32"))
+                .WithRequiredProperty("MapProperty", new MapSchema("String", "Int32"))
                 .WithRequiredProperty("SubObjectProperty", subSchema)
                 .WithRequiredProperty("SubArrayProperty", new ArraySchema(subSchema));
 

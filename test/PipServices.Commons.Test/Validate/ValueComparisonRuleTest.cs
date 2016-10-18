@@ -28,7 +28,7 @@ namespace PipServices.Commons.Test.Validate
             Assert.Equal(1, results.Count);
 
             results = schema.Validate(432);
-            Assert.AreEqual(0, results.Count);
+            Assert.Equal(0, results.Count);
 
             schema = new Schema().WithRule(new ValueComparisonRule("NE", "ABC"));
             results = schema.Validate("XYZ");
