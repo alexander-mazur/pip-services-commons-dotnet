@@ -15,7 +15,7 @@ namespace PipServices.Commons.Test.Validate
         public object NullProperty { get; set; } = null;
         public int[] IntArrayProperty { get; set; } = new int[] { 1, 2, 3 };
         public List<String> StringListProperty { get; set; } = new List<string>(new string[] { "AAA", "BBB" });
-        public Dictionary<string, int> DictProperty = new Dictionary<string, int>() { { "Key1", 111 }, { "Key2", 222 } };
+        public Dictionary<string, int> MapProperty = new Dictionary<string, int>() { { "Key1", 111 }, { "Key2", 222 } };
         public TestSubObject SubObjectProperty { get; set; } = new TestSubObject("1");
         public TestSubObject[] SubArrayProperty { get; set; } = new TestSubObject[] { new TestSubObject("2"), new TestSubObject("3") };
     }

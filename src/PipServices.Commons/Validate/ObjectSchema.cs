@@ -40,6 +40,7 @@ namespace PipServices.Commons.Validate
         {
             _properties = _properties ?? new List<PropertySchema>();
             PropertySchema schema = new PropertySchema(name, type);
+            schema.Rules = new List<IValidationRule>(rules);
             schema.MakeRequired();
             return WithProperty(schema);
         }
@@ -48,6 +49,7 @@ namespace PipServices.Commons.Validate
         {
             _properties = _properties ?? new List<PropertySchema>();
             PropertySchema schema = new PropertySchema(name, type);
+            schema.Rules = new List<IValidationRule>(rules);
             schema.MakeOptional();
             return WithProperty(schema);
         }

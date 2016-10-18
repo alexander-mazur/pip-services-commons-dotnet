@@ -9,14 +9,13 @@ namespace PipServices.Commons.Validate
         public ValidationException(string correlationId, List<ValidationResult> results):
             this(correlationId, ComposeMessage(results))
         {
+            WithDetails("results", results);
         }
 
         public ValidationException(string correlationId, string message) :
-            base(correlationId, "VALIDATION_ERROR", message)
+            base(correlationId, "INVALID_DATA", message)
         {
         }
-
-        public List<ValidationResult> Results { get; set; }
 
         public static string ComposeMessage(List<ValidationResult> results)
         {

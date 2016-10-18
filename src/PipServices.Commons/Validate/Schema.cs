@@ -14,7 +14,7 @@ namespace PipServices.Commons.Validate
         public Schema(bool required, List<IValidationRule> rules)
         {
             _required = required;
-            _rules = rules ?? _rules;
+            _rules = rules;
         }
 
         public bool IsRequired
