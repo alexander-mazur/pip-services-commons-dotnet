@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Validate
 {
@@ -55,6 +56,8 @@ namespace PipServices.Commons.Validate
             }
             else
             {
+                value = ObjectReader.GetValue(value);
+
                 // Check validation rules
                 if (Rules != null)
                 {
@@ -78,13 +81,14 @@ namespace PipServices.Commons.Validate
             }
 
             // If value is null then skip
+            value = ObjectReader.GetValue(value);
             if (value == null) return;
 
-            var valueType = value.GetType();
-
             // Match types
-            if (valueType.Equals(type)) return;
-            if (valueType.Name.Equals(type)) return;
+            if (TypeMatcher.Match(type, value))
+                return;
+
+            var valueType = value.GetType();
 
             // Generate type mismatch error
             results.Add(

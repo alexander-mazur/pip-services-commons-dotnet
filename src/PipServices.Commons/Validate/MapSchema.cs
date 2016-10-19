@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PipServices.Commons.Reflect;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PipServices.Commons.Validate
@@ -18,6 +19,8 @@ namespace PipServices.Commons.Validate
 
         protected internal override void PerformValidation(string path, object value, List<ValidationResult> results)
         {
+            value = ObjectReader.GetValue(value);
+
             base.PerformValidation(path, value, results);
 
             if (value == null) return;

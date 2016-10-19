@@ -17,7 +17,7 @@ namespace PipServices.Commons.Validate
             var found = new List<string>();
             foreach (var property in _properties)
             {
-                var propertyValue = PropertyReflector.GetProperty(value, property);
+                var propertyValue = ObjectReader.GetProperty(value, property);
                 if (propertyValue != null)
                     found.Add(property);
             }

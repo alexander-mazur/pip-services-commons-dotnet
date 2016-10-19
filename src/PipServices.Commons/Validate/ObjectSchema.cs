@@ -51,7 +51,7 @@ namespace PipServices.Commons.Validate
 
             if (value == null) return;
 
-            var properties = PropertyReflector.GetProperties(value);
+            var properties = ObjectReader.GetProperties(value);
 
             // Process defined properties
             if (Properties != null)

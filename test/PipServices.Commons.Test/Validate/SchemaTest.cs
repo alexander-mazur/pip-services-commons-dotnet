@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Xunit;
 using PipServices.Commons.Validate;
+using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Test.Validate
 {
@@ -147,6 +148,32 @@ namespace PipServices.Commons.Test.Validate
 
             var obj = new TestObject();
             var results = schema.Validate(obj);
+            Assert.Equal(0, results.Count);
+        }
+
+        [Fact]
+        public void TestJsonSchema()
+        {
+            var subSchema = new ObjectSchema()
+                .WithRequiredProperty("Id", "string")
+                .WithRequiredProperty("FLOATFIELD", "float")
+                .WithOptionalProperty("nullproperty", "object");
+
+            var schema = new ObjectSchema()
+                .WithRequiredProperty("intField", "int")
+                .WithRequiredProperty("StringProperty", "string")
+                .WithOptionalProperty("NullProperty", "object")
+                .WithRequiredProperty("IntArrayProperty", new ArraySchema("int"))
+                .WithRequiredProperty("StringListProperty", new ArraySchema("string"))
+                .WithRequiredProperty("DictProperty", new MapSchema("string", "int"))
+                .WithRequiredProperty("SubObjectProperty", subSchema)
+                .WithRequiredProperty("SubArrayProperty", new ArraySchema(subSchema));
+
+            var obj = new TestObject();
+            var json = JsonConverter.ToJson(obj);
+            var jsonObj = JsonConverter.FromJson(json);
+
+            var results = schema.Validate(jsonObj);
             Assert.Equal(0, results.Count);
         }
     }
