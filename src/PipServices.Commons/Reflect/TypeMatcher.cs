@@ -10,17 +10,19 @@ namespace PipServices.Commons.Reflect
             if (expectedType == null)
                 return true;
 
-            Type actualType = actualValue.GetType();
+            var actualType = actualValue.GetType();
 
-            if (expectedType is Type)
+            var type = expectedType as Type;
+            if (type != null)
                 // Todo: IsAssignable is not supported
-                return ((Type)expectedType).Equals(actualType);
+                return type == actualType;
 
             if (expectedType.Equals(actualType))
                 return true;
 
-            if (expectedType is string)
-                return MatchByName((string)expectedType, actualType);
+            var str = expectedType as string;
+            if (str != null)
+                return MatchByName(str, actualType);
 
             return false;
         }

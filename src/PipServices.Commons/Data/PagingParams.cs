@@ -7,6 +7,8 @@ namespace PipServices.Commons.Data
     [DataContract]
     public class PagingParams
     {
+        public PagingParams() {}
+
         public PagingParams(object skip, object take, object total)
         {
             Skip = IntegerConverter.ToNullableInteger(skip);

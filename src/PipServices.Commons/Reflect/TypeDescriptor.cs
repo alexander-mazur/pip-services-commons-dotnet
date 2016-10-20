@@ -1,12 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text;
+using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Reflect
 {
     public class TypeDescriptor
     {
-        // Todo: Complete implementation
+        public TypeDescriptor() { }
+
+        public TypeDescriptor(string name, string library)
+        {
+            Name = name;
+            Library = library;
+        }
+
+        public string Name { get; set; }
+
+        public string Library { get; set; }
+        
+        public override bool Equals(object obj)
+        {
+            var type = obj as TypeDescriptor;
+            if (type != null) {
+                var otherType = type;
+                if (this.Name == null || otherType.Name == null)
+                    return false;
+
+                if (!this.Name.Equals(otherType.Name))
+                    return false;
+
+                if (this.Library == null || otherType.Library == null
+                    || this.Library.Equals(otherType.Library))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            builder.Append(Name);
+
+            if (Library != null)
+                builder.Append(',').Append(Library);
+
+            return builder.ToString();
+        }
+
+        public static TypeDescriptor FromString(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            var tokens = value.Split(',');
+
+            if (tokens.Length == 1)
+            {
+                return new TypeDescriptor(tokens[0].Trim(), null);
+            }
+
+            if (tokens.Length == 2)
+            {
+                return new TypeDescriptor(tokens[0].Trim(), tokens[1].Trim());
+            }
+
+            throw (ConfigException)new ConfigException(
+                null, "BAD_DESCRIPTOR", "Type descriptor " + value + " is in wrong format"
+                ).WithDetails("descriptor", value);
+        }
     }
 }
