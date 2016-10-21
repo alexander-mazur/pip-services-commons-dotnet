@@ -85,7 +85,7 @@ namespace PipServices.Commons.Validate
             if (value == null) return;
 
             // Match types
-            if (TypeMatcher.Match(type, value))
+            if (TypeMatcher.MatchType(type, value.GetType()))
                 return;
 
             var valueType = value.GetType();

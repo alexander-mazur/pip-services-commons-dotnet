@@ -1,21 +1,12 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Reflection;
+using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data.Mapper
 {
     internal sealed class ObjectMapperStrategy : IObjectMapperStrategy
     {
-        private bool IsPrimitiveType(object obj)
-        {
-            var type = obj.GetType();
-
-            return type == typeof(string) || type == typeof(int) || type == typeof(long) || type == typeof(decimal) ||
-                   type == typeof(char) || type == typeof(decimal) || type == typeof(bool) || type == typeof(byte) ||
-                   type == typeof(double) || type == typeof(float) || type == typeof(sbyte) || type == typeof(short) ||
-                   type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort);
-        }
-
         public void Transfer<TS, TT>(IObjectMapper mapper, TS objectSource, TT objectTarget,
             PropertyInfo propertyInfoSource, PropertyInfo propertyInfoTarget)
             where TS : class
@@ -78,7 +69,7 @@ namespace PipServices.Commons.Data.Mapper
                             if (entrySource == null || method == null)
                                 continue;
 
-                            if (IsPrimitiveType(entrySource))
+                            if (TypeConverter.IsPrimitiveType(entrySource))
                             {
                                 var parameters = new[]
                                 {

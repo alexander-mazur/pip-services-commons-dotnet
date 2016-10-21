@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace PipServices.Commons.Convert
@@ -8,7 +9,72 @@ namespace PipServices.Commons.Convert
     /// </summary>
     public static class TypeConverter
     {
-        // Todo: Add support for TypeCodes
+        public static bool IsPrimitiveType(object obj)
+        {
+            var type = obj.GetType();
+
+            return IsPrimitiveType(type);
+        }
+
+        public static bool IsPrimitiveType(Type type)
+        {
+            return type == typeof(string) || type == typeof(int) || type == typeof(long) || type == typeof(decimal) ||
+                   type == typeof(char) || type == typeof(decimal) || type == typeof(bool) || type == typeof(byte) ||
+                   type == typeof(double) || type == typeof(float) || type == typeof(sbyte) || type == typeof(short) ||
+                   type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort);
+        }
+
+        public static TypeCode ToTypeCode(Type type)
+        {
+            if (type == null)
+                return TypeCode.Unknown;
+
+            if (type.IsArray)
+                return TypeCode.Array;
+
+            if (type.GetTypeInfo().IsEnum)
+                return TypeCode.Enum;
+
+            if (type == typeof(bool))
+                return TypeCode.Boolean;
+
+            if (type == typeof(double))
+                return TypeCode.Double;
+
+            if (type == typeof(float))
+                return TypeCode.Float;
+
+            if (type == typeof(long))
+                return TypeCode.Long;
+
+            if (type == typeof(int))
+                return TypeCode.Integer;
+
+            if (type == typeof(string))
+                return TypeCode.String;
+
+            if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
+                return TypeCode.DateTime;
+
+            if (type == typeof(TimeSpan))
+                return TypeCode.Duration;
+
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+                return TypeCode.Map;
+
+            if (type.IsArray)
+                return TypeCode.Array;
+
+            return TypeCode.Object;
+        }
+
+        public static TypeCode ToTypeCode(object value)
+        {
+            if (value == null)
+                return TypeCode.Unknown;
+
+            return ToTypeCode(value.GetType());
+        }
 
         public static T? ToNullableType<T>(object value) where T : struct
         {

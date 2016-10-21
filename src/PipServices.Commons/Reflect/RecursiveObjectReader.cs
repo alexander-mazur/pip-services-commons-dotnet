@@ -1,180 +1,174 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using PipServices.Commons.Convert;
+using TypeCode = PipServices.Commons.Convert.TypeCode;
 
 namespace PipServices.Commons.Reflect
 {
     public sealed class RecursiveObjectReader
     {
-        //private static boolean performHasProperty(Object obj, String[] names, int nameIndex)
-        //{
-        //    if (nameIndex < names.length - 1)
-        //    {
-        //        Object value = ObjectReader.getProperty(obj, names[nameIndex]);
-        //        if (value != null)
-        //            return performHasProperty(value, names, nameIndex + 1);
-        //        else
-        //            return false;
-        //    }
-        //    else
-        //        return ObjectReader.hasProperty(obj, names[nameIndex]);
-        //}
+        private static bool PerformHasProperty(object obj, string[] names, int nameIndex)
+        {
+            if (nameIndex < names.Length - 1)
+            {
+                var value = ObjectReader.GetProperty(obj, names[nameIndex]);
+                if (value != null)
+                    return PerformHasProperty(value, names, nameIndex + 1);
 
-        //public static boolean hasProperty(Object obj, String name)
-        //{
-        //    if (obj == null || name == null) return false;
+                return false;
+            }
 
-        //    String[] names = name.split("\\.");
-        //    if (names == null || names.length == 0)
-        //        return false;
+            return ObjectReader.HasProperty(obj, names[nameIndex]);
+        }
 
-        //    return performHasProperty(obj, names, 0);
-        //}
+        public static bool HasProperty(object obj, string name)
+        {
+            if (obj == null || name == null) return false;
 
-        //private static Object performGetProperty(Object obj, String[] names, int nameIndex)
-        //{
-        //    if (nameIndex < names.length - 1)
-        //    {
-        //        Object value = ObjectReader.getProperty(obj, names[nameIndex]);
-        //        if (value != null)
-        //            return performGetProperty(value, names, nameIndex + 1);
-        //        else
-        //            return null;
-        //    }
-        //    else
-        //        return ObjectReader.getProperty(obj, names[nameIndex]);
-        //}
+            var names = name.Split('.');
+            if (names == null || names.Length == 0)
+                return false;
 
-        //public static Object getProperty(Object obj, String name)
-        //{
-        //    if (obj == null || name == null) return null;
+            return PerformHasProperty(obj, names, 0);
+        }
 
-        //    String[] names = name.split("\\.");
-        //    if (names == null || names.length == 0)
-        //        return null;
+        private static object PerformGetProperty(object obj, string[] names, int nameIndex)
+        {
+            if (nameIndex < names.Length - 1)
+            {
+                var value = ObjectReader.GetProperty(obj, names[nameIndex]);
+                if (value != null)
+                    return PerformGetProperty(value, names, nameIndex + 1);
 
-        //    return performGetProperty(obj, names, 0);
-        //}
+                return null;
+            }
 
-        //private static boolean isSimpleValue(Object value)
-        //{
-        //    TypeCode code = TypeConverter.toTypeCode(value);
-        //    return code != TypeCode.Array && code != TypeCode.Map && code != TypeCode.Object;
-        //}
+            return ObjectReader.GetProperty(obj, names[nameIndex]);
+        }
 
-        //private static void performGetPropertyNames(Object obj, String path,
-        //    List<String> result, List<Object> cycleDetect)
-        //{
+        public static object GetProperty(object obj, string name)
+        {
+            if (obj == null || name == null) return null;
 
-        //    Map<String, Object> map = ObjectReader.getProperties(obj);
+            var names = name.Split('.');
+            if (names == null || names.Length == 0)
+                return null;
 
-        //    if (map.size() != 0 && cycleDetect.size() < 100)
-        //    {
-        //        cycleDetect.add(obj);
-        //        try
-        //        {
-        //            for (Map.Entry<String, Object> entry : map.entrySet())
-        //            {
-        //                Object value = entry.getValue();
+            return PerformGetProperty(obj, names, 0);
+        }
 
-        //                // Prevent cycles 
-        //                if (cycleDetect.contains(value))
-        //                    continue;
+        private static bool IsSimpleValue(object value)
+        {
+            var code = TypeConverter.ToTypeCode(value);
+            return code != TypeCode.Array && code != TypeCode.Map && code != TypeCode.Object;
+        }
 
-        //                String key = path != null ? path + "." + entry.getKey() : entry.getKey();
+        private static void PerformGetPropertyNames(object obj, string path,
+            IList<string> result, IList<object> cycleDetect)
+        {
+            var map = ObjectReader.GetProperties(obj);
 
-        //                // Add simple values directly
-        //                if (isSimpleValue(value))
-        //                    result.add(key);
-        //                // Recursively go to elements
-        //                else
-        //                    performGetPropertyNames(value, key, result, cycleDetect);
-        //            }
-        //        }
-        //        finally
-        //        {
-        //            cycleDetect.remove(obj);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (path != null)
-        //            result.add(path);
-        //    }
-        //}
+            if (map.Count != 0 && cycleDetect.Count < 100)
+            {
+                cycleDetect.Add(obj);
+                try
+                {
+                    foreach (var entry in map)
+                    {
+                        var value = entry.Value;
 
-        //public static List<String> getPropertyNames(Object obj)
-        //{
-        //    List<String> propertyNames = new ArrayList<String>();
+                        // Prevent cycles 
+                        if (cycleDetect.Contains(value))
+                            continue;
 
-        //    if (obj == null)
-        //    {
-        //        return propertyNames;
-        //    }
-        //    else
-        //    {
-        //        List<Object> cycleDetect = new ArrayList<Object>();
-        //        performGetPropertyNames(obj, null, propertyNames, cycleDetect);
-        //        return propertyNames;
-        //    }
-        //}
+                        var key = path != null ? path + "." + entry.Key : entry.Key;
 
-        //private static void performGetProperties(Object obj, String path,
-        //    Map<String, Object> result, List<Object> cycleDetect)
-        //{
+                        // Add simple values directly
+                        if (IsSimpleValue(value))
+                            result.Add(key);
+                        // Recursively go to elements
+                        else
+                            PerformGetPropertyNames(value, key, result, cycleDetect);
+                    }
+                }
+                finally
+                {
+                    cycleDetect.Remove(obj);
+                }
+            }
+            else
+            {
+                if (path != null)
+                    result.Add(path);
+            }
+        }
 
-        //    Map<String, Object> map = ObjectReader.getProperties(obj);
+        public static IList<string> GetPropertyNames(object obj)
+        {
+            var propertyNames = new List<string>();
 
-        //    if (map.size() != 0 && cycleDetect.size() < 100)
-        //    {
-        //        cycleDetect.add(obj);
-        //        try
-        //        {
-        //            for (Map.Entry<String, Object> entry : map.entrySet())
-        //            {
-        //                Object value = entry.getValue();
+            if (obj == null)
+            {
+                return propertyNames;
+            }
+            else
+            {
+                var cycleDetect = new List<object>();
+                PerformGetPropertyNames(obj, null, propertyNames, cycleDetect);
+                return propertyNames;
+            }
+        }
 
-        //                // Prevent cycles 
-        //                if (cycleDetect.contains(value))
-        //                    continue;
+        private static void PerformGetProperties(object obj, string path,
+            IDictionary<string, object> result, ICollection<object> cycleDetect)
+        {
+            var map = ObjectReader.GetProperties(obj);
 
-        //                String key = path != null ? path + "." + entry.getKey() : entry.getKey();
+            if (map.Count != 0 && cycleDetect.Count < 100)
+            {
+                cycleDetect.Add(obj);
+                try
+                {
+                    foreach(var entry in map)
+                    {
+                        var value = entry.Value;
 
-        //                // Add simple values directly
-        //                if (isSimpleValue(value))
-        //                    result.put(key, value);
-        //                // Recursively go to elements
-        //                else
-        //                    performGetProperties(value, key, result, cycleDetect);
-        //            }
-        //        }
-        //        finally
-        //        {
-        //            cycleDetect.remove(obj);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (path != null)
-        //            result.put(path, obj);
-        //    }
-        //}
+                        // Prevent cycles 
+                        if (cycleDetect.Contains(value))
+                            continue;
 
-        //public static Map<String, Object> getProperties(Object obj)
-        //{
-        //    Map<String, Object> properties = new HashMap<String, Object>();
+                        var key = path != null ? path + "." + entry.Key : entry.Key;
 
-        //    if (obj == null)
-        //    {
-        //        return properties;
-        //    }
-        //    else
-        //    {
-        //        List<Object> cycleDetect = new ArrayList<Object>();
-        //        performGetProperties(obj, null, properties, cycleDetect);
-        //        return properties;
-        //    }
-        //}
+                        // Add simple values directly
+                        if (IsSimpleValue(value))
+                            result[key] = value;
+                        // Recursively go to elements
+                        else
+                            PerformGetProperties(value, key, result, cycleDetect);
+                    }
+                }
+                finally
+                {
+                    cycleDetect.Remove(obj);
+                }
+            }
+            else
+            {
+                if (path != null)
+                    result[path] = obj;
+            }
+        }
+
+        public static IDictionary<string, object> GetProperties(object obj)
+        {
+            var properties = new Dictionary<string, object>();
+
+            if (obj == null)
+                return properties;
+
+            var cycleDetect = new List<object>();
+            PerformGetProperties(obj, null, properties, cycleDetect);
+            return properties;
+
+        }
     }
 }

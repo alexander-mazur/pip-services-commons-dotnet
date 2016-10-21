@@ -1,100 +1,104 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace PipServices.Commons.Reflect
 {
     public static class TypeMatcher
     {
-        public static bool Match(object expectedType, object actualValue)
+        public static bool MatchValue(object expectedType, object actualValue)
         {
             if (expectedType == null)
                 return true;
+            if (actualValue == null)
+                throw new ArgumentNullException(nameof(actualValue), "Actual value cannot be null");
 
-            var actualType = actualValue.GetType();
+            return MatchType(expectedType, actualValue.GetType());
+        }
+
+        public static bool MatchType(object expectedType, Type actualType)
+        {
+            if (expectedType == null)
+                return true;
+            if (actualType == null)
+                throw new ArgumentNullException(nameof(actualType), "Actual type cannot be null");
 
             var type = expectedType as Type;
             if (type != null)
-                // Todo: IsAssignable is not supported
-                return type == actualType;
-
-            if (expectedType.Equals(actualType))
-                return true;
+                return type.GetTypeInfo().IsAssignableFrom(actualType);
 
             var str = expectedType as string;
             if (str != null)
-                return MatchByName(str, actualType);
+                return MatchTypeByName(str, actualType);
 
             return false;
         }
 
-        public static bool MatchByName(string expectedType, object actualValue)
+        public static bool MatchTypeByName(string expectedType, Type actualType)
         {
-            Type actualType = actualValue.GetType();
+            if (expectedType == null)
+                return true;
+
+            if (actualType == null)
+                throw new ArgumentNullException(nameof(actualType), "Actual type cannot be null");
+
             expectedType = expectedType.ToLower();
 
             if (actualType.Name.Equals(expectedType, StringComparison.OrdinalIgnoreCase))
-            {
                 return true;
-            }
-            else if (expectedType == "object")
-            {
+
+            if (actualType.Name.Equals(expectedType, StringComparison.OrdinalIgnoreCase))
                 return true;
-            }
-            else if (expectedType == "int" || expectedType == "integer")
-            {
-                return (actualValue is int)
-                    || (actualValue is int?)
-                    || (actualValue is long)
-                    || (actualValue is long?);
-            }
-            else if (expectedType == "long")
-            {
-                return (actualValue is long);
-            }
-            else if (expectedType == "float")
-            {
-                return (actualValue is float)
-                    || (actualValue is float?)
-                    || (actualValue is double)
-                    || (actualValue is double?)
-                    || (actualValue is decimal)
-                    || (actualValue is decimal?);
-            }
-            else if (expectedType == "double")
-            {
-                return (actualValue is double)
-                    || (actualValue is double?)
-                    || (actualValue is decimal)
-                    || (actualValue is decimal?);
-            }
-            else if (expectedType == "string")
-            {
-                return (actualValue is string);
-            }
-            else if (expectedType == "date" || expectedType == "datetime")
-            {
-                return (actualValue is DateTime)
-                    || (actualValue is DateTime?)
-                    || (actualValue is DateTimeOffset)
-                    || (actualValue is DateTimeOffset?);
-            }
-            else if (expectedType == "timespan" || expectedType == "duration")
-            {
-                return (actualValue is TimeSpan)
-                    || (actualValue is TimeSpan?);
-            }
-            else if (expectedType == "map" || expectedType == "dict" || expectedType == "dictionary")
-            {
-                return actualValue is IDictionary;
-            }
-            else if (expectedType == "array" || expectedType == "list" || expectedType.EndsWith("[]"))
-            {
-                return actualValue is IEnumerable;
-            }
-            else
-            {
-                return false;
-            }
+
+            if (expectedType.Equals("object"))
+                return true;
+
+            if (expectedType.Equals("int") || expectedType.Equals("integer"))
+                return actualType == typeof(int) || actualType == typeof(long);
+
+            if (expectedType.Equals("long"))
+                return actualType == typeof(long);
+
+            if (expectedType.Equals("float"))
+                return actualType == typeof(float) || actualType == typeof(double);
+
+            if (expectedType.Equals("double"))
+                return actualType == typeof(double);
+
+            if (expectedType.Equals("string"))
+                return actualType == typeof(string);
+
+            if (expectedType.Equals("bool") || expectedType.Equals("boolean"))
+                return actualType == typeof(bool);
+
+            if (expectedType.Equals("date") || expectedType.Equals("datetime"))
+                return actualType == typeof(DateTime) || actualType == typeof(DateTimeOffset);
+
+            if (expectedType.Equals("timespan") || expectedType.Equals("duration"))
+                return actualType == typeof(TimeSpan)
+                       || actualType == typeof(int)
+                       || actualType == typeof(float)
+                       || actualType == typeof(double);
+
+            if (expectedType.Equals("enum"))
+                return actualType.GetTypeInfo().IsEnum;
+
+            if (expectedType.Equals("map") || expectedType.Equals("dict") || expectedType.Equals("dictionary"))
+                return actualType.GetTypeInfo().IsGenericType &&
+                       actualType.GetGenericTypeDefinition() == typeof(IDictionary<,>);
+
+            if (expectedType.Equals("array") || expectedType.Equals("list"))
+                return actualType.IsArray ||
+                       actualType.GetTypeInfo().IsGenericType &&
+                       actualType.GetGenericTypeDefinition() == typeof(IList<>);
+
+            if (expectedType.EndsWith("[]"))
+                // Todo: Check subtype
+                return actualType.IsArray ||
+                       actualType.GetTypeInfo().IsGenericType &&
+                       actualType.GetGenericTypeDefinition() == typeof(IList<>);
+
+            return false;
         }
     }
 }
