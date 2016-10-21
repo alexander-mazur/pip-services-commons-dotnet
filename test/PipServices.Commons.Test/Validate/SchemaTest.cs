@@ -165,7 +165,7 @@ namespace PipServices.Commons.Test.Validate
                 .WithOptionalProperty("NullProperty", "object")
                 .WithRequiredProperty("IntArrayProperty", new ArraySchema("int"))
                 .WithRequiredProperty("StringListProperty", new ArraySchema("string"))
-                .WithRequiredProperty("DictProperty", new MapSchema("string", "int"))
+                .WithRequiredProperty("MapProperty", new MapSchema("string", "int"))
                 .WithRequiredProperty("SubObjectProperty", subSchema)
                 .WithRequiredProperty("SubArrayProperty", new ArraySchema(subSchema));
 
