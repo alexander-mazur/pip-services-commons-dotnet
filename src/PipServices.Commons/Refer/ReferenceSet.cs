@@ -188,7 +188,7 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                References.Add(new Reference(locator, reference));
+                References.Add(new Reference(reference, locator));
             }
         }
 

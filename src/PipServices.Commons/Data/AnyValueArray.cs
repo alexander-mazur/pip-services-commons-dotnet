@@ -28,17 +28,20 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(object value)
         {
-            Clear();
             SetAsArray(ArrayConverter.ToArray(value));
         }
 
         public void SetAsArray(object[] values)
         {
+            Clear();
+
             AddRange(values);
         }
 
         public void SetAsArray(IEnumerable values)
         {
+            Clear();
+
             foreach (var value in values)
             {
                 Add(value);

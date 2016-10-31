@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Xunit;
+﻿using Xunit;
 using PipServices.Commons.Reflect;
 using PipServices.Commons.Convert;
 
@@ -12,7 +9,7 @@ namespace PipServices.Commons.Test.Reflect
         [Fact]
         public void TestHasProperty()
         {
-            var obj = Convert.JsonConverter.ToMap(
+            var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
                 );
 
@@ -59,7 +56,7 @@ namespace PipServices.Commons.Test.Reflect
         [Fact]
         public void TestGetProperty()
         {
-            var obj = Convert.JsonConverter.ToMap(
+            var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
                 );
 
@@ -106,7 +103,7 @@ namespace PipServices.Commons.Test.Reflect
         [Fact]
         public void TestGetPropertyNames()
         {
-            var obj = Convert.JsonConverter.ToMap(
+            var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
                 );
 
@@ -122,7 +119,7 @@ namespace PipServices.Commons.Test.Reflect
         [Fact]
         public void TestGetProperties()
         {
-            var obj = Convert.JsonConverter.ToMap(
+            var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
                 );
 

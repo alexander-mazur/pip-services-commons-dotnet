@@ -8,7 +8,7 @@ namespace PipServices.Commons.Refer
         public object Locator { get; }
         public object Refer { get; }
 
-        public Reference(object locator, object reference)
+        public Reference(object reference, object locator)
         {
             if (locator == null)
             {

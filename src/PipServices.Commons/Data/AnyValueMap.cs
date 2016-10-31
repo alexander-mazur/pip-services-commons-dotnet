@@ -38,6 +38,8 @@ namespace PipServices.Commons.Data
 
         public void SetAsMap(IDictionary map)
         {
+            Clear();
+
             if (map == null || map.Count == 0) return;
             foreach (var key in map.Keys)
             {
