@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using PipServices.Commons.Data.Mapper;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace PipServices.Commons.Convert
 {
@@ -42,11 +44,63 @@ namespace PipServices.Commons.Convert
         {
             try
             {
-                return ObjectMapper.MapTo<Dictionary<string, object>>(value);
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
+
+                ConvertJsonTypes(dict);
+
+                return dict;
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                throw;
+            }
+        }
+
+        private static void ConvertJsonTypes(IDictionary<string, object> dict)
+        {
+            foreach (var pair in dict.ToArray())
+            {
+                var jObject = pair.Value as JObject;
+                if (jObject != null)
+                {
+                    var newDict = jObject.ToObject<Dictionary<string, object>>();
+
+                    dict[pair.Key] = newDict;
+
+                    ConvertJsonTypes(newDict);
+                }
+
+                var jArray = pair.Value as JArray;
+                if (jArray != null)
+                {
+                    var newList = jArray.ToObject<List<object>>();
+
+                    dict[pair.Key] = newList;
+
+                    ConvertJsonTypes(newList);
+                }
+            }
+        }
+
+        private static void ConvertJsonTypes(IList<object> list)
+        {
+            var newList = list.ToArray();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                var jObject = newList[i] as JObject;
+                if (jObject != null)
+                {
+                    var newDict = jObject.ToObject<Dictionary<string, object>>();
+
+                    list[i] = newDict;
+
+                    ConvertJsonTypes(newDict);
+                }
+
+                var jArray = newList[i] as JArray;
+                if (jArray != null)
+                    list[i] = jArray.ToObject<List<object>>();
             }
         }
 

@@ -3,6 +3,8 @@ using PipServices.Commons.Convert;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
 
 namespace PipServices.Commons.Reflect
 {
@@ -15,7 +17,8 @@ namespace PipServices.Commons.Reflect
                 var value = (JValue)obj;
                 return value.Value;
             }
-            else if (obj is JObject)
+
+            if (obj is JObject)
             {
                 var thisObj = (JObject)obj;
                 var map = new Dictionary<string, object>();
@@ -23,7 +26,8 @@ namespace PipServices.Commons.Reflect
                     map[property.Name] = property.Value;
                 return map;
             }
-            else if (obj is JArray)
+
+            if (obj is JArray)
             {
                 var thisObj = (JArray)obj;
                 var list = new List<object>();
@@ -31,22 +35,19 @@ namespace PipServices.Commons.Reflect
                     list.Add(element);
                 return list;
             }
-            else
-            {
-                return obj;
-            }
+
+            return obj;
         }
 
         public static bool HasProperty(object obj, string name)
         {
-            if (obj == null)
-                throw new NullReferenceException("Object cannot be null");
-            if (name == null)
-                throw new NullReferenceException("Property name cannot be null");
+            if (obj == null || name == null)
+                return false;
 
-            if (obj is JObject)
+            var jObject = obj as JObject;
+            if (jObject != null)
             {
-                var thisObj = (JObject)obj;
+                var thisObj = jObject;
                 foreach (var property in thisObj.Properties())
                 {
                     if (name.Equals(property.Name, StringComparison.OrdinalIgnoreCase))
@@ -54,15 +55,18 @@ namespace PipServices.Commons.Reflect
                 }
                 return false;
             }
-            else if (obj is JArray)
+
+            var jArray = obj as JArray;
+            if (jArray != null)
             {
-                var list = (JArray)obj;
+                var list = jArray;
                 var index = IntegerConverter.ToNullableInteger(name);
                 return index >= 0 && index < list.Count;
             }
-            else if (obj is IDictionary)
+
+            var map = obj as IDictionary;
+            if (map != null)
             {
-                var map = (IDictionary)obj;
                 foreach (var key in map.Keys)
                 {
                     if (name.Equals(key.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -70,43 +74,38 @@ namespace PipServices.Commons.Reflect
                 }
                 return false;
             }
-            else if (obj is IList)
+
+            var genDictionary = obj as IDictionary<string, object>;
+            if (genDictionary != null)
             {
-                var index = IntegerConverter.ToNullableInteger(name);
-                var list = (IList)obj;
-                return index >= 0 && index < list.Count;
-            }
-            else if (obj.GetType().IsArray)
-            {
-                var index = IntegerConverter.ToNullableInteger(name);
-                if (index >= 0)
+                foreach (var key in genDictionary.Keys)
                 {
-                    var list = (IEnumerable)obj;
-                    foreach (var value in list)
-                    {
-                        if (index == 0)
-                            return true;
-                        index--;
-                    }
+                    if (name.Equals(key, StringComparison.OrdinalIgnoreCase))
+                        return true;
                 }
                 return false;
             }
-            else
+
+            var enumerable = obj as IEnumerable;
+            if (enumerable != null)
             {
-                return PropertyReflector.HasProperty(obj, name);
+                var index = IntegerConverter.ToNullableInteger(name);
+                var genericEnum = enumerable.Cast<object>();
+                return index >= 0 && index < genericEnum.Count();
             }
+
+            return PropertyReflector.HasProperty(obj, name);
         }
 
         public static object GetProperty(object obj, string name)
         {
-            if (obj == null)
-                throw new NullReferenceException("Object cannot be null");
-            if (name == null)
-                throw new NullReferenceException("Property name cannot be null");
+            if (obj == null || name == null)
+                return false;
 
-            if (obj is JObject)
+            var jObject = obj as JObject;
+            if (jObject != null)
             {
-                var thisObj = (JObject)obj;
+                var thisObj = jObject;
                 foreach (var property in thisObj.Properties())
                 {
                     if (name.Equals(property.Name, StringComparison.OrdinalIgnoreCase))
@@ -114,29 +113,25 @@ namespace PipServices.Commons.Reflect
                 }
                 return null;
             }
-            else if (obj is JArray)
+
+            var jArray = obj as JArray;
+            if (jArray != null)
             {
-                var list = (JArray)obj;
+                var list = jArray;
                 var index = IntegerConverter.ToNullableInteger(name);
                 return index >= 0 && index < list.Count ? list[index.Value] : null;
             }
-            else if (obj is IDictionary)
-            {
-                var map = (IDictionary)obj;
-                foreach (var key in map.Keys)
-                {
-                    if (name.Equals(key.ToString(), StringComparison.OrdinalIgnoreCase))
-                        return map[key];
-                }
-                return null;
-            }
-            else if (obj is IList)
-            {
-                var index = IntegerConverter.ToNullableInteger(name);
-                var list = (IList)obj;
-                return index >= 0 && index < list.Count ? list[index.Value] : null;
-            }
-            else if (obj.GetType().IsArray)
+
+            var map = obj as IDictionary;
+            if (map != null)
+                return map[name];
+
+            var genDictionary = obj as IDictionary<string, object>;
+            if (genDictionary != null)
+                return genDictionary[name];
+
+            var enumerable = obj as IEnumerable;
+            if (enumerable != null)
             {
                 var index = IntegerConverter.ToNullableInteger(name);
                 if (index >= 0)
@@ -151,10 +146,8 @@ namespace PipServices.Commons.Reflect
                 }
                 return null;
             }
-            else
-            {
-                return PropertyReflector.GetProperty(obj, name);
-            }
+
+            return PropertyReflector.GetProperty(obj, name);
         }
 
         public static List<string> GetPropertyNames(object obj)
@@ -162,7 +155,7 @@ namespace PipServices.Commons.Reflect
             if (obj == null)
                 throw new NullReferenceException("Object cannot be null");
 
-            List<string> properties = new List<string>();
+            var properties = new List<string>();
 
             if (obj is JObject)
             {
@@ -175,7 +168,7 @@ namespace PipServices.Commons.Reflect
             else if (obj is JArray)
             {
                 var list = (JArray)obj;
-                for (int index = 0; index < list.Count; index++)
+                for (var index = 0; index < list.Count; index++)
                 {
                     properties.Add(index.ToString());
                 }
@@ -188,15 +181,15 @@ namespace PipServices.Commons.Reflect
                     properties.Add(key.ToString());
                 }
             }
-            else if (obj is IList)
+            else if (obj is IDictionary<string, object>)
             {
-                var list = (IList)obj;
-                for (int index = 0; index < list.Count; index++)
+                var map = (IDictionary<string, object>)obj;
+                foreach (var key in map.Keys)
                 {
-                    properties.Add(index.ToString());
+                    properties.Add(key);
                 }
             }
-            else if (obj.GetType().IsArray)
+            else if (obj is IEnumerable)
             {
                 var list = (IEnumerable)obj;
                 var index = 0;
@@ -219,7 +212,7 @@ namespace PipServices.Commons.Reflect
             if (obj == null)
                 throw new NullReferenceException("Object cannot be null");
 
-            Dictionary<string, object> map = new Dictionary<string, object>();
+            var map = new Dictionary<string, object>();
 
             if (obj is JObject)
             {
@@ -232,7 +225,7 @@ namespace PipServices.Commons.Reflect
             else if (obj is JArray)
             {
                 var list = (JArray)obj;
-                for (int index = 0; index < list.Count; index++)
+                for (var index = 0; index < list.Count; index++)
                 {
                     map[index.ToString()] = list[index];
                 }
@@ -245,15 +238,15 @@ namespace PipServices.Commons.Reflect
                     map[key.ToString()] = thisMap[key];
                 }
             }
-            else if (obj is IList)
+            else if (obj is IDictionary<string, object>)
             {
-                var list = (IList)obj;
-                for (int index = 0; index < list.Count; index++)
+                var thisMap = (IDictionary<string, object>)obj;
+                foreach (var key in thisMap.Keys)
                 {
-                    map[index.ToString()] = list[index];
+                    map[key] = thisMap[key];
                 }
             }
-            else if (obj.GetType().IsArray)
+            else if (obj is IEnumerable)
             {
                 var list = (IEnumerable)obj;
                 var index = 0;

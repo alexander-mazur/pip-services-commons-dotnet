@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -59,7 +60,7 @@ namespace PipServices.Commons.Convert
             if (type == typeof(TimeSpan))
                 return TypeCode.Duration;
 
-            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+            if (type == typeof(IDictionary) || type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>))
                 return TypeCode.Map;
 
             if (type.IsArray)
