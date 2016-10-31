@@ -2,6 +2,7 @@
 using PipServices.Commons.Data;
 using System.Collections.Generic;
 using PipServices.Commons.Convert;
+using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Config
 {
@@ -116,6 +117,12 @@ namespace PipServices.Commons.Config
         public new static ConfigParams FromTuples(params object[] tuples)
         {
             var map = StringValueMap.FromTuples(tuples);
+            return new ConfigParams(map);
+        }
+
+        public static ConfigParams FromValue(object value)
+        {
+            var map = RecursiveObjectReader.GetProperties(value);
             return new ConfigParams(map);
         }
 

@@ -170,18 +170,18 @@ namespace PipServices.Commons.Data
             return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
         }
 
-        public DateTime? GetAsNullableDateTime(string key)
+        public DateTimeOffset? GetAsNullableDateTime(string key)
         {
             var value = TryGet(key);
             return DateTimeConverter.ToNullableDateTime(value);
         }
 
-        public DateTime GetAsDateTime(string key)
+        public DateTimeOffset GetAsDateTime(string key)
         {
-            return GetAsDateTimeWithDefault(key, new DateTime(0));
+            return GetAsDateTimeWithDefault(key, new DateTimeOffset());
         }
 
-        public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue = null)
+        public DateTimeOffset GetAsDateTimeWithDefault(string key, DateTimeOffset? defaultValue = null)
         {
             var value = TryGet(key);
             return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
@@ -247,7 +247,7 @@ namespace PipServices.Commons.Data
         public AnyValueArray GetAsNullableArray(string key)
         {
             var value = GetAsObject(key);
-            return value != null ? AnyValueArray.From(value) : null;
+            return value != null ? AnyValueArray.FromValue(value) : null;
         }
 
         public AnyValueArray GetAsArray(string key)

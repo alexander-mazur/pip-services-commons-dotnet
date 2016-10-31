@@ -28,7 +28,7 @@ namespace PipServices.Commons.Reflect
             return GetType(name, null);
         }
 
-        public static Type GetType(TypeDescriptor type)
+        public static Type GetTypeByDescriptor(TypeDescriptor type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type), "Type descriptor cannot be null");
@@ -46,7 +46,7 @@ namespace PipServices.Commons.Reflect
             throw new UnsupportedException(null, "NOT_SUPPORTED", "Constructors with paratemeters are not supported");
         }
 
-        public static object CreateInstance(string name, string library, params object[] args)
+        public static object CreateInstanceByType(string name, string library, params object[] args)
         {
             var type = GetType(name, library);
             if (type == null)
@@ -58,10 +58,18 @@ namespace PipServices.Commons.Reflect
 
         public static object CreateInstance(string name, params object[] args)
         {
-            return CreateInstance(name, null, args);
+            return CreateInstanceByType(name, null, args);
         }
 
         public static object CreateInstance(TypeDescriptor type, params object[] args)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type), "Type descriptor cannot be null");
+
+            return CreateInstanceByType(type.Name, type.Library, args);
+        }
+
+        public static object CreateInstanceByDescriptor(TypeDescriptor type, params object[] args)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type), "Type descriptor cannot be null");

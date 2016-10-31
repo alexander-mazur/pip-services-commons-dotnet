@@ -1,7 +1,8 @@
 ﻿using PipServices.Commons.Config;
+using PipServices.Commons.Data;
 using Xunit;
 
-namespace PipServices.Commons.Test.Data
+namespace PipServices.Commons.Test.Config
 {
     public sealed class ConfigParamsTest
     {
@@ -35,37 +36,35 @@ namespace PipServices.Commons.Test.Data
             Assert.Equal("Value3", section1.Get("Key3"));
         }
 
-        //[Fact]
-        //public void TestConfigFromAppSettings()
-        //{
-        //    var config = ConfigParams.FromAppSettings();
-        //    Assert.Equal(5, config.Count);
-        //    Assert.Equal("Value1", config.Get("Section1.Key1"));
-        //    Assert.Equal("Value2", config.Get("Section1.Key2"));
-        //    Assert.Equal("Value3", config.Get("Section1.Key3"));
-        //    Assert.Equal("ValueA", config.Get("Section2.Key1"));
-        //    Assert.Equal("ValueB", config.Get("Section2.Key2"));
-        //}
 
-        //[Fact]
-        //public void TestConfigFromConnectionStrings()
-        //{
-        //    var config = ConfigParams.FromConnectionStrings();
-        //    //Assert.AreEqual(5, config.Count);
-        //    Assert.Equal("Value1", config.Get("Section1.Key1"));
-        //    Assert.Equal("Value2", config.Get("Section1.Key2"));
-        //    Assert.Equal("Value3", config.Get("Section1.Key3"));
-        //    Assert.Equal("ValueA", config.Get("Section2.Key1"));
-        //    Assert.Equal("ValueB", config.Get("Section2.Key2"));
-        //}
+        [Fact]
+        public void TestConfigFromString()
+        {
+            var config = ConfigParams.FromString("Queue=TestQueue;Endpoint=sb://cvctestbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=K70UpCUXN1Q5RFykll6/gz4Et14iJrYFnGPlwiFBlow=");
+            Assert.Equal(4, config.Count);
+            Assert.Equal("TestQueue", config.Get("Queue"));
+        }
 
-        //[Fact]
-        //public void TestConfigFromXmlFile()
-        //{
-        //    var config = ConfigParams.FromXmlFile("Local.xml");
-        //    Assert.Equal(2, config.Count);
-        //    Assert.Equal("ValueA", config.Get("Key1"));
-        //    Assert.Equal("ValueB", config.Get("Key2"));
-        //}
+        [Fact]
+        public void TestConfigFromObject()
+        {
+            var value = AnyValueMap.FromTuples(
+                "field1", ConfigParams.FromString("field11=123;field12=ABC"),
+                "field2", AnyValueArray.FromValues(
+                    123, "ABC", ConfigParams.FromString("field21=543;field22=XYZ")
+                ),
+                "field3", true
+            );
+
+            var config = ConfigParams.FromValue(value);
+            Assert.Equal(7, config.Count);
+            Assert.Equal(123, config.GetAsInteger("Field1.Field11"));
+            Assert.Equal("ABC", config.GetAsString("Field1.Field12"));
+            Assert.Equal(123, config.GetAsInteger("Field2.0"));
+            Assert.Equal("ABC", config.GetAsString("Field2.1"));
+            Assert.Equal(543, config.GetAsInteger("Field2.2.Field21"));
+            Assert.Equal("XYZ", config.GetAsString("Field2.2.Field22"));
+            Assert.Equal(true, config.GetAsBoolean("Field3"));
+        }
     }
 }

@@ -13,9 +13,9 @@ namespace PipServices.Commons.Reflect
             Library = library;
         }
 
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public string Library { get; set; }
+        public string Library { get; }
         
         public override bool Equals(object obj)
         {
