@@ -15,11 +15,11 @@ namespace PipServices.Commons.Run
         public FixedRateTimer()
         { }
 
-        public FixedRateTimer(INotifiable task, int delay, int interval)
+        public FixedRateTimer(INotifiable task, int interval, int delay)
         {
             Task = task;
-            Delay = delay;
             Interval = interval;
+            Delay = delay;
         }
 
         public void Start()
