@@ -71,7 +71,7 @@ namespace PipServices.Commons.Count
 
             foreach (var counter in countersArr)
             {
-                _logger.Debug(null, CounterToString(counter));
+                _logger.Info(null, CounterToString(counter));
             }
         }
     }
