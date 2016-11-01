@@ -37,7 +37,7 @@ namespace PipServices.Commons.Config
         public static ConfigParams ReadConfig(string correlationId, string path)
         {
             var value = ReadObject(correlationId, path);
-            return ConfigParams.FromObject(value);
+            return ConfigParams.FromValue(value);
         }
     }
 }

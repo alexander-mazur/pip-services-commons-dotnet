@@ -137,11 +137,5 @@ namespace PipServices.Commons.Config
             var map = FromMaps(configs);
             return new ConfigParams(map);
         }
-
-        public static ConfigParams FromObject(object value)
-        {
-            var map = MapConverter.ToMap(value);
-            return new ConfigParams(map);
-        }
     }
 }
