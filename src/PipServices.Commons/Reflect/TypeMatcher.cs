@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace PipServices.Commons.Reflect
 {
@@ -84,19 +86,28 @@ namespace PipServices.Commons.Reflect
                 return actualType.GetTypeInfo().IsEnum;
 
             if (expectedType.Equals("map") || expectedType.Equals("dict") || expectedType.Equals("dictionary"))
-                return actualType.GetTypeInfo().IsGenericType &&
-                       actualType.GetGenericTypeDefinition() == typeof(IDictionary<,>);
+            {
+                var type = actualType.GetTypeInfo();
+                return type.GetInterfaces().Contains(typeof(IDictionary))
+                       || type.GetInterfaces().Contains(typeof(IDictionary<,>));
+            }
 
             if (expectedType.Equals("array") || expectedType.Equals("list"))
-                return actualType.IsArray ||
-                       actualType.GetTypeInfo().IsGenericType &&
-                       actualType.GetGenericTypeDefinition() == typeof(IList<>);
+            {
+                var type = actualType.GetTypeInfo();
+                return actualType.IsArray
+                       || type.GetInterfaces().Contains(typeof(IList))
+                       || type.GetInterfaces().Contains(typeof(IList<>));
+            }
 
             if (expectedType.EndsWith("[]"))
+            {
                 // Todo: Check subtype
-                return actualType.IsArray ||
-                       actualType.GetTypeInfo().IsGenericType &&
-                       actualType.GetGenericTypeDefinition() == typeof(IList<>);
+                var type = actualType.GetTypeInfo();
+                return actualType.IsArray
+                       || type.GetInterfaces().Contains(typeof(IList))
+                       || type.GetInterfaces().Contains(typeof(IList<>));
+            }
 
             return false;
         }

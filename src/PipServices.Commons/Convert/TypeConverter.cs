@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace PipServices.Commons.Convert
@@ -60,7 +61,7 @@ namespace PipServices.Commons.Convert
             if (type == typeof(TimeSpan))
                 return TypeCode.Duration;
 
-            if (type == typeof(IDictionary) || type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+            if (type.GetTypeInfo().GetInterface(nameof(IDictionary)) != null || type.GetTypeInfo().GetInterfaces().Contains(typeof(IDictionary<,>)))
                 return TypeCode.Map;
 
             if (type.IsArray)

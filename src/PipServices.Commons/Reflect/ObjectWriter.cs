@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using PipServices.Commons.Convert;
 
@@ -14,23 +16,36 @@ namespace PipServices.Commons.Reflect
             if (name == null)
                 throw new ArgumentNullException(nameof(name), "Method name cannot be null");
 
-            var type = obj.GetType();
-            var isDict = type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>);
+            var type = obj.GetType().GetTypeInfo();
+            var isDict = type.GetInterfaces().Contains(typeof(IDictionary)) || type.GetInterfaces().Contains(typeof(IDictionary<,>));
 
-            var mapObj = (IDictionary<object, object>) obj;
             if (isDict)
             {
+                var mapObj = (IDictionary<string, object>)obj;
+
                 foreach (var key in mapObj.Keys)
                 {
-                    if (name.Equals(key.ToString(), StringComparison.OrdinalIgnoreCase))
+                    if (name.Equals(key, StringComparison.OrdinalIgnoreCase))
                     {
                         mapObj[key] = value;
                         return;
                     }
                 }
+
                 mapObj[name] = value;
             }
-            else if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>))
+            else if (obj.GetType().IsArray)
+            {
+                var array = ((Array)obj);
+                var length = array.Length;
+                var index = IntegerConverter.ToIntegerWithDefault(name, -1);
+
+                if (index >= 0 && index < length)
+                {
+                    array.SetValue(value, index);
+                }
+            }
+            else if (type.GetInterfaces().Contains(typeof(IList)) || type.GetInterfaces().Contains(typeof(IList<>)))
             {
                 var list = (IList<object>) obj;
                 var index = IntegerConverter.ToIntegerWithDefault(name, -1);
@@ -44,17 +59,6 @@ namespace PipServices.Commons.Reflect
                     while (index - 1 >= list.Count)
                         list.Add(null);
                     list.Add(value);
-                }
-            }
-            else if (obj.GetType().IsArray)
-            {
-                var array = ((Array) obj);
-                var length = array.Length;
-                var index = IntegerConverter.ToIntegerWithDefault(name, -1);
-
-                if (index >= 0 && index < length)
-                {
-                    array.SetValue(value, index);
                 }
             }
             else

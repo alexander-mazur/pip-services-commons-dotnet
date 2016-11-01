@@ -102,6 +102,8 @@ namespace PipServices.Commons.Reflect
             if (obj == null || name == null)
                 return false;
 
+            name = name.ToLower();
+
             var jObject = obj as JObject;
             if (jObject != null)
             {
@@ -124,11 +126,23 @@ namespace PipServices.Commons.Reflect
 
             var map = obj as IDictionary;
             if (map != null)
-                return map[name];
+            {
+                foreach (var key in map.Keys)
+                {
+                    if (name.Equals(key.ToString(), StringComparison.OrdinalIgnoreCase))
+                        return map[key];
+                }
+            }
 
             var genDictionary = obj as IDictionary<string, object>;
             if (genDictionary != null)
-                return genDictionary[name];
+            {
+                foreach (var key in genDictionary.Keys)
+                {
+                    if (name.Equals(key, StringComparison.OrdinalIgnoreCase))
+                        return genDictionary[key];
+                }
+            }
 
             var enumerable = obj as IEnumerable;
             if (enumerable != null)

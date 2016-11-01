@@ -7,11 +7,15 @@ namespace PipServices.Commons.Data
 {
     public class AnyValueMap : Dictionary<string, object>, ICloneable
     {
-        public AnyValueMap() { }
+        public AnyValueMap()
+            : base(StringComparer.OrdinalIgnoreCase)
+        {
+        }
 
         public AnyValueMap(IDictionary<string, object> values)
-            : base(values)
-        { }
+            : base(values, StringComparer.OrdinalIgnoreCase)
+        {
+        }
 
         public AnyValueMap(IDictionary values)
         {

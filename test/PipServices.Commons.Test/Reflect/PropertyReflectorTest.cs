@@ -12,7 +12,7 @@
 //        [Fact]
 //        public void TestGetProperty()
 //        {
-//            TestObject obj = new TestObject();
+//            TestClass obj = new TestClass();
 
 //            object value = PropertyReflector.GetProperty(obj, "privateField");
 //            Assert.IsNull(value);
@@ -27,7 +27,7 @@
 //        [Fact]
 //        public void TestGetProperties()
 //        {
-//            TestObject obj = new TestObject();
+//            TestClass obj = new TestClass();
 //            List<string> names = PropertyReflector.GetPropertyNames(obj);
 //            Assert.AreEqual(8, names.Count);
 //            Assert.IsTrue(names.Contains("intField"));
@@ -44,7 +44,7 @@
 //        [Fact]
 //        public void TestSetProperties()
 //        {
-//            TestObject obj = new TestObject();
+//            TestClass obj = new TestClass();
 
 //            Dictionary<string, object> map = new Dictionary<string, object>()
 //            {
