@@ -45,7 +45,7 @@ namespace PipServices.Commons.Reflect
         {
             if (values == null || values.Count == 0) return;
 
-            foreach(var entry in values)
+            foreach(var entry in RecursiveObjectReader.GetProperties(values))
             {
                 SetProperty(obj, entry.Key, entry.Value);
             }
