@@ -37,19 +37,21 @@ namespace PipServices.Commons.Convert
 
             if (typeInfo.IsPrimitive) return null;
 
-            if(value is IDictionary)
+            var dictionary = value as IDictionary;
+            if(dictionary != null)
             {
-                return MapToMap(((IDictionary)value));
+                return MapToMap(dictionary);
             }
 
-            if (value is IEnumerable)
+            var enumerable = value as IEnumerable;
+            if (enumerable != null && !(value is string))
             {
-                return EnumerableToMap(((IEnumerable)value));
+                return EnumerableToMap(enumerable);
             }
 
             try
             {
-                return ObjectMapper.MapTo<Dictionary<string, object>>(value);
+                return JsonConverter.ToNullableMap(value.ToString());
             }
             catch
             {

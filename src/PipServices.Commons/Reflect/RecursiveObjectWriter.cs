@@ -55,7 +55,7 @@ namespace PipServices.Commons.Reflect
         {
             if (dest == null || src == null) return;
 
-            var values = ObjectReader.GetProperties(src);
+            var values = RecursiveObjectReader.GetProperties(src);
 
             SetProperties(dest, values);
         }

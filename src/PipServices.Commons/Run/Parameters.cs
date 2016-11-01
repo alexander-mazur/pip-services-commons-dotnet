@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
 using PipServices.Commons.Data;
 using PipServices.Commons.Convert;
@@ -17,131 +16,29 @@ namespace PipServices.Commons.Run
         {
         }
 
-        private static object GetCaseInsensitive(IDictionary map, string name)
-        {
-            foreach (var key in map.Keys)
-            {
-                if (string.Compare(key.ToString(), name, true) == 0)
-                {
-                    return map[key];
-                }
-            }
-            return null;
-        }
-
         public override object Get(string path)
         {
             if (string.IsNullOrEmpty(path))
-            {
                 return null;
-            }
 
-            var names = path.Split(new[] { "\\." }, StringSplitOptions.None);
-            if (names == null || names.Length == 0)
-            {
-                return null;
-            }
-            if (names.Length == 1)
-            {
-                return GetCaseInsensitive(this, names[0]);
-            }
+            if (path.IndexOf(".", StringComparison.Ordinal) > 0)
+                return RecursiveObjectReader.GetProperty(this, path);
 
-            object result = this;
-            foreach (var name in names)
-            {
-                if (result is IDictionary)
-                {
-                    result = GetCaseInsensitive((IDictionary)result, name);
-                    if (result == null)
-                    {
-                        return null;
-                    }
-                }
-                else if (result is IList)
-                {
-                    var list = (IList)result;
-                    var index = IntegerConverter.ToNullableInteger(name);
-                    if (index == null || index < 0 || index >= list.Count)
-                    {
-                        return null;
-                    }
-                    result = list[index.Value];
-                }
-            }
+            var value = base.Get(path);
 
-            return result;
+            return value;
         }
 
         public new object Add(string path, object value)
         {
-            if (path == null) return null;
-
-            var names = path.Split(new[] { "\\." }, StringSplitOptions.None);
-            if (names == null || names.Length == 0)
-            {
+            if (string.IsNullOrWhiteSpace(path))
                 return null;
-            }
-            if (names.Length == 1)
-            {
-                foreach (var key in Keys)
-                {
-                    if (string.Compare(key, names[0], true) == 0)
-                    {
-                        names[0] = key;
-                        break;
-                    }
-                }
-                base.Add(names[0], value);
-                return value;
-            }
-            object container = this;
-            for (var i = 0; i < names.Length - 1; i++)
-            {
-                var name = names[i];
-                if (container is IDictionary)
-                {
-                    var mapContainer = (IDictionary)container;
-                    container = GetCaseInsensitive(mapContainer, name);
 
-                    if (container == null)
-                    {
-                        container = new Dictionary<string, object>();
-                        mapContainer[name] = container;
-                    }
-                }
-                else if (container is IList)
-                {
-                    var list = (IList)container;
-                    var index = IntegerConverter.ToNullableInteger(name);
+            if (path.IndexOf(".", StringComparison.Ordinal) > 0)
+                RecursiveObjectWriter.SetProperty(this, path, value);
+            else
+                base.Add(path, value);
 
-                    while (index != null && index.Value >= list.Count)
-                    {
-                        list.Add(null);
-                    }
-
-                    if (index != null && index.Value >= 0 && index.Value < list.Count)
-                    {
-                        container = list[index.Value];
-                        if (container == null)
-                        {
-                            container = new Dictionary<string, object>();
-                            list[index.Value] = container;
-                        }
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
-
-            if (!(container is IDictionary))
-            {
-                return null;
-            }
-
-            var map = (IDictionary<string, object>)container;
-            map[names[names.Length - 1]] = value;
             return value;
         }
 
@@ -163,10 +60,9 @@ namespace PipServices.Commons.Run
             return result ?? defaultValue;
         }
 
-        public bool Contains(string key)
+        public new bool ContainsKey(string key)
         {
-            var path = StringConverter.ToNullableString(key);
-            return Get(path) != null;
+            return RecursiveObjectReader.HasProperty(this, key);
         }
 
         public Parameters Override(Parameters parameters)
@@ -176,32 +72,20 @@ namespace PipServices.Commons.Run
 
         public Parameters Override(Parameters parameters, bool recursive)
         {
-            return Parameters.Merge(new Parameters(parameters), this, recursive);
-        }
+            var result = new Parameters();
 
-        public static Parameters Merge(Parameters destination, IDictionary source, bool recursive)
-        {
-            if (destination == null) destination = new Parameters();
-            if (source == null) return destination;
-            foreach(var key in source.Keys)
+            if (recursive)
             {
-                var keyStr = StringConverter.ToString(key);
-                if (destination.ContainsKey(keyStr))
-                {
-                    var configValue = destination.Get(keyStr);
-                    var defaultValue = source[key];
-
-                    if(recursive && configValue is IDictionary && defaultValue is IDictionary)
-                    {
-                        destination[keyStr] = Merge(new Parameters((IDictionary)configValue), (IDictionary)defaultValue, recursive);
-                    }
-                }
-                else
-                {
-                    destination[keyStr] = source[key];
-                }
+                RecursiveObjectWriter.CopyProperties(result, this);
+                RecursiveObjectWriter.CopyProperties(result, parameters);
             }
-            return destination;
+            else
+            {
+                ObjectWriter.SetProperties(result, this);
+                ObjectWriter.SetProperties(result, parameters);
+            }
+
+            return result;
         }
 
         public Parameters SetDefaults(Parameters defaultParameters)
@@ -211,13 +95,28 @@ namespace PipServices.Commons.Run
 
         public Parameters SetDefaults(Parameters defaultParameters, bool recursive)
         {
-            return Parameters.Merge(new Parameters(this), defaultParameters, recursive);
+            var result = new Parameters();
+
+            if (recursive)
+            {
+                RecursiveObjectWriter.CopyProperties(result, defaultParameters);
+                RecursiveObjectWriter.CopyProperties(result, this);
+            }
+            else
+            {
+                ObjectWriter.SetProperties(result, defaultParameters);
+                ObjectWriter.SetProperties(result, this);
+            }
+
+            return result;
         }
 
         public void AssignTo(object value)
         {
-            if (value == null || Count == 0) return;
-            PropertyReflector.SetProperties(value, this);
+            if (value == null || Count == 0)
+                return;
+
+            RecursiveObjectWriter.CopyProperties(value, this);
         }
 
         public Parameters Pick(params string[] paths)
@@ -248,14 +147,14 @@ namespace PipServices.Commons.Run
             return JsonConverter.ToJson(this);
         }
 
-        public static new Parameters FromTuples(params object[] tuples)
+        public new static Parameters FromTuples(params object[] tuples)
         {
             return new Parameters(AnyValueMap.FromTuples(tuples));
         }
 
         public static Parameters MergeParams(params Parameters[] parameters)
         {
-            return new Parameters(AnyValueMap.FromMaps(parameters));
+            return new Parameters(FromMaps(parameters));
         }
 
         public static Parameters FromJson(string json)

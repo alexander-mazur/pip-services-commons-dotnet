@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using PipServices.Commons.Convert;
+using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Data
 {
@@ -18,6 +19,7 @@ namespace PipServices.Commons.Data
         }
 
         public AnyValueMap(IDictionary values)
+            : base(StringComparer.OrdinalIgnoreCase)
         {
             SetAsMap(values);
         }
@@ -25,19 +27,20 @@ namespace PipServices.Commons.Data
         public virtual object Get(string key)
         {
             var value = TryGet(key);
+
             if (value == null)
-            {
                 throw new NullReferenceException("Value with key " + key + " is not defined");
-            }
+
             return value;
         }
 
         protected object TryGet(string key)
         {
-            object value = null;
-            TryGetValue(key, out value);
-            return value;
+            object value;
 
+            TryGetValue(key, out value);
+
+            return value;
         }
 
         public void SetAsMap(IDictionary map)
@@ -46,9 +49,7 @@ namespace PipServices.Commons.Data
 
             if (map == null || map.Count == 0) return;
             foreach (var key in map.Keys)
-            {
-                Add(StringConverter.ToString(key), map[key]);
-            }
+                RecursiveObjectWriter.SetProperty(this, key.ToString(), map[key]);
         }
 
         public object GetAsObject()
@@ -69,7 +70,7 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(string key, object value)
         {
-            this[key] = value;
+            RecursiveObjectWriter.SetProperty(this, key, value);
         }
 
         public string GetAsNullableString(string key)

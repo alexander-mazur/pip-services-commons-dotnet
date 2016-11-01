@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 using PipServices.Commons.Convert;
+using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Data
 {
     public class StringValueMap : Dictionary<string, object>
     {
         public StringValueMap()
-        { }
+            : base(StringComparer.OrdinalIgnoreCase)
+        {
+        }
 
         public StringValueMap(IDictionary<string, object> map)
-            : base()
+            : base(StringComparer.OrdinalIgnoreCase)
         {
             SetAsMap(map);
         }
@@ -20,9 +22,7 @@ namespace PipServices.Commons.Data
         public string Get(string name)
         {
             if (name == null)
-            {
                 throw new ArgumentNullException(nameof(name));
-            }
 
             foreach (var key in Keys)
             {
@@ -37,9 +37,7 @@ namespace PipServices.Commons.Data
         public void SetAsMap(IDictionary<string, object> map)
         {
             foreach (var key in map.Keys)
-            {
                 this[StringConverter.ToString(key)] = StringConverter.ToNullableString(map[key]);
-            }
         }
 
         public object GetAsObject()
@@ -305,6 +303,10 @@ namespace PipServices.Commons.Data
         public static StringValueMap FromTuples(params object[] tuples)
         {
             var result = new StringValueMap();
+
+            if (tuples == null || tuples.Length == 0)
+                return result;
+
             for (var i = 0; i < tuples.Length; i += 2)
             {
                 if (i + 1 >= tuples.Length) break;
@@ -314,6 +316,7 @@ namespace PipServices.Commons.Data
 
                 result[name] = value;
             }
+
             return result;
         }
 
@@ -351,7 +354,7 @@ namespace PipServices.Commons.Data
         private string TryGet(string key)
         {
             object value;
-            TryGetValue(key.ToLower(), out value);
+            TryGetValue(key, out value);
             return value?.ToString();
         }
     }
