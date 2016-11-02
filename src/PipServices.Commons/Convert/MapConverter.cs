@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 using PipServices.Commons.Data.Mapper;
 
 namespace PipServices.Commons.Convert
@@ -44,7 +45,7 @@ namespace PipServices.Commons.Convert
             }
 
             var enumerable = value as IEnumerable;
-            if (enumerable != null && !(value is string))
+            if (enumerable != null && !(value is string) && !(value is JObject || value is JArray))
             {
                 return EnumerableToMap(enumerable);
             }
