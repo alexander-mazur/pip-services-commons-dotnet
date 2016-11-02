@@ -1,9 +1,14 @@
-﻿namespace PipServices.Commons.Errors
+﻿using System;
+
+namespace PipServices.Commons.Errors
 {
     public static class ApplicationExceptionFactory
     {
         public static ApplicationException Create(ErrorDescription description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             ApplicationException error;
             if (description.Category == ErrorCategory.Unknown)
                 error = new UnknownException(description.CorrelationId, description.Code, description.Message);
