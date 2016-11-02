@@ -63,7 +63,7 @@ namespace PipServices.Commons.Commands
             {
                 try
                 {
-                    listener.OnEvent(this, correlationId, args);
+                    listener.OnEvent(correlationId, this, args);
                 }
                 catch (Exception ex)
                 {

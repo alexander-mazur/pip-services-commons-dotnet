@@ -19,6 +19,6 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="args">Command arguments.</param>
         /// <returns>List of errors or empty list if validation was successful.</returns>
-        List<ValidationException> Validate(Parameters args);
+        IList<ValidationResult> Validate(Parameters args);
     }
 }

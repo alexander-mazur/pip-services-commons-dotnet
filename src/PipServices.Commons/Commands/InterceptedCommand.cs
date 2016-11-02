@@ -28,10 +28,7 @@ namespace PipServices.Commons.Commands
         /// <summary>
         /// Gets the command name.
         /// </summary>
-        public string Name
-        {
-            get { return _intercepter.GetName(_next); }
-        }
+        public string Name => _intercepter.GetName(_next);
 
         /// <summary>
         /// Executes the command given specific arguments as input.
@@ -50,7 +47,7 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="args">Command arguments.</param>
         /// <returns>A list of errors or an empty list if validation was successful.</returns>
-        public List<ValidationException> Validate(Parameters args)
+        public IList<ValidationResult> Validate(Parameters args)
         {
             return _intercepter.Validate(_next, args);
         }

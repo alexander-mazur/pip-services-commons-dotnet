@@ -13,6 +13,6 @@ namespace PipServices.Commons.Commands
         /// <param name="e">Event reference.</param>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="value">Event arguments/value.</param>
-        void OnEvent(IEvent e, string correlationId, Parameters value);
+        void OnEvent(string correlationId, IEvent e, Parameters value);
     }
 }

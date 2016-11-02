@@ -34,6 +34,6 @@ namespace PipServices.Commons.Commands
         /// <param name="command">Intercepted command.</param>
         /// <param name="args">Command arguments.</param>
         /// <returns>A list of errors or an empty list if validation was successful.</returns>
-        List<ValidationException> Validate(ICommand command, Parameters args);
+        List<ValidationResult> Validate(ICommand command, Parameters args);
     }
 }

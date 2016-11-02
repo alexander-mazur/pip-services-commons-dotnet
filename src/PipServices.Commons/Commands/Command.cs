@@ -26,13 +26,11 @@ namespace PipServices.Commons.Commands
         public Command(string name, Schema schema, IParamExecutable function)
         {
             if (name == null)
-            {
                 throw new ArgumentNullException(nameof(name));
-            }
+
             if (function == null)
-            {
                 throw new ArgumentNullException(nameof(name));
-            }
+
             Name = name;
             _schema = schema;
             _function = function;
@@ -43,15 +41,12 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="args">Cimmand arguments.</param>
         /// <returns>A list of errors or empty list if validation was successful.</returns>
-        public List<ValidationException> Validate(Parameters args)
+        public IList<ValidationResult> Validate(Parameters args)
         {
-            if (_schema == null)
-            {
-                return new List<ValidationException>();
-            }
+            if (_schema != null)
+                return _schema.Validate(args);
 
-            // TODO: complete implementation
-            return new List<ValidationException>();
+            return new List<ValidationResult>();
         }
 
         /// <summary>
@@ -63,14 +58,7 @@ namespace PipServices.Commons.Commands
         /// <returns>Execution result.</returns>
         public async Task<object> ExecuteAsync(string correlationId, Parameters args, CancellationToken token)
         {
-            if (_schema != null)
-            {
-                var errors = Validate(args);
-                if (errors.Count > 0)
-                {
-                    throw errors[0];
-                }
-            }
+            _schema?.ValidateAndThrowException(correlationId, args);
 
             try
             {
@@ -78,11 +66,9 @@ namespace PipServices.Commons.Commands
             }
             catch (Exception ex)
             {
-                // Todo: Wrap exception
-
                 throw new InvocationException(
                     correlationId, "EXEC_FAILED", "Execution " + Name + " failed: " + ex, ex)
-                    .WithDetails("command", Name);
+                    .Wrap(ex);
             }
         }
     }

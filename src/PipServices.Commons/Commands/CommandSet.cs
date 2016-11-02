@@ -99,14 +99,16 @@ namespace PipServices.Commons.Commands
         /// <summary>
         /// Adds command from another command set to this set.
         /// </summary>
-        /// <param name="commands">The commands set to add.</param>
-        public void AddCommandSet(CommandSet commands)
+        /// <param name="commandSet">The commands set to add.</param>
+        public void AddCommandSet(CommandSet commandSet)
         {
-            foreach (var command in commands.Commands)
-            {
+            foreach (var command in commandSet.Commands)
                 AddCommand(command);
-            }
+
+            foreach (var commandEvent in commandSet.Events)
+                AddEvent(commandEvent);
         }
+
 
         /// <summary>
         /// Adds an intercepter to the command set.
@@ -139,15 +141,10 @@ namespace PipServices.Commons.Commands
             }
 
             if (correlationId == null)
-            {
                 correlationId = IdGenerator.NextShort();
-            }
 
-            var errors = cref.Validate(args);
-            if (errors.Count > 0)
-            {
-                throw errors[0];
-            }
+            var results = cref.Validate(args);
+            ValidationException.ThrowExceptionIfNeeded(correlationId, results, false);
 
             return cref.ExecuteAsync(correlationId, args, token);
         }
@@ -158,17 +155,19 @@ namespace PipServices.Commons.Commands
         /// <param name="command">Command name.</param>
         /// <param name="args">Command arguments.</param>
         /// <returns>A list of validation errors or an empty list if the arguments are valid.</returns>
-        public List<ValidationException> Validate(string command, Parameters args)
+        public IList<ValidationResult> Validate(string command, Parameters args)
         {
             var cref = FindCommand(command);
+
             if (cref == null)
             {
-                var errors = new List<ValidationException>();
-                errors.Add((ValidationException)new ValidationException(
-                    "CMD_NOT_FOUND",
-                    "Request command does not exist")
-                    .WithDetails("command", command));
-                return errors;
+                var results = new List<ValidationResult>
+                {
+                    new ValidationResult(null, ValidationResultType.Error,
+                        "CMD_NOT_FOUND", "Requested command does not exist", null, null)
+                };
+
+                return results;
             }
 
             return cref.Validate(args);
@@ -204,22 +203,21 @@ namespace PipServices.Commons.Commands
         /// <param name="ev">Event name.</param>
         /// <param name="correlationId">Correlation/transaction id.</param>
         /// <param name="args">Event arguments/value.</param>
-        public void Notify(string ev, string correlationId, Parameters args)
+        public async Task NotifyAsync(string correlationId, string ev, Parameters value)
         {
             var e = FindEvent(ev);
+
             if (e != null)
-            {
-                e.NotifyAsync(correlationId, args);
-            }
+                await e.NotifyAsync(correlationId, value);
         }
 
         private void BuildCommandChain(ICommand command)
         {
             var next = command;
+
             for (var i = _intercepters.Count - 1; i >= 0; i--)
-            {
                 next = new InterceptedCommand(_intercepters[i], next);
-            }
+
             _commandsByName[next.Name] = next;
         }
 
@@ -227,10 +225,9 @@ namespace PipServices.Commons.Commands
         private void RebuildAllCommandChains()
         {
             _commandsByName.Clear();
+
             foreach (var command in Commands)
-            {
                 BuildCommandChain(command);
-            }
         }
     }
 }

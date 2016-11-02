@@ -6,7 +6,9 @@ namespace PipServices.Commons.Validate
 {
     public class ValidationException : BadRequestException
     {
-        public ValidationException(string correlationId, List<ValidationResult> results):
+        private static long SerialVersionUid { get; } = -1459801864235223845L;
+
+        public ValidationException(string correlationId, IList<ValidationResult> results) :
             this(correlationId, ComposeMessage(results))
         {
             WithDetails("results", results);
@@ -17,7 +19,7 @@ namespace PipServices.Commons.Validate
         {
         }
 
-        public static string ComposeMessage(List<ValidationResult> results)
+        public static string ComposeMessage(IList<ValidationResult> results)
         {
             var builder = new StringBuilder();
             builder.Append("Validation failed");
@@ -27,17 +29,33 @@ namespace PipServices.Commons.Validate
                 var first = true;
                 foreach (var result in results)
                 {
-                    if (result.Type != ValidationResultType.Information)
-                    {
-                        if (!first) builder.Append(": ");
-                        else builder.Append(", ");
-                        builder.Append(result.Message);
-                        first = false;
-                    }
+                    if (result.Type == ValidationResultType.Information)
+                        continue;
+
+                    builder.Append(!first ? ": " : ", ");
+                    builder.Append(result.Message);
+                    first = false;
                 }
             }
 
             return builder.ToString();
+        }
+
+
+        public static void ThrowExceptionIfNeeded(string correlationId, IList<ValidationResult> results, bool strict)
+        {
+            var hasErrors = false;
+            foreach (var result in results)
+            {
+                if (result.Type == ValidationResultType.Error)
+                    hasErrors = true;
+
+                if (strict && result.Type == ValidationResultType.Warning)
+                    hasErrors = true;
+            }
+
+            if (hasErrors)
+                throw new ValidationException(correlationId, results);
         }
     }
 }
