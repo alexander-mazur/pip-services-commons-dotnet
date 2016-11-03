@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0DBD324-390F-4490-BF56-E778241D514D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PipServices.Commons</RootNamespace>
+    <AssemblyName>PipServices.Commons.Dot</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\YamlDotNet.4.0.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Build\CompositeFactory.cs" />
+    <Compile Include="Build\CreateException.cs" />
+    <Compile Include="Build\IFactory.cs" />
+    <Compile Include="Cache\CacheEntry.cs" />
+    <Compile Include="Cache\DefaultCacheFactory.cs" />
+    <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Cache\MemoryCache.cs" />
+    <Compile Include="Cache\NullCache.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandSet.cs" />
+    <Compile Include="Commands\Event.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandIntercepter.cs" />
+    <Compile Include="Commands\IEvent.cs" />
+    <Compile Include="Commands\IEventListener.cs" />
+    <Compile Include="Commands\InterceptedCommand.cs" />
+    <Compile Include="Config\ConfigParams.cs" />
+    <Compile Include="Config\IConfigurable.cs" />
+    <Compile Include="Config\IReconfigurable.cs" />
+    <Compile Include="Config\JsonConfigReader.cs" />
+    <Compile Include="Config\YamlConfigReader.cs" />
+    <Compile Include="Convert\ArrayConverter.cs" />
+    <Compile Include="Convert\BooleanConverter.cs" />
+    <Compile Include="Convert\DateTimeConverter.cs" />
+    <Compile Include="Convert\DecimalConverter.cs" />
+    <Compile Include="Convert\DoubleConverter.cs" />
+    <Compile Include="Convert\EnumConverter.cs" />
+    <Compile Include="Convert\FloatConverter.cs" />
+    <Compile Include="Convert\IntegerConverter.cs" />
+    <Compile Include="Convert\JsonConverter.cs" />
+    <Compile Include="Convert\LongConverter.cs" />
+    <Compile Include="Convert\MapConverter.cs" />
+    <Compile Include="Convert\RecursiveMapConverter.cs" />
+    <Compile Include="Convert\StringConverter.cs" />
+    <Compile Include="Convert\TimeSpanConverter.cs" />
+    <Compile Include="Convert\TypeCode.cs" />
+    <Compile Include="Convert\TypeConverter.cs" />
+    <Compile Include="Count\CachedCounters.cs" />
+    <Compile Include="Count\CompositeCounters.cs" />
+    <Compile Include="Count\Counter.cs" />
+    <Compile Include="Count\CounterType.cs" />
+    <Compile Include="Count\DefaultCountersFactory.cs" />
+    <Compile Include="Count\ICounters.cs" />
+    <Compile Include="Count\ITimingCallback.cs" />
+    <Compile Include="Count\LogCounters.cs" />
+    <Compile Include="Count\NullCounters.cs" />
+    <Compile Include="Count\Timing.cs" />
+    <Compile Include="Data\AnyValue.cs" />
+    <Compile Include="Data\AnyValueArray.cs" />
+    <Compile Include="Data\AnyValueMap.cs" />
+    <Compile Include="Data\DataPage.cs" />
+    <Compile Include="Data\FilterParams.cs" />
+    <Compile Include="Data\ICloneable.cs" />
+    <Compile Include="Data\IdGenerator.cs" />
+    <Compile Include="Data\IIdentifiable.cs" />
+    <Compile Include="Data\INamed.cs" />
+    <Compile Include="Data\IStringIdentifiable.cs" />
+    <Compile Include="Data\ITrackable.cs" />
+    <Compile Include="Data\Mapper\IObjectMapper.cs" />
+    <Compile Include="Data\Mapper\IObjectMapperStrategy.cs" />
+    <Compile Include="Data\Mapper\ObjectMapper.cs" />
+    <Compile Include="Data\Mapper\ObjectMapperStrategy.cs" />
+    <Compile Include="Data\PagingParams.cs" />
+    <Compile Include="Data\SortField.cs" />
+    <Compile Include="Data\SortParams.cs" />
+    <Compile Include="Data\StringValueMap.cs" />
+    <Compile Include="Errors\ApplicationException.cs" />
+    <Compile Include="Errors\ApplicationExceptionFactory.cs" />
+    <Compile Include="Errors\BadRequestException.cs" />
+    <Compile Include="Errors\ConfigException.cs" />
+    <Compile Include="Errors\ConflictException.cs" />
+    <Compile Include="Errors\ConnectionException.cs" />
+    <Compile Include="Errors\ErrorCategory.cs" />
+    <Compile Include="Errors\ErrorDescription.cs" />
+    <Compile Include="Errors\ErrorDescriptionFactory.cs" />
+    <Compile Include="Errors\FileException.cs" />
+    <Compile Include="Errors\InternalException.cs" />
+    <Compile Include="Errors\InvalidStateException.cs" />
+    <Compile Include="Errors\InvocationException.cs" />
+    <Compile Include="Errors\NotFoundException.cs" />
+    <Compile Include="Errors\UnauthorizedException.cs" />
+    <Compile Include="Errors\UnknownException.cs" />
+    <Compile Include="Errors\UnsupportedException.cs" />
+    <Compile Include="Log\CompositeLogger.cs" />
+    <Compile Include="Log\ConsoleLogger.cs" />
+    <Compile Include="Log\DefaultLoggerFactory.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="Log\NullLogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Random\RandomData.cs" />
+    <Compile Include="Random\RandomDataGenerator.cs" />
+    <Compile Include="Refer\Descriptor.cs" />
+    <Compile Include="Refer\IDescriptable.cs" />
+    <Compile Include="Refer\ILocateable.cs" />
+    <Compile Include="Refer\IReferenceable.cs" />
+    <Compile Include="Refer\IReferences.cs" />
+    <Compile Include="Refer\IUnreferenceable.cs" />
+    <Compile Include="Refer\Reference.cs" />
+    <Compile Include="Refer\ReferenceException.cs" />
+    <Compile Include="Refer\ReferenceNotFoundException.cs" />
+    <Compile Include="Refer\Referencer.cs" />
+    <Compile Include="Refer\ReferenceSet.cs" />
+    <Compile Include="Reflect\MethodReflector.cs" />
+    <Compile Include="Reflect\ObjectReader.cs" />
+    <Compile Include="Reflect\ObjectWriter.cs" />
+    <Compile Include="Reflect\PropertyReflector.cs" />
+    <Compile Include="Reflect\RecursiveObjectReader.cs" />
+    <Compile Include="Reflect\RecursiveObjectWriter.cs" />
+    <Compile Include="Reflect\TypeDescriptor.cs" />
+    <Compile Include="Reflect\TypeMatcher.cs" />
+    <Compile Include="Reflect\TypeReflector.cs" />
+    <Compile Include="Run\Cleaner.cs" />
+    <Compile Include="Run\Closer.cs" />
+    <Compile Include="Run\Executor.cs" />
+    <Compile Include="Run\FixedRateTimer.cs" />
+    <Compile Include="Run\ICleanable.cs" />
+    <Compile Include="Run\IClosable.cs" />
+    <Compile Include="Run\IExecutable.cs" />
+    <Compile Include="Run\INotifiable.cs" />
+    <Compile Include="Run\IOpenable.cs" />
+    <Compile Include="Run\IParamExecutable.cs" />
+    <Compile Include="Run\IParamNotifiable.cs" />
+    <Compile Include="Run\Notifier.cs" />
+    <Compile Include="Run\Opener.cs" />
+    <Compile Include="Run\Parameters.cs" />
+    <Compile Include="Validate\AndRule.cs" />
+    <Compile Include="Validate\ArraySchema.cs" />
+    <Compile Include="Validate\AtLeastOneExistRule.cs" />
+    <Compile Include="Validate\ExcludedRule.cs" />
+    <Compile Include="Validate\IncludedRule.cs" />
+    <Compile Include="Validate\IValidationRule.cs" />
+    <Compile Include="Validate\MapSchema.cs" />
+    <Compile Include="Validate\ObjectComparator.cs" />
+    <Compile Include="Validate\ObjectSchema.cs" />
+    <Compile Include="Validate\OnlyOneExistRule.cs" />
+    <Compile Include="Validate\OrRule.cs" />
+    <Compile Include="Validate\PropertiesComparisonRule.cs" />
+    <Compile Include="Validate\PropertySchema.cs" />
+    <Compile Include="Validate\Schema.cs" />
+    <Compile Include="Validate\ValidationException.cs" />
+    <Compile Include="Validate\ValidationResult.cs" />
+    <Compile Include="Validate\ValidationResultType.cs" />
+    <Compile Include="Validate\ValueComparisonRule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
