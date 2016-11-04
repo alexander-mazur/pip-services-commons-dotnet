@@ -13,15 +13,22 @@ namespace PipServices.Commons.Validate
 
         public void Validate(string path, Schema schema, object value, List<ValidationResult> results)
         {
-            if (_rules == null) return;
+            if (_rules == null || _rules.Length == 0)
+                return;
 
             var localResults = new List<ValidationResult>();
 
             foreach (var rule in _rules)
+            {
+                var resultCount = localResults.Count;
+
                 rule.Validate(path, schema, value, localResults);
 
-            if (localResults.Count == _rules.Length)
-                results.AddRange(localResults);
+                if (resultCount == localResults.Count)
+                    return;
+            }
+
+            results.AddRange(localResults);
         }
     }
 }
