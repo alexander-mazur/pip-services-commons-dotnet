@@ -113,16 +113,8 @@ namespace PipServices.Commons.Validate
         public void ValidateAndThrowException(string correlationId, object value, bool strict = false)
         {
             var results = Validate(value);
-            var hasErrors = results.Any(r => r.Type == ValidationResultType.Error);
 
-            if (hasErrors)
-                throw new ValidationException(correlationId, results);
-
-            if (strict)
-            {
-                var hasWarnings = results.Any(r => r.Type == ValidationResultType.Warning);
-                throw new ValidationException(correlationId, results);
-            }
+            ValidationException.ThrowExceptionIfNeeded(correlationId, results, strict);
         }
     }
 }
