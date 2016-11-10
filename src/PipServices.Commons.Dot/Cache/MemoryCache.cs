@@ -103,7 +103,10 @@ namespace PipServices.Commons.Cache
                         _standardCache.Trim(5);
                 }
 
-            _standardCache.Set(key, value, _policy);
+            _standardCache.Set(key, value, new CacheItemPolicy
+            {
+                SlidingExpiration = TimeSpan.FromMilliseconds(timeout)
+            });
 
             return value;
         }

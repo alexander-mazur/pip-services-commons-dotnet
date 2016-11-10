@@ -51,6 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\CredentialParams.cs" />
+    <Compile Include="Auth\CredentialResolver.cs" />
+    <Compile Include="Auth\ICredentialStore.cs" />
     <Compile Include="Build\CompositeFactory.cs" />
     <Compile Include="Build\CreateException.cs" />
     <Compile Include="Build\IFactory.cs" />
@@ -72,6 +75,9 @@
     <Compile Include="Config\IReconfigurable.cs" />
     <Compile Include="Config\JsonConfigReader.cs" />
     <Compile Include="Config\YamlConfigReader.cs" />
+    <Compile Include="Connect\ConnectionParams.cs" />
+    <Compile Include="Connect\ConnectionResolver.cs" />
+    <Compile Include="Connect\IDiscovery.cs" />
     <Compile Include="Convert\ArrayConverter.cs" />
     <Compile Include="Convert\BooleanConverter.cs" />
     <Compile Include="Convert\DateTimeConverter.cs" />
