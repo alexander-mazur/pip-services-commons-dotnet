@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-*",
-  "authors": [ "Mark Zontak", "Sergey Seroukhov" ],
+  "authors": [ "Mark Zontak", "Sergey Seroukhov", "Volodymyr Tkachenko" ],
   "description": "Basic portable abstractions for Pip.Services in .NET Core",
   "dependencies": {
     "Microsoft.Extensions.Caching.Abstractions": "1.0.0",

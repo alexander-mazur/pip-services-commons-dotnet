@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PipServices.Commons</id>
+    <version>1.0.1</version>
+    <title>PipServices.Commons</title>
+    <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
+    <owners>seroukhov</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Basic portable abstractions for Pip.Services in .NET</description>
+    <releaseNotes>Pre release</releaseNotes>
+    <copyright>Digital Living Software Corp. 2016</copyright>
+    <tags>pip-services microservices framework</tags>
+
+    <dependencies>
+      <group targetFramework="net">
+        <dependency id="Newtonsoft.Json" version="9.0" />
+        <dependency id="YamlDotNet" version="4.0" />
+      </group>
+      <group targetFramework="netstandard">
+        <dependency id="Microsoft.Extensions.Caching.Abstractions" version="1.0.0" />
+        <dependency id="Microsoft.Extensions.Logging.TraceSource" version="1.0.0" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="System.ComponentModel.TypeConverter" version="4.1.0" />
+        <dependency id="System.Linq" version="4.1.0" />
+        <dependency id="System.Linq.Queryable" version="4.0.1" />
+        <dependency id="System.Runtime" version="4.1.0" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.1.1" />
+        <dependency id="Newtonsoft.Json" version="9.0" />
+        <dependency id="YamlDotNet" version="4.0" />
+      </group>
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="src\PipServices.Commons\bin\Release\netstandard1.6\PipServices.Commons.deps.json" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons\bin\Release\netstandard1.6\PipServices.Commons.dll" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons\bin\Release\netstandard1.6\PipServices.Commons.pdb" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons.Dot\bin\Release\PipServices.Commons.dll" target="lib\net461" />
+    <file src="src\PipServices.Commons.Dot\bin\Release\PipServices.Commons.pdb" target="lib\net461" />
+  </files>
+</package>
