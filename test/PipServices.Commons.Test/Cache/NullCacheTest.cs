@@ -25,7 +25,7 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Retrieve_ReturnsNull()
         {
-            var val = _cache.Retrieve("key1");
+            var val = _cache.Retrieve(null, "key1");
 
             Assert.Null(val);
         }
@@ -36,7 +36,7 @@ namespace PipServices.Commons.Test.Cache
             var key = "key1";
             var val = "value1";
 
-            var storedVal = _cache.Store(key, val, 0);
+            var storedVal = _cache.Store(null, key, val, 0);
 
             Assert.Equal(val, storedVal);
         }

@@ -20,8 +20,8 @@ namespace PipServices.Commons.Test.Cache
 
         public MemoryCacheTest()
         {
-            _cache.Store(Key1, Value1, 1000);
-            _cache.Store(Key2, Value2, 1000);
+            _cache.Store(null, Key1, Value1, 1000);
+            _cache.Store(null, Key2, Value2, 1000);
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace PipServices.Commons.Test.Cache
         {
             Task.Delay(500).Wait();
 
-            var val1 = _cache.Retrieve(Key1);
-            var val2 = _cache.Retrieve(Key2);
+            var val1 = _cache.Retrieve(null, Key1);
+            var val2 = _cache.Retrieve(null, Key2);
 
             Assert.NotNull(val1);
             Assert.Equal(Value1, val1);
@@ -54,8 +54,8 @@ namespace PipServices.Commons.Test.Cache
         {
             Task.Delay(1000).Wait();
 
-            var val1 = _cache.Retrieve(Key1);
-            var val2 = _cache.Retrieve(Key2);
+            var val1 = _cache.Retrieve(null, Key1);
+            var val2 = _cache.Retrieve(null, Key2);
 
             Assert.Null(val1);
             Assert.Null(val2);
@@ -64,7 +64,7 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Store_ReturnsSameValue()
         {
-            var storedVal = _cache.Store(Key3, Value3, 0);
+            var storedVal = _cache.Store(null, Key3, Value3, 0);
 
             Assert.Equal(Value3, storedVal);
         }
@@ -72,9 +72,9 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Store_ValueIsStored()
         {
-            _cache.Store(Key3, Value3, 1000);
+            _cache.Store(null, Key3, Value3, 1000);
 
-            var val3 = _cache.Retrieve(Key3);
+            var val3 = _cache.Retrieve(null, Key3);
 
             Assert.NotNull(val3);
             Assert.Equal(Value3, val3);
@@ -83,9 +83,9 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Remove_ValueIsRemoved()
         {
-            _cache.Remove(Key1);
+            _cache.Remove(null, Key1);
 
-            var val1 = _cache.Retrieve(Key1);
+            var val1 = _cache.Retrieve(null, Key1);
 
             Assert.Null(val1);
         }
@@ -98,16 +98,16 @@ namespace PipServices.Commons.Test.Cache
 
             _cache.Configure(config);
 
-            _cache.Store(Key3, Value3, 0);
+            _cache.Store(null, Key3, Value3, 0);
 
-            var val3 = _cache.Retrieve(Key3);
+            var val3 = _cache.Retrieve(null, Key3);
 
             Assert.NotNull(val3);
             Assert.Equal(Value3, val3);
 
             Task.Delay(2500).Wait();
 
-            val3 = _cache.Retrieve(Key3);
+            val3 = _cache.Retrieve(null, Key3);
 
             Assert.Null(val3);
         }
