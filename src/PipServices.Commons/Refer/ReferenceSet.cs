@@ -192,7 +192,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public static ReferenceSet From(params IDescriptable[] references)
+        public static ReferenceSet FromList(params IDescriptable[] references)
         {
             var result = new ReferenceSet();
             foreach (var reference in references)

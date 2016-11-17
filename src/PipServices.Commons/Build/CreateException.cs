@@ -1,6 +1,5 @@
 ﻿using System;
 using PipServices.Commons.Errors;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Build
 {
@@ -10,7 +9,7 @@ namespace PipServices.Commons.Build
     public class CreateException : InternalException
     {
         public CreateException(Exception innerException) :
-            this(null, (string)null)
+            this(null, null)
         {
         }
 

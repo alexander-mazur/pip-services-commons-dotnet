@@ -103,6 +103,8 @@ namespace PipServices.Commons.Cache
                         _standardCache.Trim(5);
                 }
 
+            timeout = timeout > 0 ? timeout : _timeout;
+
             _standardCache.Set(key, value, new CacheItemPolicy
             {
                 SlidingExpiration = TimeSpan.FromMilliseconds(timeout)

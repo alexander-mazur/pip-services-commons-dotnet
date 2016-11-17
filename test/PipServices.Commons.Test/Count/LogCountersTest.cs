@@ -1,6 +1,7 @@
 ﻿using PipServices.Commons.Log;
 using PipServices.Commons.Config;
 using PipServices.Commons.Count;
+using PipServices.Commons.Refer;
 using Xunit;
 
 namespace PipServices.Commons.Test.Count
@@ -12,11 +13,12 @@ namespace PipServices.Commons.Test.Count
 
         public LogCountersTest()
         {
-            ILogger log = new ConsoleLogger();
+            var log = new ConsoleLogger();
+            var refs = ReferenceSet.FromList(log);
+
+            _counters.SetReferences(refs);
 
             _fixture = new CountersFixture(_counters);
-
-            _counters.ClearAll();
         }
 
         [Fact]

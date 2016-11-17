@@ -270,13 +270,13 @@ namespace PipServices.Commons.Data
         public AnyValueMap GetAsNullableMap(string key)
         {
             var value = GetAsObject(key);
-            return value != null ? AnyValueMap.FromValue(value) : null;
+            return value != null ? FromValue(value) : null;
         }
 
         public AnyValueMap GetAsMap(string key)
         {
             var value = GetAsObject(key);
-            return AnyValueMap.FromValue(value);
+            return FromValue(value);
         }
 
         public AnyValueMap GetAsMapWithDefault(string key, AnyValueMap defaultValue)

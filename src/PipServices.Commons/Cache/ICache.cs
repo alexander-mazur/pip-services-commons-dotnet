@@ -11,7 +11,7 @@
         /// Retrieves a value from cache by unique key.
         /// </summary>
         /// <param name="key">Unique key identifying a data object.</param>
-        /// <returns>Cached value or null if the value is not found./returns>
+        /// <returns>Cached value or null if the value is not found.</returns>
         object Retrieve(string key);
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// <param name="key">Unique key identifying a data object.</param>
         /// <param name="value">The data object to store.</param>
         /// <param name="timeout">Time to live for the object in milliseconds.</param>
-        /// <returns><Cached object stored in the cache./returns>
+        /// <returns>Cached object stored in the cache.</returns>
         object Store(string key, object value, long timeout);
 
         /// <summary>

@@ -103,14 +103,14 @@ namespace PipServices.Commons.Config
 
         public ConfigParams Override(ConfigParams configParams)
         {
-            var map = StringValueMap.FromMaps(this, configParams);
+            var map = FromMaps(this, configParams);
             return new ConfigParams(map);
         }
 
 
         public ConfigParams SetDefaults(ConfigParams defaultConfigParams)
         {
-            var map = StringValueMap.FromMaps(defaultConfigParams, this);
+            var map = FromMaps(defaultConfigParams, this);
             return new ConfigParams(map);
         }
 

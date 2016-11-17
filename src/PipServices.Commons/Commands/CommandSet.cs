@@ -202,7 +202,7 @@ namespace PipServices.Commons.Commands
         /// </summary>
         /// <param name="ev">Event name.</param>
         /// <param name="correlationId">Correlation/transaction id.</param>
-        /// <param name="args">Event arguments/value.</param>
+        /// <param name="value">Event arguments/value.</param>
         public async Task NotifyAsync(string correlationId, string ev, Parameters value)
         {
             var e = FindEvent(ev);

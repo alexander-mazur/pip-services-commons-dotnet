@@ -22,14 +22,14 @@ namespace PipServices.Commons.Reflect
             var type = obj as TypeDescriptor;
             if (type != null) {
                 var otherType = type;
-                if (this.Name == null || otherType.Name == null)
+                if (Name == null || otherType.Name == null)
                     return false;
 
-                if (!this.Name.Equals(otherType.Name))
+                if (!Name.Equals(otherType.Name))
                     return false;
 
-                if (this.Library == null || otherType.Library == null
-                    || this.Library.Equals(otherType.Library))
+                if (Library == null || otherType.Library == null
+                    || Library.Equals(otherType.Library))
                     return true;
             }
 

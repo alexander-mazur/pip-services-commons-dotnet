@@ -47,24 +47,16 @@ namespace PipServices.Commons.Data
                 return (PagingParams)value;
             }
             var map = AnyValueMap.FromValue(value);
-            return PagingParams.FromMap(map);
+            return FromMap(map);
         }
 
         public static PagingParams FromTuples(params object[] tuples)
         {
             var map = AnyValueMap.FromTuples(tuples);
-            return PagingParams.FromMap(map);
+            return FromMap(map);
         }
 
         public static PagingParams FromMap(AnyValueMap map)
-        {
-            var skip = map.GetAsNullableInteger("skip");
-            var take = map.GetAsNullableInteger("take");
-            var total = map.GetAsBooleanWithDefault("total", true);
-            return new PagingParams(skip, take, total);
-        }
-
-        public static PagingParams fromMap(StringValueMap map)
         {
             var skip = map.GetAsNullableInteger("skip");
             var take = map.GetAsNullableInteger("take");

@@ -91,7 +91,7 @@ namespace PipServices.Commons.Test.Cache
         }
 
         [Fact]
-        public void Configure_NewValueStaysFor1500ms_ButFailsFor2000ms()
+        public void Configure_NewValueStaysFor1500ms_ButFailsFor2500ms()
         {
             var param = new Dictionary<string, object> {{"timeout", 2000}};
             var config = new ConfigParams(param);
@@ -105,7 +105,7 @@ namespace PipServices.Commons.Test.Cache
             Assert.NotNull(val3);
             Assert.Equal(Value3, val3);
 
-            Task.Delay(2000).Wait();
+            Task.Delay(2500).Wait();
 
             val3 = _cache.Retrieve(Key3);
 

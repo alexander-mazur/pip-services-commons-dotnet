@@ -4,7 +4,7 @@ namespace PipServices.Commons.Data
 {
     public class IdGenerator
     {
-        private static Random _rand = new Random();
+        private static readonly Random _rand = new Random();
 
         public static string NextShort()
         {
