@@ -62,7 +62,7 @@ namespace PipServices.Commons.Test.Auth
             }
             catch (Exception ex)
             {
-                Assert.IsType<ReferenceNotFoundException>(ex);
+                Assert.IsType<ReferenceException>(ex);
             }
         }
     }

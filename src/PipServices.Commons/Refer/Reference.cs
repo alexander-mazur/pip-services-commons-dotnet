@@ -2,22 +2,21 @@
 
 namespace PipServices.Commons.Refer
 {
-    // Todo: Add location by type
     public class Reference : ILocateable
     {
         public object Locator { get; }
         public object Refer { get; }
 
+        private ILocateable _locateableReference;
+
         public Reference(object reference, object locator)
         {
             if (locator == null)
-            {
                 throw new ArgumentNullException(nameof(locator));
-            }
+
             if (reference == null)
-            {
                 throw new ArgumentNullException(nameof(reference));
-            }
+
             Locator = locator;
             Refer = reference;
         }
@@ -32,27 +31,28 @@ namespace PipServices.Commons.Refer
                 throw new ArgumentException("Reference must implement ILocateable or IDescribable interface");
             }
 
+            _locateableReference = locatable;
+
             Refer = reference;
+
             if (describable != null)
-            {
                 Locator = describable.GetDescriptor();
-            }
         }
 
-        public bool Locate(object descriptor)
+        public bool Locate(object locator)
         {
-            if (Refer.Equals(descriptor))
-            {
+            if (Refer.Equals(locator))
                 return true;
-            }
 
-            var locatable = Refer as ILocateable;
-            if (locatable != null && locatable.Locate(descriptor))
-            {
-                return true;
-            }
-            return Locator.Equals(descriptor);
+            if (locator is Type)
+			    return Equals(Refer.GetType(), locator);
 
+		    // Locate locateable objects
+		    if (_locateableReference != null)
+                return _locateableReference.Locate(locator);
+
+            // Locate by direct locator matching
+            return Locator.Equals(locator);
         }
     }
 }

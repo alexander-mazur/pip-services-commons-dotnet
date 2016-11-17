@@ -72,7 +72,7 @@ namespace PipServices.Commons.Auth
             var components = _references.GetOptional(new Descriptor("*", "credential_store", "*", "*"));
 
             if (components.Count == 0)
-                throw new ReferenceNotFoundException(correlationId, "Credential store wasn't found to make lookup");
+                throw new ReferenceException(correlationId, "Credential store wasn't found to make lookup");
 
             foreach (var component in components)
             {

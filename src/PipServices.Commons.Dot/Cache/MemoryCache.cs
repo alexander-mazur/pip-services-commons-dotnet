@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Runtime.Caching;
+using System.Threading;
+using System.Threading.Tasks;
 using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
+using PipServices.Commons.Run;
 
 namespace PipServices.Commons.Cache
 {
-    // Todo: Add correlation ids
-    // Todo: Add ICleanable
-
     /// <summary>
     /// Local in-memory cache that can be used in non-scaled deployments or for testing.
     /// </summary>
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public class MemoryCache : ICache, IDescriptable, IReconfigurable
+    public class MemoryCache : ICache, IDescriptable, IReconfigurable, ICleanable
     {
         public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory",
             "1.0");
@@ -23,7 +23,6 @@ namespace PipServices.Commons.Cache
         private const long DefaultMaxSize = 1000;
 
         private readonly System.Runtime.Caching.MemoryCache _standardCache = System.Runtime.Caching.MemoryCache.Default;
-        private CacheItemPolicy _policy;
 
         private long _timeout, _maxSize;
         private readonly object _syncObject = new object();
@@ -36,11 +35,6 @@ namespace PipServices.Commons.Cache
         {
             _timeout = config.GetAsLongWithDefault("timeout", DefaultTimeout);
             _maxSize = config.GetAsLongWithDefault("max_size", DefaultMaxSize);
-
-            _policy = new CacheItemPolicy()
-            {
-                SlidingExpiration = TimeSpan.FromMilliseconds(_timeout)
-            };
         }
 
         /// <summary>
@@ -55,8 +49,9 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Removes an object from cache.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying the object.</param>
-        public void Remove(string key)
+        public void Remove(string correlationId, string key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -67,8 +62,9 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Retrieves a value from cache by unique key.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
-        public object Retrieve(string key)
+        public object Retrieve(string correlationId, string key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -79,10 +75,11 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Stores an object identified by a unique key in cache.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
         /// <param name="value">The data object to store.</param>
         /// <param name="timeout">Time to live for the object in milliseconds.</param>
-        public object Store(string key, object value, long timeout)
+        public object Store(string correlationId, string key, object value, long timeout)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -111,6 +108,13 @@ namespace PipServices.Commons.Cache
             });
 
             return value;
+        }
+
+        public Task ClearAsync(string correlationId, CancellationToken token)
+        {
+            _standardCache.Trim(100);
+
+            return Task.CompletedTask;
         }
     }
 }

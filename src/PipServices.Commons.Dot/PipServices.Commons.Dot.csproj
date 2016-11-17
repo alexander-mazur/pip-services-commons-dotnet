@@ -158,7 +158,6 @@
     <Compile Include="Refer\IUnreferenceable.cs" />
     <Compile Include="Refer\Reference.cs" />
     <Compile Include="Refer\ReferenceException.cs" />
-    <Compile Include="Refer\ReferenceNotFoundException.cs" />
     <Compile Include="Refer\Referencer.cs" />
     <Compile Include="Refer\ReferenceSet.cs" />
     <Compile Include="Reflect\MethodReflector.cs" />
@@ -179,6 +178,7 @@
     <Compile Include="Run\IExecutable.cs" />
     <Compile Include="Run\INotifiable.cs" />
     <Compile Include="Run\IOpenable.cs" />
+    <Compile Include="Run\IParametrized.cs" />
     <Compile Include="Run\IParamExecutable.cs" />
     <Compile Include="Run\IParamNotifiable.cs" />
     <Compile Include="Run\Notifier.cs" />

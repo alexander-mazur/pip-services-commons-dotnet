@@ -7,13 +7,11 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
-    // Todo: Use composite logger
-
     public sealed class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
         public static Descriptor Descriptor { get; } = new Descriptor("pip-counters", "counters", "log", "1.0");
 
-        private ILogger _logger;
+        private readonly CompositeLogger _logger = new CompositeLogger();
 
         public Descriptor GetDescriptor()
         {
@@ -22,11 +20,7 @@ namespace PipServices.Commons.Count
 
         public void SetReferences(IReferences references)
         {
-            var loggerReference = references.GetOneOptional(new Descriptor(null, "logger", null, null));
-
-            var logger = loggerReference as ILogger;
-            if (logger != null)
-			    _logger = logger;
+            _logger.SetReferences(references);
         }
 
         /**

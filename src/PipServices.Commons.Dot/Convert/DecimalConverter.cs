@@ -36,7 +36,7 @@ namespace PipServices.Commons.Convert
         public static decimal ToDecimalWithDefault(object value, decimal defaultValue = 0)
         {
             var result = ToNullableDecimal(value);
-            return result.HasValue ? result.Value : defaultValue;
+            return result ?? defaultValue;
         }
     }
 }

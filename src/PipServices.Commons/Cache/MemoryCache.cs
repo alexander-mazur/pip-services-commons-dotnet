@@ -7,9 +7,6 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Cache
 {
-    // Todo: Add correlation ids
-    // Todo: Add ICleanable
-
     /// <summary>
     /// Local in-memory cache that can be used in non-scaled deployments or for testing.
     /// </summary>
@@ -27,12 +24,6 @@ namespace PipServices.Commons.Cache
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private long _timeout, _maxSize;
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
-
-        /// <summary>
-        /// Creates an instance of local in-memory cache.
-        /// </summary>
-        public MemoryCache()
-        { }
 
         /// <summary>
         /// Initializes the components according to supplied configuration parameters.
@@ -56,8 +47,9 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Removes an object from cache.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying the object.</param>
-        public void Remove(string key)
+        public void Remove(string correlationId, string key)
         {
             if (key == null)
             {
@@ -82,9 +74,10 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Retrieves a value from cache by unique key.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
         /// <returns>Cached value or null if the value is not found.</returns>
-        public object Retrieve(string key)
+        public object Retrieve(string correlationId, string key)
         {
             if (key == null)
             {
@@ -99,7 +92,7 @@ namespace PipServices.Commons.Cache
                 {
                     if (entry.IsExpired())
                     {
-                        Task.Factory.StartNew(() => { Remove(key); });
+                        Task.Factory.StartNew(() => { Remove(correlationId, key); });
                         return null;
                     }
                 }
@@ -115,11 +108,12 @@ namespace PipServices.Commons.Cache
         /// <summary>
         /// Stores an object identified by a unique key in cache.
         /// </summary>
+        /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
         /// <param name="value">The data object to store.</param>
         /// <param name="timeout">Time to live for the object in milliseconds.</param>
         /// <returns>Cached object stored in the cache.</returns>
-        public object Store(string key, object value, long timeout)
+        public object Store(string correlationId, string key, object value, long timeout)
         {
             if (key == null)
             {
@@ -154,7 +148,7 @@ namespace PipServices.Commons.Cache
                 // cleanup
                 if (_maxSize > 0 && _cache.Count > _maxSize)
                 {
-                    Task.Factory.StartNew(() => Cleanup());
+                    Task.Factory.StartNew(Cleanup);
                 }
 
                 return value;
@@ -196,14 +190,26 @@ namespace PipServices.Commons.Cache
                     _cache.Remove(oldest.Key);
                 }
             }
-            catch
+            finally
             {
-                // Ignore error. TODO: log??
+                _lock.ExitWriteLock();
+            }
+        }
+
+        public Task ClearAsync(string correlationId, CancellationToken token)
+        {
+            _lock.EnterWriteLock();
+
+            try
+            {
+                _cache.Clear();
             }
             finally
             {
                 _lock.ExitWriteLock();
             }
+
+            return Task.CompletedTask;
         }
     }
 }

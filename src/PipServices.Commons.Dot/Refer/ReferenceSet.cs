@@ -65,7 +65,7 @@ namespace PipServices.Commons.Refer
                 }
             }
 
-            throw new ReferenceNotFoundException(null, locator);
+            throw new ReferenceException(null, locator);
         }
 
         public object GetOneOptional(object locator)
@@ -88,7 +88,7 @@ namespace PipServices.Commons.Refer
 
             if (reference == null)
             {
-                throw new ReferenceNotFoundException(null, locator);
+                throw new ReferenceException(null, locator);
             }
 
             return reference;

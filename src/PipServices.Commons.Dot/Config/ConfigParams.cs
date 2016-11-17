@@ -1,13 +1,10 @@
 ﻿using System;
 using PipServices.Commons.Data;
 using System.Collections.Generic;
-using PipServices.Commons.Convert;
 using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Config
 {
-    // Todo: FromObject shall be recursive (match java)
-
     /// <summary>
     /// Map with configuration parameters that use complex keys with dot notation and simple string values.
     /// </summary>

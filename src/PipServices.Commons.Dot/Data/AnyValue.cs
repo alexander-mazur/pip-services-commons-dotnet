@@ -4,8 +4,6 @@ using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Data
 {
-    // Todo: Add GetAsMap
-
     public class AnyValue : ICloneable
     {
         private static long SerialVersionUid { get; } = 8543060319681670938L;
@@ -188,6 +186,11 @@ namespace PipServices.Commons.Data
         public AnyValueArray GetAsArray()
         {
             return AnyValueArray.FromValue(Value);
+        }
+
+        public AnyValueMap GetAsMap()
+        {
+            return AnyValueMap.FromValue(Value);
         }
 
         public override bool Equals(object obj)
