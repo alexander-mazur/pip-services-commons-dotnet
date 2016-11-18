@@ -102,12 +102,11 @@
     <Compile Include="Validate\ValueComparisonRuleTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PipServices.Commons.Dot\PipServices.Commons.Dot.csproj">
+    <ProjectReference Include="..\..\src\PipServices.Commons.Net461\PipServices.Commons.Net461.csproj">
       <Project>{c0dbd324-390f-4490-bf56-e778241d514d}</Project>
-      <Name>PipServices.Commons.Dot</Name>
+      <Name>PipServices.Commons.Net461</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
