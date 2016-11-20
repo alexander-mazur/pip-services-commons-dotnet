@@ -11,7 +11,7 @@ namespace PipServices.Commons.Test.Reflect
         {
             var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
-                );
+            );
 
             var has = RecursiveObjectReader.HasProperty(obj, "");
             Assert.False(has);
@@ -58,7 +58,7 @@ namespace PipServices.Commons.Test.Reflect
         {
             var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
-                );
+            );
 
             var value = RecursiveObjectReader.GetProperty(obj, "");
             Assert.Null(value);
@@ -105,7 +105,7 @@ namespace PipServices.Commons.Test.Reflect
         {
             var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
-                );
+            );
 
             var names = RecursiveObjectReader.GetPropertyNames(obj);
             Assert.Equal(5, names.Count);
@@ -121,7 +121,7 @@ namespace PipServices.Commons.Test.Reflect
         {
             var obj = JsonConverter.ToMap(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 }, \"value3\": [ 444, { \"value311\": 555 } ] }"
-                );
+            );
 
             var values = RecursiveObjectReader.GetProperties(obj);
             Assert.Equal(5, values.Count);

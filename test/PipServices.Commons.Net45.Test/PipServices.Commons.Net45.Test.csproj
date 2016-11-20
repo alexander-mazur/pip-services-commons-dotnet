@@ -195,6 +195,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\DescriptorTest.cs">
       <Link>Refer\DescriptorTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\MethodReflectorTest.cs">
+      <Link>Reflect\MethodReflectorTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\ObjectReaderTest.cs">
       <Link>Reflect\ObjectReaderTest.cs</Link>
     </Compile>
@@ -212,6 +215,15 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TestClass.cs">
       <Link>Reflect\TestClass.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeDescriptorTest.cs">
+      <Link>Reflect\TypeDescriptorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeMatcherTest.cs">
+      <Link>Reflect\TypeMatcherTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeReflectorTest.cs">
+      <Link>Reflect\TypeReflectorTest.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Run\ParametersTest.cs">
       <Link>Run\ParametersTest.cs</Link>

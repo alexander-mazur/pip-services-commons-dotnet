@@ -9,6 +9,24 @@ namespace PipServices.Commons.Test.Reflect
     public sealed class RecursiveObjectWriterTest
     {
         [Fact]
+        public void TestSetObjectProperty()
+        {
+            TestClass obj = new TestClass();
+
+            ObjectWriter.SetProperty(obj, "privateField", "XYZ");
+
+            ObjectWriter.SetProperty(obj, "publicField", "AAAA");
+            Assert.Equal("AAAA", obj.PublicField);
+
+            DateTime now = new DateTime(1975, 4, 8, 0, 0, 0, DateTimeKind.Utc);
+            ObjectWriter.SetProperty(obj, "PublicProp", now);
+            Assert.Equal(now, obj.PublicProp);
+
+            ObjectWriter.SetProperty(obj, "PublicProp", "BBBB");
+            Assert.Equal(now, obj.PublicProp);
+        }
+
+        [Fact]
         public void TestSetProperty()
         {
             var obj = JsonConverter.ToMap(

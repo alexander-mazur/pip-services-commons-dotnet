@@ -1,13 +1,11 @@
-﻿using Xunit;
+﻿using PipServices.Commons.Data;
 using PipServices.Commons.Reflect;
-using PipServices.Commons.Convert;
-using PipServices.Commons.Data;
+using Xunit;
 
 namespace PipServices.Commons.Test.Reflect
 {
     public sealed class ObjectReaderTest
     {
-
         [Fact]
         public void TestGetObjectProperty()
         {

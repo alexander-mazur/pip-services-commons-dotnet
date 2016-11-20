@@ -14,7 +14,6 @@ namespace PipServices.Commons.Reflect
         }
 
         public string Name { get; }
-
         public string Library { get; }
         
         public override bool Equals(object obj)
@@ -61,18 +60,13 @@ namespace PipServices.Commons.Reflect
             var tokens = value.Split(',');
 
             if (tokens.Length == 1)
-            {
                 return new TypeDescriptor(tokens[0].Trim(), null);
-            }
-
-            if (tokens.Length == 2)
-            {
+            else if (tokens.Length == 2)
                 return new TypeDescriptor(tokens[0].Trim(), tokens[1].Trim());
-            }
 
             throw (ConfigException)new ConfigException(
                 null, "BAD_DESCRIPTOR", "Type descriptor " + value + " is in wrong format"
-                ).WithDetails("descriptor", value);
+            ).WithDetails("descriptor", value);
         }
     }
 }

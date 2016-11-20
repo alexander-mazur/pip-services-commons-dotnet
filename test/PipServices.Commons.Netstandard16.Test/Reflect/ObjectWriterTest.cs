@@ -18,7 +18,7 @@ namespace PipServices.Commons.Test.Reflect
             ObjectWriter.SetProperty(obj, "PublicField", "AAAA");
             Assert.Equal("AAAA", obj.PublicField);
 
-            var now = DateTimeOffset.UtcNow;
+            var now = DateTime.UtcNow;
             ObjectWriter.SetProperty(obj, "PublicProp", now);
             Assert.Equal(now, obj.PublicProp);
 
