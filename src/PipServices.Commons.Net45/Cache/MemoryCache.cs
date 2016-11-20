@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.Caching;
-using System.Threading;
-using System.Threading.Tasks;
-using PipServices.Commons.Config;
+﻿using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
 using PipServices.Commons.Run;
+using System;
+using System.Runtime.Caching;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Cache
 {
@@ -16,8 +15,7 @@ namespace PipServices.Commons.Cache
     /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IReconfigurable, ICleanable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory",
-            "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
 
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
@@ -47,29 +45,16 @@ namespace PipServices.Commons.Cache
         }
 
         /// <summary>
-        /// Removes an object from cache.
-        /// </summary>
-        /// <param name="correlationId"></param>
-        /// <param name="key">Unique key identifying the object.</param>
-        public void Remove(string correlationId, string key)
-        {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            _standardCache.Remove(key);
-        }
-
-        /// <summary>
         /// Retrieves a value from cache by unique key.
         /// </summary>
         /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
-        public object Retrieve(string correlationId, string key)
+        public async Task<object> RetrieveAsync(string correlationId, string key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            return _standardCache.Get(key);
+            return await Task.FromResult(_standardCache.Get(key));
         }
 
         /// <summary>
@@ -79,7 +64,7 @@ namespace PipServices.Commons.Cache
         /// <param name="key">Unique key identifying a data object.</param>
         /// <param name="value">The data object to store.</param>
         /// <param name="timeout">Time to live for the object in milliseconds.</param>
-        public object Store(string correlationId, string key, object value, long timeout)
+        public async Task<object> StoreAsync(string correlationId, string key, object value, long timeout)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -89,16 +74,17 @@ namespace PipServices.Commons.Cache
             {
                 if (_standardCache.Contains(key))
                     _standardCache.Remove(key);
-
                 return null;
             }
 
             if (_maxSize <= _standardCache.GetCount())
+            {
                 lock (_syncObject)
                 {
                     if (_maxSize <= _standardCache.GetCount())
                         _standardCache.Trim(5);
                 }
+            }
 
             timeout = timeout > 0 ? timeout : _timeout;
 
@@ -107,13 +93,26 @@ namespace PipServices.Commons.Cache
                 SlidingExpiration = TimeSpan.FromMilliseconds(timeout)
             });
 
-            return value;
+            return await Task.FromResult(value);
+        }
+
+        /// <summary>
+        /// Removes an object from cache.
+        /// </summary>
+        /// <param name="correlationId"></param>
+        /// <param name="key">Unique key identifying the object.</param>
+        public async Task RemoveAsync(string correlationId, string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            _standardCache.Remove(key);
+            await Task.Delay(0);
         }
 
         public async Task ClearAsync(string correlationId)
         {
             _standardCache.Trim(100);
-
             await Task.Delay(0);
         }
     }

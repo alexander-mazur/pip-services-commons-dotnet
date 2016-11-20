@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using PipServices.Commons.Config;
+﻿using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Cache
 {
@@ -15,15 +14,14 @@ namespace PipServices.Commons.Cache
     /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IReconfigurable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory",
-            "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
 
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private long _timeout, _maxSize;
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private readonly object _lock = new object();
 
         /// <summary>
         /// Initializes the components according to supplied configuration parameters.
@@ -44,129 +42,12 @@ namespace PipServices.Commons.Cache
             return Descriptor;
         }
 
-        /// <summary>
-        /// Removes an object from cache.
-        /// </summary>
-        /// <param name="correlationId"></param>
-        /// <param name="key">Unique key identifying the object.</param>
-        public void Remove(string correlationId, string key)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            _lock.EnterWriteLock();
-            try
-            {
-                _cache.Remove(key);
-            }
-            catch
-            {
-                // Ignore error
-            }
-            finally
-            {
-                _lock.ExitWriteLock();
-            }
-        }
-
-        /// <summary>
-        /// Retrieves a value from cache by unique key.
-        /// </summary>
-        /// <param name="correlationId"></param>
-        /// <param name="key">Unique key identifying a data object.</param>
-        /// <returns>Cached value or null if the value is not found.</returns>
-        public object Retrieve(string correlationId, string key)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            _lock.EnterReadLock();
-            try
-            {
-                CacheEntry entry;
-                if (_cache.TryGetValue(key, out entry))
-                {
-                    if (entry.IsExpired())
-                    {
-                        Task.Factory.StartNew(() => { Remove(correlationId, key); });
-                        return null;
-                    }
-                }
-                return entry?.Value;
-
-            }
-            finally
-            {
-                _lock.ExitReadLock();
-            }
-        }
-
-        /// <summary>
-        /// Stores an object identified by a unique key in cache.
-        /// </summary>
-        /// <param name="correlationId"></param>
-        /// <param name="key">Unique key identifying a data object.</param>
-        /// <param name="value">The data object to store.</param>
-        /// <param name="timeout">Time to live for the object in milliseconds.</param>
-        /// <returns>Cached object stored in the cache.</returns>
-        public object Store(string correlationId, string key, object value, long timeout)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            _lock.EnterWriteLock();
-            try
-            {
-                CacheEntry entry;
-                _cache.TryGetValue(key, out entry);
-                timeout = timeout > 0 ? timeout : _timeout;
-
-                if (value == null)
-                {
-                    if (entry != null)
-                    {
-                        _cache.Remove(key);
-                    }
-                    return null;
-                }
-
-                if (entry != null)
-                {
-                    entry.Value = value;
-                }
-                else
-                {
-                    _cache[key] = new CacheEntry(key, value, timeout);
-                }
-
-                // cleanup
-                if (_maxSize > 0 && _cache.Count > _maxSize)
-                {
-                    Task.Factory.StartNew(Cleanup);
-                }
-
-                return value;
-
-            }
-            finally
-            {
-                _lock.ExitWriteLock();
-            }
-        }
-
         private void Cleanup()
         {
             CacheEntry oldest = null;
             var keysToRemove = new List<string>();
 
-            _lock.EnterWriteLock();
-            try
+            lock (_lock)
             {
                 foreach (var entry in _cache)
                 {
@@ -190,26 +71,104 @@ namespace PipServices.Commons.Cache
                     _cache.Remove(oldest.Key);
                 }
             }
-            finally
+        }
+
+        /// <summary>
+        /// Retrieves a value from cache by unique key.
+        /// </summary>
+        /// <param name="correlationId"></param>
+        /// <param name="key">Unique key identifying a data object.</param>
+        /// <returns>Cached value or null if the value is not found.</returns>
+        public async Task<object> RetrieveAsync(string correlationId, string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            await Task.Delay(0);
+
+            lock (_lock)
             {
-                _lock.ExitWriteLock();
+                CacheEntry entry;
+                if (_cache.TryGetValue(key, out entry))
+                {
+                    if (entry.IsExpired())
+                    {
+                        _cache.Remove(key);
+                        return null;
+                    }
+
+                    return entry.Value;
+                }
+
+                return null;
             }
         }
 
-        public Task ClearAsync(string correlationId, CancellationToken token)
+        /// <summary>
+        /// Stores an object identified by a unique key in cache.
+        /// </summary>
+        /// <param name="correlationId"></param>
+        /// <param name="key">Unique key identifying a data object.</param>
+        /// <param name="value">The data object to store.</param>
+        /// <param name="timeout">Time to live for the object in milliseconds.</param>
+        /// <returns>Cached object stored in the cache.</returns>
+        public async Task<object> StoreAsync(string correlationId, string key, object value, long timeout)
         {
-            _lock.EnterWriteLock();
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            try
+            lock (_lock)
+            {
+                CacheEntry entry;
+                _cache.TryGetValue(key, out entry);
+                timeout = timeout > 0 ? timeout : _timeout;
+
+                if (value == null)
+                {
+                    if (entry != null)
+                        _cache.Remove(key);
+                    return null;
+                }
+
+                if (entry != null)
+                    entry.SetValue(value, timeout);
+                else
+                    _cache[key] = new CacheEntry(key, value, timeout);
+
+                // cleanup
+                if (_maxSize > 0 && _cache.Count > _maxSize)
+                    Cleanup();
+            }
+
+            return await Task.FromResult(value);
+        }
+
+        /// <summary>
+        /// Removes an object from cache.
+        /// </summary>
+        /// <param name="correlationId"></param>
+        /// <param name="key">Unique key identifying the object.</param>
+        public async Task RemoveAsync(string correlationId, string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            lock (_lock)
+            {
+                _cache.Remove(key);
+            }
+
+            await Task.Delay(0);
+        }
+
+        public async Task ClearAsync(string correlationId)
+        {
+            lock (_lock)
             {
                 _cache.Clear();
             }
-            finally
-            {
-                _lock.ExitWriteLock();
-            }
 
-            return Task.CompletedTask;
+            await Task.Delay(0);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace PipServices.Commons.Test.Cache
 
         public MemoryCacheTest()
         {
-            _cache.Store(null, Key1, Value1, 1000);
-            _cache.Store(null, Key2, Value2, 1000);
+            var value = _cache.StoreAsync(null, Key1, Value1, 1000).Result;
+            value = _cache.StoreAsync(null, Key2, Value2, 1000).Result;
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace PipServices.Commons.Test.Cache
         {
             Task.Delay(500).Wait();
 
-            var val1 = _cache.Retrieve(null, Key1);
-            var val2 = _cache.Retrieve(null, Key2);
+            var val1 = _cache.RetrieveAsync(null, Key1).Result;
+            var val2 = _cache.RetrieveAsync(null, Key2).Result;
 
             Assert.NotNull(val1);
             Assert.Equal(Value1, val1);
@@ -54,8 +54,8 @@ namespace PipServices.Commons.Test.Cache
         {
             Task.Delay(1000).Wait();
 
-            var val1 = _cache.Retrieve(null, Key1);
-            var val2 = _cache.Retrieve(null, Key2);
+            var val1 = _cache.RetrieveAsync(null, Key1).Result;
+            var val2 = _cache.RetrieveAsync(null, Key2).Result;
 
             Assert.Null(val1);
             Assert.Null(val2);
@@ -64,17 +64,15 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Store_ReturnsSameValue()
         {
-            var storedVal = _cache.Store(null, Key3, Value3, 0);
-
+            var storedVal = _cache.StoreAsync(null, Key3, Value3, 0).Result;
             Assert.Equal(Value3, storedVal);
         }
 
         [Fact]
         public void Store_ValueIsStored()
         {
-            _cache.Store(null, Key3, Value3, 1000);
-
-            var val3 = _cache.Retrieve(null, Key3);
+            var value = _cache.StoreAsync(null, Key3, Value3, 1000).Result;
+            var val3 = _cache.RetrieveAsync(null, Key3).Result;
 
             Assert.NotNull(val3);
             Assert.Equal(Value3, val3);
@@ -83,32 +81,28 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Remove_ValueIsRemoved()
         {
-            _cache.Remove(null, Key1);
+            _cache.RemoveAsync(null, Key1).Wait();
 
-            var val1 = _cache.Retrieve(null, Key1);
-
+            var val1 = _cache.RetrieveAsync(null, Key1).Result;
             Assert.Null(val1);
         }
 
         [Fact]
         public void Configure_NewValueStaysFor1500ms_ButFailsFor2500ms()
         {
-            var param = new Dictionary<string, object> {{"timeout", 2000}};
+            var param = new Dictionary<string, object> { { "timeout", 2000 } };
             var config = new ConfigParams(param);
 
             _cache.Configure(config);
 
-            _cache.Store(null, Key3, Value3, 0);
-
-            var val3 = _cache.Retrieve(null, Key3);
-
+            var value = _cache.StoreAsync(null, Key3, Value3, 0).Result;
+            var val3 = _cache.RetrieveAsync(null, Key3).Result;
             Assert.NotNull(val3);
             Assert.Equal(Value3, val3);
 
             Task.Delay(2500).Wait();
 
-            val3 = _cache.Retrieve(null, Key3);
-
+            val3 = _cache.RetrieveAsync(null, Key3).Result;
             Assert.Null(val3);
         }
     }
