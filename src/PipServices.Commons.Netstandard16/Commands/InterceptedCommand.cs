@@ -28,18 +28,20 @@ namespace PipServices.Commons.Commands
         /// <summary>
         /// Gets the command name.
         /// </summary>
-        public string Name => _intercepter.GetName(_next);
+        public string Name
+        {
+            get { return _intercepter.GetName(_next); }
+        }
 
         /// <summary>
         /// Executes the command given specific arguments as input.
         /// </summary>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="args">Command arguments.</param>
-        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public Task<object> ExecuteAsync(string correlationId, Parameters args, CancellationToken token)
+        public Task<object> ExecuteAsync(string correlationId, Parameters args)
         {
-            return _intercepter.ExecuteAsync(correlationId, _next, args, token);
+            return _intercepter.ExecuteAsync(correlationId, _next, args);
         }
 
         /// <summary>

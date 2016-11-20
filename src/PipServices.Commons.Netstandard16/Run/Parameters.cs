@@ -7,14 +7,19 @@ using PipServices.Commons.Config;
 
 namespace PipServices.Commons.Run
 {
+    /// <summary>
+    /// Parameters represent hierarchical map that uses simple keys and stores complex objects.
+    /// It allows hierarchical access to stored data using dot-notation.
+    /// 
+    /// All keys stored in the map are case-insensitive.
+    /// </summary>
     public class Parameters : AnyValueMap
     {
-        public Parameters()
-        { }
+        public Parameters() { }
 
-        public Parameters(IDictionary values) : base(values)
-        {
-        }
+        public Parameters(IDictionary values) 
+            : base(values)
+        { }
 
         public override object Get(string path)
         {
@@ -23,10 +28,8 @@ namespace PipServices.Commons.Run
 
             if (path.IndexOf(".", StringComparison.Ordinal) > 0)
                 return RecursiveObjectReader.GetProperty(this, path);
-
-            var value = base.Get(path);
-
-            return value;
+            else
+                return base.Get(path);
         }
 
         public new object Add(string path, object value)

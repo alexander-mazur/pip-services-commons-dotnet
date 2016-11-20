@@ -420,8 +420,8 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Run\IOpenable.cs">
       <Link>Run\IOpenable.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParametrized.cs">
-      <Link>Run\IParametrized.cs</Link>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParameterized.cs">
+      <Link>Run\IParameterized.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParamExecutable.cs">
       <Link>Run\IParamExecutable.cs</Link>

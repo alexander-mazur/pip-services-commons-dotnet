@@ -12,11 +12,11 @@ namespace PipServices.Commons.Test.Run
             var result = Parameters.FromTuples(
                 "value1", 123,
                 "value2", 234
-                );
+            );
             var defaults = Parameters.FromTuples(
                 "value2", 432,
                 "value3", 345
-                );
+            );
             result = result.SetDefaults(defaults, false);
             Assert.Equal(3, result.Count);
             Assert.Equal(123, result["value1"]);
@@ -29,10 +29,10 @@ namespace PipServices.Commons.Test.Run
         {
             var result = Parameters.FromJson(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 } }"
-                );
+            );
             var defaults = Parameters.FromJson(
                 "{ \"value2\": { \"value22\": 777, \"value23\": 333 }, \"value3\": 345 }"
-                );
+            );
             result = result.SetDefaults(defaults, true);
 
             Assert.Equal(3, result.Count);
@@ -51,7 +51,7 @@ namespace PipServices.Commons.Test.Run
         {
             var result = Parameters.FromJson(
                 "{ \"value1\": 123, \"value2\": 234 }"
-                );
+            );
             result = result.Override(null, true);
 
             Assert.Equal(2, result.Count);
@@ -65,7 +65,7 @@ namespace PipServices.Commons.Test.Run
             var value = new TestClass(null, null);
             var newValues = Parameters.FromJson(
                 "{ \"value1\": 123, \"value2\": \"ABC\", \"value3\": 456 }"
-                );
+            );
 
             newValues.AssignTo(value);
             Assert.NotNull(value.Value1);
@@ -79,7 +79,7 @@ namespace PipServices.Commons.Test.Run
         {
             var config = Parameters.FromJson(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 } }"
-                );
+            );
 
             var value = config.Get("");
             Assert.Null(value);
@@ -113,7 +113,7 @@ namespace PipServices.Commons.Test.Run
         {
             var config = Parameters.FromJson(
                 "{ \"value1\": 123, \"value2\": { \"value21\": 111, \"value22\": 222 } }"
-                );
+            );
 
             var has = config.ContainsKey("");
             Assert.False(has);
@@ -176,7 +176,7 @@ namespace PipServices.Commons.Test.Run
                 "field1.field11", 123,
                 "field2", "ABC",
                 "Field1.Field12", "XYZ"
-                );
+            );
 
             var parameters = Parameters.FromConfig(config);
             Assert.Equal(2, parameters.Count);

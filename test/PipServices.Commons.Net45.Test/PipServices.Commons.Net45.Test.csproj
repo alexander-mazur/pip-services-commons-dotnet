@@ -72,6 +72,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Cache\NullCacheTest.cs">
       <Link>Cache\NullCacheTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Commands\CommandTest.cs">
+      <Link>Commands\CommandTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\ConfigParamsTest.cs">
       <Link>Config\ConfigParamsTest.cs</Link>
     </Compile>

@@ -110,7 +110,7 @@ namespace PipServices.Commons.Cache
             return value;
         }
 
-        public async Task ClearAsync(string correlationId, CancellationToken token)
+        public async Task ClearAsync(string correlationId)
         {
             _standardCache.Trim(100);
 
