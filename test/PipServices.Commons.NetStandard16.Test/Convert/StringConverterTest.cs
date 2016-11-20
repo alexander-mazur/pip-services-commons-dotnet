@@ -10,7 +10,7 @@ namespace PipServices.Commons.Convert
             Assert.Null(StringConverter.ToNullableString(null));
             Assert.Equal("xyz", StringConverter.ToString("xyz"));
             Assert.Equal("123", StringConverter.ToString(123));
-            Assert.Equal("true", StringConverter.ToString(true));
+            Assert.Equal("True", StringConverter.ToString(true));
             //Assert.Equal("{ prop = xyz }", StringConverter.ToString(new { prop = "xyz" }, "xyz"));
 
             Assert.Equal("xyz", StringConverter.ToStringWithDefault(null, "xyz"));

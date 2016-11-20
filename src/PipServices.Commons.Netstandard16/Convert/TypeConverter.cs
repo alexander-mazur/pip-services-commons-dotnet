@@ -65,7 +65,8 @@ namespace PipServices.Commons.Convert
                 || type.GetTypeInfo().GetInterfaces().Contains(typeof(IDictionary<,>)))
                 return TypeCode.Map;
 
-            if (type.IsArray)
+            if (type.GetTypeInfo().GetInterface(nameof(IList)) != null
+                || type.GetTypeInfo().GetInterfaces().Contains(typeof(IList<>)))
                 return TypeCode.Array;
 
             return TypeCode.Object;

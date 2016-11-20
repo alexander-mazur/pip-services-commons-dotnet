@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace PipServices.Commons.Convert
@@ -42,10 +44,10 @@ namespace PipServices.Commons.Convert
             {
                 var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
 
-                //ConvertJsonTypes(map);
-                //return map;
+                ConvertJsonTypes(map);
+                return map;
 
-                return RecursiveMapConverter.ToNullableMap(map);
+                //return RecursiveMapConverter.ToNullableMap(map);
             }
             catch (Exception)
             {
@@ -53,53 +55,53 @@ namespace PipServices.Commons.Convert
             }
         }
 
-        //private static void ConvertJsonTypes(IDictionary<string, object> dict)
-        //{
-        //    foreach (var pair in dict.ToArray())
-        //    {
-        //        var jObject = pair.Value as JObject;
-        //        if (jObject != null)
-        //        {
-        //            var newDict = jObject.ToObject<Dictionary<string, object>>();
+        private static void ConvertJsonTypes(IDictionary<string, object> dict)
+        {
+            foreach (var pair in dict.ToArray())
+            {
+                var jObject = pair.Value as JObject;
+                if (jObject != null)
+                {
+                    var newDict = jObject.ToObject<Dictionary<string, object>>();
 
-        //            dict[pair.Key] = newDict;
+                    dict[pair.Key] = newDict;
 
-        //            ConvertJsonTypes(newDict);
-        //        }
+                    ConvertJsonTypes(newDict);
+                }
 
-        //        var jArray = pair.Value as JArray;
-        //        if (jArray != null)
-        //        {
-        //            var newList = jArray.ToObject<List<object>>();
+                var jArray = pair.Value as JArray;
+                if (jArray != null)
+                {
+                    var newList = jArray.ToObject<List<object>>();
 
-        //            dict[pair.Key] = newList;
+                    dict[pair.Key] = newList;
 
-        //            ConvertJsonTypes(newList);
-        //        }
-        //    }
-        //}
+                    ConvertJsonTypes(newList);
+                }
+            }
+        }
 
-        //private static void ConvertJsonTypes(IList<object> list)
-        //{
-        //    var newList = list.ToArray();
+        private static void ConvertJsonTypes(IList<object> list)
+        {
+            var newList = list.ToArray();
 
-        //    for (var i = 0; i < list.Count; i++)
-        //    {
-        //        var jObject = newList[i] as JObject;
-        //        if (jObject != null)
-        //        {
-        //            var newDict = jObject.ToObject<Dictionary<string, object>>();
+            for (var i = 0; i < list.Count; i++)
+            {
+                var jObject = newList[i] as JObject;
+                if (jObject != null)
+                {
+                    var newDict = jObject.ToObject<Dictionary<string, object>>();
 
-        //            list[i] = newDict;
+                    list[i] = newDict;
 
-        //            ConvertJsonTypes(newDict);
-        //        }
+                    ConvertJsonTypes(newDict);
+                }
 
-        //        var jArray = newList[i] as JArray;
-        //        if (jArray != null)
-        //            list[i] = jArray.ToObject<List<object>>();
-        //    }
-        //}
+                var jArray = newList[i] as JArray;
+                if (jArray != null)
+                    list[i] = jArray.ToObject<List<object>>();
+            }
+        }
 
         public static IDictionary<string, object> ToMap(string value)
         {
