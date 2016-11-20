@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading;
-using Xunit;
-using PipServices.Commons.Config;
-using PipServices.Commons.Errors;
+﻿using PipServices.Commons.Config;
 using PipServices.Commons.Connect;
+using PipServices.Commons.Errors;
 using PipServices.Commons.Refer;
+using System;
 using System.Linq;
+using Xunit;
 
 namespace PipServices.Commons.Test.Connect
 {
@@ -15,7 +14,7 @@ namespace PipServices.Commons.Test.Connect
             "connection.protocol", "http",
             "connection.host", "localhost",
             "connection.port", 3000
-            );
+        );
 
         private ConnectionResolver _connectionResolver;
 
@@ -38,42 +37,33 @@ namespace PipServices.Commons.Test.Connect
         public void TestRegister()
         {
             var connectionParams = new ConnectionParams();
-            var task = _connectionResolver.RegisterAsync("correlationId", connectionParams, CancellationToken.None);
-            task.Wait();
+            _connectionResolver.RegisterAsync("correlationId", connectionParams).Wait();
             var configList = _connectionResolver.GetAll();
+
+            Assert.Equal(configList.Count(), 1);
+
+            connectionParams.DiscoveryKey = "Discovery key value";
+            _connectionResolver.RegisterAsync("correlationId", connectionParams).Wait();
+            configList = _connectionResolver.GetAll();
 
             Assert.Equal(configList.Count(), 2);
 
-            connectionParams.DiscoveryKey = "Discovery key value";
-            task = _connectionResolver.RegisterAsync("correlationId", connectionParams, CancellationToken.None);
-            task.Wait();
-            configList = _connectionResolver.GetAll();
-
-            Assert.Equal(configList.Count(), 3);
-
-            task = _connectionResolver.RegisterAsync("correlationId", connectionParams, CancellationToken.None);
-            task.Wait();
+            _connectionResolver.RegisterAsync("correlationId", connectionParams).Wait();
             configList = _connectionResolver.GetAll();
             var configFirst = configList.FirstOrDefault();
             var configLast = configList.LastOrDefault();
 
-            Assert.Equal(configList.Count(), 4);
-
+            Assert.Equal(configList.Count(), 3);
             Assert.Equal(configFirst.Get("protocol"), "http");
-
             Assert.Equal(configFirst.Get("host"), "localhost");
-
             Assert.Equal(configFirst.Get("port"), "3000");
-
             Assert.Equal(configLast.Get("discovery_key"), "Discovery key value");
         }
 
         [Fact]
         public void TestResolve()
         {
-            var task = _connectionResolver.ResolveAsync("correlationId", CancellationToken.None);
-            task.Wait();
-            var connectionParams = task.Result;
+            var connectionParams = _connectionResolver.ResolveAsync("correlationId").Result;
 
             Assert.Equal(connectionParams.Get("protocol"), "http");
             Assert.Equal(connectionParams.Get("host"), "localhost");
@@ -84,13 +74,13 @@ namespace PipServices.Commons.Test.Connect
                 "connection.host", "localhost",
                 "connection.port", 3000,
                 "connection.discovery_key", "Discovery key value"
-                );
+            );
+
             IReferences references = new ReferenceSet();
             _connectionResolver = new ConnectionResolver(restConfigDiscovery, references);
             try
             {
-                task = _connectionResolver.ResolveAsync("correlationId", CancellationToken.None);
-                task.Wait();
+                _connectionResolver.ResolveAsync("correlationId").Wait();
             }
             catch (Exception ex)
             {

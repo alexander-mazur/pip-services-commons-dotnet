@@ -4,73 +4,69 @@ using PipServices.Commons.Data;
 
 namespace PipServices.Commons.Auth
 {
-    /**
-     * Credentials such as login and password, client id and key,
-     * certificates, etc. Separating credentials from connection parameters
-     * allow to store them in secure location and share among multiple
-     * connections.
-     */
+    /// <summary>
+    /// Credentials such as login and password, client id and key,
+    /// certificates, etc. Separating credentials from connection parameters
+    /// allow to store them in secure location and share among multiple connections.
+    /// </summary>
     public sealed class CredentialParams : ConfigParams
     {
-        private static long SerialVersionUid { get; } = 4144579662501676747L;
-
-        /**
-         * Creates an empty instance of credential parameters.
-         */
-
+        /// <summary>
+        /// Creates an empty instance of credential parameters.
+        /// </summary>
         public CredentialParams()
         {
         }
 
-        /**
-         * Create an instance of credentials from free-form configuration map.
-         * @param content a map with the credentials. 
-         */
+        /// <summary>
+        /// Create an instance of credentials from free-form configuration map.
+        /// </summary>
+        /// <param name="map">a map with the credentials</param>
         public CredentialParams(IDictionary<string, object> map)
             : base(map)
         {
         }
 
-        /**
-         * Checks if credential lookup shall be performed.
-         * The credentials are requested when 'store_key' parameter contains 
-         * a non-empty string that represents the name in credential store.
-         * @return <b>true</b> if the credentials shall be resolved by credential store 
-         * and <b>false</b> when all credential parameters are defined statically.
-         */
+        /// <summary>
+        /// Checks if credential lookup shall be performed.
+        /// The credentials are requested when 'store_key' parameter contains 
+        /// a non-empty string that represents the name in credential store.
+        /// </summary>
+        public bool UseCredentialStore
+        {
+            get { return ContainsKey("store_key"); }
+        }
 
-        public bool UseCredentialStore => ContainsKey("store_key");
-
-        /**
-         * Gets or sets the key under which the connection shall be looked up in credential store. 
-         */
+        /// <summary>
+        /// Gets or sets the key under which the connection shall be looked up in credential store. 
+        /// </summary>
         public string StoreKey
         {
             get { return GetAsNullableString("store_key"); }
             set { this["store_key"] = value; }
         }
 
-        /**
-         * Gets or sets the user name / login.
-         */
+        /// <summary>
+        /// Gets or sets the user name / login.
+        /// </summary>
         public string Username
         {
             get { return GetAsNullableString("username"); }
             set { this["username"] = value; }
         }
 
-        /**
-         * Gets or sets the service user password.
-         */
+        /// <summary>
+        /// Gets or sets the service user password.
+        /// </summary>
         public string Password
         {
             get { return GetAsNullableString("password"); }
             set { this["password"] = value; }
         }
 
-        /**
-         * Gets or sets the client or access id
-         */
+        /// <summary>
+        /// Gets or sets the client or access id
+        /// </summary>
         public string AccessId
         {
             get
@@ -82,15 +78,15 @@ namespace PipServices.Commons.Auth
             set { this["access_id"] = value; }
         }
 
-        /**
-         * Gets or sets the client or access key
-         */
+        /// <summary>
+        /// Gets or sets the client or access key
+        /// </summary>
         public string AccessKey
         {
             get
             {
                 var accessKey = GetAsNullableString("access_key");
-                accessKey = accessKey ?? GetAsNullableString("access_key");
+                accessKey = accessKey ?? GetAsNullableString("client_key");
                 return accessKey;
             }
             set { this["access_key"] = value; }

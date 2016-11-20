@@ -10,13 +10,10 @@ namespace PipServices.Commons.Test.Auth
         {
             var сredential = new CredentialParams();
             сredential.StoreKey = null;
-
             Assert.Null(сredential.StoreKey);
 
             сredential.StoreKey = "Store key";
-
             Assert.Equal(сredential.StoreKey, "Store key");
-
             Assert.True(сredential.UseCredentialStore);
         }
 
@@ -25,11 +22,9 @@ namespace PipServices.Commons.Test.Auth
         {
             var сredential = new CredentialParams();
             сredential.Username = null;
-
             Assert.Null(сredential.Username);
 
             сredential.Username = "Kate Negrienko";
-
             Assert.Equal(сredential.Username, "Kate Negrienko");
         }
 
@@ -38,11 +33,9 @@ namespace PipServices.Commons.Test.Auth
         {
             CredentialParams сredential = new CredentialParams();
             сredential.Password = null;
-
             Assert.Null(сredential.Password);
 
             сredential.Password = "qwerty";
-
             Assert.Equal(сredential.Password, "qwerty");
         }
 
@@ -51,11 +44,9 @@ namespace PipServices.Commons.Test.Auth
         {
             var сredential = new CredentialParams();
             сredential.AccessKey = null;
-
             Assert.Null(сredential.AccessKey);
 
             сredential.AccessKey = "key";
-
             Assert.Equal(сredential.AccessKey, "key");
         }
     }

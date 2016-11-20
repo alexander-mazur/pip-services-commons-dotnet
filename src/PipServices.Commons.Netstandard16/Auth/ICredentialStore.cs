@@ -1,21 +1,24 @@
 ﻿namespace PipServices.Commons.Auth
 {
+    /// <summary>
+    /// Store that keeps and located client credentials.
+    /// </summary>
     public interface ICredentialStore
     {
-        /**
-             * Stores credential in the store
-             * @param correlationId a unique transaction id to trace calls across components
-             * @param key the key to lookup credential
-             * @param credential a credential parameters
-             */
+        /// <summary>
+        /// Stores credential in the store
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="key">the key to lookup credential</param>
+        /// <param name="credential">a credential parameters</param>
         void Store(string correlationId, string key, CredentialParams credential);
 
-        /**
-         * Looks up credential from the store
-         * @param correlationId a unique transaction id to trace calls across components
-         * @param key a key to lookup credential
-         * @return found credential parameters or <code>null</code> if nothing was found
-         */
+        /// <summary>
+        /// Looks up credential from the store
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="key">a key to lookup credential</param>
+        /// <returns>found credential parameters or <code>null</code> if nothing was found</returns>
         CredentialParams Lookup(string correlationId, string key);
     }
 }

@@ -7,19 +7,12 @@ namespace PipServices.Commons.Auth
     public sealed class CredentialResolver : IConfigurable, IReferenceable
     {
         private readonly IList<CredentialParams> _credentials = new List<CredentialParams>();
-        private IReferences _references = new ReferenceSet();
+        private IReferences _references = null;
 
-        public CredentialResolver() { }
-
-        public CredentialResolver(ConfigParams config)
+        public CredentialResolver(ConfigParams config = null, IReferences references = null)
         {
-            Configure(config);
-        }
-
-        public CredentialResolver(ConfigParams config, IReferences references)
-        {
-            Configure(config);
-            SetReferences(references);
+            if (config != null) Configure(config);
+            if (references != null) SetReferences(references);
         }
 
         public void SetReferences(IReferences references)
@@ -39,7 +32,6 @@ namespace PipServices.Commons.Auth
                 foreach (var section in sectionsNames)
                 {
                     var credential = credentials.GetSection(section);
-
                     _credentials.Add(new CredentialParams(credential));
                 }
             }
@@ -47,7 +39,6 @@ namespace PipServices.Commons.Auth
             else
             {
                 var credential = config.GetSection("credential");
-
                 _credentials.Add(new CredentialParams(credential));
             }
         }
@@ -64,24 +55,24 @@ namespace PipServices.Commons.Auth
 
         private CredentialParams LookupInStores(string correlationId, CredentialParams credential)
         {
-            if (credential.UseCredentialStore == false)
-                return null;
+            if (credential.UseCredentialStore == false) return null;
 
             var key = credential.StoreKey;
+            if (_references == null) return null;
 
             var components = _references.GetOptional(new Descriptor("*", "credential_store", "*", "*"));
-
             if (components.Count == 0)
                 throw new ReferenceException(correlationId, "Credential store wasn't found to make lookup");
 
             foreach (var component in components)
             {
                 var store = component as ICredentialStore;
-
-                var resolvedCredential = store?.Lookup(correlationId, key);
-
-                if (resolvedCredential != null)
-                    return resolvedCredential;
+                if (store != null)
+                {
+                    var resolvedCredential = store.Lookup(correlationId, key);
+                    if (resolvedCredential != null)
+                        return resolvedCredential;
+                }
             }
 
             return null;
@@ -101,13 +92,12 @@ namespace PipServices.Commons.Auth
             // Return connection that require discovery
             foreach (var credential in _credentials)
             {
-                if (!credential.UseCredentialStore)
-                    continue;
-
-                var resolvedConnection = LookupInStores(correlationId, credential);
-
-                if (resolvedConnection != null)
-                    return resolvedConnection;
+                if (credential.UseCredentialStore)
+                {
+                    var resolvedConnection = LookupInStores(correlationId, credential);
+                    if (resolvedConnection != null)
+                        return resolvedConnection;
+                }
             }
 
             return null;
