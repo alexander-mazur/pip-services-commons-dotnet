@@ -61,7 +61,8 @@ namespace PipServices.Commons.Convert
             if (type == typeof(TimeSpan))
                 return TypeCode.Duration;
 
-            if (type.GetTypeInfo().GetInterface(nameof(IDictionary)) != null || type.GetTypeInfo().GetInterfaces().Contains(typeof(IDictionary<,>)))
+            if (type.GetTypeInfo().GetInterface(nameof(IDictionary)) != null 
+                || type.GetTypeInfo().GetInterfaces().Contains(typeof(IDictionary<,>)))
                 return TypeCode.Map;
 
             if (type.IsArray)
@@ -87,6 +88,8 @@ namespace PipServices.Commons.Convert
 
             if (typeInfo.IsEnum)
                 value = EnumConverter.ToNullableEnum<T>(value);
+            else if (typeInfo.IsAssignableFrom(typeof(decimal)))
+                value = DecimalConverter.ToNullableDecimal(value);
             else if (typeInfo.IsAssignableFrom(typeof(string)))
                 value = StringConverter.ToNullableString(value);
             else if (typeInfo.IsAssignableFrom(typeof(long)))
@@ -97,8 +100,6 @@ namespace PipServices.Commons.Convert
                 value = DoubleConverter.ToNullableDouble(value);
             else if (typeInfo.IsAssignableFrom(typeof(float)))
                 value = FloatConverter.ToNullableFloat(value);
-            else if (typeInfo.IsAssignableFrom(typeof(decimal)))
-                value = DecimalConverter.ToNullableDecimal(value);
             else if (typeInfo.IsAssignableFrom(typeof(DateTime)))
                 value = DateTimeConverter.ToNullableDateTime(value);
             else if (typeInfo.IsAssignableFrom(typeof(TimeSpan)))
@@ -130,6 +131,8 @@ namespace PipServices.Commons.Convert
 
             if (typeInfo.IsEnum)
                 value = EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
+            else if (typeInfo.IsAssignableFrom(typeof(decimal)))
+                value = DecimalConverter.ToNullableDecimal(value);
             else if (typeInfo.IsAssignableFrom(typeof(string)))
                 value = StringConverter.ToNullableString(value);
             else if (typeInfo.IsAssignableFrom(typeof(long)))
@@ -140,8 +143,6 @@ namespace PipServices.Commons.Convert
                 value = DoubleConverter.ToNullableDouble(value);
             else if (typeInfo.IsAssignableFrom(typeof(float)))
                 value = FloatConverter.ToNullableFloat(value);
-            else if (typeInfo.IsAssignableFrom(typeof(decimal)))
-                value = DecimalConverter.ToNullableDecimal(value);
             else if (typeInfo.IsAssignableFrom(typeof(bool)))
                 value = BooleanConverter.ToNullableBoolean(value);
             else if (typeInfo.IsAssignableFrom(typeof(DateTime)))

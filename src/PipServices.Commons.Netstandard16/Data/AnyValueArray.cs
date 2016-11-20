@@ -149,17 +149,17 @@ namespace PipServices.Commons.Data
             return DoubleConverter.ToDoubleWithDefault(this[index], defaultValue);
         }
 
-        public DateTimeOffset? GetAsNullableDateTime(int index)
+        public DateTime? GetAsNullableDateTime(int index)
         {
             return DateTimeConverter.ToNullableDateTime(this[index]);
         }
 
-        public DateTimeOffset GetAsDateTime(int index)
+        public DateTime GetAsDateTime(int index)
         {
-            return GetAsDateTimeWithDefault(index, new DateTimeOffset());
+            return GetAsDateTimeWithDefault(index, new DateTime());
         }
 
-        public DateTimeOffset GetAsDateTimeWithDefault(int index, DateTimeOffset? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(int index, DateTime? defaultValue = null)
         {
             return DateTimeConverter.ToDateTimeWithDefault(this[index], defaultValue);
         }

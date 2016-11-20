@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Xunit;
+﻿using PipServices.Commons.Convert;
 using PipServices.Commons.Data;
-using PipServices.Commons.Convert;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PipServices.Commons.Test.Convert
 {
@@ -48,9 +47,7 @@ namespace PipServices.Commons.Test.Convert
             var jsonDate = JsonConverter.FromJson<DateTimeOffset>("\"1975-04-08T00:00Z\"");
 
             Assert.Equal(date.Year, jsonDate.Year);
-
             Assert.Equal(date.Month, jsonDate.Month);
-
             Assert.Equal(date.Day, jsonDate.Day);
         }
 

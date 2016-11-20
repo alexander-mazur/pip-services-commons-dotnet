@@ -84,8 +84,47 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Connect\ConnectionResolverTest.cs">
       <Link>Connect\ConnectionResolverTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\ArrayConverterTest.cs">
+      <Link>Convert\ArrayConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\BooleanConverterTest.cs">
+      <Link>Convert\BooleanConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\DateTimeConverterTest.cs">
+      <Link>Convert\DateTimeConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\DoubleConverterTest.cs">
+      <Link>Convert\DoubleConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\EnumConverterTest.cs">
+      <Link>Convert\EnumConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\FloatConverterTest.cs">
+      <Link>Convert\FloatConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\IntegerConverterTest.cs">
+      <Link>Convert\IntegerConverterTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\JsonConverterTest.cs">
       <Link>Convert\JsonConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\LongConverterTest.cs">
+      <Link>Convert\LongConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\MapConverterTest.cs">
+      <Link>Convert\MapConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\RecursiveMapConverterTest.cs">
+      <Link>Convert\RecursiveMapConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\StringConverterTest.cs">
+      <Link>Convert\StringConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\TimeSpanConverterTest.cs">
+      <Link>Convert\TimeSpanConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\TypeConverterTest.cs">
+      <Link>Convert\TypeConverterTest.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Count\CountersFixture.cs">
       <Link>Count\CountersFixture.cs</Link>

@@ -168,18 +168,18 @@ namespace PipServices.Commons.Data
             return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
         }
 
-        public DateTimeOffset? GetAsNullableDateTime(string key)
+        public DateTime? GetAsNullableDateTime(string key)
         {
             var value = TryGet(key);
             return DateTimeConverter.ToNullableDateTime(value);
         }
 
-        public DateTimeOffset GetAsDateTime(string key)
+        public DateTime GetAsDateTime(string key)
         {
-            return GetAsDateTimeWithDefault(key, new DateTimeOffset());
+            return GetAsDateTimeWithDefault(key, new DateTime());
         }
 
-        public DateTimeOffset GetAsDateTimeWithDefault(string key, DateTimeOffset? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue = null)
         {
             var value = TryGet(key);
             return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);

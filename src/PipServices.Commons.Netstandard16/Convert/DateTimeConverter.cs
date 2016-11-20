@@ -8,7 +8,7 @@ namespace PipServices.Commons.Convert
     /// </summary>
     public class DateTimeConverter
     {
-        public static DateTimeOffset? ToNullableDateTime(object value)
+        public static DateTime? ToNullableDateTime(object value)
         {
             if (value == null) return null;
             if (value is DateTime || value is DateTime?)
@@ -31,14 +31,14 @@ namespace PipServices.Commons.Convert
             }
         }
 
-        public static DateTimeOffset ToDateTime(object value)
+        public static DateTime ToDateTime(object value)
         {
-            return ToDateTimeWithDefault(value, new DateTimeOffset());
+            return ToDateTimeWithDefault(value, new DateTime());
         }
 
-        public static DateTimeOffset ToDateTimeWithDefault(object value, DateTimeOffset? defaultValue = null)
+        public static DateTime ToDateTimeWithDefault(object value, DateTime? defaultValue = null)
         {
-            var realDefault = defaultValue ?? new DateTimeOffset();
+            var realDefault = defaultValue ?? new DateTime();
             var result = ToNullableDateTime(value);
             return result ?? realDefault;
         }

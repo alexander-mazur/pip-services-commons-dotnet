@@ -21,9 +21,7 @@ namespace PipServices.Commons.Convert
             {
                 var array = new List<object>();
                 foreach (var item in (IEnumerable)value)
-                {
                     array.Add(item);
-                }
                 return array;
             }
             else

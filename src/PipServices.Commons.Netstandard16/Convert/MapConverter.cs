@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Newtonsoft.Json.Linq;
-using PipServices.Commons.Data.Mapper;
 
 namespace PipServices.Commons.Convert
 {
@@ -12,20 +11,16 @@ namespace PipServices.Commons.Convert
         {
             var result = new Dictionary<string, object>();
             foreach(var key in dictionary.Keys)
-            {
                 result[StringConverter.ToString(key)] = dictionary[key];
-            }
             return result;
         }
 
-        private static IDictionary<string, object> EnumerableToMap(IEnumerable enumerable)
+        private static IDictionary<string, object> ArrayToMap(IEnumerable enumerable)
         {
             var result = new Dictionary<string, object>();
             var index = 0;
             foreach (var obj in enumerable)
-            {
                 result[(index++).ToString()] = obj;
-            }
             return result;
         }
 
@@ -40,19 +35,15 @@ namespace PipServices.Commons.Convert
 
             var dictionary = value as IDictionary;
             if(dictionary != null)
-            {
                 return MapToMap(dictionary);
-            }
 
             var enumerable = value as IEnumerable;
             if (enumerable != null && !(value is string) && !(value is JObject || value is JArray))
-            {
-                return EnumerableToMap(enumerable);
-            }
+                return ArrayToMap(enumerable);
 
             try
             {
-                return JsonConverter.ToNullableMap(value.ToString());
+                return RecursiveMapConverter.ToNullableMap(value);
             }
             catch
             {
