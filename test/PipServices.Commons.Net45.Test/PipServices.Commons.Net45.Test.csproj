@@ -129,6 +129,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\NullLoggerTest.cs">
       <Link>Log\NullLoggerTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\DescriptorTest.cs">
+      <Link>Refer\DescriptorTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\ObjectReaderTest.cs">
       <Link>Reflect\ObjectReaderTest.cs</Link>
     </Compile>

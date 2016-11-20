@@ -48,7 +48,7 @@ namespace PipServices.Commons.Convert
 
                 return dict;
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 throw;
             }

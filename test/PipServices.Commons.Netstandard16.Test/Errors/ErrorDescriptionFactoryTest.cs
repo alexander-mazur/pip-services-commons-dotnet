@@ -38,9 +38,6 @@ namespace PipServices.Commons.Test.Errors
         [Fact]
         public void Create_FromException_IsOk()
         {
-            var key = "key";
-            var details = "details";
-
             var ex = new Exception("message");
 
             var descr = ErrorDescriptionFactory.Create(ex);

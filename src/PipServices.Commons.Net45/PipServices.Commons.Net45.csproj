@@ -336,6 +336,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\NullLogger.cs">
       <Link>Log\NullLogger.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\AutoCreateReferenceSet.cs">
+      <Link>Refer\AutoCreateReferenceSet.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Descriptor.cs">
       <Link>Refer\Descriptor.cs</Link>
     </Compile>

@@ -62,7 +62,7 @@ namespace PipServices.Commons.Count
                 {
                     Dump();
                 }
-                catch (InvocationException ex)
+                catch (InvocationException)
                 {
                     // Todo: decide what to do
                 }
