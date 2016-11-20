@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0DBD324-390F-4490-BF56-E778241D514D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PipServices.Commons</RootNamespace>
+    <AssemblyName>PipServices.Commons</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\YamlDotNet.4.0.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Auth\CredentialParams.cs">
+      <Link>Auth\CredentialParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Auth\CredentialResolver.cs">
+      <Link>Auth\CredentialResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Auth\ICredentialStore.cs">
+      <Link>Auth\ICredentialStore.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Build\CompositeFactory.cs">
+      <Link>Build\CompositeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Build\CreateException.cs">
+      <Link>Build\CreateException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Build\IFactory.cs">
+      <Link>Build\IFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Cache\CacheEntry.cs">
+      <Link>Cache\CacheEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Cache\DefaultCacheFactory.cs">
+      <Link>Cache\DefaultCacheFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Cache\ICache.cs">
+      <Link>Cache\ICache.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Cache\NullCache.cs">
+      <Link>Cache\NullCache.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\Command.cs">
+      <Link>Commands\Command.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\CommandSet.cs">
+      <Link>Commands\CommandSet.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\Event.cs">
+      <Link>Commands\Event.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\ICommand.cs">
+      <Link>Commands\ICommand.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\ICommandIntercepter.cs">
+      <Link>Commands\ICommandIntercepter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\IEvent.cs">
+      <Link>Commands\IEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\IEventListener.cs">
+      <Link>Commands\IEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Commands\InterceptedCommand.cs">
+      <Link>Commands\InterceptedCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\ConfigParams.cs">
+      <Link>Config\ConfigParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\IConfigurable.cs">
+      <Link>Config\IConfigurable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\IReconfigurable.cs">
+      <Link>Config\IReconfigurable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\JsonConfigReader.cs">
+      <Link>Config\JsonConfigReader.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\YamlConfigReader.cs">
+      <Link>Config\YamlConfigReader.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Connect\ConnectionParams.cs">
+      <Link>Connect\ConnectionParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Connect\ConnectionResolver.cs">
+      <Link>Connect\ConnectionResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Connect\IDiscovery.cs">
+      <Link>Connect\IDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\ArrayConverter.cs">
+      <Link>Convert\ArrayConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\BooleanConverter.cs">
+      <Link>Convert\BooleanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\DateTimeConverter.cs">
+      <Link>Convert\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\DecimalConverter.cs">
+      <Link>Convert\DecimalConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\DoubleConverter.cs">
+      <Link>Convert\DoubleConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\EnumConverter.cs">
+      <Link>Convert\EnumConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\FloatConverter.cs">
+      <Link>Convert\FloatConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\IntegerConverter.cs">
+      <Link>Convert\IntegerConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\JsonConverter.cs">
+      <Link>Convert\JsonConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\LongConverter.cs">
+      <Link>Convert\LongConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\MapConverter.cs">
+      <Link>Convert\MapConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\RecursiveMapConverter.cs">
+      <Link>Convert\RecursiveMapConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\StringConverter.cs">
+      <Link>Convert\StringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\TimeSpanConverter.cs">
+      <Link>Convert\TimeSpanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\TypeCode.cs">
+      <Link>Convert\TypeCode.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Convert\TypeConverter.cs">
+      <Link>Convert\TypeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\CachedCounters.cs">
+      <Link>Count\CachedCounters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\CompositeCounters.cs">
+      <Link>Count\CompositeCounters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\Counter.cs">
+      <Link>Count\Counter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\CounterType.cs">
+      <Link>Count\CounterType.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\DefaultCountersFactory.cs">
+      <Link>Count\DefaultCountersFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\ICounters.cs">
+      <Link>Count\ICounters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\ITimingCallback.cs">
+      <Link>Count\ITimingCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\LogCounters.cs">
+      <Link>Count\LogCounters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\NullCounters.cs">
+      <Link>Count\NullCounters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Count\Timing.cs">
+      <Link>Count\Timing.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\AnyValue.cs">
+      <Link>Data\AnyValue.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\AnyValueArray.cs">
+      <Link>Data\AnyValueArray.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\AnyValueMap.cs">
+      <Link>Data\AnyValueMap.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\DataPage.cs">
+      <Link>Data\DataPage.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\FilterParams.cs">
+      <Link>Data\FilterParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\ICloneable.cs">
+      <Link>Data\ICloneable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\IdGenerator.cs">
+      <Link>Data\IdGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\IIdentifiable.cs">
+      <Link>Data\IIdentifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\INamed.cs">
+      <Link>Data\INamed.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\IStringIdentifiable.cs">
+      <Link>Data\IStringIdentifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\ITrackable.cs">
+      <Link>Data\ITrackable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\Mapper\IObjectMapper.cs">
+      <Link>Data\Mapper\IObjectMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\Mapper\IObjectMapperStrategy.cs">
+      <Link>Data\Mapper\IObjectMapperStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\Mapper\ObjectMapper.cs">
+      <Link>Data\Mapper\ObjectMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\Mapper\ObjectMapperStrategy.cs">
+      <Link>Data\Mapper\ObjectMapperStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\PagingParams.cs">
+      <Link>Data\PagingParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\SortField.cs">
+      <Link>Data\SortField.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\SortParams.cs">
+      <Link>Data\SortParams.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\StringValueMap.cs">
+      <Link>Data\StringValueMap.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ApplicationException.cs">
+      <Link>Errors\ApplicationException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ApplicationExceptionFactory.cs">
+      <Link>Errors\ApplicationExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\BadRequestException.cs">
+      <Link>Errors\BadRequestException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ConfigException.cs">
+      <Link>Errors\ConfigException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ConflictException.cs">
+      <Link>Errors\ConflictException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ConnectionException.cs">
+      <Link>Errors\ConnectionException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ErrorCategory.cs">
+      <Link>Errors\ErrorCategory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ErrorDescription.cs">
+      <Link>Errors\ErrorDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\ErrorDescriptionFactory.cs">
+      <Link>Errors\ErrorDescriptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\FileException.cs">
+      <Link>Errors\FileException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\InternalException.cs">
+      <Link>Errors\InternalException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\InvalidStateException.cs">
+      <Link>Errors\InvalidStateException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\InvocationException.cs">
+      <Link>Errors\InvocationException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\NotFoundException.cs">
+      <Link>Errors\NotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\UnauthorizedException.cs">
+      <Link>Errors\UnauthorizedException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\UnknownException.cs">
+      <Link>Errors\UnknownException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Errors\UnsupportedException.cs">
+      <Link>Errors\UnsupportedException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\CompositeLogger.cs">
+      <Link>Log\CompositeLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\ConsoleLogger.cs">
+      <Link>Log\ConsoleLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\DefaultLoggerFactory.cs">
+      <Link>Log\DefaultLoggerFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\ILogger.cs">
+      <Link>Log\ILogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\Logger.cs">
+      <Link>Log\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\LogLevel.cs">
+      <Link>Log\LogLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\NullLogger.cs">
+      <Link>Log\NullLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Descriptor.cs">
+      <Link>Refer\Descriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IDescriptable.cs">
+      <Link>Refer\IDescriptable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ILocateable.cs">
+      <Link>Refer\ILocateable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IReferenceable.cs">
+      <Link>Refer\IReferenceable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IReferences.cs">
+      <Link>Refer\IReferences.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IUnreferenceable.cs">
+      <Link>Refer\IUnreferenceable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Reference.cs">
+      <Link>Refer\Reference.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ReferenceException.cs">
+      <Link>Refer\ReferenceException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Referencer.cs">
+      <Link>Refer\Referencer.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ReferenceSet.cs">
+      <Link>Refer\ReferenceSet.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\MethodReflector.cs">
+      <Link>Reflect\MethodReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\ObjectReader.cs">
+      <Link>Reflect\ObjectReader.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\ObjectWriter.cs">
+      <Link>Reflect\ObjectWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\PropertyReflector.cs">
+      <Link>Reflect\PropertyReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\RecursiveObjectReader.cs">
+      <Link>Reflect\RecursiveObjectReader.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\RecursiveObjectWriter.cs">
+      <Link>Reflect\RecursiveObjectWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\TypeDescriptor.cs">
+      <Link>Reflect\TypeDescriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\TypeMatcher.cs">
+      <Link>Reflect\TypeMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\TypeReflector.cs">
+      <Link>Reflect\TypeReflector.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Cleaner.cs">
+      <Link>Run\Cleaner.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Closer.cs">
+      <Link>Run\Closer.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Executor.cs">
+      <Link>Run\Executor.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\FixedRateTimer.cs">
+      <Link>Run\FixedRateTimer.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\ICleanable.cs">
+      <Link>Run\ICleanable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IClosable.cs">
+      <Link>Run\IClosable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IExecutable.cs">
+      <Link>Run\IExecutable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\INotifiable.cs">
+      <Link>Run\INotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IOpenable.cs">
+      <Link>Run\IOpenable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParametrized.cs">
+      <Link>Run\IParametrized.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParamExecutable.cs">
+      <Link>Run\IParamExecutable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParamNotifiable.cs">
+      <Link>Run\IParamNotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Notifier.cs">
+      <Link>Run\Notifier.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Opener.cs">
+      <Link>Run\Opener.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Run\Parameters.cs">
+      <Link>Run\Parameters.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\AndRule.cs">
+      <Link>Validate\AndRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ArraySchema.cs">
+      <Link>Validate\ArraySchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\AtLeastOneExistRule.cs">
+      <Link>Validate\AtLeastOneExistRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ExcludedRule.cs">
+      <Link>Validate\ExcludedRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\IncludedRule.cs">
+      <Link>Validate\IncludedRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\IValidationRule.cs">
+      <Link>Validate\IValidationRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\MapSchema.cs">
+      <Link>Validate\MapSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ObjectComparator.cs">
+      <Link>Validate\ObjectComparator.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ObjectSchema.cs">
+      <Link>Validate\ObjectSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\OnlyOneExistRule.cs">
+      <Link>Validate\OnlyOneExistRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\OrRule.cs">
+      <Link>Validate\OrRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\PropertiesComparisonRule.cs">
+      <Link>Validate\PropertiesComparisonRule.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\PropertySchema.cs">
+      <Link>Validate\PropertySchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\Schema.cs">
+      <Link>Validate\Schema.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ValidationException.cs">
+      <Link>Validate\ValidationException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ValidationResult.cs">
+      <Link>Validate\ValidationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ValidationResultType.cs">
+      <Link>Validate\ValidationResultType.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ValueComparisonRule.cs">
+      <Link>Validate\ValueComparisonRule.cs</Link>
+    </Compile>
+    <Compile Include="Cache\MemoryCache.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Random\RandomData.cs" />
+    <Compile Include="Random\RandomDataGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

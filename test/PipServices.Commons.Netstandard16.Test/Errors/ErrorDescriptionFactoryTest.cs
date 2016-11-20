@@ -2,6 +2,8 @@
 using PipServices.Commons.Errors;
 using Xunit;
 
+using ApplicationException = PipServices.Commons.Errors.ApplicationException;
+
 namespace PipServices.Commons.Test.Errors
 {
     public class ErrorDescriptionFactoryTest
