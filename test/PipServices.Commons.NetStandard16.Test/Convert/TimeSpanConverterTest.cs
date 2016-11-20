@@ -9,9 +9,9 @@ namespace PipServices.Commons.Convert
         public void TestToNullableDuration()
         {
             //Assert.Null(TimeSpanConverter.ToNullableTimeSpan(null));
-            //Assert.True(TimeSpanConverter.ToNullableTimeSpan((int)6000).Value.Seconds == 6);
-            //Assert.True(TimeSpanConverter.ToNullableTimeSpan((short)6000).Value.Seconds == 6);
-            //Assert.True(TimeSpanConverter.ToNullableTimeSpan(6000.5).Value.Seconds == 6);
+            Assert.True(TimeSpanConverter.ToNullableTimeSpan((int)6000).Value.Seconds == 6);
+            Assert.True(TimeSpanConverter.ToNullableTimeSpan((short)6000).Value.Seconds == 6);
+            Assert.True(TimeSpanConverter.ToNullableTimeSpan(6000.5).Value.Seconds == 6);
             //Assert.True(TimeSpanConverter.ToNullableTimeSpan(-600).Value.Seconds == -1);
             //Assert.True(TimeSpanConverter.ToNullableTimeSpan(0).Value.Seconds == 0);
         }
