@@ -336,6 +336,30 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\NullLogger.cs">
       <Link>Log\NullLogger.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomArray.cs">
+      <Link>Random\RandomArray.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomBoolean.cs">
+      <Link>Random\RandomBoolean.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomDateTime.cs">
+      <Link>Random\RandomDateTime.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomDouble.cs">
+      <Link>Random\RandomDouble.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomFloat.cs">
+      <Link>Random\RandomFloat.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomInteger.cs">
+      <Link>Random\RandomInteger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomString.cs">
+      <Link>Random\RandomString.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomText.cs">
+      <Link>Random\RandomText.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\AutoCreateReferenceSet.cs">
       <Link>Refer\AutoCreateReferenceSet.cs</Link>
     </Compile>
@@ -497,8 +521,7 @@
     </Compile>
     <Compile Include="Cache\MemoryCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Random\RandomData.cs" />
-    <Compile Include="Random\RandomDataGenerator.cs" />
+    <Compile Include="Random\RandomEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

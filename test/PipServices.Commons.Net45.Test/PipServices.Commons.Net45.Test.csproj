@@ -129,6 +129,30 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\NullLoggerTest.cs">
       <Link>Log\NullLoggerTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomArrayTest.cs">
+      <Link>Random\RandomArrayTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomBooleanTest.cs">
+      <Link>Random\RandomBooleanTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomDateTimeTest.cs">
+      <Link>Random\RandomDateTimeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomDoubleTest.cs">
+      <Link>Random\RandomDoubleTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomFloatTest.cs">
+      <Link>Random\RandomFloatTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomIntegerTest.cs">
+      <Link>Random\RandomIntegerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomStringTest.cs">
+      <Link>Random\RandomStringTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomTextTest.cs">
+      <Link>Random\RandomTextTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\DescriptorTest.cs">
       <Link>Refer\DescriptorTest.cs</Link>
     </Compile>
