@@ -18,7 +18,6 @@
         <dependency id="YamlDotNet" version="4.0" />
       </group>
       <group targetFramework="netstandard">
-        <dependency id="Microsoft.Extensions.Caching.Abstractions" version="1.0.0" />
         <dependency id="Microsoft.Extensions.Logging.TraceSource" version="1.0.0" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="System.ComponentModel.TypeConverter" version="4.1.0" />
