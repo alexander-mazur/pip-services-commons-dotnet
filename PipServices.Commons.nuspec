@@ -33,10 +33,10 @@
   </metadata>
 
   <files>
-    <file src="src\PipServices.Commons.Net461\bin\Release\netstandard1.6\PipServices.Commons.deps.json" target="lib\netstandard1.6" />
-    <file src="src\PipServices.Commons.Net461\bin\Release\netstandard1.6\PipServices.Commons.dll" target="lib\netstandard1.6" />
-    <file src="src\PipServices.Commons.Net461\bin\Release\netstandard1.6\PipServices.Commons.pdb" target="lib\netstandard1.6" />
-    <file src="src\PipServices.Commons.Netstandard16\bin\Release\PipServices.Commons.dll" target="lib\net461" />
-    <file src="src\PipServices.Commons.Netstandard16\bin\Release\PipServices.Commons.pdb" target="lib\net461" />
+    <file src="src\PipServices.Commons.Netstandard16\bin\Release\netstandard1.6\PipServices.Commons.deps.json" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons.Netstandard16\bin\Release\netstandard1.6\PipServices.Commons.dll" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons.Netstandard16\bin\Release\netstandard1.6\PipServices.Commons.pdb" target="lib\netstandard1.6" />
+    <file src="src\PipServices.Commons.Net461\bin\Release\PipServices.Commons.dll" target="lib\net461" />
+    <file src="src\PipServices.Commons.Net461\bin\Release\PipServices.Commons.pdb" target="lib\net461" />
   </files>
 </package>

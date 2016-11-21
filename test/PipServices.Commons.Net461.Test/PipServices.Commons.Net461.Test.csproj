@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PipServices.Commons.Test</RootNamespace>
-    <AssemblyName>PipServices.Commons.Dot.Test</AssemblyName>
+    <AssemblyName>PipServices.Commons.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
