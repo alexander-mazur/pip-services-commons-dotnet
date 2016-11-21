@@ -12,7 +12,7 @@ namespace PipServices.Commons.Convert
         {
             if (value == null) return null;
             if (value is TimeSpan || value is TimeSpan?)
-                return (long)((TimeSpan)value).TotalMilliseconds;
+                return (long)((TimeSpan)value).Ticks;
             if (value is DateTime || value is DateTime?)
                 return ((DateTime)value).Ticks;
             if (value is bool || value is bool?)
@@ -20,7 +20,7 @@ namespace PipServices.Commons.Convert
 
             try
             {
-                return System.Convert.ToInt64(value, CultureInfo.InvariantCulture);
+                return (long)System.Convert.ToDouble(value, CultureInfo.InvariantCulture);
             }
             catch
             {

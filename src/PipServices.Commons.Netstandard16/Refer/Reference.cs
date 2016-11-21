@@ -4,9 +4,8 @@ namespace PipServices.Commons.Refer
 {
     public class Reference : ILocateable
     {
-        public object Locator { get; }
-        public object Refer { get; }
-
+        private object _locator;
+        private object _reference;
         private ILocateable _locateableReference;
 
         public Reference(object reference, object locator)
@@ -17,8 +16,8 @@ namespace PipServices.Commons.Refer
             if (reference == null)
                 throw new ArgumentNullException(nameof(reference));
 
-            Locator = locator;
-            Refer = reference;
+            _locator = locator;
+            _reference = reference;
         }
 
         public Reference(object reference)
@@ -27,32 +26,35 @@ namespace PipServices.Commons.Refer
             var describable = reference as IDescriptable;
 
             if (locatable == null && describable == null)
-            {
                 throw new ArgumentException("Reference must implement ILocateable or IDescribable interface");
-            }
 
             _locateableReference = locatable;
 
-            Refer = reference;
+            _reference = reference;
 
             if (describable != null)
-                Locator = describable.GetDescriptor();
+                _locator = describable.GetDescriptor();
         }
 
         public bool Locate(object locator)
         {
-            if (Refer.Equals(locator))
+            if (_reference.Equals(locator))
                 return true;
 
             if (locator is Type)
-			    return Equals(Refer.GetType(), locator);
+                return ((Type)_locator).Equals(_reference.GetType());
 
 		    // Locate locateable objects
 		    if (_locateableReference != null)
                 return _locateableReference.Locate(locator);
 
             // Locate by direct locator matching
-            return Locator.Equals(locator);
+            return _locator.Equals(locator);
+        }
+
+        public object GetReference()
+        {
+            return _reference;
         }
     }
 }

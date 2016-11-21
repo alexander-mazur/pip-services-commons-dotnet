@@ -5,9 +5,7 @@ namespace PipServices.Commons.Count
 {
     public sealed class Counter
     {
-        public Counter()
-        {
-        }
+        public Counter() { }
 
         public Counter(string name, CounterType type)
         {

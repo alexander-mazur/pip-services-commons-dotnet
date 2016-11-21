@@ -1,52 +1,60 @@
-﻿using System;
-using System.Text;
+﻿using PipServices.Commons.Convert;
+using System;
 using System.Collections.Generic;
-using PipServices.Commons.Convert;
-using PipServices.Commons.Reflect;
+using System.Text;
 
 namespace PipServices.Commons.Data
 {
-    public class StringValueMap : Dictionary<string, object>
+    public class StringValueMap : Dictionary<string, string>
     {
         public StringValueMap()
             : base(StringComparer.OrdinalIgnoreCase)
         {
         }
 
-        public StringValueMap(IDictionary<string, object> map)
+        public StringValueMap(IDictionary<string, string> map)
             : base(StringComparer.OrdinalIgnoreCase)
         {
             SetAsMap(map);
         }
 
-        public string Get(string name)
+        public new string this[string key]
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            get { return Get(key); }
+            set { SetAsObject(key, value); }
+        }
 
-            foreach (var key in Keys)
+        public string Get(string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            foreach (var thisKey in Keys)
             {
-                if (string.Compare(key, name, true) == 0)
-                {
-                    return this[key].ToString();
-                }
+                if (string.Compare(thisKey, key, true) == 0)
+                    return base[thisKey];
             }
+
             return null;
         }
 
         public void SetAsMap(IDictionary<string, object> map)
         {
             foreach (var key in map.Keys)
-                this[StringConverter.ToString(key)] = StringConverter.ToNullableString(map[key]);
+                SetAsObject(key, StringConverter.ToNullableString(map[key]));
+        }
+
+        public void SetAsMap(IDictionary<string, string> map)
+        {
+            foreach (var key in map.Keys)
+                SetAsObject(key, map[key]);
         }
 
         public object GetAsObject()
         {
             var result = new Dictionary<string, object>();
             foreach (var key in Keys)
-            {
                 result[key] = this[key];
-            }
             return result;
         }
 
@@ -58,7 +66,7 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(string key, object value)
         {
-            this[key] = StringConverter.ToNullableString(value);
+            base[key] = StringConverter.ToNullableString(value);
         }
 
         public object GetAsObject(string key)
@@ -68,7 +76,7 @@ namespace PipServices.Commons.Data
 
         public string GetAsNullableString(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return StringConverter.ToNullableString(value);
         }
 
@@ -79,13 +87,13 @@ namespace PipServices.Commons.Data
 
         public string GetAsStringWithDefault(string key, string defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return StringConverter.ToStringWithDefault(value, defaultValue);
         }
 
         public bool? GetAsNullableBoolean(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return BooleanConverter.ToNullableBoolean(value);
         }
 
@@ -96,13 +104,13 @@ namespace PipServices.Commons.Data
 
         public bool GetAsBooleanWithDefault(string key, bool defaultValue = false)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return BooleanConverter.ToBooleanWithDefault(value, defaultValue);
         }
 
         public int? GetAsNullableInteger(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return IntegerConverter.ToNullableInteger(value);
         }
 
@@ -113,13 +121,13 @@ namespace PipServices.Commons.Data
 
         public int GetAsIntegerWithDefault(string key, int defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return IntegerConverter.ToIntegerWithDefault(value, defaultValue);
         }
 
         public long? GetAsNullableLong(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return LongConverter.ToNullableLong(value);
         }
 
@@ -130,13 +138,13 @@ namespace PipServices.Commons.Data
 
         public long GetAsLongWithDefault(string key, long defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return LongConverter.ToLongWithDefault(value, defaultValue);
         }
 
         public float? GetAsNullableFloat(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return FloatConverter.ToNullableFloat(value);
         }
 
@@ -147,13 +155,13 @@ namespace PipServices.Commons.Data
 
         public float GetAsFloatWithDefault(string key, float defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return FloatConverter.ToFloatWithDefault(value, defaultValue);
         }
 
         public double? GetAsNullableDouble(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DoubleConverter.ToNullableDouble(value);
         }
 
@@ -164,30 +172,30 @@ namespace PipServices.Commons.Data
 
         public double GetAsDoubleWithDefault(string key, double defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
         }
 
-        public DateTimeOffset? GetAsNullableDateTime(string key)
+        public DateTime? GetAsNullableDateTime(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DateTimeConverter.ToNullableDateTime(value);
         }
 
-        public DateTimeOffset GetAsDateTime(string key)
+        public DateTime GetAsDateTime(string key)
         {
-            return GetAsDateTimeWithDefault(key, new DateTimeOffset());
+            return GetAsDateTimeWithDefault(key, new DateTime());
         }
 
-        public DateTimeOffset GetAsDateTimeWithDefault(string key, DateTimeOffset? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
         }
 
         public TimeSpan? GetAsNullableTimeSpan(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TimeSpanConverter.ToNullableTimeSpan(value);
         }
 
@@ -198,13 +206,13 @@ namespace PipServices.Commons.Data
 
         public TimeSpan GetAsTimeSpanWithDefault(string key, TimeSpan? defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TimeSpanConverter.ToTimeSpanWithDefault(value, defaultValue);
         }
 
         public T? GetAsNullableEnum<T>(string key) where T : struct
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return EnumConverter.ToNullableEnum<T>(value);
         }
 
@@ -215,7 +223,7 @@ namespace PipServices.Commons.Data
 
         public T GetAsEnumWithDefault<T>(string key, T defaultValue = default(T))
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
         }
 
@@ -279,18 +287,13 @@ namespace PipServices.Commons.Data
             foreach (var key in Keys)
             {
                 if (builder.Length > 0)
-                {
                     builder.Append(";");
-                }
+
                 var value = this[key];
                 if (value != null)
-                {
                     builder.Append(key + "=" + value);
-                }
                 else
-                {
                     builder.Append(key);
-                }
             }
             return builder.ToString();
         }
@@ -338,24 +341,15 @@ namespace PipServices.Commons.Data
             return result;
         }
 
-        public static StringValueMap FromMaps(params IDictionary<string, object>[] maps)
+        public static StringValueMap FromMaps(params IDictionary<string, string>[] maps)
         {
             var result = new StringValueMap();
             if (maps != null && maps.Length > 0)
             {
                 foreach (var map in maps)
-                {
-                    result.SetAsMap(map);
-                }
+                    result.SetAsMap((IDictionary<string, object>)map);
             }
             return result;
-        }
-
-        private string TryGet(string key)
-        {
-            object value;
-            TryGetValue(key, out value);
-            return value?.ToString();
         }
     }
 }

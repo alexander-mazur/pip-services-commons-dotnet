@@ -8,13 +8,6 @@ namespace PipServices.Commons.Cache
     public class CacheEntry
     {
         /// <summary>
-        /// Gets the time of expiration, in ticks.
-        /// </summary>
-        public long Expiration { get; }
-        public string Key { get; }
-        public object Value { get; set; }
-
-        /// <summary>
         /// Creates an instance of the cache entry.
         /// </summary>
         /// <param name="key">Unique key used to identify the value.</param>
@@ -24,7 +17,17 @@ namespace PipServices.Commons.Cache
         {
             Key = key;
             Value = value;
-            Expiration = DateTime.Now.Ticks + timeout * TimeSpan.TicksPerMillisecond;
+            Expiration = Environment.TickCount + timeout;
+        }
+
+        public string Key { get; }
+        public object Value { get; private set; }
+        public long Expiration { get; private set; }
+
+        public void SetValue(object value, long timeout)
+        {
+            Value = value;
+            Expiration = Environment.TickCount + timeout;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace PipServices.Commons.Cache
         /// <returns><code>True</code> if expired.</returns>
         public bool IsExpired()
         {
-            return Expiration < DateTime.Now.Ticks;
+            return Expiration < Environment.TickCount;
         }
     }
 }

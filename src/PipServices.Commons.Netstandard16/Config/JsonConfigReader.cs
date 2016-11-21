@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using Newtonsoft.Json;
 using PipServices.Commons.Errors;
+using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Config
 {
@@ -17,8 +17,7 @@ namespace PipServices.Commons.Config
                 using (var reader = new StreamReader(File.OpenRead(path)))
                 {
                     var json = reader.ReadToEnd();
-
-                    return JsonConvert.DeserializeObject<dynamic>(json);
+                    return JsonConverter.ToNullableMap(json);
                 }
             }
             catch (Exception ex)
@@ -27,10 +26,9 @@ namespace PipServices.Commons.Config
                     correlationId,
                     "READ_FAILED",
                     "Failed reading configuration " + path + ": " + ex
-
-                    )
-                    .WithDetails("path", path)
-                    .WithCause(ex);
+                )
+                .WithDetails("path", path)
+                .WithCause(ex);
             }
         }
 

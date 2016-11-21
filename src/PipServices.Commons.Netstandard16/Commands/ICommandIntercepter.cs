@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using PipServices.Commons.Run;
+﻿using PipServices.Commons.Run;
 using PipServices.Commons.Validate;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Commands
 {
@@ -24,9 +23,8 @@ namespace PipServices.Commons.Commands
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="command">Intercepted command.</param>
         /// <param name="args">Map with command arguments.</param>
-        /// <param name="token"></param>
         /// <returns></returns>
-        Task<object> ExecuteAsync(string correlationId, ICommand command, Parameters args, CancellationToken token);
+        Task<object> ExecuteAsync(string correlationId, ICommand command, Parameters args);
 
         /// <summary>
         /// Performs validation of the command arguments.

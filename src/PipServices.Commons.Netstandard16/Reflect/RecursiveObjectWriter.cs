@@ -46,9 +46,7 @@ namespace PipServices.Commons.Reflect
             if (values == null || values.Count == 0) return;
 
             foreach(var entry in RecursiveObjectReader.GetProperties(values))
-            {
                 SetProperty(obj, entry.Key, entry.Value);
-            }
         }
 
         public static void CopyProperties(object dest, object src)
@@ -56,7 +54,6 @@ namespace PipServices.Commons.Reflect
             if (dest == null || src == null) return;
 
             var values = RecursiveObjectReader.GetProperties(src);
-
             SetProperties(dest, values);
         }
     }

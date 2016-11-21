@@ -14,9 +14,12 @@ namespace PipServices.Commons.Errors
             this(null, null, null, null)
         { }
 
-        public ApplicationException(string category = null, string correlationId = null, string code = null, string message = null) : 
-            base(message ?? "Unknown error")
+        public ApplicationException(string category = null, string correlationId = null, string code = null, string message = null) 
+            : base(message ?? "Unknown error")
         {
+            Code = "UNKNOWN";
+            Status = 500;
+
             Category = category ?? ErrorCategory.Unknown;
             CorrelationId = correlationId;
             Code = code;
@@ -26,8 +29,8 @@ namespace PipServices.Commons.Errors
         public string CorrelationId { get; set; }
         public string Cause { get; set; }
         public StringValueMap Details { get; set; }
-        public string Code { get; set; } = "Unknown";
-        public int Status { get; set; } = 500;
+        public string Code { get; set; }
+        public int Status { get; set; }
 
         public new string StackTrace
         {
@@ -37,7 +40,7 @@ namespace PipServices.Commons.Errors
 
         public ApplicationException WithCode(string code)
         {
-            Code = code;
+            Code = code ?? "UNKNOWN";
             return this;
         }
 
@@ -81,7 +84,7 @@ namespace PipServices.Commons.Errors
             return this;
         }
 
-        public static ApplicationException Wrap(ApplicationException error, Exception cause)
+        public static ApplicationException WrapException(ApplicationException error, Exception cause)
         {
             if (cause is ApplicationException)
                 return (ApplicationException)cause;

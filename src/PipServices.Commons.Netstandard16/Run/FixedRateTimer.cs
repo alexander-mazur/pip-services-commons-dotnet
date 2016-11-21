@@ -5,15 +5,10 @@ namespace PipServices.Commons.Run
 {
     public class FixedRateTimer : IClosable
     {
-        public INotifiable Task { get; set; }
-        public int Delay { get; set; }
-        public int Interval { get; set; }
         private Timer _timer;
-        public bool Started { get; private set; }
         private readonly object _syncRoot = new object();
 
-        public FixedRateTimer()
-        { }
+        public FixedRateTimer() { }
 
         public FixedRateTimer(INotifiable task, int interval, int delay)
         {
@@ -21,6 +16,11 @@ namespace PipServices.Commons.Run
             Interval = interval;
             Delay = delay;
         }
+
+        public INotifiable Task { get; set; }
+        public int Delay { get; set; }
+        public int Interval { get; set; }
+        public bool IsStarted { get; private set; }
 
         public void Start()
         {
@@ -39,11 +39,11 @@ namespace PipServices.Commons.Run
                     }, 
                     null, Delay, Interval
                 );
-                Started = true;
+                IsStarted = true;
             }
         }
 
-        public async Task CloseAsync(string correlationId, CancellationToken token)
+        public async Task CloseAsync(string correlationId)
         {
             lock (_syncRoot)
             {
@@ -54,7 +54,7 @@ namespace PipServices.Commons.Run
                 }
             }
 
-            await System.Threading.Tasks.Task.Delay(0, token);
+            await System.Threading.Tasks.Task.Delay(0);
         }
     }
 }

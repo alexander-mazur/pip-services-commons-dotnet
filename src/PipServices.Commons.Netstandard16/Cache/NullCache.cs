@@ -1,4 +1,5 @@
 ﻿using PipServices.Commons.Refer;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Cache
 {
@@ -9,7 +10,7 @@ namespace PipServices.Commons.Cache
     /// </summary>
     public class NullCache : ICache, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "null", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-common", "cache", "null", "1.0");
 
         /// <summary>
         /// Gets the component descriptor.
@@ -21,23 +22,14 @@ namespace PipServices.Commons.Cache
         }
 
         /// <summary>
-        /// Removes an object from cache.
-        /// </summary>
-        /// <param name="correlationId"></param>
-        /// <param name="key">Unique key identifying the object.</param>
-        public void Remove(string correlationId, string key)
-        {
-        }
-
-        /// <summary>
         /// Retrieves a value from cache by unique key.
         /// </summary>
         /// <param name="correlationId"></param>
         /// <param name="key">Unique key identifying a data object.</param>
         /// <returns>Cached value or null if the value is not found.</returns>
-        public object Retrieve(string correlationId, string key)
+        public async Task<object> RetrieveAsync(string correlationId, string key)
         {
-            return null;
+            return await Task.FromResult((object)null);
         }
 
         /// <summary>
@@ -48,9 +40,19 @@ namespace PipServices.Commons.Cache
         /// <param name="value">The data object to store.</param>
         /// <param name="timeout">Time to live for the object in milliseconds.</param>
         /// <returns>Cached object stored in the cache.</returns>
-        public object Store(string correlationId, string key, object value, long timeout)
+        public async Task<object> StoreAsync(string correlationId, string key, object value, long timeout)
         {
-            return value;
+            return await Task.FromResult(value);
+        }
+
+        /// <summary>
+        /// Removes an object from cache.
+        /// </summary>
+        /// <param name="correlationId"></param>
+        /// <param name="key">Unique key identifying the object.</param>
+        public async Task RemoveAsync(string correlationId, string key)
+        {
+            await Task.Delay(0);
         }
     }
 }

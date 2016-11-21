@@ -1,5 +1,4 @@
-﻿using System;
-using PipServices.Commons.Errors;
+﻿using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Build
 {
@@ -8,20 +7,18 @@ namespace PipServices.Commons.Build
     /// </summary>
     public class CreateException : InternalException
     {
-        public CreateException(Exception innerException) :
-            this(null, null)
-        {
-        }
+        public CreateException()
+            : this(null, null)
+        { }
 
-        public CreateException(string correlationId, object locator) :
-            base(correlationId, "CANNOT_CREATE", "Requested component " + (locator == null ? "" : locator.ToString()) + " cannot be created")
+        public CreateException(string correlationId, object locator) 
+            : base(correlationId, "CANNOT_CREATE", "Requested component " + locator + " cannot be created")
         {
             WithDetails("locator", locator);
         }
 
-        public CreateException(string correlationId, string message) :
-            base(correlationId, "CANNOT_CREATE", message)
-        {
-        }
+        public CreateException(string correlationId, string message) 
+            : base(correlationId, "CANNOT_CREATE", message)
+        { }
     }
 }

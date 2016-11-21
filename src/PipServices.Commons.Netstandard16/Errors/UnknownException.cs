@@ -7,19 +7,17 @@ namespace PipServices.Commons.Errors
     /// </summary>
     public class UnknownException : ApplicationException
     {
-        public UnknownException(Exception innerException) : 
-            base(ErrorCategory.Unknown, null, null, null)
+        public UnknownException(Exception innerException) 
+            : base(ErrorCategory.Unknown, null, null, null)
         {
             Status = 500;
-
             WithCause(innerException);
         }
 
-        public UnknownException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.Unknown, correlationId, code, message)
+        public UnknownException(string correlationId = null, string code = null, string message = null, Exception innerException = null) 
+            : base(ErrorCategory.Unknown, correlationId, code, message)
         {
             Status = 500;
-
             WithCause(innerException);
         }
     }

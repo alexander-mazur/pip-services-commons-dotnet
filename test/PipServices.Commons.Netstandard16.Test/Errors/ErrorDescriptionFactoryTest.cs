@@ -2,6 +2,8 @@
 using PipServices.Commons.Errors;
 using Xunit;
 
+using ApplicationException = PipServices.Commons.Errors.ApplicationException;
+
 namespace PipServices.Commons.Test.Errors
 {
     public class ErrorDescriptionFactoryTest
@@ -36,9 +38,6 @@ namespace PipServices.Commons.Test.Errors
         [Fact]
         public void Create_FromException_IsOk()
         {
-            var key = "key";
-            var details = "details";
-
             var ex = new Exception("message");
 
             var descr = ErrorDescriptionFactory.Create(ex);

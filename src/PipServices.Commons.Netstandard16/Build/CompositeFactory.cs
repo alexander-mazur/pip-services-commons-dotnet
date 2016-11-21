@@ -10,8 +10,7 @@ namespace PipServices.Commons.Build
     {
         private readonly List<IFactory> _factories = new List<IFactory>();
 
-        public CompositeFactory()
-        { }
+        public CompositeFactory() { }
 
         public CompositeFactory(params IFactory[] factories)
         {
@@ -24,9 +23,7 @@ namespace PipServices.Commons.Build
         public void Add(IFactory factory)
         {
             if (factory == null)
-            {
                 throw new ArgumentNullException(nameof(factory));
-            }
 
             _factories.Add(factory);
         }
@@ -34,9 +31,7 @@ namespace PipServices.Commons.Build
         public void Remove(IFactory factory)
         {
             if (factory == null)
-            {
                 throw new ArgumentNullException(nameof(factory));
-            }
 
             _factories.Remove(factory);
         }
@@ -44,9 +39,7 @@ namespace PipServices.Commons.Build
         public bool CanCreate(object locator)
         {
             if (locator == null)
-            {
                 throw new ArgumentNullException(nameof(locator));
-            }
 
             return _factories.Exists(x => x.CanCreate(locator));
         }
@@ -54,16 +47,13 @@ namespace PipServices.Commons.Build
         public object Create(object locator)
         {
             if (locator == null)
-            {
                 throw new ArgumentNullException(nameof(locator));
-            }
-
 
             var factory = _factories.FindLast(x => x.CanCreate(locator));
+
             if (factory == null)
-            {
                 throw new CreateException(null, locator);
-            }
+
             return factory.Create(locator);
         }
     }

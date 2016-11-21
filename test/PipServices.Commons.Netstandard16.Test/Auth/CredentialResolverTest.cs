@@ -1,10 +1,9 @@
-﻿using System;
-using Xunit;
+﻿using PipServices.Commons.Auth;
 using PipServices.Commons.Config;
-using PipServices.Commons.Auth;
-using PipServices.Commons.Errors;
 using PipServices.Commons.Refer;
+using System;
 using System.Linq;
+using Xunit;
 
 namespace PipServices.Commons.Test.Auth
 {
@@ -15,7 +14,7 @@ namespace PipServices.Commons.Test.Auth
             "credential.password", "qwerty",
             "credential.access_key", "key",
             "credential.store_key", "store key"
-            );
+        );
 
         [Fact]
         public void TestConfigure()
@@ -34,28 +33,23 @@ namespace PipServices.Commons.Test.Auth
         {
             var credentialResolver = new CredentialResolver();
             var credential = credentialResolver.Lookup("correlationId");
-
             Assert.Null(credential);
 
             var restConfigWithoutStoreKey = ConfigParams.FromTuples(
                 "credential.username", "Negrienko",
                 "credential.password", "qwerty",
                 "credential.access_key", "key"
-                );
+            );
             credentialResolver = new CredentialResolver(restConfigWithoutStoreKey);
             credential = credentialResolver.Lookup("correlationId");
 
             Assert.Equal(credential.Get("username"), "Negrienko");
-
             Assert.Equal(credential.Get("password"), "qwerty");
-
             Assert.Equal(credential.Get("access_key"), "key");
-
             Assert.Null(credential.Get("store_key"));
 
             credentialResolver = new CredentialResolver(RestConfig);
             credentialResolver.SetReferences(new ReferenceSet());
-
             try
             {
                 credential = credentialResolver.Lookup("correlationId");

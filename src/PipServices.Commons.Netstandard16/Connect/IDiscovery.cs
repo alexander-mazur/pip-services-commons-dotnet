@@ -1,36 +1,37 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipServices.Commons.Connect
 {
+    /// <summary>
+    /// Service discovery component used to register connections of the services
+    /// or to resolve connections to external services called by clients.
+    /// </summary>
     public interface IDiscovery
     {
-        /**
-         * Registers connection where API service binds to.
-         * @param correlationId a unique transaction id to trace calls across components
-         * @param key a key to identify the connection
-         * @param connection the connection to be registered.
-         * @throws ApplicationException when registration fails for whatever reasons
-         */
-        Task RegisterAsync(string correlationId, string key, ConnectionParams connection, CancellationToken token);
+        /// <summary>
+        /// Registers connection where API service binds to.
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="key">a key to identify the connection</param>
+        /// <param name="connection">the connection to be registered.</param>
+        /// <param name="token"></param>
+        Task RegisterAsync(string correlationId, string key, ConnectionParams connection);
 
-        /**
-         * Resolves one connection from the list of service connections.
-         * @param correlationId a unique transaction id to trace calls across components
-         * @param key a key locate a connection
-         * @return a resolved connection.
-         * @throws ApplicationException when resolution failed for whatever reasons.
-         */
-        Task<ConnectionParams> ResolveOneAsync(string correlationId, string key, CancellationToken token);
+        /// <summary>
+        /// Resolves one connection from the list of service connections.
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="key">a key locate a connection</param>
+        /// <returns>a resolved connection.</returns>
+        Task<ConnectionParams> ResolveOneAsync(string correlationId, string key);
 
-        /**
-         * Resolves a list of connections from to be called by a client.
-         * @param correlationId a unique transaction id to trace calls across components
-         * @param key a key locate connections
-         * @return a list with resolved connections.
-         * @throws ApplicationException when resolution failed for whatever reasons.
-         */
-        Task<IList<ConnectionParams>> ResolveAllAsync(string correlationId, string key, CancellationToken token);
+        /// <summary>
+        /// Resolves a list of connections from to be called by a client.
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="key">a key locate connections</param>
+        /// <returns>a list with resolved connections.</returns>
+        Task<IList<ConnectionParams>> ResolveAllAsync(string correlationId, string key);
     }
 }

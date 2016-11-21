@@ -1,12 +1,12 @@
-﻿using System;
-using PipServices.Commons.Errors;
+﻿using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Refer
 {
-    public sealed class ReferenceException : InternalException
+    /// <summary>
+    /// Exception thrown when required component is not found in references
+    /// </summary>
+    public class ReferenceException : InternalException
     {
-        private static long SerialVersionUid { get; } = 439183381933188434L;
-
         public ReferenceException()
             : this(null, null)
         {
@@ -20,12 +20,10 @@ namespace PipServices.Commons.Refer
 
         public ReferenceException(string correlationId, string message)
             : base(correlationId, "REF_ERROR", message)
-        {
-        }
+        { }
 
         public ReferenceException(string correlationId, string code, string message)
             : base(correlationId, code, message)
-        {
-        }
+        { }
     }
 }

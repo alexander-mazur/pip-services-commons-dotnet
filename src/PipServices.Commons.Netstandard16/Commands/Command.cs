@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using PipServices.Commons.Errors;
 using PipServices.Commons.Run;
-using PipServices.Commons.Errors;
 using PipServices.Commons.Validate;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Commands
 {
@@ -13,7 +12,6 @@ namespace PipServices.Commons.Commands
     /// </summary>
     public class Command : ICommand
     {
-        public string Name { get; }
         private readonly Schema _schema;
         private readonly IParamExecutable _function;
 
@@ -36,40 +34,46 @@ namespace PipServices.Commons.Commands
             _function = function;
         }
 
-        /// <summary>
-        /// Performs validation of the command arguments.
-        /// </summary>
-        /// <param name="args">Cimmand arguments.</param>
-        /// <returns>A list of errors or empty list if validation was successful.</returns>
-        public IList<ValidationResult> Validate(Parameters args)
-        {
-            if (_schema != null)
-                return _schema.Validate(args);
-
-            return new List<ValidationResult>();
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Executes the command given specific arguments as input.
         /// </summary>
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="args">Command arguments.</param>
-        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public async Task<object> ExecuteAsync(string correlationId, Parameters args, CancellationToken token)
+        public async Task<object> ExecuteAsync(string correlationId, Parameters args)
         {
-            _schema?.ValidateAndThrowException(correlationId, args);
+            if (_schema != null)
+                _schema.ValidateAndThrowException(correlationId, args);
 
             try
             {
-                return await _function.ExecuteAsync(correlationId, args, token);
+                return await _function.ExecuteAsync(correlationId, args);
             }
             catch (Exception ex)
             {
                 throw new InvocationException(
-                    correlationId, "EXEC_FAILED", "Execution " + Name + " failed: " + ex, ex)
-                    .Wrap(ex);
+                    correlationId, 
+                    "EXEC_FAILED", 
+                    "Execution " + Name + " failed: " + ex
+                )
+                .WithDetails("command", Name)
+                .Wrap(ex);
             }
+        }
+
+        /// <summary>
+        /// Performs validation of the command arguments.
+        /// </summary>
+        /// <param name="args">Command arguments.</param>
+        /// <returns>A list with validation results</returns>
+        public IList<ValidationResult> Validate(Parameters args)
+        {
+            if (_schema != null)
+                return _schema.Validate(args);
+
+            return new List<ValidationResult>();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace PipServices.Commons.Data
 {
@@ -7,7 +6,7 @@ namespace PipServices.Commons.Data
     {
         public FilterParams() { }
 
-        public FilterParams(IDictionary<string, object> map)
+        public FilterParams(IDictionary<string, string> map)
         {
             SetAsMap(map);
         }

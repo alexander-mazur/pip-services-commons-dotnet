@@ -6,7 +6,7 @@ namespace PipServices.Commons.Test.Cache
     public sealed class NullCacheTest
     {
         private NullCache _cache;
-        
+
         public NullCacheTest()
         {
             _cache = new NullCache();
@@ -25,8 +25,7 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Retrieve_ReturnsNull()
         {
-            var val = _cache.Retrieve(null, "key1");
-
+            var val = _cache.RetrieveAsync(null, "key1").Result;
             Assert.Null(val);
         }
 
@@ -36,8 +35,7 @@ namespace PipServices.Commons.Test.Cache
             var key = "key1";
             var val = "value1";
 
-            var storedVal = _cache.Store(null, key, val, 0);
-
+            var storedVal = _cache.StoreAsync(null, key, val, 0).Result;
             Assert.Equal(val, storedVal);
         }
     }

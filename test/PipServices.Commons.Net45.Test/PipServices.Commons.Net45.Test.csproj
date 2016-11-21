@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B5D4044-052B-47DA-B9B4-EF7089CF2D29}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PipServices.Commons</RootNamespace>
+    <AssemblyName>PipServices.Commons.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Auth\CredentialParamsTest.cs">
+      <Link>Auth\CredentialParamsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Auth\CredentialResolverTest.cs">
+      <Link>Auth\CredentialResolverTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Cache\MemoryCacheTest.cs">
+      <Link>Cache\MemoryCacheTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Cache\NullCacheTest.cs">
+      <Link>Cache\NullCacheTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Commands\CommandTest.cs">
+      <Link>Commands\CommandTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\ConfigParamsTest.cs">
+      <Link>Config\ConfigParamsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\JsonConfigReaderTest.cs">
+      <Link>Config\JsonConfigReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\YamlConfigReaderTest.cs">
+      <Link>Config\YamlConfigReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Connect\ConnectionParamsTest.cs">
+      <Link>Connect\ConnectionParamsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Connect\ConnectionResolverTest.cs">
+      <Link>Connect\ConnectionResolverTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\ArrayConverterTest.cs">
+      <Link>Convert\ArrayConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\BooleanConverterTest.cs">
+      <Link>Convert\BooleanConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\DateTimeConverterTest.cs">
+      <Link>Convert\DateTimeConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\DoubleConverterTest.cs">
+      <Link>Convert\DoubleConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\EnumConverterTest.cs">
+      <Link>Convert\EnumConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\FloatConverterTest.cs">
+      <Link>Convert\FloatConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\IntegerConverterTest.cs">
+      <Link>Convert\IntegerConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\JsonConverterTest.cs">
+      <Link>Convert\JsonConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\LongConverterTest.cs">
+      <Link>Convert\LongConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\MapConverterTest.cs">
+      <Link>Convert\MapConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\RecursiveMapConverterTest.cs">
+      <Link>Convert\RecursiveMapConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\StringConverterTest.cs">
+      <Link>Convert\StringConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\TimeSpanConverterTest.cs">
+      <Link>Convert\TimeSpanConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Convert\TypeConverterTest.cs">
+      <Link>Convert\TypeConverterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Count\CountersFixture.cs">
+      <Link>Count\CountersFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Count\LogCountersTest.cs">
+      <Link>Count\LogCountersTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Count\NullCountersTest.cs">
+      <Link>Count\NullCountersTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\AnyValueArrayTest.cs">
+      <Link>Data\AnyValueArrayTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\AnyValueTest.cs">
+      <Link>Data\AnyValueTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\IdGeneratorTest.cs">
+      <Link>Data\IdGeneratorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\Mapper\ObjectMapperTest.cs">
+      <Link>Data\Mapper\ObjectMapperTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Errors\ApplicationExceptionFactoryTest.cs">
+      <Link>Errors\ApplicationExceptionFactoryTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Errors\ApplicationExceptionTest.cs">
+      <Link>Errors\ApplicationExceptionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Errors\ErrorDescriptionFactoryTest.cs">
+      <Link>Errors\ErrorDescriptionFactoryTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\CompositeLoggerTest.cs">
+      <Link>Log\CompositeLoggerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\ConsoleLoggerTest.cs">
+      <Link>Log\ConsoleLoggerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\LoggerFixture.cs">
+      <Link>Log\LoggerFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\NullLoggerTest.cs">
+      <Link>Log\NullLoggerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomArrayTest.cs">
+      <Link>Random\RandomArrayTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomBooleanTest.cs">
+      <Link>Random\RandomBooleanTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomDateTimeTest.cs">
+      <Link>Random\RandomDateTimeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomDoubleTest.cs">
+      <Link>Random\RandomDoubleTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomFloatTest.cs">
+      <Link>Random\RandomFloatTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomIntegerTest.cs">
+      <Link>Random\RandomIntegerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomStringTest.cs">
+      <Link>Random\RandomStringTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Random\RandomTextTest.cs">
+      <Link>Random\RandomTextTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\DescriptorTest.cs">
+      <Link>Refer\DescriptorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\MethodReflectorTest.cs">
+      <Link>Reflect\MethodReflectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\ObjectReaderTest.cs">
+      <Link>Reflect\ObjectReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\ObjectWriterTest.cs">
+      <Link>Reflect\ObjectWriterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\PropertyReflectorTest.cs">
+      <Link>Reflect\PropertyReflectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\RecursiveObjectReaderTest.cs">
+      <Link>Reflect\RecursiveObjectReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\RecursiveObjectWriterTest.cs">
+      <Link>Reflect\RecursiveObjectWriterTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TestClass.cs">
+      <Link>Reflect\TestClass.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeDescriptorTest.cs">
+      <Link>Reflect\TypeDescriptorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeMatcherTest.cs">
+      <Link>Reflect\TypeMatcherTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\TypeReflectorTest.cs">
+      <Link>Reflect\TypeReflectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Run\ParametersTest.cs">
+      <Link>Run\ParametersTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Run\TestClass.cs">
+      <Link>Run\TestClass.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\AtLeastOneExistRuleTest.cs">
+      <Link>Validate\AtLeastOneExistRuleTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\InclusionRulesTest.cs">
+      <Link>Validate\InclusionRulesTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\LogicalRulesTest.cs">
+      <Link>Validate\LogicalRulesTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\OnlyOneExistRuleTest.cs">
+      <Link>Validate\OnlyOneExistRuleTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\PropertiesComparisonRuleTest.cs">
+      <Link>Validate\PropertiesComparisonRuleTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\SchemaTest.cs">
+      <Link>Validate\SchemaTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\TestObject.cs">
+      <Link>Validate\TestObject.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\TestSubObject.cs">
+      <Link>Validate\TestSubObject.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Validate\ValueComparisonRuleTest.cs">
+      <Link>Validate\ValueComparisonRuleTest.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PipServices.Commons.Net45\PipServices.Commons.Net45.csproj">
+      <Project>{c0dbd324-390f-4490-bf56-e778241d514d}</Project>
+      <Name>PipServices.Commons.Net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

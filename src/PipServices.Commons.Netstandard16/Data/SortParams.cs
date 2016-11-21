@@ -7,9 +7,7 @@ namespace PipServices.Commons.Data
         public SortParams(IEnumerable<SortField> fields = null)
         {
             if (fields != null)
-            {
                 AddRange(fields);
-            }
         }
     }
 }

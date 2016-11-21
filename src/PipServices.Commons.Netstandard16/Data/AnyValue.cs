@@ -6,11 +6,6 @@ namespace PipServices.Commons.Data
 {
     public class AnyValue : ICloneable
     {
-        private static long SerialVersionUid { get; } = 8543060319681670938L;
-
-        [JsonProperty("value")]
-        public object Value { get; private set; }
-
         public AnyValue(object value = null)
         {
             var anyValue = value as AnyValue;
@@ -22,6 +17,9 @@ namespace PipServices.Commons.Data
         {
             Value = value.Value;
         }
+
+        [JsonProperty("value")]
+        public object Value { get; private set; }
 
         public object GetAsObject()
         {
@@ -123,17 +121,17 @@ namespace PipServices.Commons.Data
             return DoubleConverter.ToDoubleWithDefault(Value, defaultValue);
         }
 
-        public DateTimeOffset? GetAsNullableDateTime()
+        public DateTime? GetAsNullableDateTime()
         {
             return DateTimeConverter.ToNullableDateTime(Value);
         }
 
-        public DateTimeOffset GetAsDateTime()
+        public DateTime GetAsDateTime()
         {
-            return GetAsDateTimeWithDefault(new DateTimeOffset());
+            return GetAsDateTimeWithDefault(new DateTime());
         }
 
-        public DateTimeOffset GetAsDateTimeWithDefault(DateTimeOffset? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(DateTime? defaultValue = null)
         {
             return DateTimeConverter.ToDateTimeWithDefault(Value, defaultValue);
         }

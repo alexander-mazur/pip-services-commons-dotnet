@@ -14,13 +14,13 @@ namespace PipServices.Commons.Convert
             if (value is DateTime || value is DateTime?)
                 return (int)((DateTime)value).Ticks;
             if (value is TimeSpan || value is TimeSpan?)
-                return (int)((TimeSpan)value).TotalMilliseconds;
+                return (int)((TimeSpan)value).Ticks;
             if (value is bool || value is bool?)
                 return (bool)value ? 1 : 0;
 
             try
             {
-                return System.Convert.ToInt32(value, CultureInfo.InvariantCulture);
+                return (int)System.Convert.ToSingle(value, CultureInfo.InvariantCulture);
             }
             catch
             {

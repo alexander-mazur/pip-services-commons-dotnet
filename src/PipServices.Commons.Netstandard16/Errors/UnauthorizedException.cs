@@ -7,19 +7,17 @@ namespace PipServices.Commons.Errors
     /// </summary>
     public class UnauthorizedException : ApplicationException
     {
-        public UnauthorizedException(Exception innerException) : 
-            base(ErrorCategory.Unauthorized, null, null, null)
+        public UnauthorizedException(Exception innerException) 
+            : base(ErrorCategory.Unauthorized, null, null, null)
         {
             Status = 401;
-
             WithCause(innerException);
         }
 
-        public UnauthorizedException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.Unauthorized, correlationId, code, message)
+        public UnauthorizedException(string correlationId = null, string code = null, string message = null, Exception innerException = null) 
+            : base(ErrorCategory.Unauthorized, correlationId, code, message)
         {
             Status = 401;
-
             WithCause(innerException);
         }
     }

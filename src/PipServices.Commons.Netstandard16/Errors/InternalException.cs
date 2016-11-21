@@ -7,19 +7,17 @@ namespace PipServices.Commons.Errors
     /// </summary>
     public class InternalException : ApplicationException
     {
-        public InternalException(Exception innerException) : 
-            base(ErrorCategory.Internal, null, null, null)
+        public InternalException(Exception innerException) 
+            : base(ErrorCategory.Internal, null, null, null)
         {
             Status = 500;
-
             WithCause(innerException);
         }
 
-        public InternalException(string correlationId = null, string code = null, string message = null, Exception innerException = null) :
-            base(ErrorCategory.Internal, correlationId, code, message)
+        public InternalException(string correlationId = null, string code = null, string message = null, Exception innerException = null) 
+            : base(ErrorCategory.Internal, correlationId, code, message)
         {
             Status = 500;
-
             WithCause(innerException);
         }
     }

@@ -1,28 +1,22 @@
-﻿using System;
+﻿using PipServices.Commons.Errors;
 using System.Text;
-using PipServices.Commons.Errors;
 
 namespace PipServices.Commons.Refer
 {
     public class Descriptor
     {
+        public Descriptor(string group, string type, string id, string version)
+        {
+            Group = group != "*" ? group : null;
+            Type = type != "*" ? type : null;
+            Id = id != "*" ? id : null;
+            Version = version != "*" ? version : null;
+        }
+
         public string Group { get; }
         public string Type { get; }
         public string Id { get; }
         public string Version { get; }
-
-        public Descriptor(string group, string type, string id, string version)
-        {
-            if ("*".Equals(group)) group = null;
-            if ("*".Equals(type)) type = null;
-            if ("*".Equals(id)) id = null;
-            if ("*".Equals(version)) version = null;
-
-            Group = group;
-            Type = type;
-            Id = id;
-            Version = version;
-        }
 
         private bool MatchField(string field1, string field2)
         {
@@ -54,6 +48,12 @@ namespace PipServices.Commons.Refer
                 && ExactMatchField(Type, descriptor.Type)
                 && ExactMatchField(Id, descriptor.Id)
                 && ExactMatchField(Version, descriptor.Version);
+        }
+
+        public bool IsComplete()
+        {
+            return Group != null && Type != null
+                && Id != null && Version != null;
         }
 
         public override bool Equals(object obj)
@@ -89,8 +89,9 @@ namespace PipServices.Commons.Refer
 
             if (tokens.Length != 4)
             {
-                throw new ConfigException(null, "BAD_DESCRIPTOR", "Descriptor " + value + " is in wrong format")
-                    .WithDetails("descriptor", value);
+                throw new ConfigException(
+                    null, "BAD_DESCRIPTOR", "Descriptor " + value + " is in wrong format"
+                ).WithDetails("descriptor", value);
             }
 
             return new Descriptor(tokens[0].Trim(), tokens[1].Trim(), tokens[2].Trim(), tokens[3].Trim());

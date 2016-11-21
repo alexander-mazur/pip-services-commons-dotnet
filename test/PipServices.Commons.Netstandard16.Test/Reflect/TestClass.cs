@@ -14,7 +14,7 @@ namespace PipServices.Commons.Test.Reflect
         protected long GetPrivateProp() { return 543; }
         protected void SetPrivateProp(long value) { }
 
-        public DateTimeOffset PublicProp { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime PublicProp { get; set; } = DateTime.UtcNow;
 
         private void PrivateMethod() { }
 

@@ -12,20 +12,13 @@ namespace PipServices.Commons.Commands
     public class Event : IEvent
     {
         /// <summary>
-        /// Gets listeners that receive notifications for this event.
-        /// </summary>
-        public List<IEventListener> Listeners { get; } = new List<IEventListener>();
-
-        /// <summary>
         /// Creates an instance of Event.
         /// </summary>
         /// <param name="name">The name of the event.</param>
         public Event(string name)
         {
             if (name == null)
-            {
                 throw new ArgumentNullException(nameof(name));
-            }
             Name = name;
         }
 
@@ -33,6 +26,11 @@ namespace PipServices.Commons.Commands
         /// Gets the name of the event.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets listeners that receive notifications for this event.
+        /// </summary>
+        public List<IEventListener> Listeners { get; } = new List<IEventListener>();
 
         /// <summary>
         /// Adds a listener to receive notifications.
@@ -70,8 +68,10 @@ namespace PipServices.Commons.Commands
                     throw new InvocationException(
                         correlationId,
                         "EXEC_FAILED",
-                        "Raising event " + Name + " failed: " + ex, ex)
-                        .WithDetails("event", Name);
+                        "Raising event " + Name + " failed: " + ex
+                    )
+                    .WithDetails("event", Name)
+                    .Wrap(ex);
                 }
             }
 

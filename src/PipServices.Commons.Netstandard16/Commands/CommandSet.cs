@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using PipServices.Commons.Data;
+﻿using PipServices.Commons.Data;
 using PipServices.Commons.Errors;
 using PipServices.Commons.Run;
 using PipServices.Commons.Validate;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Commands
 {
@@ -14,19 +13,29 @@ namespace PipServices.Commons.Commands
     /// </summary>
     public class CommandSet
     {
+        private List<ICommand> _commands = new List<ICommand>();
+        private List<IEvent> _events = new List<IEvent>();
+        private readonly Dictionary<string, ICommand> _commandsByName = new Dictionary<string, ICommand>();
+        private readonly Dictionary<string, IEvent> _eventsByName = new Dictionary<string, IEvent>();
+        private readonly List<ICommandIntercepter> _intercepters = new List<ICommandIntercepter>();
+
+        public CommandSet() { }
+
         /// <summary>
         /// Gets all supported commands.
         /// </summary>
-        public List<ICommand> Commands { get; } = new List<ICommand>();
+        public List<ICommand> Commands
+        {
+            get { return _commands; }
+        }
 
         /// <summary>
         /// Gets all supported events.
         /// </summary>
-        private List<IEvent> Events { get; } = new List<IEvent>();
-
-        private readonly Dictionary<string, ICommand> _commandsByName = new Dictionary<string, ICommand>();
-        private readonly Dictionary<string, IEvent> _eventsByName = new Dictionary<string, IEvent>();
-        private readonly List<ICommandIntercepter> _intercepters = new List<ICommandIntercepter>();
+        private List<IEvent> Events
+        {
+            get { return _events; }
+        }
 
         /// <summary>
         /// Finds a specific command by its name.
@@ -52,6 +61,24 @@ namespace PipServices.Commons.Commands
             return value;
         }
 
+        private void BuildCommandChain(ICommand command)
+        {
+            var next = command;
+
+            for (var i = _intercepters.Count - 1; i >= 0; i--)
+                next = new InterceptedCommand(_intercepters[i], next);
+
+            _commandsByName[next.Name] = next;
+        }
+
+        private void RebuildAllCommandChains()
+        {
+            _commandsByName.Clear();
+
+            foreach (var command in _commands)
+                BuildCommandChain(command);
+        }
+
         /// <summary>
         /// Adds a command to the command set.
         /// </summary>
@@ -69,9 +96,7 @@ namespace PipServices.Commons.Commands
         public void AddCommands(IEnumerable<ICommand> commands)
         {
             foreach (var command in commands)
-            {
                 AddCommand(command);
-            }
         }
 
         /// <summary>
@@ -80,7 +105,7 @@ namespace PipServices.Commons.Commands
         /// <param name="ev">The event to add.</param>
         public void AddEvent(IEvent ev)
         {
-            Events.Add(ev);
+            _events.Add(ev);
             _eventsByName[ev.Name] = ev;
         }
 
@@ -91,9 +116,7 @@ namespace PipServices.Commons.Commands
         public void AddEvents(IEnumerable<IEvent> events)
         {
             foreach (var ev in events)
-            {
                 AddEvent(ev);
-            }
         }
 
         /// <summary>
@@ -126,9 +149,8 @@ namespace PipServices.Commons.Commands
         /// <param name="correlationId">Unique correlation/transaction id.</param>
         /// <param name="command">Command name.</param>
         /// <param name="args">Command arguments.</param>
-        /// <param name="token"></param>
         /// <returns>Execution result.</returns>
-        public Task<object> ExecuteAsync(string correlationId, string command, Parameters args, CancellationToken token)
+        public Task<object> ExecuteAsync(string correlationId, string command, Parameters args)
         {
             var cref = FindCommand(command);
             if (cref == null)
@@ -136,8 +158,9 @@ namespace PipServices.Commons.Commands
                 throw new BadRequestException(
                     correlationId,
                     "CMD_NOT_FOUND",
-                    "Request command does not exist")
-                    .WithDetails("command", command);
+                    "Request command does not exist"
+                )
+                .WithDetails("command", command);
             }
 
             if (correlationId == null)
@@ -146,7 +169,7 @@ namespace PipServices.Commons.Commands
             var results = cref.Validate(args);
             ValidationException.ThrowExceptionIfNeeded(correlationId, results, false);
 
-            return cref.ExecuteAsync(correlationId, args, token);
+            return cref.ExecuteAsync(correlationId, args);
         }
 
         /// <summary>
@@ -191,7 +214,7 @@ namespace PipServices.Commons.Commands
         /// <param name="listener">The listener to remove.</param>
         public void RemoveListener(IEventListener listener)
         {
-            foreach (var ev in Events)
+            foreach (var ev in _events)
             {
                 ev.RemoveListener(listener);
             }
@@ -209,25 +232,6 @@ namespace PipServices.Commons.Commands
 
             if (e != null)
                 await e.NotifyAsync(correlationId, value);
-        }
-
-        private void BuildCommandChain(ICommand command)
-        {
-            var next = command;
-
-            for (var i = _intercepters.Count - 1; i >= 0; i--)
-                next = new InterceptedCommand(_intercepters[i], next);
-
-            _commandsByName[next.Name] = next;
-        }
-
-
-        private void RebuildAllCommandChains()
-        {
-            _commandsByName.Clear();
-
-            foreach (var command in Commands)
-                BuildCommandChain(command);
         }
     }
 }

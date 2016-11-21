@@ -19,6 +19,7 @@ namespace PipServices.Commons.Convert
             {
                 try
                 {
+                    // Todo: Try to avoid exception
                     return (T)Enum.Parse(typeof(T), value.ToString());
                 }
                 catch
@@ -45,6 +46,7 @@ namespace PipServices.Commons.Convert
             {
                 try
                 {
+                    // Todo: try to avoid exception
                     return (T)Enum.Parse(typeof(T), value.ToString());
                 }
                 catch

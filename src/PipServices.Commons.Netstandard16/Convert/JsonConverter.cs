@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PipServices.Commons.Convert
 {
@@ -42,13 +42,14 @@ namespace PipServices.Commons.Convert
         {
             try
             {
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
+                var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
 
-                ConvertJsonTypes(dict);
+                ConvertJsonTypes(map);
+                return map;
 
-                return dict;
+                //return RecursiveMapConverter.ToNullableMap(map);
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 throw;
             }

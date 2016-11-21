@@ -1,17 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PipServices.Commons.Run
 {
+    /// <summary>
+    /// Helper class that triggers execution for components
+    /// </summary>
     public class Executor
     {
-        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, CancellationToken token)
+        /// <summary>
+        /// Triggers execution for components that implement IExecutable and IParamExecutable interfaces.
+        /// IParamExecutable components receive an empty parameter set
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="components">a list of components to be executed</param>
+        /// <returns>execution results</returns>
+        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable components)
         {
-            return await ExecuteAsync(correlationId, components, new Parameters(), token);
+            return await ExecuteAsync(correlationId, components, new Parameters());
         }
 
-        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable<object> components, Parameters args, CancellationToken token)
+        /// <summary>
+        /// Triggers execution for components that implement IExecutable and IParamExecutable interfaces
+        /// and passes to IParamExecutable them set of parameters.
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <param name="components">a list of components to be executed</param>
+        /// <param name="args">a set of parameters to pass to executed components</param>
+        /// <returns>execution results</returns>
+        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable components, Parameters args)
         {
             var results = new List<object>();
             if (components == null) return results;
@@ -21,14 +39,13 @@ namespace PipServices.Commons.Run
                 var executable = component as IExecutable;
                 if (executable != null)
                 {
-                    results.Add(await executable.ExecuteAsync(correlationId, token));
-                    continue;
+                    results.Add(await executable.ExecuteAsync(correlationId));
                 }
-
-                var paramExecutable = component as IParamExecutable;
-                if (paramExecutable != null)
+                else
                 {
-                    results.Add(await paramExecutable.ExecuteAsync(correlationId, args, token));
+                    var paramExecutable = component as IParamExecutable;
+                    if (paramExecutable != null)
+                        results.Add(await paramExecutable.ExecuteAsync(correlationId, args));
                 }
             }
 

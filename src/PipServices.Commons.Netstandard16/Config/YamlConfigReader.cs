@@ -26,10 +26,9 @@ namespace PipServices.Commons.Config
                     correlationId,
                     "READ_FAILED",
                     "Failed reading configuration " + path + ": " + ex
-
-                    )
-                    .WithDetails("path", path)
-                    .WithCause(ex);
+                )
+                .WithDetails("path", path)
+                .WithCause(ex);
             }
         }
 

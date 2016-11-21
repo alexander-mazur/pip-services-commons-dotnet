@@ -3,6 +3,8 @@ using PipServices.Commons.Errors;
 using PipServices.Commons.Data;
 using Xunit;
 
+using ApplicationException = PipServices.Commons.Errors.ApplicationException;
+
 namespace PipServices.Commons.Test.Errors
 {
     public class ApplicationExceptionFactoryTest

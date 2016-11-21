@@ -6,11 +6,16 @@ namespace PipServices.Commons.Count
 {
     public sealed class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "counters", "composite", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-commons", "counters", "composite", "1.0");
 
         private readonly IList<ICounters> _counters = new List<ICounters>();
 
-        public Descriptor GetDescriptor() { return Descriptor; }
+        public CompositeCounters() { }
+
+        public Descriptor GetDescriptor()
+        {
+            return Descriptor;
+        }
 
         public void SetReferences(IReferences references)
         {
@@ -34,25 +39,21 @@ namespace PipServices.Commons.Count
             foreach (var counter in _counters)
             {
                 var callback = counter as ITimingCallback;
-
-                callback?.EndTiming(name, elapsed);
+                if (callback != null)
+                    callback.EndTiming(name, elapsed);
             }
         }
 
         public void Stats(string name, float value)
         {
             foreach (var counter in _counters)
-            {
                 counter.Stats(name, value);
-            }
         }
 
         public void Last(string name, float value)
         {
             foreach (var counter in _counters)
-            {
                 counter.Last(name, value);
-            }
         }
 
         public void TimestampNow(string name)
@@ -63,9 +64,7 @@ namespace PipServices.Commons.Count
         public void Timestamp(string name, DateTime value)
         {
             foreach (var counter in _counters)
-            {
                 counter.Timestamp(name, value);
-            }
         }
 
         public void IncrementOne(string name)
@@ -75,11 +74,11 @@ namespace PipServices.Commons.Count
 
         public void Increment(string name, int value)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
+
             foreach (var counter in _counters)
-            {
                 counter.Increment(name, value);
-            }
         }
     }
 }
