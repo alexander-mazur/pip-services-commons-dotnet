@@ -1,4 +1,4 @@
-{
+﻿{
   "title": "Unit Tests for Pip.Services Commons Library",
   "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
   "description": "Performs unit testing for Pip.Services Commons",
@@ -20,6 +20,7 @@
   },
   "testRunner": "xunit",
   "buildOptions": {
-    "define": [ "CORE_NET" ]
+    "define": [ "CORE_NET" ],
+    "outputName": "PipServices.Commons.Test"
   }
 }

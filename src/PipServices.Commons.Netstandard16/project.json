@@ -1,4 +1,4 @@
-{
+﻿{
   "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
   "title": "Pip.Services Commons Library",
   "version": "1.0.3-*",
@@ -22,6 +22,7 @@
     }
   },
   "buildOptions": {
-    "define": [ "CORE_NET" ]
+    "define": [ "CORE_NET" ],
+    "outputName": "PipServices.Commons"
   }
 }
