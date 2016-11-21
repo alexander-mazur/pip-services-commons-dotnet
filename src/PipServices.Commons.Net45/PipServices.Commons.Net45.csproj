@@ -489,6 +489,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Validate\MapSchema.cs">
       <Link>Validate\MapSchema.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Validate\NotRule.cs">
+      <Link>Validate\NotRule.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Validate\ObjectComparator.cs">
       <Link>Validate\ObjectComparator.cs</Link>
     </Compile>
