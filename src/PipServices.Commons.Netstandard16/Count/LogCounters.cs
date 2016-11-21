@@ -9,7 +9,7 @@ namespace PipServices.Commons.Count
 {
     public sealed class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-counters", "counters", "log", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-counters", "counters", "log", "1.0");
 
         private readonly CompositeLogger _logger = new CompositeLogger();
 
@@ -23,11 +23,6 @@ namespace PipServices.Commons.Count
             _logger.SetReferences(references);
         }
 
-        /**
-         * Formats counter string representation.
-         * @param counter a counter object to generate a string for.
-         * @return a formatted string representation of the counter.
-         */
         private string CounterToString(Counter counter)
         {
             var result = "Counter " + counter.Name + " { ";
@@ -57,13 +52,14 @@ namespace PipServices.Commons.Count
             if (_logger == null || counters == null)
                 return;
 
-            var countersArr = counters as Counter[] ?? counters.ToArray();
+            var countersArray = counters as Counter[] ?? counters.ToArray();
 
-            if (!countersArr.Any()) return;
+            if (!countersArray.Any()) return;
 
-            new List<Counter>(countersArr).Sort((c1, c2) => string.Compare(c1.Name, c2.Name, StringComparison.Ordinal));
+            new List<Counter>(countersArray)
+                .Sort((c1, c2) => string.Compare(c1.Name, c2.Name, StringComparison.Ordinal));
 
-            foreach (var counter in countersArr)
+            foreach (var counter in countersArray)
             {
                 _logger.Info(null, CounterToString(counter));
             }

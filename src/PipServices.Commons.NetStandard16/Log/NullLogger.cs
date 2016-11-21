@@ -5,7 +5,7 @@ namespace PipServices.Commons.Log
 {
     public sealed class NullLogger : ILogger, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "null", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-commons", "logger", "null", "1.0");
 
         public Descriptor GetDescriptor()
         {

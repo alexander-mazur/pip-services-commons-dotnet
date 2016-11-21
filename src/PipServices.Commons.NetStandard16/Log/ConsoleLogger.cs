@@ -30,17 +30,7 @@ namespace PipServices.Commons.Log
             return builder.ToString();
         }
 
-        protected string ComposeMessage(string message, object[] args)
-        {
-            message = message != null ? message : "";
-            if (args != null && args.Length > 0)
-            {
-                message = string.Format(message, args);
-            }
-            return message;
-        }
-
-        protected override void Write(LogLevel level, string correlationId, Exception error, string message, params object[] args)
+        protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             if (Level < level) return;
 
@@ -53,19 +43,14 @@ namespace PipServices.Commons.Log
             build.Append(DateTime.UtcNow);
             build.Append("] ");
 
-            message = ComposeMessage(message, args);
             build.Append(message);
 
             if (error != null)
             {
                 if (message.Length == 0)
-                {
                     build.Append("Error: ");
-                }
                 else
-                {
                     build.Append(": ");
-                }
 
                 build.Append(ComposeError(error));
             }
@@ -73,13 +58,9 @@ namespace PipServices.Commons.Log
             var output = build.ToString();
 
             if (level == LogLevel.Fatal || level == LogLevel.Error || level == LogLevel.Warn)
-            {
                 Console.Error.WriteLine(output);
-            }
             else
-            {
                 Console.Out.WriteLine(output);
-            }
         }
     }
 }

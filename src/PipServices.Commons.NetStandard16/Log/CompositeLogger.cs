@@ -6,13 +6,11 @@ namespace PipServices.Commons.Log
 {
     public sealed class CompositeLogger : Logger, IReferenceable, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "composite", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-commons", "logger", "composite", "1.0");
 
         private readonly List<ILogger> _loggers = new List<ILogger>();
 
-        public CompositeLogger()
-        {
-        }
+        public CompositeLogger() { }
 
         public CompositeLogger(IReferences references)
         {
@@ -30,18 +28,14 @@ namespace PipServices.Commons.Log
             foreach (var logger in loggers)
             {
                 if (logger is ILogger)
-                {
                     _loggers.Add((ILogger)logger);
-                }
             }
         }
 
-        protected override void Write(LogLevel level, string correlationId, Exception error, string message, params object[] args)
+        protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             foreach (var logger in _loggers)
-            {
-                logger.Log(level, correlationId, error, message, args);
-            }
+                logger.Log(level, correlationId, error, message);
         }
     }
 }

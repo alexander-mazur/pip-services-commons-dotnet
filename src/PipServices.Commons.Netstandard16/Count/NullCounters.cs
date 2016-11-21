@@ -5,7 +5,12 @@ namespace PipServices.Commons.Count
 {
     public sealed class NullCounters : ICounters, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "counters", "null", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-commons", "counters", "null", "1.0");
+
+        public Descriptor GetDescriptor()
+        {
+            return Descriptor;
+        }
 
         public Timing BeginTiming(string name)
         {
@@ -34,11 +39,6 @@ namespace PipServices.Commons.Count
 
         public void Increment(string name, int value)
         {
-        }
-
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
         }
     }
 }

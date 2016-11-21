@@ -333,6 +333,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\LogLevel.cs">
       <Link>Log\LogLevel.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\LogLevelConverter.cs">
+      <Link>Log\LogLevelConverter.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\NullLogger.cs">
       <Link>Log\NullLogger.cs</Link>
     </Compile>

@@ -7,6 +7,11 @@ namespace PipServices.Commons.Log
     {
         private static readonly Descriptor ThisDescriptor = new Descriptor("pip-commons", "factory", "logger", "1.0");
 
+        public Descriptor GetDescriptor()
+        {
+            return ThisDescriptor;
+        }
+
         public bool CanCreate(object locator)
         {
             var descriptor = locator as Descriptor;
@@ -41,11 +46,6 @@ namespace PipServices.Commons.Log
                 return new CompositeLogger();
 
             return null;
-        }
-
-        public Descriptor GetDescriptor()
-        {
-            return ThisDescriptor;
         }
     }
 }
