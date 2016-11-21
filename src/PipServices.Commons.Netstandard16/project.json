@@ -1,11 +1,11 @@
-﻿{
+{
   "buildOptions": {
     "outputName": "PipServices.Commons"
   },
 
   "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
   "title": "Pip.Services Commons Library",
-  "version": "1.0.3-*",
+  "version": "1.0.0-*",
   "authors": [ "Mark Zontak", "Sergey Seroukhov", "Volodymyr Tkachenko" ],
   "description": "Basic portable abstractions for Pip.Services",
   "dependencies": {

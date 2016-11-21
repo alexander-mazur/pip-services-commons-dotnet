@@ -53,54 +53,28 @@ mvn test
 
 ## <a name="release"></a> Release
 
-TBD: Document the release process for .NET
+Detail description of the NuGet release publishing procedure 
+is described at http://docs.nuget.org/ndocs/create-packages/publish-a-package
 
-Create ${user.home}/.m2/settings.xml file with your credentials for deployment:
-
-```xml
-<settings>
-  ...
-  <servers>
-    <server>
-      <id>ossrh</id>
-      <username>your-user-name</username>
-      <password>your-user-password</password>
-    </server>
-  </servers>
-  ...
-</settings>
-```
-
-Formal release process consistents of few steps. 
-First of all it is required to tag guthub repository with a version number:
+Before publishing a new release you shall register on NuGet site and get you API Key.
+Then register your API Key as:
 
 ```bash
-git tag vx.y.y
-git push origin master --tags
+nuget setApiKey Your-API-Key
 ```
 
-Then the release can be pushed to the central Maven repository. 
-To be able to make the release contributor must have an account with proper permissions.
+Update release notes in CHANGELOG. Update version number and release details in nuspec file.
+After that compile and test the project. Then create a nuget package:
 
 ```bash
-mvn clean deploy
+nuget pack PipServices.Commons.nuspec
 ```
 
-With the property autoReleaseAfterClose set to false you can manually inspect the staging repository 
-in the Nexus Repository Manager and trigger a release of the staging repository later withЖ
+Publish the package on nuget global repository
 
 ```bash
-mvn nexus-staging:release
+nuget push PipServices.Commons.nuspec -Source https://www.nuget.org/api/v2/package
 ```
-
-If you find something went wrong you can drop the staging repository with
-```bash
-mvn nexus-staging:drop
-```
-
-Microservice releases additionally require generation and publishing 
-binary packages at http://downloads.pipservices.org
-
 
 ## <a name="contrib"></a> Contributing
 

@@ -1,8 +1,8 @@
-﻿{
+{
   "title": "Unit Tests for Pip.Services Commons Library",
   "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
   "description": "Performs unit testing for Pip.Services Commons",
-  "version": "1.0.3-*",
+  "version": "1.0.0-*",
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",

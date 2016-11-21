@@ -2,14 +2,19 @@
 <package >
   <metadata>
     <id>PipServices.Commons</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <title>PipServices.Commons</title>
     <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
     <owners>seroukhov</owners>
+
+    <projectUrl>https://github.com/pip-services/pip-services-commons-dotnet</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <iconUrl>https://raw.githubusercontent.com/pip-services/pip-services/master/design/Icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
     <description>Basic portable abstractions for Pip.Services in .NET</description>
     <releaseNotes>Pre release</releaseNotes>
-    <copyright>Digital Living Software Corp. 2016</copyright>
+    <copyright>Digital Living Software Corp. 2009-2016</copyright>
     <tags>pip-services microservices framework</tags>
 
     <dependencies>
