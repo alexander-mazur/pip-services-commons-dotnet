@@ -113,7 +113,8 @@ namespace PipServices.Commons.Cache
         public async Task ClearAsync(string correlationId)
         {
             _standardCache.Trim(100);
-            await Task.Delay(0);
+
+            await Task.Yield();
         }
     }
 }
