@@ -78,6 +78,12 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\ConfigParamsTest.cs">
       <Link>Config\ConfigParamsTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\JsonConfigReaderTest.cs">
+      <Link>Config\JsonConfigReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Config\YamlConfigReaderTest.cs">
+      <Link>Config\YamlConfigReaderTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Connect\ConnectionParamsTest.cs">
       <Link>Connect\ConnectionParamsTest.cs</Link>
     </Compile>

@@ -111,18 +111,18 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public new static ConfigParams FromTuples(params object[] tuples)
-        {
-            var map = StringValueMap.FromTuples(tuples);
-            return new ConfigParams(map);
-        }
-
         public static ConfigParams FromValue(object value)
         {
             var map = RecursiveObjectReader.GetProperties(value);
             var result = new ConfigParams();
             result.SetAsMap(map);
             return result;
+        }
+
+        public new static ConfigParams FromTuples(params object[] tuples)
+        {
+            var map = StringValueMap.FromTuples(tuples);
+            return new ConfigParams(map);
         }
 
         public new static ConfigParams FromString(string line)

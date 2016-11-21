@@ -6,28 +6,30 @@ namespace PipServices.Commons.Test.Data
 {
     public sealed class IdGeneratorTest
     {
-        private void TestIds(Func<string> generator, int minSize)
+        [Fact]
+        public void TestNextShort()
         {
-            var id1 = generator();
+            var id1 = IdGenerator.NextShort();
             Assert.NotNull(id1);
-            Assert.True(id1.Length >= minSize);
+            Assert.True(id1.Length >= 9);
 
-            var id2 = generator();
+            var id2 = IdGenerator.NextShort();
             Assert.NotNull(id2);
-            Assert.True(id2.Length >= minSize);
+            Assert.True(id2.Length >= 9);
             Assert.NotEqual(id1, id2);
         }
 
         [Fact]
-        public void TestShortId()
+        public void TestNextLong()
         {
-            TestIds(IdGenerator.NextShort, 9);
-        }
+            var id1 = IdGenerator.NextLong();
+            Assert.NotNull(id1);
+            Assert.True(id1.Length >= 32);
 
-        [Fact]
-        public void TestLong()
-        {
-            TestIds(IdGenerator.NextLong, 32);
+            var id2 = IdGenerator.NextLong();
+            Assert.NotNull(id2);
+            Assert.True(id2.Length >= 32);
+            Assert.NotEqual(id1, id2);
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D144AE02-95C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A7F95F1-9A0E-4F25-AA94-E0DE51528B21}"
 	ProjectSection(SolutionItems) = preProject
+		data\config.json = data\config.json
+		data\config.yaml = data\config.yaml
 		global.json = global.json
 		PipServices.Commons.nuspec = PipServices.Commons.nuspec
 	EndProjectSection
