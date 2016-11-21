@@ -1,6 +1,9 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.4"></a> 1.0.3-1.0.4 (2016-11-21)
+## <a name="1.0.3-1.0.5"></a> 1.0.3-1.0.5 (2016-11-21)
+
+### Features
+* **log** Added diagnotics logger
 
 ### Bug Fixes
 * Added description to NuGet package

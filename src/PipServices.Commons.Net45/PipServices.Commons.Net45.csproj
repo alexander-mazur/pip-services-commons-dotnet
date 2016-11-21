@@ -324,6 +324,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\DefaultLoggerFactory.cs">
       <Link>Log\DefaultLoggerFactory.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\DiagnosticsLogger.cs">
+      <Link>Log\DiagnosticsLogger.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\ILogger.cs">
       <Link>Log\ILogger.cs</Link>
     </Compile>

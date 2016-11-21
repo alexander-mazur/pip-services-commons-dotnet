@@ -168,6 +168,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\ConsoleLoggerTest.cs">
       <Link>Log\ConsoleLoggerTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\DiagnosticsLoggerTest.cs">
+      <Link>Log\DiagnosticsLoggerTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Log\LoggerFixture.cs">
       <Link>Log\LoggerFixture.cs</Link>
     </Compile>

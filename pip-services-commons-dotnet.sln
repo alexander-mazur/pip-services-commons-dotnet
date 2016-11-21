@@ -11,10 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D144AE02-95C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A7F95F1-9A0E-4F25-AA94-E0DE51528B21}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
 		data\config.json = data\config.json
 		data\config.yaml = data\config.yaml
 		global.json = global.json
 		PipServices.Commons.nuspec = PipServices.Commons.nuspec
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PipServices.Commons.NetStandard16", "src\PipServices.Commons.NetStandard16\PipServices.Commons.NetStandard16.xproj", "{6D9CC0D7-45A5-4A70-A226-3D29BBD06892}"
