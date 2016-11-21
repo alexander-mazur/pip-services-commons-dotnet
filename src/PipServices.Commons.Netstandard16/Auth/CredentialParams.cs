@@ -22,7 +22,7 @@ namespace PipServices.Commons.Auth
         /// Create an instance of credentials from free-form configuration map.
         /// </summary>
         /// <param name="map">a map with the credentials</param>
-        public CredentialParams(IDictionary<string, object> map)
+        public CredentialParams(IDictionary<string, string> map)
             : base(map)
         {
         }

@@ -20,7 +20,7 @@ namespace PipServices.Commons.Config
         /// Creates an instance of ConfigParams.
         /// </summary>
         /// <param name="content">Existing map to copy keys/values from.</param>
-        public ConfigParams(IDictionary<string, object> content)
+        public ConfigParams(IDictionary<string, string> content)
             : base(content)
         { }
 
@@ -120,7 +120,9 @@ namespace PipServices.Commons.Config
         public static ConfigParams FromValue(object value)
         {
             var map = RecursiveObjectReader.GetProperties(value);
-            return new ConfigParams(map);
+            var result = new ConfigParams();
+            result.SetAsMap(map);
+            return result;
         }
 
         public new static ConfigParams FromString(string line)
@@ -129,7 +131,7 @@ namespace PipServices.Commons.Config
             return new ConfigParams(map);
         }
 
-        public static ConfigParams MergeConfigs(params IDictionary<string, object>[] configs)
+        public static ConfigParams MergeConfigs(params IDictionary<string, string>[] configs)
         {
             var map = FromMaps(configs);
             return new ConfigParams(map);

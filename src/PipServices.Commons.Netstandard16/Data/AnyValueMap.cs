@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PipServices.Commons.Convert;
+using System;
 using System.Collections;
-using PipServices.Commons.Convert;
-using PipServices.Commons.Reflect;
+using System.Collections.Generic;
 
 namespace PipServices.Commons.Data
 {
@@ -24,23 +23,29 @@ namespace PipServices.Commons.Data
             SetAsMap(values);
         }
 
-        public virtual object Get(string key)
+        public new object this[string key]
         {
-            var value = TryGet(key);
-
-            if (value == null)
-                throw new NullReferenceException("Value with key " + key + " is not defined");
-
-            return value;
+            get { return Get(key); }
+            set { SetAsObject(key, value); }
         }
 
-        protected object TryGet(string key)
+        public new void Add(string key, object value)
         {
-            object value;
+            SetAsObject(key, value);
+        }
 
-            TryGetValue(key, out value);
+        public virtual object Get(string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
 
-            return value;
+            foreach (var thisKey in Keys)
+            {
+                if (string.Compare(thisKey, key, true) == 0)
+                    return base[thisKey];
+            }
+
+            return null;
         }
 
         public void SetAsMap(IDictionary map)
@@ -48,8 +53,9 @@ namespace PipServices.Commons.Data
             Clear();
 
             if (map == null || map.Count == 0) return;
+
             foreach (var key in map.Keys)
-                RecursiveObjectWriter.SetProperty(this, key.ToString(), map[key]);
+                SetAsObject(key.ToString(), map[key]);
         }
 
         public object GetAsObject()
@@ -59,7 +65,7 @@ namespace PipServices.Commons.Data
 
         public object GetAsObject(string key)
         {
-            return TryGet(key);
+            return Get(key);
         }
 
         public void SetAsObject(object value)
@@ -68,14 +74,14 @@ namespace PipServices.Commons.Data
             SetAsMap((IDictionary)MapConverter.ToMap(value));
         }
 
-        public void SetAsObject(string key, object value)
+        public virtual void SetAsObject(string key, object value)
         {
-            RecursiveObjectWriter.SetProperty(this, key, value);
+            base[key] = value;
         }
 
         public string GetAsNullableString(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return StringConverter.ToNullableString(value);
         }
 
@@ -86,13 +92,13 @@ namespace PipServices.Commons.Data
 
         public string GetAsStringWithDefault(string key, string defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return StringConverter.ToStringWithDefault(value, defaultValue);
         }
 
         public bool? GetAsNullableBoolean(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return BooleanConverter.ToNullableBoolean(value);
         }
 
@@ -103,13 +109,13 @@ namespace PipServices.Commons.Data
 
         public bool GetAsBooleanWithDefault(string key, bool defaultValue = false)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return BooleanConverter.ToBooleanWithDefault(value, defaultValue);
         }
 
         public int? GetAsNullableInteger(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return IntegerConverter.ToNullableInteger(value);
         }
 
@@ -120,13 +126,13 @@ namespace PipServices.Commons.Data
 
         public int GetAsIntegerWithDefault(string key, int defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return IntegerConverter.ToIntegerWithDefault(value, defaultValue);
         }
 
         public long? GetAsNullableLong(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return LongConverter.ToNullableLong(value);
         }
 
@@ -137,13 +143,13 @@ namespace PipServices.Commons.Data
 
         public long GetAsLongWithDefault(string key, long defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return LongConverter.ToLongWithDefault(value, defaultValue);
         }
 
         public float? GetAsNullableFloat(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return FloatConverter.ToNullableFloat(value);
         }
 
@@ -154,13 +160,13 @@ namespace PipServices.Commons.Data
 
         public float GetAsFloatWithDefault(string key, float defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return FloatConverter.ToFloatWithDefault(value, defaultValue);
         }
 
         public double? GetAsNullableDouble(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DoubleConverter.ToNullableDouble(value);
         }
 
@@ -171,13 +177,13 @@ namespace PipServices.Commons.Data
 
         public double GetAsDoubleWithDefault(string key, double defaultValue = 0)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
         }
 
         public DateTime? GetAsNullableDateTime(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DateTimeConverter.ToNullableDateTime(value);
         }
 
@@ -188,13 +194,13 @@ namespace PipServices.Commons.Data
 
         public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
         }
 
         public TimeSpan? GetAsNullableTimeSpan(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TimeSpanConverter.ToNullableTimeSpan(value);
         }
 
@@ -205,13 +211,13 @@ namespace PipServices.Commons.Data
 
         public TimeSpan GetAsTimeSpanWithDefault(string key, TimeSpan? defaultValue = null)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TimeSpanConverter.ToTimeSpanWithDefault(value, defaultValue);
         }
 
         public T? GetAsNullableEnum<T>(string key) where T : struct
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return EnumConverter.ToNullableEnum<T>(value);
         }
 
@@ -222,25 +228,25 @@ namespace PipServices.Commons.Data
 
         public T GetAsEnumWithDefault<T>(string key, T defaultValue = default(T))
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);
         }
 
         public T GetAsType<T>(string key)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TypeConverter.ToType<T>(value);
         }
 
         public T? GetAsNullableType<T>(string key) where T : struct
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TypeConverter.ToNullableType<T>(value);
         }
 
         public T GetAsTypeWithDefault<T>(string key, T defaultValue)
         {
-            var value = TryGet(key);
+            var value = Get(key);
             return TypeConverter.ToTypeWithDefault<T>(value, defaultValue);
         }
 
@@ -300,10 +306,9 @@ namespace PipServices.Commons.Data
         public static AnyValueMap FromTuples(params object[] tuples)
         {
             var result = new AnyValueMap();
-            if(tuples == null || tuples.Length == 0)
-            {
+            if (tuples == null || tuples.Length == 0)
                 return result;
-            }
+
             for (var index = 0; index < tuples.Length; index += 2)
             {
                 if (index + 1 >= tuples.Length) break;
@@ -323,24 +328,9 @@ namespace PipServices.Commons.Data
             if (maps != null && maps.Length > 0)
             {
                 foreach (IDictionary map in maps)
-                {
                     result.SetAsMap(map);
-                }
             }
             return result;
-        }
-
-        private void SetTuples(params object[] values)
-        {
-            for (var i = 0; i < values.Length; i += 2)
-            {
-                if (i + 1 >= values.Length) break;
-
-                var name = values[i].ToString();
-                var value = values[i + 1];
-
-                Add(name, value);
-            }
         }
     }
 }

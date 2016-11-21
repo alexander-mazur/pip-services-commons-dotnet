@@ -32,17 +32,15 @@ namespace PipServices.Commons.Run
                 return base.Get(path);
         }
 
-        public new object Add(string path, object value)
+        public override void SetAsObject(string path, object value)
         {
             if (string.IsNullOrWhiteSpace(path))
-                return null;
+                return;
 
             if (path.IndexOf(".", StringComparison.Ordinal) > 0)
                 RecursiveObjectWriter.SetProperty(this, path, value);
             else
-                base.Add(path, value);
-
-            return value;
+                base.SetAsObject(path, value);
         }
 
         public Parameters GetAsNullableParameters(string key)

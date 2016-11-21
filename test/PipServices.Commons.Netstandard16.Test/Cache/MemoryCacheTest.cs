@@ -90,8 +90,7 @@ namespace PipServices.Commons.Test.Cache
         [Fact]
         public void Configure_NewValueStaysFor1500ms_ButFailsFor2500ms()
         {
-            var param = new Dictionary<string, object> { { "timeout", 2000 } };
-            var config = new ConfigParams(param);
+            var config = ConfigParams.FromTuples("timeout", 2000);
 
             _cache.Configure(config);
 

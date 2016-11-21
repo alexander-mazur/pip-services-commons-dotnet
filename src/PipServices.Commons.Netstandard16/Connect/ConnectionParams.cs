@@ -20,7 +20,7 @@ namespace PipServices.Commons.Connect
         /// Create an instance of service address with free-form configuration map.
         /// </summary>
         /// <param name="map">a map with the address configuration parameters.</param>
-        public ConnectionParams(IDictionary<string, object> map)
+        public ConnectionParams(IDictionary<string, string> map)
             : base(map)
         { }
 

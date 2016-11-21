@@ -10,10 +10,7 @@ namespace PipServices.Commons.Data
 
         public DataPage(List<T> data, long? total = null)
         {
-            if (data != null)
-            {
-                Data = data;
-            }
+            Data = data;
             Total = total;
         }
 
@@ -21,6 +18,6 @@ namespace PipServices.Commons.Data
         public long? Total { get; set; }
 
         [DataMember]
-        public List<T> Data { get; set; } = new List<T>();
+        public List<T> Data { get; set; }
     }
 }

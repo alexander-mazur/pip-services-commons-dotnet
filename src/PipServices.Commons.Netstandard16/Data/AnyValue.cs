@@ -6,11 +6,6 @@ namespace PipServices.Commons.Data
 {
     public class AnyValue : ICloneable
     {
-        private static long SerialVersionUid { get; } = 8543060319681670938L;
-
-        [JsonProperty("value")]
-        public object Value { get; private set; }
-
         public AnyValue(object value = null)
         {
             var anyValue = value as AnyValue;
@@ -22,6 +17,9 @@ namespace PipServices.Commons.Data
         {
             Value = value.Value;
         }
+
+        [JsonProperty("value")]
+        public object Value { get; private set; }
 
         public object GetAsObject()
         {

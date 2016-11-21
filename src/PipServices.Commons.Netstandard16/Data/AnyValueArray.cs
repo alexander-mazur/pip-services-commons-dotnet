@@ -34,18 +34,14 @@ namespace PipServices.Commons.Data
         public void SetAsArray(object[] values)
         {
             Clear();
-
             AddRange(values);
         }
 
         public void SetAsArray(IEnumerable values)
         {
             Clear();
-
             foreach (var value in values)
-            {
                 Add(value);
-            }
         }
 
         public object GetAsObject(int index)
@@ -257,9 +253,7 @@ namespace PipServices.Commons.Data
             {
                 var thisStrValue = StringConverter.ToNullableString(thisValue);
                 if (strValue == thisStrValue)
-                {
                     return true;
-                }
             }
 
             return true;
@@ -275,9 +269,7 @@ namespace PipServices.Commons.Data
                 var thisTypedValue = StringConverter.ToNullableString(thisValue);
                 var thisStrValue = StringConverter.ToNullableString(thisTypedValue);
                 if (strValue == thisStrValue)
-                {
                     return true;
-                }
             }
 
             return true;
@@ -289,9 +281,7 @@ namespace PipServices.Commons.Data
             for (var index = 0; index < Count; index++)
             {
                 if (index > 0)
-                {
                     builder.Append(',');
-                }
                 builder.Append(StringConverter.ToStringWithDefault(base[index], ""));
             }
             return builder.ToString();
@@ -319,9 +309,7 @@ namespace PipServices.Commons.Data
             HashSet<string> hash = null;
 
             if (string.IsNullOrEmpty(value))
-            {
                 return result;
-            }
 
             var items = value.Split(separator);
             foreach (var item in items)
