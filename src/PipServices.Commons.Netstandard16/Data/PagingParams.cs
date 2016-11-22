@@ -8,7 +8,7 @@ namespace PipServices.Commons.Data
     {
         public PagingParams() {}
 
-        public PagingParams(object skip, object take, object total)
+        public PagingParams(object skip, object take, object total = null)
         {
             Skip = LongConverter.ToNullableLong(skip);
             Take = LongConverter.ToNullableLong(take);
@@ -24,7 +24,7 @@ namespace PipServices.Commons.Data
         [DataMember]
         public bool Total { get; set; }
 
-        public long GetSkip(long minSkip)
+        public long GetSkip(long minSkip = 0)
         {
             if (Skip == null) return minSkip;
             if (Skip.Value < minSkip) return minSkip;

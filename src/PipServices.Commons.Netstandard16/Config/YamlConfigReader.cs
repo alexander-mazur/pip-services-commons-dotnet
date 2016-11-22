@@ -2,11 +2,28 @@
 using System.IO;
 using PipServices.Commons.Errors;
 using YamlDotNet.Serialization;
+using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Config
 {
-    public sealed class YamlConfigReader
+    public sealed class YamlConfigReader: FileConfigReader, IDescriptable
     {
+        public static Descriptor Descriptor = new Descriptor("pip-commons", "config-reader", "yaml", "1.0");
+
+        public YamlConfigReader(string path = null)
+            : base(path)
+        { }
+
+        public Descriptor GetDescriptor()
+        {
+            return Descriptor;
+        }
+
+        public override ConfigParams ReadConfig(string correlationId)
+        {
+            return ReadConfig(correlationId, Path);
+        }
+
         public static object ReadObject(string correlationId, string path)
         {
             if (path == null)

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PipServices.Commons</id>
-    <version>1.0.5</version>
+    <version>1.0.7</version>
     <title>PipServices.Commons</title>
     <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
     <owners>seroukhov</owners>

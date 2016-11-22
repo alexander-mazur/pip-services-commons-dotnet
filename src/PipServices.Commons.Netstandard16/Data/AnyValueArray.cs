@@ -21,6 +21,16 @@ namespace PipServices.Commons.Data
             SetAsArray(values);
         }
 
+        public virtual object Get(int index)
+        {
+            return base[index];
+        }
+
+        public virtual void Set(int index, object value)
+        {
+            base[index] = value;
+        }
+
         public object GetAsObject()
         {
             return new List<object>(this);
@@ -46,14 +56,13 @@ namespace PipServices.Commons.Data
 
         public object GetAsObject(int index)
         {
-            return base[index];
+            return Get(index);
         }
 
         public void SetAsObject(int index, object value)
         {
-            base[index] = value;
+            Set(index, value);
         }
-
 
         public string GetAsNullableString(int index)
         {

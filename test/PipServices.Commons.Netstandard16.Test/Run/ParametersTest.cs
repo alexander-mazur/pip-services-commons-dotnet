@@ -141,31 +141,31 @@ namespace PipServices.Commons.Test.Run
         }
 
         [Fact]
-        public void TestAdd()
+        public void TestSet()
         {
             var config = new Parameters();
 
-            config.Add(null, 123);
+            config.Set(null, 123);
             Assert.Equal(0, config.Count);
 
-            config.Add("field1", 123);
+            config.Set("field1", 123);
             Assert.Equal(1, config.Count);
             Assert.Equal(123, (int)config.Get("field1"));
 
-            config.Add("field2", "ABC");
+            config.Set("field2", "ABC");
             Assert.Equal(2, config.Count);
             Assert.Equal("ABC", config.Get("field2"));
 
-            config.Add("field2.field1", 123);
+            config.Set("field2.field1", 123);
             Assert.Equal("ABC", config.Get("field2"));
 
-            config.Add("field3.field31", 456);
+            config.Set("field3.field31", 456);
             Assert.Equal(3, config.Count);
             var subConfig = config.GetAsMap("field3");
             Assert.NotNull(subConfig);
             Assert.Equal(456, (int)subConfig.Get("field31"));
 
-            config.Add("field3.field32", "XYZ");
+            config.Set("field3.field32", "XYZ");
             Assert.Equal("XYZ", config.Get("field3.field32"));
         }
 

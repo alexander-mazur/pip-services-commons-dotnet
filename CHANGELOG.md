@@ -1,13 +1,15 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.5"></a> 1.0.3-1.0.5 (2016-11-21)
+## <a name="1.0.3-1.0.7"></a> 1.0.3-1.0.7 (2016-11-21)
 
 ### Features
+* **config** Added IConfigReader interface and readers for AppSettings and ConnectionStrings
 * **log** Added diagnotics logger
 
 ### Bug Fixes
 * Added description to NuGet package
 * Added development documentation
+* Made convenience changes in StringValueMap and AnyValueMap
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 

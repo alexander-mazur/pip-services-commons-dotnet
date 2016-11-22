@@ -6,7 +6,7 @@ namespace PipServices.Commons.Log
 {
     public class ConsoleLogger : Logger, IDescriptable
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-commons", "logger", "console", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-commons", "logger", "console", "1.0");
 
         public Descriptor GetDescriptor()
         {

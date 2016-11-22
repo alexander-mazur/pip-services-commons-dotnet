@@ -21,10 +21,10 @@ namespace PipServices.Commons.Data
         public new string this[string key]
         {
             get { return Get(key); }
-            set { SetAsObject(key, value); }
+            set { Set(key, value); }
         }
 
-        public string Get(string key)
+        public virtual string Get(string key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -36,6 +36,16 @@ namespace PipServices.Commons.Data
             }
 
             return null;
+        }
+
+        public virtual void Set(string key, string value)
+        {
+            base[key] = value;
+        }
+
+        public new void Add(string key, string value)
+        {
+            Set(key, value);
         }
 
         public void SetAsMap(IDictionary<string, object> map)
@@ -66,7 +76,7 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(string key, object value)
         {
-            base[key] = StringConverter.ToNullableString(value);
+            Set(key, StringConverter.ToNullableString(value));
         }
 
         public object GetAsObject(string key)
