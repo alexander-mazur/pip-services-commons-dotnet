@@ -50,12 +50,20 @@ namespace PipServices.Commons.Data
 
         public void SetAsMap(IDictionary<string, object> map)
         {
+            Clear();
+
+            if (map == null || map.Count == 0) return;
+
             foreach (var key in map.Keys)
                 SetAsObject(key, StringConverter.ToNullableString(map[key]));
         }
 
         public void SetAsMap(IDictionary<string, string> map)
         {
+            Clear();
+
+            if (map == null || map.Count == 0) return;
+
             foreach (var key in map.Keys)
                 SetAsObject(key, map[key]);
         }

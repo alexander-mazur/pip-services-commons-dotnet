@@ -13,8 +13,9 @@ namespace PipServices.Commons.Data
         }
 
         public AnyValueMap(IDictionary<string, object> values)
-            : base(values, StringComparer.OrdinalIgnoreCase)
+            : base(StringComparer.OrdinalIgnoreCase)
         {
+            SetAsMap(values);
         }
 
         public AnyValueMap(IDictionary values)
@@ -51,6 +52,16 @@ namespace PipServices.Commons.Data
         public new void Add(string key, object value)
         {
             Set(key, value);
+        }
+
+        public void SetAsMap(IDictionary<string, object> map)
+        {
+            Clear();
+
+            if (map == null || map.Count == 0) return;
+
+            foreach (var key in map.Keys)
+                Set(key.ToString(), map[key]);
         }
 
         public void SetAsMap(IDictionary map)
