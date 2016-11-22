@@ -5,7 +5,6 @@
     <version>1.0.10</version>
     <title>PipServices.Commons</title>
     <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
-    <owners>seroukhov</owners>
 
     <projectUrl>https://github.com/pip-services/pip-services-commons-dotnet</projectUrl>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -19,18 +18,18 @@
 
     <dependencies>
       <group targetFramework="net">
-        <dependency id="Newtonsoft.Json" version="9.0" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="YamlDotNet" version="4.0" />
       </group>
       <group targetFramework="netstandard">
-        <dependency id="Microsoft.Extensions.Logging.TraceSource" version="1.0.0" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-        <dependency id="System.ComponentModel.TypeConverter" version="4.1.0" />
-        <dependency id="System.Linq" version="4.1.0" />
-        <dependency id="System.Linq.Queryable" version="4.0.1" />
-        <dependency id="System.Runtime" version="4.1.0" />
-        <dependency id="System.Runtime.Serialization.Primitives" version="4.1.1" />
-        <dependency id="Newtonsoft.Json" version="9.0" />
+        <dependency id="Microsoft.Extensions.Logging.TraceSource" version="1.1.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="System.ComponentModel.TypeConverter" version="4.3.0" />
+        <dependency id="System.Linq" version="4.3.0" />
+        <dependency id="System.Linq.Queryable" version="4.3.0" />
+        <dependency id="System.Runtime" version="4.3.0" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.3.0" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="YamlDotNet" version="4.0" />
       </group>
     </dependencies>
