@@ -40,6 +40,8 @@ namespace PipServices.Commons.Convert
 
         public static IDictionary<string, object> ToNullableMap(string value)
         {
+            if (value == null) return null;
+
             try
             {
                 var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
