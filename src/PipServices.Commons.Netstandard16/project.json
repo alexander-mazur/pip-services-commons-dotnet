@@ -1,13 +1,16 @@
 {
-  "buildOptions": {
-    "outputName": "PipServices.Commons"
-  },
+  "version": "1.0.10-*",
 
   "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
   "title": "Pip.Services Commons Library",
-  "version": "1.0.10-*",
   "authors": [ "Mark Zontak", "Sergey Seroukhov", "Volodymyr Tkachenko" ],
   "description": "Basic portable abstractions for Pip.Services",
+
+  "buildOptions": {
+    "define": [ "CORE_NET" ],
+    "outputName": "PipServices.Commons"
+  },
+
   "dependencies": {
     "Microsoft.Extensions.Logging.TraceSource": "1.1.0",
     "NETStandard.Library": "1.6.1",
@@ -19,13 +22,10 @@
     "System.Runtime.Serialization.Primitives": "4.3.0",
     "YamlDotNet": "4.0.0"
   },
+
   "frameworks": {
     "netstandard1.6": {
       "imports": "dnxcore50"
     }
-  },
-  "buildOptions": {
-    "define": [ "CORE_NET" ],
-    "outputName": "PipServices.Commons"
   }
 }
