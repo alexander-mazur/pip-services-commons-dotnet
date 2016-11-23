@@ -127,6 +127,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\JsonConfigReader.cs">
       <Link>Config\JsonConfigReader.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\MemoryConfigReader.cs">
+      <Link>Config\MemoryConfigReader.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\YamlConfigReader.cs">
       <Link>Config\YamlConfigReader.cs</Link>
     </Compile>
