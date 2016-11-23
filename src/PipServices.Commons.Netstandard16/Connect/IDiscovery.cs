@@ -32,6 +32,6 @@ namespace PipServices.Commons.Connect
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="key">a key locate connections</param>
         /// <returns>a list with resolved connections.</returns>
-        Task<IList<ConnectionParams>> ResolveAllAsync(string correlationId, string key);
+        Task<List<ConnectionParams>> ResolveAllAsync(string correlationId, string key);
     }
 }
