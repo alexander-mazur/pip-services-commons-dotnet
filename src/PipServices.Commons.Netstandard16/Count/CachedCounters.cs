@@ -15,6 +15,14 @@ namespace PipServices.Commons.Count
         private long _interval = _defaultInterval;
         private readonly object _lock = new object();
 
+        public CachedCounters() { }
+
+        public long Interval
+        {
+            get { return _interval; }
+            set { _interval = value; }
+        }
+
         protected abstract void Save(IEnumerable<Counter> counters);
 
         public virtual void Configure(ConfigParams config)
