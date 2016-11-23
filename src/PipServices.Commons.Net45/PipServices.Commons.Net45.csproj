@@ -61,6 +61,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Auth\ICredentialStore.cs">
       <Link>Auth\ICredentialStore.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Auth\MemoryCredentialStore.cs">
+      <Link>Auth\MemoryCredentialStore.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Build\CompositeFactory.cs">
       <Link>Build\CompositeFactory.cs</Link>
     </Compile>
@@ -135,6 +138,9 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Connect\IDiscovery.cs">
       <Link>Connect\IDiscovery.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Connect\MemoryDiscovery.cs">
+      <Link>Connect\MemoryDiscovery.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Convert\ArrayConverter.cs">
       <Link>Convert\ArrayConverter.cs</Link>

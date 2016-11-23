@@ -1,4 +1,6 @@
-﻿namespace PipServices.Commons.Auth
+﻿using System.Threading.Tasks;
+
+namespace PipServices.Commons.Auth
 {
     /// <summary>
     /// Store that keeps and located client credentials.
@@ -11,7 +13,7 @@
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="key">the key to lookup credential</param>
         /// <param name="credential">a credential parameters</param>
-        void Store(string correlationId, string key, CredentialParams credential);
+        Task StoreAsync(string correlationId, string key, CredentialParams credential);
 
         /// <summary>
         /// Looks up credential from the store
@@ -19,6 +21,6 @@
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="key">a key to lookup credential</param>
         /// <returns>found credential parameters or <code>null</code> if nothing was found</returns>
-        CredentialParams Lookup(string correlationId, string key);
+        Task<CredentialParams> LookupAsync(string correlationId, string key);
     }
 }

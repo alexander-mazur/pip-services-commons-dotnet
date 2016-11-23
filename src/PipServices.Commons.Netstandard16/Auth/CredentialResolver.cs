@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PipServices.Commons.Config;
 using PipServices.Commons.Refer;
+using System.Threading.Tasks;
 
 namespace PipServices.Commons.Auth
 {
@@ -53,7 +54,7 @@ namespace PipServices.Commons.Auth
             _credentials.Add(connection);
         }
 
-        private CredentialParams LookupInStores(string correlationId, CredentialParams credential)
+        private async Task<CredentialParams> LookupInStoresAsync(string correlationId, CredentialParams credential)
         {
             if (credential.UseCredentialStore == false) return null;
 
@@ -69,7 +70,7 @@ namespace PipServices.Commons.Auth
                 var store = component as ICredentialStore;
                 if (store != null)
                 {
-                    var resolvedCredential = store.Lookup(correlationId, key);
+                    var resolvedCredential = await store.LookupAsync(correlationId, key);
                     if (resolvedCredential != null)
                         return resolvedCredential;
                 }
@@ -78,7 +79,7 @@ namespace PipServices.Commons.Auth
             return null;
         }
 
-        public CredentialParams Lookup(string correlationId)
+        public async Task<CredentialParams> LookupAsync(string correlationId)
         {
             if (_credentials.Count == 0) return null;
 
@@ -94,7 +95,7 @@ namespace PipServices.Commons.Auth
             {
                 if (credential.UseCredentialStore)
                 {
-                    var resolvedConnection = LookupInStores(correlationId, credential);
+                    var resolvedConnection = await LookupInStoresAsync(correlationId, credential);
                     if (resolvedConnection != null)
                         return resolvedConnection;
                 }

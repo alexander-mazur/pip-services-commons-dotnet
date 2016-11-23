@@ -1,9 +1,11 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.10"></a> 1.0.3-1.0.10 (2016-11-22)
+## <a name="1.0.3-1.0.11"></a> 1.0.3-1.0.11 (2016-11-22)
 
 ### Features
+* **auth** Added MemoryCredentialStore
 * **config** Added IConfigReader interface and readers for AppSettings and ConnectionStrings
+* **connect** Added MemoryDiscovery
 * **log** Added diagnotics logger
 
 ### Bug Fixes
