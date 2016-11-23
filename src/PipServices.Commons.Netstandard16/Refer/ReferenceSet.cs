@@ -13,7 +13,7 @@ namespace PipServices.Commons.Refer
 
         public ReferenceSet() { }
 
-        public ReferenceSet(params IDescriptable[] references)
+        public ReferenceSet(IEnumerable<object> references)
         {
             foreach (var reference in references)
                 Put(reference);

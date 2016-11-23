@@ -9,7 +9,7 @@ namespace PipServices.Commons.Auth
     /// certificates, etc. Separating credentials from connection parameters
     /// allow to store them in secure location and share among multiple connections.
     /// </summary>
-    public sealed class CredentialParams : ConfigParams
+    public class CredentialParams : ConfigParams
     {
         /// <summary>
         /// Creates an empty instance of credential parameters.

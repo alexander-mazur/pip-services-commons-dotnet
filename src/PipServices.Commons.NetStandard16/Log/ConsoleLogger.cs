@@ -8,7 +8,7 @@ namespace PipServices.Commons.Log
     {
         public static Descriptor Descriptor = new Descriptor("pip-commons", "logger", "console", "1.0");
 
-        public Descriptor GetDescriptor()
+        public virtual Descriptor GetDescriptor()
         {
             return Descriptor;
         }

@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.9"></a> 1.0.3-1.0.9 (2016-11-21)
+## <a name="1.0.3-1.0.10"></a> 1.0.3-1.0.10 (2016-11-22)
 
 ### Features
 * **config** Added IConfigReader interface and readers for AppSettings and ConnectionStrings
@@ -12,6 +12,7 @@
 * Made convenience changes in StringValueMap and AnyValueMap
 * Fixed NullPointerException in JsonConverter.ToNullableMap
 * Fixed NullPointerException in AnyValueMap and StringValueMap
+* Made key methods virtual
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 

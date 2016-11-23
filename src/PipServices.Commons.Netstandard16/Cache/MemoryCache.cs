@@ -37,7 +37,7 @@ namespace PipServices.Commons.Cache
         /// Gets the component descriptor.
         /// </summary>
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
-        public Descriptor GetDescriptor()
+        public virtual Descriptor GetDescriptor()
         {
             return Descriptor;
         }

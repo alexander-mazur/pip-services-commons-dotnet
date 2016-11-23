@@ -17,7 +17,7 @@ namespace PipServices.Commons.Count
 
         protected abstract void Save(IEnumerable<Counter> counters);
 
-        public void Configure(ConfigParams config)
+        public virtual void Configure(ConfigParams config)
         {
             _interval = config.GetAsLongWithDefault("interval", _defaultInterval);
         }

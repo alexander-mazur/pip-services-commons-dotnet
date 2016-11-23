@@ -9,7 +9,7 @@ namespace PipServices.Commons.Connect
     /// It contains service protocol, host, port number, route, database name, timeouts 
     /// and additional configuration parameters.
     /// </summary>
-    public sealed class ConnectionParams : ConfigParams
+    public class ConnectionParams : ConfigParams
     {
         /// <summary>
         /// Creates an empty instance of connection parameters.
