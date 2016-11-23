@@ -365,7 +365,7 @@ namespace PipServices.Commons.Data
             if (maps != null && maps.Length > 0)
             {
                 foreach (var map in maps)
-                    result.SetAsMap((IDictionary<string, object>)map);
+                    result.SetAsMap(map);
             }
             return result;
         }
