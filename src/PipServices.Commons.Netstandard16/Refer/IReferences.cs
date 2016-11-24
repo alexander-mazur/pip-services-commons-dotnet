@@ -9,17 +9,17 @@ namespace PipServices.Commons.Refer
     public interface IReferences
     {
         /// <summary>
-        /// Puts a new component reference to the set
-        /// </summary>
-        /// <param name="reference">a component reference to be added that implements ILocateable interface</param>
-        void Put(object reference);
-
-        /// <summary>
         /// Puts a new component reference to the set with explicit locator
         /// </summary>
+        /// <param name="component">a component reference to be added</param>
         /// <param name="locator">a locator to find the reference</param>
-        /// <param name="reference">a component reference to be added</param>
-        void Put(object locator, object reference);
+        void Put(object component, object locator = null);
+
+        /// <summary>
+        /// Puts list of component references
+        /// </summary>
+        /// <param name="components">A list of components</param>
+        void PutAll(params object[] components);
 
         /// <summary>
         /// Removes component reference from the set.

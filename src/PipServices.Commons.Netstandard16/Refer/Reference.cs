@@ -5,19 +5,19 @@ namespace PipServices.Commons.Refer
     public class Reference : ILocateable
     {
         private object _locator;
-        private object _reference;
-        private ILocateable _locateableReference;
+        private object _component;
+        private ILocateable _locateable;
 
-        public Reference(object reference, object locator)
+        public Reference(object component, object locator)
         {
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
 
-            if (reference == null)
-                throw new ArgumentNullException(nameof(reference));
+            if (component == null)
+                throw new ArgumentNullException(nameof(component));
 
             _locator = locator;
-            _reference = reference;
+            _component = component;
         }
 
         public Reference(object reference)
@@ -28,9 +28,9 @@ namespace PipServices.Commons.Refer
             if (locatable == null && describable == null)
                 throw new ArgumentException("Reference must implement ILocateable or IDescribable interface");
 
-            _locateableReference = locatable;
+            _locateable = locatable;
 
-            _reference = reference;
+            _component = reference;
 
             if (describable != null)
                 _locator = describable.GetDescriptor();
@@ -38,23 +38,23 @@ namespace PipServices.Commons.Refer
 
         public bool Locate(object locator)
         {
-            if (_reference.Equals(locator))
+            if (_component.Equals(locator))
                 return true;
 
             if (locator is Type)
-                return ((Type)_locator).Equals(_reference.GetType());
+                return ((Type)_locator).Equals(_component.GetType());
 
 		    // Locate locateable objects
-		    if (_locateableReference != null)
-                return _locateableReference.Locate(locator);
+		    if (_locateable != null)
+                return _locateable.Locate(locator);
 
             // Locate by direct locator matching
             return _locator.Equals(locator);
         }
 
-        public object GetReference()
+        public object GetComponent()
         {
-            return _reference;
+            return _component;
         }
     }
 }

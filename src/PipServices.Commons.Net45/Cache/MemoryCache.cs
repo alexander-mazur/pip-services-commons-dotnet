@@ -15,15 +15,24 @@ namespace PipServices.Commons.Cache
     /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IReconfigurable, ICleanable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
-
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
         private readonly System.Runtime.Caching.MemoryCache _standardCache = System.Runtime.Caching.MemoryCache.Default;
+        private readonly object _lock = new object();
 
-        private long _timeout, _maxSize;
-        private readonly object _syncObject = new object();
+        public MemoryCache(string name = null, ConfigParams config = null)
+        {
+            Name = name;
+            Timeout = DefaultTimeout;
+            MaxSize = DefaultMaxSize;
+
+            if (config != null) Configure(config);
+        }
+
+        public string Name { get; protected set; }
+        public long Timeout { get; set; }
+        public long MaxSize { get; set; }
 
         /// <summary>
         /// Initializes the components according to supplied configuration parameters.
@@ -31,8 +40,9 @@ namespace PipServices.Commons.Cache
         /// <param name="config">Configuration parameters.</param>
         public void Configure(ConfigParams config)
         {
-            _timeout = config.GetAsLongWithDefault("timeout", DefaultTimeout);
-            _maxSize = config.GetAsLongWithDefault("max_size", DefaultMaxSize);
+            Name = NameResolver.Resolve(config, Name);
+            Timeout = config.GetAsLongWithDefault("timeout", Timeout);
+            MaxSize = config.GetAsLongWithDefault("max_size", MaxSize);
         }
 
         /// <summary>
@@ -41,7 +51,7 @@ namespace PipServices.Commons.Cache
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-common", "cache", Name ?? "memory", "1.0");
         }
 
         /// <summary>
@@ -77,16 +87,16 @@ namespace PipServices.Commons.Cache
                 return null;
             }
 
-            if (_maxSize <= _standardCache.GetCount())
+            if (MaxSize <= _standardCache.GetCount())
             {
-                lock (_syncObject)
+                lock (_lock)
                 {
-                    if (_maxSize <= _standardCache.GetCount())
+                    if (MaxSize <= _standardCache.GetCount())
                         _standardCache.Trim(5);
                 }
             }
 
-            timeout = timeout > 0 ? timeout : _timeout;
+            timeout = timeout > 0 ? timeout : Timeout;
 
             _standardCache.Set(key, value, new CacheItemPolicy
             {

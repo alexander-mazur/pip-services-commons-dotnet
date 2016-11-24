@@ -19,29 +19,26 @@ namespace PipServices.Commons.Refer
                 Put(reference);
         }
 
-        public virtual void Put(object reference)
+        public virtual void Put(object component, object locator = null)
         {
-            if (reference == null)
-                throw new ArgumentNullException(nameof(reference));
+            if (component == null)
+                throw new ArgumentNullException(nameof(component));
 
             lock (_lock)
             {
-                var r = reference as Reference;
-                References.Add(r ?? new Reference(reference));
+                if (locator != null)
+                    References.Add(new Reference(component, locator));
+                else if (component is Reference)
+                    References.Add((Reference)component);
+                else
+                    References.Add(new Reference(component));
             }
         }
 
-        public virtual void Put(object reference, object locator)
+        public void PutAll(params object[] components)
         {
-            if (locator == null)
-                throw new ArgumentNullException(nameof(locator));
-            if (reference == null)
-                throw new ArgumentNullException(nameof(reference));
-
-            lock (_lock)
-            {
-                References.Add(new Reference(reference, locator));
-            }
+            foreach (var component in components)
+                Put(component);
         }
 
         public virtual object Remove(object locator)
@@ -57,7 +54,7 @@ namespace PipServices.Commons.Refer
                     {
                         // Remove from the set
                         References.RemoveAt(index);
-                        return reference.GetReference();
+                        return reference.GetComponent();
                     }
                 }
             }
@@ -103,7 +100,7 @@ namespace PipServices.Commons.Refer
                     var reference = References[index];
                     if (reference.Locate(locator))
                     {
-                        var component = reference.GetReference();
+                        var component = reference.GetComponent();
                         if (component is T)
                             return (T)component;
                     }
@@ -119,16 +116,16 @@ namespace PipServices.Commons.Refer
 
         public virtual T GetOneRequired<T>(object locator)
         {
-            var reference = GetOneOptional<T>(locator);
+            var component = GetOneOptional<T>(locator);
 
             // Create a missing component
-            if (reference == null)
-                reference = ResolveMissing<T>(locator);
+            if (component == null)
+                component = ResolveMissing<T>(locator);
 
-            if (reference == null)
+            if (component == null)
                 throw new ReferenceException(null, locator);
 
-            return reference;
+            return component;
         }
 
         public virtual List<object> GetOptional(object locator)
@@ -141,7 +138,7 @@ namespace PipServices.Commons.Refer
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
 
-            var references = new List<T>();
+            var components = new List<T>();
 
             lock (_lock)
             {
@@ -150,14 +147,14 @@ namespace PipServices.Commons.Refer
                     var reference = References[index];
                     if (reference.Locate(locator))
                     {
-                        var component = reference.GetReference();
+                        var component = reference.GetComponent();
                         if (component is T)
-                            references.Add((T)component);
+                            components.Add((T)component);
                     }
                 }
             }
 
-            return references;
+            return components;
         }
 
         public List<object> GetRequired(object locator)
@@ -167,24 +164,24 @@ namespace PipServices.Commons.Refer
 
         public List<T> GetRequired<T>(object locator)
         {
-            var references = GetOptional<T>(locator);
+            var components = GetOptional<T>(locator);
 
             // Try to resolve missing dependency
-            if (references.Count == 0)
+            if (components.Count == 0)
             {
-                var reference = ResolveMissing<T>(locator);
+                var component = ResolveMissing<T>(locator);
 
                 lock (_lock)
                 {
-                    if (reference != null)
-                        references.Add(reference);
+                    if (component != null)
+                        components.Add(component);
                 }
             }
 
-            if (references.Count == 0)
+            if (components.Count == 0)
                 throw new ReferenceException(null, locator);
 
-            return references;
+            return components;
         }
 
         public object GetOneBefore(object prior, object locator)
@@ -207,7 +204,7 @@ namespace PipServices.Commons.Refer
                 for (; index >= 0; index--)
                 {
                     var reference = References[index];
-                    if (reference.GetReference().Equals(prior))
+                    if (reference.GetComponent().Equals(prior))
                         break;
                 }
 
@@ -216,7 +213,7 @@ namespace PipServices.Commons.Refer
                     var reference = References[index];
                     if (reference.Locate(locator))
                     {
-                        var component = reference.GetReference();
+                        var component = reference.GetComponent();
                         if (component is T)
                             return (T)component;
                     }
@@ -226,11 +223,10 @@ namespace PipServices.Commons.Refer
             throw new ReferenceException(null, locator);
         }
 
-        public static ReferenceSet FromList(params IDescriptable[] references)
+        public static ReferenceSet FromList(params object[] components)
         {
             var result = new ReferenceSet();
-            foreach (var reference in references)
-                result.Put(reference);
+            result.PutAll(components);
             return result;
         }
     }

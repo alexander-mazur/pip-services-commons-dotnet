@@ -6,6 +6,8 @@ namespace PipServices.Commons.Cache
     public class DefaultCacheFactory : IFactory, IDescriptable
     {
         private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "cache", "1.0");
+        private static readonly Descriptor NullCacheDescriptor = new Descriptor("pip-services-common", "cache", "null", "1.0");
+        private static readonly Descriptor MemoryCacheDescriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
 
         public bool CanCreate(object locator)
         {
@@ -14,10 +16,10 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCache.Descriptor))
+            if (descriptor.Match(NullCacheDescriptor))
                 return true;
 
-            if (descriptor.Match(MemoryCache.Descriptor))
+            if (descriptor.Match(MemoryCacheDescriptor))
                 return true;
 
             return false;
@@ -30,10 +32,10 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return null;
 
-            if (descriptor.Match(NullCache.Descriptor))
+            if (descriptor.Match(NullCacheDescriptor))
                 return new NullCache();
 
-            if (descriptor.Match(MemoryCache.Descriptor))
+            if (descriptor.Match(MemoryCacheDescriptor))
                 return new MemoryCache();
 
             return null;

@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.15"></a> 1.0.3-1.0.15 (2016-11-22)
+## <a name="1.0.3-1.0.18"></a> 1.0.3-1.0.18 (2016-11-22)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -11,6 +11,7 @@
 * **log** DiagnoticsLogger
 * **refer** AutoCreateReferenceSet, added AutoOpen property
 * **refer** Made get methods in IReferences generic
+* **refer** Added PutAll method to IReferences
 
 ### Bug Fixes
 * Added description to NuGet package
@@ -20,6 +21,7 @@
 * Fixed NullPointerException in AnyValueMap and StringValueMap
 * Made key methods virtual
 * Fixed NullPointerException in NameResolver
+* Fixed wrong cast in Referencer
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 

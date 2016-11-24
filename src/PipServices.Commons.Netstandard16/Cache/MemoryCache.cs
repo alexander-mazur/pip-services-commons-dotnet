@@ -14,14 +14,24 @@ namespace PipServices.Commons.Cache
     /// </remarks>
     public class MemoryCache : ICache, IDescriptable, IReconfigurable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-services-common", "cache", "memory", "1.0");
-
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
-        private long _timeout, _maxSize;
         private readonly object _lock = new object();
+
+        public MemoryCache(string name = null, ConfigParams config = null)
+        {
+            Name = name;
+            Timeout = DefaultTimeout;
+            MaxSize = DefaultMaxSize;
+
+            if (config != null) Configure(config);
+        }
+
+        public string Name { get; protected set; }
+        public long Timeout { get; set; }
+        public long MaxSize { get; set; }
 
         /// <summary>
         /// Initializes the components according to supplied configuration parameters.
@@ -29,8 +39,9 @@ namespace PipServices.Commons.Cache
         /// <param name="config">Configuration parameters.</param>
         public void Configure(ConfigParams config)
         {
-            _timeout = config.GetAsLongWithDefault("timeout", DefaultTimeout);
-            _maxSize = config.GetAsLongWithDefault("max_size", DefaultMaxSize);
+            Name = NameResolver.Resolve(config, Name);
+            Timeout = config.GetAsLongWithDefault("timeout", Timeout);
+            MaxSize = config.GetAsLongWithDefault("max_size", MaxSize);
         }
 
         /// <summary>
@@ -39,7 +50,7 @@ namespace PipServices.Commons.Cache
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public virtual Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-common", "cache", Name ?? "memory", "1.0");
         }
 
         private void Cleanup()
@@ -66,7 +77,7 @@ namespace PipServices.Commons.Cache
                     _cache.Remove(key);
                 }
 
-                if (_cache.Count > _maxSize && oldest != null)
+                if (_cache.Count > MaxSize && oldest != null)
                 {
                     _cache.Remove(oldest.Key);
                 }
@@ -121,7 +132,7 @@ namespace PipServices.Commons.Cache
             {
                 CacheEntry entry;
                 _cache.TryGetValue(key, out entry);
-                timeout = timeout > 0 ? timeout : _timeout;
+                timeout = timeout > 0 ? timeout : Timeout;
 
                 if (value == null)
                 {
@@ -136,7 +147,7 @@ namespace PipServices.Commons.Cache
                     _cache[key] = new CacheEntry(key, value, timeout);
 
                 // cleanup
-                if (_maxSize > 0 && _cache.Count > _maxSize)
+                if (MaxSize > 0 && _cache.Count > MaxSize)
                     Cleanup();
             }
 

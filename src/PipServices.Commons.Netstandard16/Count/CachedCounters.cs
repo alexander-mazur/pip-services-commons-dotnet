@@ -7,27 +7,25 @@ namespace PipServices.Commons.Count
 {
     public abstract class CachedCounters : ICounters, IReconfigurable, ITimingCallback
     {
-        private static readonly long _defaultInterval = 300000;
+        private static readonly long DefaultInterval = 300000;
 
         private readonly IDictionary<string, Counter> _cache = new Dictionary<string, Counter>();
         private bool _updated;
         private long _lastDumpTime = Environment.TickCount;
-        private long _interval = _defaultInterval;
         private readonly object _lock = new object();
 
-        public CachedCounters() { }
-
-        public long Interval
+        public CachedCounters()
         {
-            get { return _interval; }
-            set { _interval = value; }
+            Interval = DefaultInterval;
         }
+
+        public long Interval { get; set; }
 
         protected abstract void Save(IEnumerable<Counter> counters);
 
         public virtual void Configure(ConfigParams config)
         {
-            _interval = config.GetAsLongWithDefault("interval", _defaultInterval);
+            Interval = config.GetAsLongWithDefault("interval", DefaultInterval);
         }
 
         public void Clear(string name)
@@ -65,7 +63,7 @@ namespace PipServices.Commons.Count
         protected void Update()
         {
             _updated = true;
-            if (Environment.TickCount > _lastDumpTime + _interval)
+            if (Environment.TickCount > _lastDumpTime + Interval)
             {
                 try
                 {

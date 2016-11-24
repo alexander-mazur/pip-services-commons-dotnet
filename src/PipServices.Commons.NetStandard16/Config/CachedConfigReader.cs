@@ -4,7 +4,7 @@ namespace PipServices.Commons.Config
 {
     public abstract class CachedConfigReader: IConfigReader, IReconfigurable
     {
-        private long _nextRead = 0;
+        private long _lastRead = 0;
         private ConfigParams _config;
 
         public CachedConfigReader(string name = null)
@@ -26,11 +26,11 @@ namespace PipServices.Commons.Config
 
         public ConfigParams ReadConfig(string correlationId)
         {
-            if (_config != null && Environment.TickCount > _nextRead)
+            if (_config != null && Environment.TickCount > _lastRead + Timeout)
                 return _config;
 
             _config = PerformReadConfig(correlationId);
-            _nextRead = Environment.TickCount + Timeout;
+            _lastRead = Environment.TickCount;
 
             return _config;
         }

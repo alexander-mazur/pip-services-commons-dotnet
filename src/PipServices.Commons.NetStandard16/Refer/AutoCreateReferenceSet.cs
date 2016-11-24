@@ -18,7 +18,7 @@ namespace PipServices.Commons.Refer
         {
             foreach (var reference in References)
             {
-                var factory = reference.GetReference() as IFactory;
+                var factory = reference.GetComponent() as IFactory;
                 if (factory != null)
                 {
                     if (factory.CanCreate(locator))
