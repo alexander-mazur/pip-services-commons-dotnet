@@ -12,10 +12,10 @@ namespace PipServices.Commons.Connect
 
         public MemoryDiscovery() { }
 
-        public MemoryDiscovery(string name, ConfigParams connections)
+        public MemoryDiscovery(string name = null, ConfigParams config = null)
         {
             Name = name;
-            Init(connections);
+            if (config != null) Configure(config);
         }
 
         public string Name { get; set; }
@@ -34,10 +34,10 @@ namespace PipServices.Commons.Connect
         public virtual void Configure(ConfigParams config)
         {
             Name = NameResolver.Resolve(config, Name);
-            Init(config);
+            ReadConnections(config);
         }
 
-        private void Init(ConfigParams connections)
+        private void ReadConnections(ConfigParams connections)
         {
             lock (_lock)
             {
