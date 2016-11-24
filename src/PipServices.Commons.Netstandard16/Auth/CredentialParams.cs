@@ -14,9 +14,7 @@ namespace PipServices.Commons.Auth
         /// <summary>
         /// Creates an empty instance of credential parameters.
         /// </summary>
-        public CredentialParams()
-        {
-        }
+        public CredentialParams() { }
 
         /// <summary>
         /// Create an instance of credentials from free-form configuration map.
@@ -24,8 +22,7 @@ namespace PipServices.Commons.Auth
         /// <param name="map">a map with the credentials</param>
         public CredentialParams(IDictionary<string, string> map)
             : base(map)
-        {
-        }
+        { }
 
         /// <summary>
         /// Checks if credential lookup shall be performed.
@@ -96,6 +93,43 @@ namespace PipServices.Commons.Auth
         {
             var map = StringValueMap.FromString(line);
             return new CredentialParams(map);
+        }
+
+        public static List<CredentialParams> ManyFromConfig(ConfigParams config, bool configAsDefault = true)
+        {
+            var result = new List<CredentialParams>();
+
+            // Try to get multiple credentials first
+            var credentials = config.GetSection("credentials");
+
+            if (credentials.Count > 0)
+            {
+                var sectionsNames = credentials.GetSectionNames();
+
+                foreach (var section in sectionsNames)
+                {
+                    var credential = credentials.GetSection(section);
+                    result.Add(new CredentialParams(credential));
+                }
+            }
+            // Then try to get a single connection
+            else
+            {
+                var credential = config.GetSection("credential");
+                if (credential.Count > 0)
+                    result.Add(new CredentialParams(credential));
+                // Apply defaults
+                else if (configAsDefault)
+                    result.Add(new CredentialParams(config));
+            }
+
+            return result;
+        }
+
+        public static CredentialParams FromConfig(ConfigParams config, bool configAsDefault = true)
+        {
+            var connections = ManyFromConfig(config, configAsDefault);
+            return connections.Count > 0 ? connections[0] : null;
         }
     }
 }

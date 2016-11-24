@@ -1,13 +1,16 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.12"></a> 1.0.3-1.0.12 (2016-11-22)
+## <a name="1.0.3-1.0.15"></a> 1.0.3-1.0.15 (2016-11-22)
 
 ### Features
-* **auth** Added MemoryCredentialStore
-* **config** Added IConfigReader interface and readers for AppSettings and ConnectionStrings
-* **config** Added ConfigReader
-* **connect** Added MemoryDiscovery
-* **log** Added diagnotics logger
+* **auth** MemoryCredentialStore
+* **config** IConfigReader interface and readers for AppSettings and ConnectionStrings
+* **config** IConfigReader, CachedConfigReader
+* **config** NameResolver. Improved support for named (non-singleton) components 
+* **connect** MemoryDiscovery
+* **log** DiagnoticsLogger
+* **refer** AutoCreateReferenceSet, added AutoOpen property
+* **refer** Made get methods in IReferences generic
 
 ### Bug Fixes
 * Added description to NuGet package
@@ -16,6 +19,7 @@
 * Fixed NullPointerException in JsonConverter.ToNullableMap
 * Fixed NullPointerException in AnyValueMap and StringValueMap
 * Made key methods virtual
+* Fixed NullPointerException in NameResolver
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 

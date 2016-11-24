@@ -102,5 +102,42 @@ namespace PipServices.Commons.Connect
             var map = StringValueMap.FromString(line);
             return new ConnectionParams(map);
         }
+
+        public static List<ConnectionParams> ManyFromConfig(ConfigParams config, bool configAsDefault = true)
+        {
+            var result = new List<ConnectionParams>();
+
+            // Try to get multiple connections first
+            var connections = config.GetSection("connections");
+
+            if (connections.Count > 0)
+            {
+                var connectionSections = connections.GetSectionNames();
+
+                foreach (var section in connectionSections)
+                {
+                    var connection = connections.GetSection(section);
+                    result.Add(new ConnectionParams(connection));
+                }
+            }
+            // Then try to get a single connection
+            else
+            {
+                var connection = config.GetSection("connection");
+                if (connection.Count > 0)
+                    result.Add(new ConnectionParams(connection));
+                // Apply default if possible
+                else if (configAsDefault)
+                    result.Add(new ConnectionParams(config));
+            }
+
+            return result;
+        }
+
+        public static ConnectionParams FromConfig(ConfigParams config, bool configAsDefault = true)
+        {
+            var connections = ManyFromConfig(config, configAsDefault);
+            return connections.Count > 0 ? connections[0] : null;
+        }
     }
 }

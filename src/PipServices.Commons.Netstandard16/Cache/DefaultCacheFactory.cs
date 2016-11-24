@@ -5,7 +5,7 @@ namespace PipServices.Commons.Cache
 {
     public class DefaultCacheFactory : IFactory, IDescriptable
     {
-        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-commons", "factory", "cache", "1.0");
+        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "cache", "1.0");
 
         public bool CanCreate(object locator)
         {

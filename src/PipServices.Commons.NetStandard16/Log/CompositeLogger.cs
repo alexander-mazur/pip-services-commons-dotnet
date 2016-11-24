@@ -6,7 +6,7 @@ namespace PipServices.Commons.Log
 {
     public class CompositeLogger : Logger, IReferenceable, IDescriptable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-commons", "logger", "composite", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "logger", "composite", "1.0");
 
         protected readonly List<ILogger> _loggers = new List<ILogger>();
 

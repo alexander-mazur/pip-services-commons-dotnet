@@ -5,7 +5,7 @@ namespace PipServices.Commons.Count
 {
     public sealed class DefaultCountersFactory : IFactory, IDescriptable
     {
-        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-commons", "factory", "counters", "1.0");
+        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "counters", "1.0");
 
         public Descriptor GetDescriptor()
         {

@@ -8,7 +8,7 @@ namespace PipServices.Commons.Connect
 {
     public sealed class ConnectionResolver
     {
-        private readonly IList<ConnectionParams> _connections = new List<ConnectionParams>();
+        private readonly List<ConnectionParams> _connections = new List<ConnectionParams>();
         private IReferences _references;
 
         public ConnectionResolver(ConfigParams config = null, IReferences references = null)
@@ -22,30 +22,12 @@ namespace PipServices.Commons.Connect
             _references = references;
         }
 
-        public void Configure(ConfigParams config)
+        public void Configure(ConfigParams config, bool configAsDefault = true)
         {
-            // Try to get multiple connections first
-            var connections = config.GetSection("connections");
-
-            if (connections.Count > 0)
-            {
-                var connectionSections = connections.GetSectionNames();
-
-                foreach (var section in connectionSections)
-                {
-                    var connection = connections.GetSection(section);
-                    _connections.Add(new ConnectionParams(connection));
-                }
-            }
-            // Then try to get a single connection
-            else
-            {
-                var connection = config.GetSection("connection");
-                _connections.Add(new ConnectionParams(connection));
-            }
+            _connections.AddRange(ConnectionParams.ManyFromConfig(config, configAsDefault));
         }
 
-        public IEnumerable<ConnectionParams> GetAll()
+        public List<ConnectionParams> GetAll()
         {
             return _connections;
         }

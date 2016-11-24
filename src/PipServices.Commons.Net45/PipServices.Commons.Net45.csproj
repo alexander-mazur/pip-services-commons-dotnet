@@ -109,6 +109,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Commands\InterceptedCommand.cs">
       <Link>Commands\InterceptedCommand.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\CachedConfigReader.cs">
+      <Link>Config\CachedConfigReader.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\ConfigParams.cs">
       <Link>Config\ConfigParams.cs</Link>
     </Compile>
@@ -129,6 +132,9 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\MemoryConfigReader.cs">
       <Link>Config\MemoryConfigReader.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\NameResolver.cs">
+      <Link>Config\NameResolver.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\YamlConfigReader.cs">
       <Link>Config\YamlConfigReader.cs</Link>

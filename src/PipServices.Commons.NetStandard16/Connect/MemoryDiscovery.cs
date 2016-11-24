@@ -7,16 +7,18 @@ namespace PipServices.Commons.Connect
 {
     public class MemoryDiscovery : IDiscovery, IReconfigurable, IDescriptable
     {
-        private static readonly Descriptor Descriptor = new Descriptor("pip-commons", "discovery", "memory", "1.0");
         private List<DiscoveryItem> _items = new List<DiscoveryItem>();
         private object _lock = new object();
 
         public MemoryDiscovery() { }
 
-        public MemoryDiscovery(ConfigParams connections)
+        public MemoryDiscovery(string name, ConfigParams connections)
         {
+            Name = name;
             Init(connections);
         }
+
+        public string Name { get; set; }
 
         private class DiscoveryItem
         {
@@ -26,11 +28,12 @@ namespace PipServices.Commons.Connect
 
         public virtual Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-commons", "discovery", Name ?? "memory", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)
         {
+            Name = NameResolver.Resolve(config, Name);
             Init(config);
         }
 

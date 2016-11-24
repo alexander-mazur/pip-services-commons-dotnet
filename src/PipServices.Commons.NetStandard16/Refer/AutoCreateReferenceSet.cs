@@ -1,15 +1,24 @@
 ﻿using PipServices.Commons.Build;
+using PipServices.Commons.Run;
 using System;
-using System.Linq;
 
 namespace PipServices.Commons.Refer
 {
     public class AutoCreateReferenceSet : ReferenceSet
     {
+        private bool _autoOpen = true;
+
+        public bool AutoOpen
+        {
+            get { return _autoOpen; }
+            set { _autoOpen = value; }
+        }
+
         protected IFactory FindFactory(object locator)
         {
-            foreach (var factory in References.Cast<IFactory>())
+            foreach (var reference in References)
             {
+                var factory = reference.GetReference() as IFactory;
                 if (factory != null)
                 {
                     if (factory.CanCreate(locator))
@@ -20,7 +29,7 @@ namespace PipServices.Commons.Refer
             return null;
         }
 
-        protected object Create(object locator)
+        protected virtual object Create(object locator)
         {
             // Find factory
             var factory = FindFactory(locator);
@@ -61,6 +70,11 @@ namespace PipServices.Commons.Refer
             var referenceable = component as IReferenceable;
             if (referenceable != null)
                 referenceable.SetReferences(this);
+
+            // Auto open component is configured
+            var openable = component as IOpenable;
+            if (openable != null && AutoOpen)
+                openable.OpenAsync(null).Wait();
 
             return component;
         }

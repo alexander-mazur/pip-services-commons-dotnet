@@ -6,7 +6,7 @@ namespace PipServices.Commons.Config
 {
     public class ConnectionStringsConfigReader : IConfigReader, IDescriptable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-commons", "config-reader", "connection-strings", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "connection-strings", "1.0");
 
         public ConnectionStringsConfigReader() { }
 

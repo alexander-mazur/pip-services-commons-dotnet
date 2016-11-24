@@ -8,7 +8,12 @@ namespace PipServices.Commons.Data
 
         public static string NextShort()
         {
-            return ((long)(100000000 + _random.Next() * 899999999)).ToString();
+            string result = "";
+            
+            for (int i = 10; result.Length < 9 && i >= 0; i--)
+                result = ((long)(100000000 + _random.Next() * 899999999)).ToString();
+
+            return result;
         }
 
         public static string NextLong()

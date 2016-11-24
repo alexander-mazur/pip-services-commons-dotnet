@@ -6,7 +6,7 @@ namespace PipServices.Commons.Count
 {
     public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-commons", "counters", "composite", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "composite", "1.0");
 
         protected readonly IList<ICounters> _counters = new List<ICounters>();
 

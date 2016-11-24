@@ -1,19 +1,18 @@
 ﻿namespace PipServices.Commons.Config
 {
-    public abstract class FileConfigReader: IConfigReader, IConfigurable
+    public abstract class FileConfigReader: CachedConfigReader, IConfigurable
     {
-        public FileConfigReader(string path = null)
+        public FileConfigReader(string name = null, string path = null)
+            : base(name)
         {
             Path = path;
         }
 
         public string Path { get; set; }
 
-        public virtual void Configure(ConfigParams config)
+        public override void Configure(ConfigParams config)
         {
             Path = config.GetAsString("path");
         }
-
-        public abstract ConfigParams ReadConfig(string correlationId);
     }
 }

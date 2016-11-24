@@ -4,23 +4,24 @@ namespace PipServices.Commons.Config
 {
     public class MemoryConfigReader: IConfigReader, IDescriptable, IReconfigurable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-commons", "config-reader", "memory", "1.0");
         protected ConfigParams _config = new ConfigParams();
 
-        public MemoryConfigReader() { }
-
-        public MemoryConfigReader(ConfigParams config)
+        public MemoryConfigReader(string name = null, ConfigParams config = null)
         {
+            Name = name;
             _config = config ?? new ConfigParams();
         }
 
+        public string Name { get; set; }
+
         public virtual Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-commons", "config-reader", Name ?? "memory", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)
         {
+            Name = NameResolver.Resolve(config, Name);
             _config = config;
         }
 

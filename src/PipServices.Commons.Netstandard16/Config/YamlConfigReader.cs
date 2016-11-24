@@ -8,10 +8,10 @@ namespace PipServices.Commons.Config
 {
     public class YamlConfigReader: FileConfigReader, IDescriptable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-commons", "config-reader", "yaml", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "yaml", "1.0");
 
-        public YamlConfigReader(string path = null)
-            : base(path)
+        public YamlConfigReader(string name = null, string path = null)
+            : base(name, path)
         { }
 
         public virtual Descriptor GetDescriptor()
@@ -44,7 +44,7 @@ namespace PipServices.Commons.Config
             }
         }
 
-        public override ConfigParams ReadConfig(string correlationId)
+        protected override ConfigParams PerformReadConfig(string correlationId)
         {
             var value = ReadObject(correlationId);
             return ConfigParams.FromValue(value);
@@ -52,12 +52,12 @@ namespace PipServices.Commons.Config
 
         public static object ReadObject(string correlationId, string path)
         {
-            return new YamlConfigReader(path).ReadObject(correlationId);
+            return new YamlConfigReader(null, path).ReadObject(correlationId);
         }
 
         public static ConfigParams ReadConfig(string correlationId, string path)
         {
-            return new YamlConfigReader(path).ReadConfig(correlationId);
+            return new YamlConfigReader(null, path).ReadConfig(correlationId);
         }
     }
 }

@@ -7,24 +7,27 @@ namespace PipServices.Commons.Auth
 {
     public class MemoryCredentialStore : ICredentialStore, IReconfigurable, IDescriptable
     {
-        private static readonly Descriptor Descriptor = new Descriptor("pip-commons", "credential-store", "memory", "1.0");
         private Dictionary<string, CredentialParams> _items = new Dictionary<string, CredentialParams>();
         private object _lock = new object();
 
         public MemoryCredentialStore() { }
 
-        public MemoryCredentialStore(ConfigParams credentials)
+        public MemoryCredentialStore(string name, ConfigParams credentials)
         {
+            Name = name;
             Init(credentials);
         }
 
+        public string Name { get; set; }
+
         public virtual Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-commons", "credential-store", Name ?? "memory", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)
         {
+            Name = NameResolver.Resolve(config, Name);
             Init(config);
         }
 

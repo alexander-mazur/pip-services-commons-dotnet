@@ -19,7 +19,7 @@ namespace PipServices.Commons.Refer
                 Put(reference);
         }
 
-        public void Put(object reference)
+        public virtual void Put(object reference)
         {
             if (reference == null)
                 throw new ArgumentNullException(nameof(reference));
@@ -31,7 +31,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public void Put(object reference, object locator)
+        public virtual void Put(object reference, object locator)
         {
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
@@ -44,7 +44,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public object Remove(object locator)
+        public virtual object Remove(object locator)
         {
             if (locator == null) return null;
 
@@ -65,7 +65,7 @@ namespace PipServices.Commons.Refer
             return null;
         }
 
-        public List<object> GetAll()
+        public virtual List<object> GetAll()
         {
             return new List<object>(References);
         }
@@ -80,7 +80,21 @@ namespace PipServices.Commons.Refer
             return null;
         }
 
-        public object GetOneOptional(object locator)
+        protected virtual T ResolveMissing<T>(object locator)
+        {
+            var component = ResolveMissing(locator);
+            if (component is T)
+                return (T)component;
+            else
+                return default(T);
+        }
+
+        public virtual object GetOneOptional(object locator)
+        {
+            return GetOneOptional<object>(locator);
+        }
+
+        public virtual T GetOneOptional<T>(object locator)
         {
             lock (_lock)
             {
@@ -88,15 +102,28 @@ namespace PipServices.Commons.Refer
                 {
                     var reference = References[index];
                     if (reference.Locate(locator))
-                        return reference.GetReference();
+                    {
+                        var component = reference.GetReference();
+                        if (component is T)
+                            return (T)component;
+                    }
                 }
-                return null;
+                return default(T);
             }
         }
 
-        public object GetOneRequired(object locator)
+        public virtual object GetOneRequired(object locator)
         {
-            var reference = GetOneOptional(locator) ?? ResolveMissing(locator);
+            return GetOneRequired<object>(locator);
+        }
+
+        public virtual T GetOneRequired<T>(object locator)
+        {
+            var reference = GetOneOptional<T>(locator);
+
+            // Create a missing component
+            if (reference == null)
+                reference = ResolveMissing<T>(locator);
 
             if (reference == null)
                 throw new ReferenceException(null, locator);
@@ -104,12 +131,17 @@ namespace PipServices.Commons.Refer
             return reference;
         }
 
-        public List<object> GetOptional(object locator)
+        public virtual List<object> GetOptional(object locator)
+        {
+            return GetOptional<object>(locator);
+        }
+
+        public virtual List<T> GetOptional<T>(object locator)
         {
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
 
-            var references = new List<object>();
+            var references = new List<T>();
 
             lock (_lock)
             {
@@ -117,7 +149,11 @@ namespace PipServices.Commons.Refer
                 {
                     var reference = References[index];
                     if (reference.Locate(locator))
-                        references.Add(reference.GetReference());
+                    {
+                        var component = reference.GetReference();
+                        if (component is T)
+                            references.Add((T)component);
+                    }
                 }
             }
 
@@ -126,12 +162,17 @@ namespace PipServices.Commons.Refer
 
         public List<object> GetRequired(object locator)
         {
-            var references = GetOptional(locator);
+            return GetRequired<object>(locator);
+        }
+
+        public List<T> GetRequired<T>(object locator)
+        {
+            var references = GetOptional<T>(locator);
 
             // Try to resolve missing dependency
             if (references.Count == 0)
             {
-                var reference = ResolveMissing(locator);
+                var reference = ResolveMissing<T>(locator);
 
                 lock (_lock)
                 {
@@ -147,6 +188,11 @@ namespace PipServices.Commons.Refer
         }
 
         public object GetOneBefore(object prior, object locator)
+        {
+            return GetOneBefore<object>(prior, locator);
+        }
+
+        public T GetOneBefore<T>(object prior, object locator)
         {
             if (prior == null)
                 throw new ArgumentNullException(nameof(prior));
@@ -169,7 +215,11 @@ namespace PipServices.Commons.Refer
                 {
                     var reference = References[index];
                     if (reference.Locate(locator))
-                        return reference.GetReference();
+                    {
+                        var component = reference.GetReference();
+                        if (component is T)
+                            return (T)component;
+                    }
                 }
             }
 

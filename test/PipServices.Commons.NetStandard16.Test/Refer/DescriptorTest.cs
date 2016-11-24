@@ -29,7 +29,7 @@ namespace PipServices.Commons.Refer
 
             // Check mismatch by individual fields
             Assert.False(descriptor.Match(new Descriptor(null, "cache", null, null)));
-            Assert.False(descriptor.Match(new Descriptor("pip-commons", "controller", null, null)));
+            Assert.False(descriptor.Match(new Descriptor("pip-services-commons", "controller", null, null)));
             Assert.False(descriptor.Match(new Descriptor(null, null, "special", null)));
             Assert.False(descriptor.Match(new Descriptor(null, null, null, "2.0")));
         }

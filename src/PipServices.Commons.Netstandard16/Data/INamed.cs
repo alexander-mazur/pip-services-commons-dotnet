@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets the object name
         /// </summary>
-        string Name { get; }
+        string Name { get; set; }
     }
 }

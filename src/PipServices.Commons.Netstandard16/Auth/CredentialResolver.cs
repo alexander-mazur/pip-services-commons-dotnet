@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace PipServices.Commons.Auth
 {
-    public sealed class CredentialResolver : IConfigurable, IReferenceable
+    public sealed class CredentialResolver
     {
-        private readonly IList<CredentialParams> _credentials = new List<CredentialParams>();
+        private readonly List<CredentialParams> _credentials = new List<CredentialParams>();
         private IReferences _references = null;
 
         public CredentialResolver(ConfigParams config = null, IReferences references = null)
@@ -21,30 +21,12 @@ namespace PipServices.Commons.Auth
             _references = references;
         }
 
-        public void Configure(ConfigParams config)
+        public void Configure(ConfigParams config, bool configAsDefault = true)
         {
-            // Try to get multiple credentials first
-            var credentials = config.GetSection("credentials");
-
-            if (credentials.Count > 0)
-            {
-                var sectionsNames = credentials.GetSectionNames();
-
-                foreach (var section in sectionsNames)
-                {
-                    var credential = credentials.GetSection(section);
-                    _credentials.Add(new CredentialParams(credential));
-                }
-            }
-            // Then try to get a single connection
-            else
-            {
-                var credential = config.GetSection("credential");
-                _credentials.Add(new CredentialParams(credential));
-            }
+            _credentials.AddRange(CredentialParams.ManyFromConfig(config, configAsDefault));
         }
 
-        public IEnumerable<CredentialParams> GetAll()
+        public List<CredentialParams> GetAll()
         {
             return _credentials;
         }

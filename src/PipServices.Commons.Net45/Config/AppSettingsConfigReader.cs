@@ -6,7 +6,7 @@ namespace PipServices.Commons.Config
 {
     public class AppSettingsConfigReader: IConfigReader, IDescriptable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-commons", "config-reader", "app-settings", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "app-settings", "1.0");
 
         public AppSettingsConfigReader() { }
 
