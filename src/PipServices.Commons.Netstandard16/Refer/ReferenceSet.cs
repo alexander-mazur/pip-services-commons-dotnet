@@ -8,8 +8,8 @@ namespace PipServices.Commons.Refer
     /// </summary>
     public class ReferenceSet : IReferences
     {
-        protected readonly List<Reference> References = new List<Reference>();
-        private readonly object _lock = new object();
+        protected readonly List<Reference> _references = new List<Reference>();
+        protected readonly object _lock = new object();
 
         public ReferenceSet() { }
 
@@ -27,11 +27,11 @@ namespace PipServices.Commons.Refer
             lock (_lock)
             {
                 if (locator != null)
-                    References.Add(new Reference(component, locator));
+                    _references.Add(new Reference(component, locator));
                 else if (component is Reference)
-                    References.Add((Reference)component);
+                    _references.Add((Reference)component);
                 else
-                    References.Add(new Reference(component));
+                    _references.Add(new Reference(component));
             }
         }
 
@@ -47,13 +47,13 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                for (int index = References.Count - 1; index >= 0; index--)
+                for (int index = _references.Count - 1; index >= 0; index--)
                 {
-                    var reference = References[index];
+                    var reference = _references[index];
                     if (reference.Locate(locator))
                     {
                         // Remove from the set
-                        References.RemoveAt(index);
+                        _references.RemoveAt(index);
                         return reference.GetComponent();
                     }
                 }
@@ -64,7 +64,10 @@ namespace PipServices.Commons.Refer
 
         public virtual List<object> GetAll()
         {
-            return new List<object>(References);
+            var components = new List<object>();
+            foreach (var reference in _references)
+                components.Add(reference.GetComponent());
+            return components;
         }
 
         /// <summary>
@@ -95,9 +98,9 @@ namespace PipServices.Commons.Refer
         {
             lock (_lock)
             {
-                for (var index = References.Count - 1; index >= 0; index--)
+                for (var index = _references.Count - 1; index >= 0; index--)
                 {
-                    var reference = References[index];
+                    var reference = _references[index];
                     if (reference.Locate(locator))
                     {
                         var component = reference.GetComponent();
@@ -142,9 +145,9 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                for (int index = References.Count - 1; index >= 0; index--)
+                for (int index = _references.Count - 1; index >= 0; index--)
                 {
-                    var reference = References[index];
+                    var reference = _references[index];
                     if (reference.Locate(locator))
                     {
                         var component = reference.GetComponent();
@@ -198,19 +201,19 @@ namespace PipServices.Commons.Refer
 
             lock (_lock)
             {
-                var index = References.Count - 1;
+                var index = _references.Count - 1;
 
                 // Locate prior reference
                 for (; index >= 0; index--)
                 {
-                    var reference = References[index];
+                    var reference = _references[index];
                     if (reference.GetComponent().Equals(prior))
                         break;
                 }
 
                 for (; index >= 0; index--)
                 {
-                    var reference = References[index];
+                    var reference = _references[index];
                     if (reference.Locate(locator))
                     {
                         var component = reference.GetComponent();

@@ -16,7 +16,7 @@ namespace PipServices.Commons.Refer
 
         protected IFactory FindFactory(object locator)
         {
-            foreach (var reference in References)
+            foreach (var reference in _references)
             {
                 var factory = reference.GetComponent() as IFactory;
                 if (factory != null)
