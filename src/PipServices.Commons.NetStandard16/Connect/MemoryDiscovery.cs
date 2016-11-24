@@ -28,7 +28,7 @@ namespace PipServices.Commons.Connect
 
         public virtual Descriptor GetDescriptor()
         {
-            return new Descriptor("pip-services-commons", "discovery", Name ?? "memory", "1.0");
+            return new Descriptor("pip-services-commons", "discovery", "memory", Name ?? "default", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)

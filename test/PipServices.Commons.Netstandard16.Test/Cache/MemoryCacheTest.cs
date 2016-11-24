@@ -31,7 +31,7 @@ namespace PipServices.Commons.Test.Cache
 
             Assert.NotNull(descriptor);
             Assert.Equal("cache", descriptor.Type);
-            Assert.Equal("memory", descriptor.Id);
+            Assert.Equal("memory", descriptor.Kind);
         }
 
         [Fact]

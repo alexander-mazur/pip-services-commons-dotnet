@@ -13,7 +13,7 @@ namespace PipServices.Commons.Refer
             var factory = new DefaultLoggerFactory();
             refs.Put(factory);
 
-            var logger = refs.GetOneRequired<ILogger>(new Descriptor("*", "logger", "*", "*"));
+            var logger = refs.GetOneRequired<ILogger>(new Descriptor("*", "logger", "*", "*", "*"));
             Assert.NotNull(logger);
         }
     }

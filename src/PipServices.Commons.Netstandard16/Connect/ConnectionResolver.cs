@@ -44,17 +44,11 @@ namespace PipServices.Commons.Connect
             var key = connection.DiscoveryKey;
             if (_references == null) return false;
 
-            var components = _references.GetOptional(new Descriptor("*", "discovery", "*", "*"));
-            if (components == null) return false;
+            var discoveries = _references.GetOptional<IDiscovery>(new Descriptor("*", "discovery", "*", "*", "*"));
+            if (discoveries == null) return false;
 
-            foreach (var component in components)
-            {
-                var discovery = component as IDiscovery;
-                if (discovery != null)
-                {
-                    await discovery.RegisterAsync(correlationId, key, connection);
-                }
-            }
+            foreach (var discovery in discoveries)
+                await discovery.RegisterAsync(correlationId, key, connection);
 
             return true;
         }
@@ -75,19 +69,15 @@ namespace PipServices.Commons.Connect
             var key = connection.DiscoveryKey;
             if (_references == null) return null;
 
-            var components = _references.GetOptional(new Descriptor("*", "discovery", "*", "*"));
-            if (components.Count == 0)
+            var discoveries = _references.GetOptional<IDiscovery>(new Descriptor("*", "discovery", "*", "*", "*"));
+            if (discoveries.Count == 0)
                 throw new ConfigException(correlationId, "CANNOT_RESOLVE", "Discovery wasn't found to make resolution");
 
-            foreach (var component in components)
+            foreach (var discovery in discoveries)
             {
-                var discovery = component as IDiscovery;
-                if (discovery != null)
-                {
-                    var resolvedConnection = await discovery.ResolveOneAsync(correlationId, key);
-                    if (resolvedConnection != null)
-                        return resolvedConnection;
-                }
+                var resolvedConnection = await discovery.ResolveOneAsync(correlationId, key);
+                if (resolvedConnection != null)
+                    return resolvedConnection;
             }
 
             return null;
@@ -132,19 +122,15 @@ namespace PipServices.Commons.Connect
             var key = connection.DiscoveryKey;
             if (_references == null) return null;
 
-            var components = _references.GetOptional(new Descriptor("*", "discovery", "*", "*"));
-            if (components.Count == 0)
+            var discoveries = _references.GetOptional<IDiscovery>(new Descriptor("*", "discovery", "*", "*", "*"));
+            if (discoveries.Count == 0)
                 throw new ConfigException(correlationId, "CANNOT_RESOLVE", "Discovery wasn't found to make resolution");
 
-            foreach (var component in components)
+            foreach (var discovery in discoveries)
             {
-                var discovery = component as IDiscovery;
-                if (discovery != null)
-                {
-                    var resolvedConnections = await discovery.ResolveAllAsync(correlationId, key);
-                    if (resolvedConnections != null)
-                        result.AddRange(resolvedConnections);
-                }
+                var resolvedConnections = await discovery.ResolveAllAsync(correlationId, key);
+                if (resolvedConnections != null)
+                    result.AddRange(resolvedConnections);
             }
 
             return result;

@@ -1,30 +1,34 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
 
 namespace PipServices.Commons.Run
 {
-    public class FixedRateTimer : IClosable
+    public class FixedRateTimer
     {
         private Timer _timer;
-        private readonly object _syncRoot = new object();
+        private readonly object _lock = new object();
 
-        public FixedRateTimer() { }
+        public FixedRateTimer()
+        {
+            Interval = 60000;
+            Delay = 0;
+        }
 
-        public FixedRateTimer(INotifiable task, int interval, int delay)
+        public FixedRateTimer(Action task, int interval, int delay)
         {
             Task = task;
             Interval = interval;
             Delay = delay;
         }
 
-        public INotifiable Task { get; set; }
+        public Action Task { get; set; }
         public int Delay { get; set; }
         public int Interval { get; set; }
         public bool IsStarted { get; private set; }
 
         public void Start()
         {
-            lock (_syncRoot)
+            lock (_lock)
             {
                 if (_timer != null)
                 {
@@ -33,28 +37,42 @@ namespace PipServices.Commons.Run
                 }
 
                 _timer = new Timer(
-                    (state) => 
+                    (state) =>
                     {
-                        Task.NotifyAsync("pip-commons-timer");
-                    }, 
+                        if (Task != null) Task();
+                    },
                     null, Delay, Interval
                 );
+
                 IsStarted = true;
             }
         }
 
-        public async Task CloseAsync(string correlationId)
+        public void Restart()
         {
-            lock (_syncRoot)
+            Stop();
+
+            var oldDelay = Delay;
+            Delay = Interval;
+
+            Start();
+
+            Delay = oldDelay;
+        }
+
+        public void Stop()
+        {
+            lock (_lock)
             {
                 if (_timer != null)
                 {
                     _timer.Dispose();
                     _timer = null;
                 }
-            }
 
-            await System.Threading.Tasks.Task.Delay(0);
+                IsStarted = false;
+            }
         }
+
     }
 }

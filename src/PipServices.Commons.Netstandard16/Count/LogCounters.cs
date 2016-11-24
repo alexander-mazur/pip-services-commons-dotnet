@@ -9,7 +9,7 @@ namespace PipServices.Commons.Count
 {
     public class LogCounters : CachedCounters, IDescriptable, IReferenceable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-counters", "counters", "log", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-counters", "counters", "log", "default", "1.0");
 
         private readonly CompositeLogger _logger = new CompositeLogger();
 

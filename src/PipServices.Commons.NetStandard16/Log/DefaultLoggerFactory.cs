@@ -5,7 +5,7 @@ namespace PipServices.Commons.Log
 {
     public class DefaultLoggerFactory : IFactory, IDescriptable
     {
-        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "logger", "1.0");
+        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "logger", "default", "1.0");
 
         public Descriptor GetDescriptor()
         {

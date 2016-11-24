@@ -22,7 +22,7 @@ namespace PipServices.Commons.Auth
 
         public virtual Descriptor GetDescriptor()
         {
-            return new Descriptor("pip-services-commons", "credential-store", Name ?? "memory", "1.0");
+            return new Descriptor("pip-services-commons", "credential-store", "memory", Name ?? "default", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)

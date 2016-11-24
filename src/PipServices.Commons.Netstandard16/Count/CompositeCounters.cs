@@ -6,9 +6,9 @@ namespace PipServices.Commons.Count
 {
     public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "composite", "1.0");
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "composite", "default", "1.0");
 
-        protected readonly IList<ICounters> _counters = new List<ICounters>();
+        protected readonly List<ICounters> _counters = new List<ICounters>();
 
         public CompositeCounters() { }
 
@@ -19,14 +19,8 @@ namespace PipServices.Commons.Count
 
         public virtual void SetReferences(IReferences references)
         {
-            var counters = references.GetOptional(new Descriptor(null, "counters", null, null));
-
-            foreach (var counter in counters)
-            {
-                var item = counter as ICounters;
-                if (item != null)
-				    _counters.Add(item);
-            }
+            var counters = references.GetOptional<ICounters>(new Descriptor(null, "counters", null, null, null));
+            _counters.AddRange(counters);
         }
 
         public Timing BeginTiming(string name)

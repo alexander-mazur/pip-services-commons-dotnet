@@ -14,7 +14,7 @@ namespace PipServices.Commons.Config
             {
                 var descriptorStr = config.GetAsNullableString("descriptor");
                 var descriptor = Descriptor.FromString(descriptorStr);
-                name = descriptor != null ? descriptor.Id : null;
+                name = descriptor != null ? descriptor.Name : null;
             }
 
             return name ?? defaultName;

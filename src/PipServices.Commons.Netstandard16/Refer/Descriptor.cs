@@ -5,18 +5,20 @@ namespace PipServices.Commons.Refer
 {
     public class Descriptor
     {
-        public Descriptor(string group, string type, string id, string version)
+        public Descriptor(string group, string type, string kind, string name, string version)
         {
             Group = group != "*" ? group : null;
             Type = type != "*" ? type : null;
-            Id = id != "*" ? id : null;
+            Kind = kind != "*" ? kind : null;
+            Name = name != "*" ? name : null;
             Version = version != "*" ? version : null;
         }
 
-        public string Group { get; }
-        public string Type { get; }
-        public string Id { get; }
-        public string Version { get; }
+        public string Group { get; private set; }
+        public string Type { get; private set; }
+        public string Kind { get; private set; }
+        public string Name { get; private set; }
+        public string Version { get; private set; }
 
         private bool MatchField(string field1, string field2)
         {
@@ -29,7 +31,8 @@ namespace PipServices.Commons.Refer
         {
             return MatchField(Group, descriptor.Group)
                    && MatchField(Type, descriptor.Type)
-                   && MatchField(Id, descriptor.Id)
+                   && MatchField(Kind, descriptor.Kind)
+                   && MatchField(Name, descriptor.Name)
                    && MatchField(Version, descriptor.Version);
         }
 
@@ -46,14 +49,15 @@ namespace PipServices.Commons.Refer
         {
             return ExactMatchField(Group, descriptor.Group)
                 && ExactMatchField(Type, descriptor.Type)
-                && ExactMatchField(Id, descriptor.Id)
+                && ExactMatchField(Kind, descriptor.Kind)
+                && ExactMatchField(Name, descriptor.Name)
                 && ExactMatchField(Version, descriptor.Version);
         }
 
         public bool IsComplete()
         {
-            return Group != null && Type != null
-                && Id != null && Version != null;
+            return Group != null && Type != null && Kind != null
+                && Name != null && Version != null;
         }
 
         public override bool Equals(object obj)
@@ -75,7 +79,8 @@ namespace PipServices.Commons.Refer
             var builder = new StringBuilder();
             builder.Append(Group ?? "*")
                 .Append(":").Append(Type ?? "*")
-                .Append(":").Append(Id ?? "*")
+                .Append(":").Append(Kind ?? "*")
+                .Append(":").Append(Name ?? "*")
                 .Append(":").Append(Version ?? "*");
             return builder.ToString();
         }
@@ -87,14 +92,14 @@ namespace PipServices.Commons.Refer
 
             var tokens = value.Split(':');
 
-            if (tokens.Length != 4)
+            if (tokens.Length != 5)
             {
                 throw new ConfigException(
                     null, "BAD_DESCRIPTOR", "Descriptor " + value + " is in wrong format"
                 ).WithDetails("descriptor", value);
             }
 
-            return new Descriptor(tokens[0].Trim(), tokens[1].Trim(), tokens[2].Trim(), tokens[3].Trim());
+            return new Descriptor(tokens[0].Trim(), tokens[1].Trim(), tokens[2].Trim(), tokens[3].Trim(), tokens[4].Trim());
         }
     }
 }

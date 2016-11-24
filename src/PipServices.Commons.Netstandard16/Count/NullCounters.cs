@@ -5,7 +5,7 @@ namespace PipServices.Commons.Count
 {
     public sealed class NullCounters : ICounters, IDescriptable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "null", "1.0");
+        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "null", "default", "1.0");
 
         public Descriptor GetDescriptor()
         {

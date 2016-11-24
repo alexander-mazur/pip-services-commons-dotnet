@@ -19,7 +19,7 @@ namespace PipServices.Commons.Test.Cache
 
             Assert.NotNull(descriptor);
             Assert.Equal("cache", descriptor.Type);
-            Assert.Equal("null", descriptor.Id);
+            Assert.Equal("null", descriptor.Kind);
         }
 
         [Fact]

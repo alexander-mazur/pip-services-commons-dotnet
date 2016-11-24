@@ -8,15 +8,13 @@ namespace PipServices.Commons.Config
 {
     public class JsonConfigReader: FileConfigReader, IDescriptable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "json", "1.0");
-
         public JsonConfigReader(string name = null, string path = null)
             : base(name, path)
         { }
 
         public virtual Descriptor GetDescriptor()
         {
-            return Descriptor;
+            return new Descriptor("pip-services-commons", "config-reader", "json", Name ?? "default", "1.0");
         }
 
         public object ReadObject(string correlationId)

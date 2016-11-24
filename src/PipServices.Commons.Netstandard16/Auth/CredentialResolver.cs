@@ -43,7 +43,7 @@ namespace PipServices.Commons.Auth
             var key = credential.StoreKey;
             if (_references == null) return null;
 
-            var components = _references.GetOptional(new Descriptor("*", "credential_store", "*", "*"));
+            var components = _references.GetOptional(new Descriptor("*", "credential_store", "*", "*", "*"));
             if (components.Count == 0)
                 throw new ReferenceException(correlationId, "Credential store wasn't found to make lookup");
 

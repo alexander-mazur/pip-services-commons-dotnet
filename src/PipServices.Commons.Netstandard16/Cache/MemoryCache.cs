@@ -50,7 +50,7 @@ namespace PipServices.Commons.Cache
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public virtual Descriptor GetDescriptor()
         {
-            return new Descriptor("pip-services-common", "cache", Name ?? "memory", "1.0");
+            return new Descriptor("pip-services-common", "cache", "memory", Name ?? "default", "1.0");
         }
 
         private void Cleanup()

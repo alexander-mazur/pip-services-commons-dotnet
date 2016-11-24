@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.19"></a> 1.0.3-1.0.19 (2016-11-22)
+## <a name="1.0.3-1.0.20"></a> 1.0.3-1.0.20 (2016-11-22)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -12,6 +12,8 @@
 * **refer** AutoCreateReferenceSet, added AutoOpen property
 * **refer** Made get methods in IReferences generic
 * **refer** Added PutAll method to IReferences
+* **run** Changed FixedRateTimer interface
+* **refer** Added Kind field to Descriptor
 
 ### Bug Fixes
 * Added description to NuGet package
