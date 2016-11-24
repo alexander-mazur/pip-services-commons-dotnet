@@ -20,7 +20,11 @@ namespace PipServices.Commons.Count
         public virtual void SetReferences(IReferences references)
         {
             var counters = references.GetOptional<ICounters>(new Descriptor(null, "counters", null, null, null));
-            _counters.AddRange(counters);
+            foreach (var counter in counters)
+            {
+                if (counter != this)
+                    _counters.AddRange(counters);
+            }
         }
 
         public Timing BeginTiming(string name)

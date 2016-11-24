@@ -10,9 +10,13 @@ namespace PipServices.Commons.Log
 
         protected readonly List<ILogger> _loggers = new List<ILogger>();
 
-        public CompositeLogger() { }
+        public CompositeLogger()
+        {
+            Level = LogLevel.Trace;
+        }
 
         public CompositeLogger(IReferences references)
+            : this()
         {
             SetReferences(references);
         }
@@ -25,7 +29,11 @@ namespace PipServices.Commons.Log
         public virtual void SetReferences(IReferences references)
         {
             var loggers = references.GetOptional<ILogger>(new Descriptor(null, "logger", null, null, null));
-            _loggers.AddRange(loggers);
+            foreach (var logger in loggers)
+            {
+                if (logger != this)
+                    _loggers.Add(logger);
+            }
         }
 
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)

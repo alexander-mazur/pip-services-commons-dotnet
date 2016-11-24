@@ -5,14 +5,17 @@ namespace PipServices.Commons.Log
 {
     public abstract class Logger : ILogger, IReconfigurable
     {
-        public Logger() { }
+        public Logger()
+        {
+            Level = LogLevel.Info;
+        }
 
         public LogLevel Level { get; set; }
 
         public virtual void Configure(ConfigParams config)
         {
             Level = LogLevelConverter.ToLogLevel(
-                config.GetAsObject("level")
+                config.GetAsObject("level") ?? Level
             );
         }
 

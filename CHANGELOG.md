@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.21"></a> 1.0.3-1.0.21 (2016-11-22)
+## <a name="1.0.3-1.0.22"></a> 1.0.3-1.0.22 (2016-11-24)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -26,6 +26,8 @@
 * Fixed wrong cast in Referencer
 * Fixed GetAll in references
 * Fixed NullPointerException in MemoryDiscovery
+* Set default log levels
+* Fixed endless loop in Loggers while logging errors
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 

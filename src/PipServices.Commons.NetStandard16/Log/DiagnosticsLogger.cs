@@ -1,4 +1,5 @@
-﻿using PipServices.Commons.Refer;
+﻿using PipServices.Commons.Convert;
+using PipServices.Commons.Refer;
 using System;
 using System.Text;
 
@@ -25,6 +26,8 @@ namespace PipServices.Commons.Log
                 builder.Append(error.Message)
                     .Append(" StackTrace: ")
                     .Append(error.StackTrace);
+
+                error = error.InnerException;
             }
 
             return builder.ToString();
@@ -40,7 +43,7 @@ namespace PipServices.Commons.Log
             build.Append(':');
             build.Append(Level.ToString());
             build.Append(':');
-            build.Append(DateTime.UtcNow);
+            build.Append(StringConverter.ToString(DateTime.UtcNow));
             build.Append("] ");
 
             build.Append(message);
