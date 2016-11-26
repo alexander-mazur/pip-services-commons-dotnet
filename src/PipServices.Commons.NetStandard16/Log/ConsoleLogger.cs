@@ -41,7 +41,7 @@ namespace PipServices.Commons.Log
             build.Append('[');
             build.Append(correlationId != null ? correlationId : "---");
             build.Append(':');
-            build.Append(Level.ToString());
+            build.Append(level.ToString());
             build.Append(':');
             build.Append(StringConverter.ToString(DateTime.UtcNow));
             build.Append("] ");
