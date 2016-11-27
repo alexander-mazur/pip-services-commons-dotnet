@@ -13,7 +13,7 @@ namespace PipServices.Commons.Test.Log
         {
             Log = new CompositeLogger();
 
-            var refs = ReferenceSet.FromList(
+            var refs = References.FromList(
                 new ConsoleLogger(), 
                 new DiagnosticsLogger(),
                 Log

@@ -388,8 +388,8 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomText.cs">
       <Link>Random\RandomText.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\AutoCreateReferenceSet.cs">
-      <Link>Refer\AutoCreateReferenceSet.cs</Link>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\AutoCreateReferences.cs">
+      <Link>Refer\AutoCreateReferences.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Descriptor.cs">
       <Link>Refer\Descriptor.cs</Link>
@@ -418,8 +418,8 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Referencer.cs">
       <Link>Refer\Referencer.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ReferenceSet.cs">
-      <Link>Refer\ReferenceSet.cs</Link>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\References.cs">
+      <Link>Refer\References.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\MethodReflector.cs">
       <Link>Reflect\MethodReflector.cs</Link>

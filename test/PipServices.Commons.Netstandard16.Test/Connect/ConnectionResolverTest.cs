@@ -21,7 +21,7 @@ namespace PipServices.Commons.Test.Connect
         public ConnectionResolverTest()
         {
             _connectionResolver = new ConnectionResolver(RestConfig);
-            _connectionResolver.SetReferences(new ReferenceSet());
+            _connectionResolver.SetReferences(new References());
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace PipServices.Commons.Test.Connect
                 "connection.discovery_key", "Discovery key value"
             );
 
-            IReferences references = new ReferenceSet();
+            IReferences references = new References();
             _connectionResolver = new ConnectionResolver(restConfigDiscovery, references);
             try
             {

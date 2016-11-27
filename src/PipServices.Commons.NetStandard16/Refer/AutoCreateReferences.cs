@@ -4,7 +4,7 @@ using System;
 
 namespace PipServices.Commons.Refer
 {
-    public class AutoCreateReferenceSet : ReferenceSet
+    public class AutoCreateReferences : References
     {
         private bool _autoOpen = true;
 

@@ -6,14 +6,14 @@ namespace PipServices.Commons.Refer
     /// <summary>
     /// Basic implementation of IReferences that stores component as a flat list
     /// </summary>
-    public class ReferenceSet : IReferences
+    public class References : IReferences
     {
         protected readonly List<Reference> _references = new List<Reference>();
         protected readonly object _lock = new object();
 
-        public ReferenceSet() { }
+        public References() { }
 
-        public ReferenceSet(IEnumerable<object> references)
+        public References(IEnumerable<object> references)
         {
             foreach (var reference in references)
                 Put(reference);
@@ -108,7 +108,9 @@ namespace PipServices.Commons.Refer
                             return (T)component;
                     }
                 }
-                return default(T);
+
+                // Try to create a missing component
+                return ResolveMissing<T>(locator);
             }
         }
 
@@ -120,10 +122,6 @@ namespace PipServices.Commons.Refer
         public virtual T GetOneRequired<T>(object locator)
         {
             var component = GetOneOptional<T>(locator);
-
-            // Create a missing component
-            if (component == null)
-                component = ResolveMissing<T>(locator);
 
             if (component == null)
                 throw new ReferenceException(null, locator);
@@ -155,6 +153,15 @@ namespace PipServices.Commons.Refer
                             components.Add((T)component);
                     }
                 }
+
+                // Try to resolve missing dependency
+                if (components.Count == 0)
+                {
+                    var component = ResolveMissing<T>(locator);
+
+                    if (component != null)
+                        components.Add(component);
+                }
             }
 
             return components;
@@ -168,18 +175,6 @@ namespace PipServices.Commons.Refer
         public List<T> GetRequired<T>(object locator)
         {
             var components = GetOptional<T>(locator);
-
-            // Try to resolve missing dependency
-            if (components.Count == 0)
-            {
-                var component = ResolveMissing<T>(locator);
-
-                lock (_lock)
-                {
-                    if (component != null)
-                        components.Add(component);
-                }
-            }
 
             if (components.Count == 0)
                 throw new ReferenceException(null, locator);
@@ -226,9 +221,9 @@ namespace PipServices.Commons.Refer
             throw new ReferenceException(null, locator);
         }
 
-        public static ReferenceSet FromList(params object[] components)
+        public static References FromList(params object[] components)
         {
-            var result = new ReferenceSet();
+            var result = new References();
             result.PutAll(components);
             return result;
         }

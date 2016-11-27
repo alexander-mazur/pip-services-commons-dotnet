@@ -49,7 +49,7 @@ namespace PipServices.Commons.Test.Auth
             Assert.Null(credential.Get("store_key"));
 
             credentialResolver = new CredentialResolver(RestConfig);
-            credentialResolver.SetReferences(new ReferenceSet());
+            credentialResolver.SetReferences(new References());
             try
             {
                 credential = credentialResolver.LookupAsync("correlationId").Result;
