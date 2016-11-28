@@ -5,6 +5,6 @@
         /// <summary>
         ///  Sets the object id
         /// </summary>
-        new string Id { get;  set; }
+        new string Id { get; }
     }
 }

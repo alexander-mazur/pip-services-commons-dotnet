@@ -12,6 +12,12 @@ namespace PipServices.Commons.Refer
         {
         }
 
+        public ReferenceException(object locator)
+            : base(null, "REF_ERROR", "Failed to obtain reference to " + locator)
+        {
+            WithDetails("locator", locator);
+        }
+
         public ReferenceException(string correlationId, object locator)
             : base(correlationId, "REF_ERROR", "Failed to obtain reference to " + locator)
         {

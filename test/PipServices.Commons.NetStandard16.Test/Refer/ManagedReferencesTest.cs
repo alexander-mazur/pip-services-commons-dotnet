@@ -3,12 +3,12 @@ using Xunit;
 
 namespace PipServices.Commons.Refer
 {
-    public class AutoCreateReferencesTest
+    public class ManagedReferencesTest
     {
         [Fact]
         public void TestAutoCreateComponent()
         {
-            var refs = new AutoCreateReferences();
+            var refs = new ManagedReferences();
 
             var factory = new DefaultLoggerFactory();
             refs.Put(factory);
@@ -20,7 +20,7 @@ namespace PipServices.Commons.Refer
         [Fact]
         public void TestStringLocator()
         {
-            var refs = new AutoCreateReferences();
+            var refs = new ManagedReferences();
 
             var factory = new DefaultLoggerFactory();
             refs.Put(factory);
@@ -32,7 +32,7 @@ namespace PipServices.Commons.Refer
         [Fact]
         public void TestNullLocator()
         {
-            var refs = new AutoCreateReferences();
+            var refs = new ManagedReferences();
 
             var factory = new DefaultLoggerFactory();
             refs.Put(factory);

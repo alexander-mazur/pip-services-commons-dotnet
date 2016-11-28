@@ -30,6 +30,14 @@ namespace PipServices.Commons.Refer
         object Remove(object locator);
 
         /// <summary>
+        /// Removes all component references from the set.
+        /// The method removes only the last reference.
+        /// </summary>
+        /// <param name="locator">a locator to find the reference to remove</param>
+        /// <returns>a removed reference</returns>
+        List<object> RemoveAll(object locator);
+
+        /// <summary>
         /// Gets all stored component references
         /// </summary>
         /// <returns>a list with component references</returns>
@@ -102,20 +110,21 @@ namespace PipServices.Commons.Refer
         T GetOneRequired<T>(object locator);
 
         /// <summary>
-        /// Gets a component references that matches provided locator.
+        /// Find all references by specified query criteria
         /// </summary>
-        /// <param name="reference">a component reference to start the search and continue form latest to oldest</param>
-        /// <param name="locator">a locator to find a reference</param>
-        /// <returns>a found component reference</returns>
-        object GetOneBefore(object reference, object locator);
+        /// <param name="query">query criteria</param>
+        /// <param name="required">Force to raise exception is no reference is found</param>
+        /// <returns>List of found references</returns>
+        List<object> Find(ReferenceQuery query, bool required);
 
         /// <summary>
-        /// Gets a component references that matches provided locator
-        /// and matching to the specified type
+        /// Find all references by specified query criteria
+        /// and matching to specified type
         /// </summary>
-        /// <param name="reference">a component reference to start the search and continue form latest to oldest</param>
-        /// <param name="locator">a locator to find a reference</param>
-        /// <returns>a found component reference</returns>
-        T GetOneBefore<T>(object reference, object locator);
+        /// <param name="query">query criteria</param>
+        /// <param name="required">Force to raise exception is no reference is found</param>
+        /// <returns>List of found references</returns>
+        List<T> Find<T>(ReferenceQuery query, bool required);
+
     }
 }

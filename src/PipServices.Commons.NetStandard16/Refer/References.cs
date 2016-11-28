@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PipServices.Commons.Refer
@@ -13,10 +14,13 @@ namespace PipServices.Commons.Refer
 
         public References() { }
 
-        public References(IEnumerable<object> references)
+        public References(IEnumerable components = null)
         {
-            foreach (var reference in references)
-                Put(reference);
+            if (components != null)
+            {
+                foreach (var component in components)
+                    Put(component);
+            }
         }
 
         public virtual void Put(object component, object locator = null)
@@ -35,7 +39,7 @@ namespace PipServices.Commons.Refer
             }
         }
 
-        public void PutAll(params object[] components)
+        public virtual void PutAll(params object[] components)
         {
             foreach (var component in components)
                 Put(component);
@@ -62,84 +66,9 @@ namespace PipServices.Commons.Refer
             return null;
         }
 
-        public virtual List<object> GetAll()
+        public virtual List<object> RemoveAll(object locator)
         {
             var components = new List<object>();
-            foreach (var reference in _references)
-                components.Add(reference.GetComponent());
-            return components;
-        }
-
-        /// <summary>
-        /// Attempts to resolve missing reference
-        /// </summary>
-        /// <param name="locator">a locator to find references</param>
-        /// <returns>resolved reference or <code>null<code></returns>
-        protected virtual object ResolveMissing(object locator)
-        {
-            return null;
-        }
-
-        protected virtual T ResolveMissing<T>(object locator)
-        {
-            var component = ResolveMissing(locator);
-            if (component is T)
-                return (T)component;
-            else
-                return default(T);
-        }
-
-        public virtual object GetOneOptional(object locator)
-        {
-            return GetOneOptional<object>(locator);
-        }
-
-        public virtual T GetOneOptional<T>(object locator)
-        {
-            lock (_lock)
-            {
-                for (var index = _references.Count - 1; index >= 0; index--)
-                {
-                    var reference = _references[index];
-                    if (reference.Locate(locator))
-                    {
-                        var component = reference.GetComponent();
-                        if (component is T)
-                            return (T)component;
-                    }
-                }
-
-                // Try to create a missing component
-                return ResolveMissing<T>(locator);
-            }
-        }
-
-        public virtual object GetOneRequired(object locator)
-        {
-            return GetOneRequired<object>(locator);
-        }
-
-        public virtual T GetOneRequired<T>(object locator)
-        {
-            var component = GetOneOptional<T>(locator);
-
-            if (component == null)
-                throw new ReferenceException(null, locator);
-
-            return component;
-        }
-
-        public virtual List<object> GetOptional(object locator)
-        {
-            return GetOptional<object>(locator);
-        }
-
-        public virtual List<T> GetOptional<T>(object locator)
-        {
-            if (locator == null)
-                throw new ArgumentNullException(nameof(locator));
-
-            var components = new List<T>();
 
             lock (_lock)
             {
@@ -148,84 +77,120 @@ namespace PipServices.Commons.Refer
                     var reference = _references[index];
                     if (reference.Locate(locator))
                     {
+                        // Remove from the set
+                        _references.RemoveAt(index);
+                        components.Add(reference.GetComponent());
+                    }
+                }
+            }
+
+            return components;
+        }
+
+        public virtual List<object> GetAll()
+        {
+            var components = new List<object>();
+            foreach (var reference in _references)
+                components.Add(reference.GetComponent());
+            return components;
+        }
+
+        public virtual object GetOneOptional(object locator)
+        {
+            var components = Find<object>(new ReferenceQuery(locator), false);
+            return components.Count > 0 ? components[0] : null;
+        }
+
+        public virtual T GetOneOptional<T>(object locator)
+        {
+            var components = Find<T>(new ReferenceQuery(locator), false);
+            return components.Count > 0 ? components[0] : default(T);
+        }
+
+        public virtual object GetOneRequired(object locator)
+        {
+            var components = Find<object>(new ReferenceQuery(locator), true);
+            return components.Count > 0 ? components[0] : null;
+        }
+
+        public virtual T GetOneRequired<T>(object locator)
+        {
+            var components = Find<T>(new ReferenceQuery(locator), true);
+            return components.Count > 0 ? components[0] : default(T);
+        }
+
+        public virtual List<object> GetOptional(object locator)
+        {
+            return Find<object>(new ReferenceQuery(locator), false);
+        }
+
+        public virtual List<T> GetOptional<T>(object locator)
+        {
+            return Find<T>(new ReferenceQuery(locator), false);
+        }
+
+        public virtual List<object> GetRequired(object locator)
+        {
+            return Find<object>(new ReferenceQuery(locator), true);
+        }
+
+        public virtual List<T> GetRequired<T>(object locator)
+        {
+            return Find<T>(new ReferenceQuery(locator), true);
+        }
+
+        public virtual List<object> Find(ReferenceQuery query, bool required)
+        {
+            return Find<object>(query, required);
+        }
+
+        public virtual List<T> Find<T>(ReferenceQuery query, bool required)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            var components = new List<T>();
+
+            lock (_lock)
+            {
+                var index = query.Ascending ? 0 : _references.Count - 1;
+
+                // Locate the start
+                if (query.StartLocator != null)
+                {
+                    while (index >= 0 && index < _references.Count)
+                    {
+                        var reference = _references[index];
+                        if (reference.Locate(query.StartLocator))
+                            break;
+                        index += query.Ascending ? 1 : -1;
+                    }
+                }
+
+                // Search all references
+                while (index >= 0 && index < _references.Count)
+                {
+                    var reference = _references[index];
+                    if (reference.Locate(query.Locator))
+                    {
                         var component = reference.GetComponent();
                         if (component is T)
                             components.Add((T)component);
                     }
-                }
-
-                // Try to resolve missing dependency
-                if (components.Count == 0)
-                {
-                    var component = ResolveMissing<T>(locator);
-
-                    if (component != null)
-                        components.Add(component);
+                    index += query.Ascending ? 1 : -1;
                 }
             }
 
-            return components;
-        }
-
-        public List<object> GetRequired(object locator)
-        {
-            return GetRequired<object>(locator);
-        }
-
-        public List<T> GetRequired<T>(object locator)
-        {
-            var components = GetOptional<T>(locator);
-
-            if (components.Count == 0)
-                throw new ReferenceException(null, locator);
+            if (components.Count == 0 && required)
+                throw new ReferenceException(null, query.Locator);
 
             return components;
-        }
-
-        public object GetOneBefore(object prior, object locator)
-        {
-            return GetOneBefore<object>(prior, locator);
-        }
-
-        public T GetOneBefore<T>(object prior, object locator)
-        {
-            if (prior == null)
-                throw new ArgumentNullException(nameof(prior));
-            if (locator == null)
-                throw new ArgumentNullException(nameof(locator));
-
-            lock (_lock)
-            {
-                var index = _references.Count - 1;
-
-                // Locate prior reference
-                for (; index >= 0; index--)
-                {
-                    var reference = _references[index];
-                    if (reference.GetComponent().Equals(prior))
-                        break;
-                }
-
-                for (; index >= 0; index--)
-                {
-                    var reference = _references[index];
-                    if (reference.Locate(locator))
-                    {
-                        var component = reference.GetComponent();
-                        if (component is T)
-                            return (T)component;
-                    }
-                }
-            }
-
-            throw new ReferenceException(null, locator);
         }
 
         public static References FromList(params object[] components)
         {
-            var result = new References();
-            result.PutAll(components);
-            return result;
+            return new References(components);
         }
+
     }
 }
