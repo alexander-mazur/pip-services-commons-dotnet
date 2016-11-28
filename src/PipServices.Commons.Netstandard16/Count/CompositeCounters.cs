@@ -10,7 +10,10 @@ namespace PipServices.Commons.Count
 
         protected readonly List<ICounters> _counters = new List<ICounters>();
 
-        public CompositeCounters() { }
+        public CompositeCounters(IReferences references = null)
+        {
+            if (references != null) SetReferences(references);
+        }
 
         public virtual Descriptor GetDescriptor()
         {

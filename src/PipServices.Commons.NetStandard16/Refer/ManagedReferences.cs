@@ -1,16 +1,17 @@
 ﻿using PipServices.Commons.Run;
+using System.Collections;
 using System.Threading.Tasks;
 
 namespace PipServices.Commons.Refer
 {
     public class ManagedReferences: ReferencesDecorator, IOpenable, IClosable
     {
-        private References _references;
-        private BuildReferencesDecorator _builder;
-        private LinkReferencesDecorator _linker;
-        private RunReferencesDecorator _runner;
+        protected References _references;
+        protected BuildReferencesDecorator _builder;
+        protected LinkReferencesDecorator _linker;
+        protected RunReferencesDecorator _runner;
 
-        public ManagedReferences(params object[] components)
+        public ManagedReferences(IEnumerable components = null)
         {
             _references = new References(components);
             _builder = new BuildReferencesDecorator(_references, this);

@@ -10,15 +10,11 @@ namespace PipServices.Commons.Log
 
         protected readonly List<ILogger> _loggers = new List<ILogger>();
 
-        public CompositeLogger()
+        public CompositeLogger(IReferences references = null)
         {
             Level = LogLevel.Trace;
-        }
 
-        public CompositeLogger(IReferences references)
-            : this()
-        {
-            SetReferences(references);
+            if (references != null) SetReferences(references);
         }
 
         public virtual Descriptor GetDescriptor()
