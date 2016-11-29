@@ -34,7 +34,7 @@ namespace PipServices.Commons.Convert
             return ToTimeSpanWithDefault(value, new TimeSpan(0));
         }
 
-        public static TimeSpan ToTimeSpanWithDefault(object value, TimeSpan? defaultValue = null)
+        public static TimeSpan ToTimeSpanWithDefault(object value, TimeSpan? defaultValue)
         {
             var realDefault = defaultValue.HasValue ? defaultValue.Value : new TimeSpan(0);
             var result = ToNullableTimeSpan(value);

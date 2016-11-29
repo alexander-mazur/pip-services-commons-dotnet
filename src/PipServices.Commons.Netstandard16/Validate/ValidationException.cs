@@ -1,9 +1,16 @@
 ﻿using PipServices.Commons.Errors;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace PipServices.Commons.Validate
 {
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class ValidationException : BadRequestException
     {
         private static long SerialVersionUid { get; } = -1459801864235223845L;
@@ -18,6 +25,12 @@ namespace PipServices.Commons.Validate
             base(correlationId, "INVALID_DATA", message)
         {
         }
+
+#if !CORE_NET
+        protected ValidationException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
 
         public static string ComposeMessage(IList<ValidationResult> results)
         {

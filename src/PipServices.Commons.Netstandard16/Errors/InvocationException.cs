@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
     /// <summary>
     /// Class of errors related to remote service calls.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class InvocationException : ApplicationException
     {
         public InvocationException(Exception innerException) 
@@ -20,5 +26,12 @@ namespace PipServices.Commons.Errors
             Status = 500;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected InvocationException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

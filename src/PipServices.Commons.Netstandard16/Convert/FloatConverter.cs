@@ -33,7 +33,7 @@ namespace PipServices.Commons.Convert
             return ToFloatWithDefault(value, 0);
         }
 
-        public static float ToFloatWithDefault(object value, float defaultValue = 0)
+        public static float ToFloatWithDefault(object value, float defaultValue)
         {
             var result = ToNullableFloat(value);
             return result.HasValue ? result.Value : defaultValue;

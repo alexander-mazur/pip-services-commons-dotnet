@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
@@ -6,6 +7,11 @@ namespace PipServices.Commons.Errors
     /// Errors happened during connection to remote services.
     /// They can be related to misconfiguration, network issues or remote service itself
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class ConnectionException : ApplicationException
     {
         public ConnectionException(Exception innerException) 
@@ -21,5 +27,12 @@ namespace PipServices.Commons.Errors
             Status = 500;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected ConnectionException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

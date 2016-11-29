@@ -33,7 +33,7 @@ namespace PipServices.Commons.Convert
             return ToIntegerWithDefault(value, 0);
         }
 
-        public static int ToIntegerWithDefault(object value, int defaultValue = 0)
+        public static int ToIntegerWithDefault(object value, int defaultValue)
         {
             var result = ToNullableInteger(value);
             return result.HasValue ? result.Value : defaultValue;

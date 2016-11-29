@@ -47,5 +47,6 @@ namespace PipServices.Commons.Errors
 
             return error;
         }
+
     }
 }

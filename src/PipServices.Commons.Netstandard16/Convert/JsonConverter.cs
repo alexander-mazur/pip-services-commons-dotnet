@@ -44,7 +44,8 @@ namespace PipServices.Commons.Convert
 
             try
             {
-                var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(value, new JsonSerializerSettings());
+                var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(
+                    value, new JsonSerializerSettings());
 
                 ConvertJsonTypes(map);
                 return map;

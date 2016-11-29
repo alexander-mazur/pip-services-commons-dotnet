@@ -33,7 +33,7 @@ namespace PipServices.Commons.Convert
             return ToDoubleWithDefault(value, 0);
         }
 
-        public static double ToDoubleWithDefault(object value, double defaultValue = 0)
+        public static double ToDoubleWithDefault(object value, double defaultValue)
         {
             var result = ToNullableDouble(value);
             return result.HasValue ? result.Value : defaultValue;

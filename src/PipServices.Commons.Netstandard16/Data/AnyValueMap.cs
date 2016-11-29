@@ -106,7 +106,7 @@ namespace PipServices.Commons.Data
             return GetAsStringWithDefault(key, null);
         }
 
-        public string GetAsStringWithDefault(string key, string defaultValue = null)
+        public string GetAsStringWithDefault(string key, string defaultValue)
         {
             var value = Get(key);
             return StringConverter.ToStringWithDefault(value, defaultValue);
@@ -123,7 +123,7 @@ namespace PipServices.Commons.Data
             return GetAsBooleanWithDefault(key, false);
         }
 
-        public bool GetAsBooleanWithDefault(string key, bool defaultValue = false)
+        public bool GetAsBooleanWithDefault(string key, bool defaultValue)
         {
             var value = Get(key);
             return BooleanConverter.ToBooleanWithDefault(value, defaultValue);
@@ -140,7 +140,7 @@ namespace PipServices.Commons.Data
             return GetAsIntegerWithDefault(key, 0);
         }
 
-        public int GetAsIntegerWithDefault(string key, int defaultValue = 0)
+        public int GetAsIntegerWithDefault(string key, int defaultValue)
         {
             var value = Get(key);
             return IntegerConverter.ToIntegerWithDefault(value, defaultValue);
@@ -157,7 +157,7 @@ namespace PipServices.Commons.Data
             return GetAsLongWithDefault(key, 0);
         }
 
-        public long GetAsLongWithDefault(string key, long defaultValue = 0)
+        public long GetAsLongWithDefault(string key, long defaultValue)
         {
             var value = Get(key);
             return LongConverter.ToLongWithDefault(value, defaultValue);
@@ -174,7 +174,7 @@ namespace PipServices.Commons.Data
             return GetAsFloatWithDefault(key, 0);
         }
 
-        public float GetAsFloatWithDefault(string key, float defaultValue = 0)
+        public float GetAsFloatWithDefault(string key, float defaultValue)
         {
             var value = Get(key);
             return FloatConverter.ToFloatWithDefault(value, defaultValue);
@@ -191,7 +191,7 @@ namespace PipServices.Commons.Data
             return GetAsDoubleWithDefault(key, 0);
         }
 
-        public double GetAsDoubleWithDefault(string key, double defaultValue = 0)
+        public double GetAsDoubleWithDefault(string key, double defaultValue)
         {
             var value = Get(key);
             return DoubleConverter.ToDoubleWithDefault(value, defaultValue);
@@ -208,7 +208,7 @@ namespace PipServices.Commons.Data
             return GetAsDateTimeWithDefault(key, new DateTime());
         }
 
-        public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(string key, DateTime? defaultValue)
         {
             var value = Get(key);
             return DateTimeConverter.ToDateTimeWithDefault(value, defaultValue);
@@ -225,7 +225,7 @@ namespace PipServices.Commons.Data
             return GetAsTimeSpanWithDefault(key, new TimeSpan(0));
         }
 
-        public TimeSpan GetAsTimeSpanWithDefault(string key, TimeSpan? defaultValue = null)
+        public TimeSpan GetAsTimeSpanWithDefault(string key, TimeSpan? defaultValue)
         {
             var value = Get(key);
             return TimeSpanConverter.ToTimeSpanWithDefault(value, defaultValue);
@@ -242,7 +242,7 @@ namespace PipServices.Commons.Data
             return GetAsEnumWithDefault<T>(key, default(T));
         }
 
-        public T GetAsEnumWithDefault<T>(string key, T defaultValue = default(T))
+        public T GetAsEnumWithDefault<T>(string key, T defaultValue)
         {
             var value = Get(key);
             return EnumConverter.ToEnumWithDefault<T>(value, defaultValue);

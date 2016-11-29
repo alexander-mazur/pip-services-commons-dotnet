@@ -29,7 +29,7 @@ namespace PipServices.Commons.Convert
             return ToBooleanWithDefault(value, false);
         }
 
-        public static bool ToBooleanWithDefault(object value, bool defaultValue = false)
+        public static bool ToBooleanWithDefault(object value, bool defaultValue)
         {
             var result = ToNullableBoolean(value);
             return result.HasValue ? result.Value : defaultValue;

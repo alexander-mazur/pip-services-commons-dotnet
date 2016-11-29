@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
     /// <summary>
     /// Class of errors related to conflict in object versions between the user request and the server.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class ConflictException : ApplicationException
     {
         public ConflictException(Exception innerException) 
@@ -20,5 +26,12 @@ namespace PipServices.Commons.Errors
             Status = 409;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected ConflictException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

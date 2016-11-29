@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
     /// <summary>
     /// Class of errors related to internal system errors, programming mistakes, etc.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class InternalException : ApplicationException
     {
         public InternalException(Exception innerException) 
@@ -20,5 +26,12 @@ namespace PipServices.Commons.Errors
             Status = 500;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected InternalException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

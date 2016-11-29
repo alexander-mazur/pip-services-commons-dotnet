@@ -36,7 +36,7 @@ namespace PipServices.Commons.Convert
             return ToDateTimeWithDefault(value, new DateTime());
         }
 
-        public static DateTime ToDateTimeWithDefault(object value, DateTime? defaultValue = null)
+        public static DateTime ToDateTimeWithDefault(object value, DateTime? defaultValue)
         {
             var realDefault = defaultValue ?? new DateTime();
             var result = ToNullableDateTime(value);

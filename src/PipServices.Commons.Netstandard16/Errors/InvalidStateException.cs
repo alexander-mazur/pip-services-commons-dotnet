@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
@@ -6,6 +7,11 @@ namespace PipServices.Commons.Errors
     /// Class of errors related to operations called in wrong component state.
     /// For example, business calls when the component is not ready.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class InvalidStateException : ApplicationException
     {
         public InvalidStateException(Exception innerException) 
@@ -21,5 +27,12 @@ namespace PipServices.Commons.Errors
             Status = 500;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected InvalidStateException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

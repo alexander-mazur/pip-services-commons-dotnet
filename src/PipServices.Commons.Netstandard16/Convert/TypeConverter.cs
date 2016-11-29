@@ -20,10 +20,10 @@ namespace PipServices.Commons.Convert
 
         public static bool IsPrimitiveType(Type type)
         {
-            return type == typeof(string) || type == typeof(int) || type == typeof(long) || type == typeof(decimal) ||
-                   type == typeof(char) || type == typeof(decimal) || type == typeof(bool) || type == typeof(byte) ||
-                   type == typeof(double) || type == typeof(float) || type == typeof(sbyte) || type == typeof(short) ||
-                   type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort);
+            return type == typeof(string) || type == typeof(int) || type == typeof(long) || type == typeof(decimal) 
+                || type == typeof(char) || type == typeof(decimal) || type == typeof(bool) || type == typeof(byte) 
+                || type == typeof(double) || type == typeof(float) || type == typeof(sbyte) || type == typeof(short) 
+                || type == typeof(uint) || type == typeof(ulong) || type == typeof(ushort);
         }
 
         public static TypeCode ToTypeCode(Type type)

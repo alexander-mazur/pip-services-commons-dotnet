@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
     /// <summary>
     /// Class of errors related to read/write file operations.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class FileException : ApplicationException
     {
         public FileException(Exception innerException) 
@@ -20,5 +26,12 @@ namespace PipServices.Commons.Errors
             Status = 500;
             WithCause(innerException);
         }
+
+#if !CORE_NET
+        protected FileException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        { }
+#endif
+
     }
 }

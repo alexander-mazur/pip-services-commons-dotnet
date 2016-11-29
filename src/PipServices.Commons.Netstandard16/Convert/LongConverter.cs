@@ -33,7 +33,7 @@ namespace PipServices.Commons.Convert
             return ToLongWithDefault(value, 0);
         }
 
-        public static long ToLongWithDefault(object value, long defaultValue = 0)
+        public static long ToLongWithDefault(object value, long defaultValue)
         {
             var result = ToNullableLong(value);
             return result.HasValue ? result.Value : defaultValue;

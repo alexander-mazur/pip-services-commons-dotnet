@@ -57,7 +57,8 @@ namespace PipServices.Commons.Convert
             return result ?? new Dictionary<string, object>();
         }
 
-        public static IDictionary<string, object> ToMapWithDefault(object value, Dictionary<string, object> defaultValue)
+        public static IDictionary<string, object> ToMapWithDefault(
+            object value, Dictionary<string, object> defaultValue)
         {
             var result = ToNullableMap(value);
             return result ?? defaultValue;

@@ -20,7 +20,7 @@ namespace PipServices.Commons.Convert
             return ToStringWithDefault(value, null);
         }
 
-        public static string ToStringWithDefault(object value, string defaultValue = null)
+        public static string ToStringWithDefault(object value, string defaultValue)
         {
             if (value == null) return defaultValue;
             if (value is string) return (string)value;

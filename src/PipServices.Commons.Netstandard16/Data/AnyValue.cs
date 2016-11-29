@@ -41,7 +41,7 @@ namespace PipServices.Commons.Data
             return GetAsStringWithDefault(null);
         }
 
-        public string GetAsStringWithDefault(string defaultValue = null)
+        public string GetAsStringWithDefault(string defaultValue)
         {
             return StringConverter.ToStringWithDefault(Value, defaultValue);
         }
@@ -56,7 +56,7 @@ namespace PipServices.Commons.Data
             return GetAsBooleanWithDefault(false);
         }
 
-        public bool GetAsBooleanWithDefault(bool defaultValue = false)
+        public bool GetAsBooleanWithDefault(bool defaultValue)
         {
             return BooleanConverter.ToBooleanWithDefault(Value, defaultValue);
         }
@@ -71,7 +71,7 @@ namespace PipServices.Commons.Data
             return GetAsIntegerWithDefault(0);
         }
 
-        public int GetAsIntegerWithDefault(int defaultValue = 0)
+        public int GetAsIntegerWithDefault(int defaultValue)
         {
             return IntegerConverter.ToIntegerWithDefault(Value, defaultValue);
         }
@@ -86,7 +86,7 @@ namespace PipServices.Commons.Data
             return GetAsLongWithDefault(0);
         }
 
-        public long GetAsLongWithDefault(long defaultValue = 0)
+        public long GetAsLongWithDefault(long defaultValue)
         {
             return LongConverter.ToLongWithDefault(Value, defaultValue);
         }
@@ -101,7 +101,7 @@ namespace PipServices.Commons.Data
             return GetAsFloatWithDefault(0);
         }
 
-        public float GetAsFloatWithDefault(float defaultValue = 0)
+        public float GetAsFloatWithDefault(float defaultValue)
         {
             return FloatConverter.ToFloatWithDefault(Value, defaultValue);
         }
@@ -116,7 +116,7 @@ namespace PipServices.Commons.Data
             return GetAsDoubleWithDefault(0);
         }
 
-        public double GetAsDoubleWithDefault(double defaultValue = 0)
+        public double GetAsDoubleWithDefault(double defaultValue)
         {
             return DoubleConverter.ToDoubleWithDefault(Value, defaultValue);
         }
@@ -131,7 +131,7 @@ namespace PipServices.Commons.Data
             return GetAsDateTimeWithDefault(new DateTime());
         }
 
-        public DateTime GetAsDateTimeWithDefault(DateTime? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(DateTime? defaultValue)
         {
             return DateTimeConverter.ToDateTimeWithDefault(Value, defaultValue);
         }
@@ -146,7 +146,7 @@ namespace PipServices.Commons.Data
             return GetAsTimeSpanWithDefault(new TimeSpan(0));
         }
 
-        public TimeSpan GetAsTimeSpanWithDefault(TimeSpan? defaultValue = null)
+        public TimeSpan GetAsTimeSpanWithDefault(TimeSpan? defaultValue)
         {
             return TimeSpanConverter.ToTimeSpanWithDefault(Value, defaultValue);
         }
@@ -161,7 +161,7 @@ namespace PipServices.Commons.Data
             return GetAsEnumWithDefault<T>(default(T));
         }
 
-        public T GetAsEnumWithDefault<T>(T defaultValue = default(T))
+        public T GetAsEnumWithDefault<T>(T defaultValue)
         {
             return EnumConverter.ToEnumWithDefault<T>(Value, defaultValue);
         }

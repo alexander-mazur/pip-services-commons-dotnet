@@ -74,7 +74,7 @@ namespace PipServices.Commons.Data
             return GetAsStringWithDefault(index, null);
         }
 
-        public string GetAsStringWithDefault(int index, string defaultValue = null)
+        public string GetAsStringWithDefault(int index, string defaultValue)
         {
             return StringConverter.ToStringWithDefault(this[index], defaultValue);
         }
@@ -89,7 +89,7 @@ namespace PipServices.Commons.Data
             return GetAsBooleanWithDefault(index, false);
         }
 
-        public bool GetAsBooleanWithDefault(int index, bool defaultValue = false)
+        public bool GetAsBooleanWithDefault(int index, bool defaultValue)
         {
             return BooleanConverter.ToBooleanWithDefault(this[index], defaultValue);
         }
@@ -104,7 +104,7 @@ namespace PipServices.Commons.Data
             return GetAsIntegerWithDefault(index, 0);
         }
 
-        public int GetAsIntegerWithDefault(int index, int defaultValue = 0)
+        public int GetAsIntegerWithDefault(int index, int defaultValue)
         {
             return IntegerConverter.ToIntegerWithDefault(this[index], defaultValue);
         }
@@ -119,7 +119,7 @@ namespace PipServices.Commons.Data
             return GetAsLongWithDefault(index, 0);
         }
 
-        public long GetAsLongWithDefault(int index, long defaultValue = 0)
+        public long GetAsLongWithDefault(int index, long defaultValue)
         {
             return LongConverter.ToLongWithDefault(this[index], defaultValue);
         }
@@ -134,7 +134,7 @@ namespace PipServices.Commons.Data
             return GetAsFloatWithDefault(index, 0);
         }
 
-        public float GetAsFloatWithDefault(int index, float defaultValue = 0)
+        public float GetAsFloatWithDefault(int index, float defaultValue)
         {
             return FloatConverter.ToFloatWithDefault(this[index], defaultValue);
         }
@@ -149,7 +149,7 @@ namespace PipServices.Commons.Data
             return GetAsDoubleWithDefault(index, 0);
         }
 
-        public double GetAsDoubleWithDefault(int index, double defaultValue = 0)
+        public double GetAsDoubleWithDefault(int index, double defaultValue)
         {
             return DoubleConverter.ToDoubleWithDefault(this[index], defaultValue);
         }
@@ -164,7 +164,7 @@ namespace PipServices.Commons.Data
             return GetAsDateTimeWithDefault(index, new DateTime());
         }
 
-        public DateTime GetAsDateTimeWithDefault(int index, DateTime? defaultValue = null)
+        public DateTime GetAsDateTimeWithDefault(int index, DateTime? defaultValue)
         {
             return DateTimeConverter.ToDateTimeWithDefault(this[index], defaultValue);
         }
@@ -179,7 +179,7 @@ namespace PipServices.Commons.Data
             return GetAsTimeSpanWithDefault(index, new TimeSpan(0));
         }
 
-        public TimeSpan GetAsTimeSpanWithDefault(int index, TimeSpan? defaultValue = null)
+        public TimeSpan GetAsTimeSpanWithDefault(int index, TimeSpan? defaultValue)
         {
             return TimeSpanConverter.ToTimeSpanWithDefault(this[index], defaultValue);
         }
@@ -194,7 +194,7 @@ namespace PipServices.Commons.Data
             return GetAsEnumWithDefault<T>(index, default(T));
         }
 
-        public T GetAsEnumWithDefault<T>(int index, T defaultValue = default(T))
+        public T GetAsEnumWithDefault<T>(int index, T defaultValue)
         {
             return EnumConverter.ToEnumWithDefault<T>(this[index], defaultValue);
         }

@@ -1,11 +1,17 @@
 ﻿using System;
 using PipServices.Commons.Data;
+using System.Runtime.Serialization;
 
 namespace PipServices.Commons.Errors
 {
     /// <summary>
     /// Generic application exception.
     /// </summary>
+#if CORE_NET
+    [DataContract]
+#else
+    [Serializable]
+#endif
     public class ApplicationException : Exception
     {
         private string _stackTrace;
@@ -25,18 +31,72 @@ namespace PipServices.Commons.Errors
             Code = code;
         }
 
+#if !CORE_NET
+        protected ApplicationException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
+        {
+            Category = info.GetString("category");
+            CorrelationId = info.GetString("correlation_id");
+            Cause = info.GetString("cause");
+            Code = info.GetString("code");
+            Status = info.GetInt32("status");
+            _stackTrace = info.GetString("stack_trace");
+            Details = StringValueMap.FromString(info.GetString("details"));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue("category", Category);
+            info.AddValue("correlation_id", CorrelationId);
+            info.AddValue("cause", Cause);
+            info.AddValue("code", Code);
+            info.AddValue("status", Status);
+            info.AddValue("stack_trace", StackTrace);
+            info.AddValue("details", Details != null ? Details.ToString() : null);
+        }
+#endif
+
+#if CORE_NET
+        [DataMember]
+        public string Category { get; set; }
+
+        [DataMember]
+        public string CorrelationId { get; set; }
+
+        [DataMember]
+        public string Cause { get; set; }
+
+        [DataMember]
+        public string Code { get; set; }
+
+        [DataMember]
+        public int Status { get; set; }
+
+        [DataMember]
+        public StringValueMap Details { get; set; }
+
+        [DataMember]
+        public new string StackTrace
+        {
+            get { return _stackTrace ?? base.StackTrace; }
+            set { _stackTrace = value; }
+        }
+#else
         public string Category { get; set; }
         public string CorrelationId { get; set; }
         public string Cause { get; set; }
-        public StringValueMap Details { get; set; }
         public string Code { get; set; }
         public int Status { get; set; }
+        public StringValueMap Details { get; set; }
 
         public new string StackTrace
         {
             get { return _stackTrace ?? base.StackTrace; }
             set { _stackTrace = value; }
         }
+#endif
 
         public ApplicationException WithCode(string code)
         {
