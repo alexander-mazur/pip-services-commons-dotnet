@@ -2,10 +2,7 @@
 using PipServices.Commons.Errors;
 using Xunit;
 using System.IO;
-
-#if !CORE_NET
-using System.Runtime.Serialization.Json;
-#endif
+using Newtonsoft.Json;
 
 using ApplicationException = PipServices.Commons.Errors.ApplicationException;
 
@@ -117,16 +114,28 @@ namespace PipServices.Commons.Test.Errors
             Assert.Equal(newTrace, appEx.StackTrace);
         }
 
-#if !CORE_NET
-        // Todo: Fix it for CORE.NET
         [Fact]
         public void TestSerialization()
         {
             var ex = new InternalException("Test", "TEST_CODE", "Test error");
-            var stream = new MemoryStream();
-            var ser = new DataContractJsonSerializer(typeof(InternalException));
-            ser.WriteObject(stream, ex);
+
+            var description = ErrorDescriptionFactory.Create(ex);
+
+            var jsonString = JsonConvert.SerializeObject(description);
+
+            //var stream = new MemoryStream();
+            //var writer = new StreamWriter(stream);
+
+            //writer.WriteLine(jsonString);
+
+            var restoredDescription = JsonConvert.DeserializeObject<ErrorDescription>(jsonString);
+
+            var restoredException = ApplicationExceptionFactory.Create(restoredDescription);
+
+            Assert.IsType<InternalException>(restoredException);
+            Assert.Equal(ex.CorrelationId, restoredException.CorrelationId);
+            Assert.Equal(ex.Code, restoredException.Code);
+            Assert.Equal(ex.Message, restoredException.Message);
         }
-#endif
     }
 }

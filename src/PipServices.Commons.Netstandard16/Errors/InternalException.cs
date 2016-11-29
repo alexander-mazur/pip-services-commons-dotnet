@@ -13,6 +13,10 @@ namespace PipServices.Commons.Errors
 #endif
     public class InternalException : ApplicationException
     {
+        public InternalException()
+        {
+        }
+
         public InternalException(Exception innerException) 
             : base(ErrorCategory.Internal, null, null, null)
         {
