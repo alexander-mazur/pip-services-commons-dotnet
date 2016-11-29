@@ -1,6 +1,8 @@
 ﻿using System;
 using PipServices.Commons.Data;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PipServices.Commons.Reflect;
 
 namespace PipServices.Commons.Errors
 {
@@ -20,6 +22,12 @@ namespace PipServices.Commons.Errors
             this(null, null, null, null)
         { }
 
+        [JsonConstructor]
+        protected ApplicationException(string message)
+            : base(message)
+        {
+        }
+        
         public ApplicationException(string category = null, string correlationId = null, string code = null, string message = null) 
             : base(message ?? "Unknown error")
         {
@@ -58,45 +66,33 @@ namespace PipServices.Commons.Errors
         }
 #endif
 
-#if CORE_NET
-        [DataMember]
+        [JsonProperty("category")]
         public string Category { get; set; }
 
-        [DataMember]
+        [JsonProperty("correlation_id")]
         public string CorrelationId { get; set; }
 
-        [DataMember]
+        [JsonProperty("cause")]
         public string Cause { get; set; }
 
-        [DataMember]
+        [JsonProperty("code")]
         public string Code { get; set; }
 
-        [DataMember]
+        [JsonProperty("status")]
         public int Status { get; set; }
 
-        [DataMember]
+        [JsonProperty("details")]
         public StringValueMap Details { get; set; }
 
-        [DataMember]
+        [JsonProperty("message")]
+        public string BaseMessage => Message;
+
+        [JsonProperty("stack_trace")]
         public new string StackTrace
         {
             get { return _stackTrace ?? base.StackTrace; }
             set { _stackTrace = value; }
         }
-#else
-        public string Category { get; set; }
-        public string CorrelationId { get; set; }
-        public string Cause { get; set; }
-        public string Code { get; set; }
-        public int Status { get; set; }
-        public StringValueMap Details { get; set; }
-
-        public new string StackTrace
-        {
-            get { return _stackTrace ?? base.StackTrace; }
-            set { _stackTrace = value; }
-        }
-#endif
 
         public ApplicationException WithCode(string code)
         {

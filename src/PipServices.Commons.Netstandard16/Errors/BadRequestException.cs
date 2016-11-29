@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class BadRequestException : ApplicationException
     {
+        [JsonConstructor]
+        public BadRequestException(string message)
+            : base(message)
+        {
+        }
+
         public BadRequestException(Exception innerException) 
             : base(ErrorCategory.BadRequest, null, null, null)
         {

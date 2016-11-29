@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class NotFoundException : ApplicationException
     {
+        [JsonConstructor]
+        public NotFoundException(string message)
+            : base(message)
+        {
+        }
+
         public NotFoundException(Exception innerException) 
             : base(ErrorCategory.NotFound, null, null, null)
         {

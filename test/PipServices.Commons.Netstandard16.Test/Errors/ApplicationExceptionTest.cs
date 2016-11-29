@@ -119,18 +119,9 @@ namespace PipServices.Commons.Test.Errors
         {
             var ex = new InternalException("Test", "TEST_CODE", "Test error");
 
-            var description = ErrorDescriptionFactory.Create(ex);
+            var jsonString = JsonConvert.SerializeObject(ex);
 
-            var jsonString = JsonConvert.SerializeObject(description);
-
-            //var stream = new MemoryStream();
-            //var writer = new StreamWriter(stream);
-
-            //writer.WriteLine(jsonString);
-
-            var restoredDescription = JsonConvert.DeserializeObject<ErrorDescription>(jsonString);
-
-            var restoredException = ApplicationExceptionFactory.Create(restoredDescription);
+            var restoredException = JsonConvert.DeserializeObject<InternalException>(jsonString);
 
             Assert.IsType<InternalException>(restoredException);
             Assert.Equal(ex.CorrelationId, restoredException.CorrelationId);

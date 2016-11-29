@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -14,6 +15,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class ConnectionException : ApplicationException
     {
+        [JsonConstructor]
+        public ConnectionException(string message)
+            : base(message)
+        {
+        }
+
         public ConnectionException(Exception innerException) 
             : base(ErrorCategory.NoResponse, null, null, null)
         {

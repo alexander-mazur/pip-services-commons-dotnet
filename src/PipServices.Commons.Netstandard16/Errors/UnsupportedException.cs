@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class UnsupportedException : ApplicationException
     {
+        [JsonConstructor]
+        public UnsupportedException(string message)
+            : base(message)
+        {
+        }
+
         public UnsupportedException(Exception innerException) 
             : base(ErrorCategory.Unsupported, null, null, null)
         {

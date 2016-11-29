@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class ConfigException : ApplicationException
     {
+        [JsonConstructor]
+        public ConfigException(string message)
+            : base(message)
+        {
+        }
+
         public ConfigException(Exception innerException) 
             : base(ErrorCategory.Misconfiguration, null, null, null)
         {

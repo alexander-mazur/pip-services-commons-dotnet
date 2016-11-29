@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class ConflictException : ApplicationException
     {
+        [JsonConstructor]
+        public ConflictException(string message)
+            : base(message)
+        {
+        }
+
         public ConflictException(Exception innerException) 
             : base(ErrorCategory.Conflict, null, null, null)
         {

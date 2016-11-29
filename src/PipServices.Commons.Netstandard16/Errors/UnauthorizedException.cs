@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -13,6 +14,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class UnauthorizedException : ApplicationException
     {
+        [JsonConstructor]
+        public UnauthorizedException(string message)
+            : base(message)
+        {
+        }
+
         public UnauthorizedException(Exception innerException) 
             : base(ErrorCategory.Unauthorized, null, null, null)
         {

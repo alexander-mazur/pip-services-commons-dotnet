@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace PipServices.Commons.Errors
 {
@@ -14,6 +15,12 @@ namespace PipServices.Commons.Errors
 #endif
     public class InvalidStateException : ApplicationException
     {
+        [JsonConstructor]
+        public InvalidStateException(string message)
+            : base(message)
+        {
+        }
+
         public InvalidStateException(Exception innerException) 
             : base(ErrorCategory.InvalidState, null, null, null)
         {
