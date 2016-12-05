@@ -27,7 +27,12 @@ namespace PipServices.Commons.Config
 
         public virtual ConfigParams ReadConfig(string correlationId)
         {
-            return _config;
+            return new ConfigParams(_config);
+        }
+
+        public virtual ConfigParams ReadConfigSection(string correlationId, string section)
+        {
+            return _config != null ? _config.GetSection(section) : null;
         }
     }
 }

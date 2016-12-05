@@ -15,7 +15,7 @@ namespace PipServices.Commons.Auth
         public MemoryCredentialStore(string name, ConfigParams credentials)
         {
             Name = name;
-            Init(credentials);
+            Configure(credentials);
         }
 
         public string Name { get; set; }
@@ -28,10 +28,10 @@ namespace PipServices.Commons.Auth
         public virtual void Configure(ConfigParams config)
         {
             Name = NameResolver.Resolve(config, Name);
-            Init(config);
+            ReadCredentials(config);
         }
 
-        private void Init(ConfigParams credentials)
+        private void ReadCredentials(ConfigParams credentials)
         {
             lock (_lock)
             {

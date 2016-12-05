@@ -34,5 +34,11 @@ namespace PipServices.Commons.Config
 
             return _config;
         }
+
+        public ConfigParams ReadConfigSection(string correlationId, string section)
+        {
+            var config = ReadConfig(correlationId);
+            return config != null ? config.GetSection(section) : null;
+        }
     }
 }
