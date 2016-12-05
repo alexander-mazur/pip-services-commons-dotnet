@@ -14,7 +14,8 @@ namespace PipServices.Commons.Log
         {
             Level = LogLevel.Trace;
 
-            if (references != null) SetReferences(references);
+            if (references != null)
+                SetReferences(references);
         }
 
         public virtual Descriptor GetDescriptor()
@@ -22,7 +23,7 @@ namespace PipServices.Commons.Log
             return Descriptor;
         }
 
-        public virtual void SetReferences(IReferences references)
+        public void SetReferences(IReferences references)
         {
             var loggers = references.GetOptional<ILogger>(new Descriptor(null, "logger", null, null, null));
             foreach (var logger in loggers)
