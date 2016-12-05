@@ -10,28 +10,28 @@ namespace PipServices.Commons.Data
 
         public PagingParams(object skip, object take, object total = null)
         {
-            Skip = LongConverter.ToNullableLong(skip);
-            Take = LongConverter.ToNullableLong(take);
+            Skip = IntegerConverter.ToNullableInteger(skip);
+            Take = IntegerConverter.ToNullableInteger(take);
             Total = BooleanConverter.ToBooleanWithDefault(total, false);
         }
 
         [DataMember]
-        public long? Skip { get; set; }
+        public int? Skip { get; set; }
 
         [DataMember]
-        public long? Take { get; set; }
+        public int? Take { get; set; }
 
         [DataMember]
         public bool Total { get; set; }
 
-        public long GetSkip(long minSkip = 0)
+        public int GetSkip(int minSkip = 0)
         {
             if (Skip == null) return minSkip;
             if (Skip.Value < minSkip) return minSkip;
             return Skip.Value;
         }
 
-        public long GetTake(long maxTake)
+        public int GetTake(int maxTake)
         {
             if (Take == null) return maxTake;
             if (Take.Value < 0) return 0;
@@ -56,8 +56,8 @@ namespace PipServices.Commons.Data
 
         public static PagingParams FromMap(AnyValueMap map)
         {
-            var skip = map.GetAsNullableLong("skip");
-            var take = map.GetAsNullableLong("take");
+            var skip = map.GetAsNullableInteger("skip");
+            var take = map.GetAsNullableInteger("take");
             var total = map.GetAsBooleanWithDefault("total", true);
             return new PagingParams(skip, take, total);
         }
