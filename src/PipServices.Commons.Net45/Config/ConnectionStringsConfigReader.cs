@@ -32,5 +32,10 @@ namespace PipServices.Commons.Config
 
             return result;
         }
+
+        public ConfigParams ReadConfigSection(string correlationId, string section)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
