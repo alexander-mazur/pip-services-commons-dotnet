@@ -8,6 +8,7 @@ namespace PipServices.Commons.Errors
         {
             return new ErrorDescription()
             {
+                Type = ex.GetType().FullName,
                 Category = ex.Category,
                 Status = ex.Status,
                 Code = ex.Code,
@@ -23,9 +24,10 @@ namespace PipServices.Commons.Errors
         {
             return new ErrorDescription()
             {
+                Type = ex.GetType().FullName,
                 Category = ErrorCategory.Unknown,
                 Status = 500,
-                Code = "Unknown",
+                Code = "UNKNOWN",
                 Message = ex.Message,
                 StackTrace = ex.StackTrace,
             };

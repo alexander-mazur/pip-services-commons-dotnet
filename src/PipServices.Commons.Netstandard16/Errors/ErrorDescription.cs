@@ -6,6 +6,9 @@ namespace PipServices.Commons.Errors
     [DataContract]
     public class ErrorDescription
     {
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+
         [DataMember(Name = "category")]
         public string Category { get; set; }
 

@@ -8,7 +8,7 @@ namespace PipServices.Commons.Data
 
         public FilterParams(IDictionary<string, string> map)
         {
-            SetAsMap(map);
+            Append(map);
         }
 
         public new static FilterParams FromTuples(params object[] values)

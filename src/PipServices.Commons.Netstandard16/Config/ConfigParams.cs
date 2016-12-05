@@ -115,7 +115,7 @@ namespace PipServices.Commons.Config
         {
             var map = RecursiveObjectReader.GetProperties(value);
             var result = new ConfigParams();
-            result.SetAsMap(map);
+            result.Append(map);
             return result;
         }
 

@@ -44,7 +44,7 @@ namespace PipServices.Commons.Test.Errors
 
             Assert.NotNull(descr);
             Assert.Equal(ErrorCategory.Unknown, descr.Category);
-            Assert.Equal("Unknown", descr.Code);
+            Assert.Equal("UNKNOWN", descr.Code);
             Assert.Equal(ex.Message, descr.Message);
             Assert.Equal(500, descr.Status);
             Assert.Equal(ex.StackTrace, descr.StackTrace);

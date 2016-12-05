@@ -13,12 +13,12 @@ namespace PipServices.Commons.Data
 
         public AnyValueArray(object[] values)
         {
-            SetAsArray(values);
+            Append(values);
         }
 
         public AnyValueArray(IEnumerable values)
         {
-            SetAsArray(values);
+            Append(values);
         }
 
         public virtual object Get(int index)
@@ -38,18 +38,17 @@ namespace PipServices.Commons.Data
 
         public void SetAsObject(object value)
         {
-            SetAsArray(ArrayConverter.ToArray(value));
+            Clear();
+            Append(ArrayConverter.ToArray(value));
         }
 
-        public void SetAsArray(object[] values)
+        public void Append(object[] values)
         {
-            Clear();
             AddRange(values);
         }
 
-        public void SetAsArray(IEnumerable values)
+        public void Append(IEnumerable values)
         {
-            Clear();
             foreach (var value in values)
                 Add(value);
         }

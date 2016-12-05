@@ -15,13 +15,13 @@ namespace PipServices.Commons.Data
         public AnyValueMap(IDictionary<string, object> values)
             : base(StringComparer.OrdinalIgnoreCase)
         {
-            SetAsMap(values);
+            Append(values);
         }
 
         public AnyValueMap(IDictionary values)
             : base(StringComparer.OrdinalIgnoreCase)
         {
-            SetAsMap(values);
+            Append(values);
         }
 
         public new object this[string key]
@@ -49,25 +49,16 @@ namespace PipServices.Commons.Data
             base[key] = value;
         }
 
-        public new void Add(string key, object value)
+        public void Append(IDictionary<string, object> map)
         {
-            Set(key, value);
-        }
-
-        public void SetAsMap(IDictionary<string, object> map)
-        {
-            Clear();
-
             if (map == null || map.Count == 0) return;
 
             foreach (var key in map.Keys)
                 Set(key.ToString(), map[key]);
         }
 
-        public void SetAsMap(IDictionary map)
+        public void Append(IDictionary map)
         {
-            Clear();
-
             if (map == null || map.Count == 0) return;
 
             foreach (var key in map.Keys)
@@ -87,7 +78,7 @@ namespace PipServices.Commons.Data
         public void SetAsObject(object value)
         {
             Clear();
-            SetAsMap((IDictionary)MapConverter.ToMap(value));
+            Append((IDictionary)MapConverter.ToMap(value));
         }
 
         public void SetAsObject(string key, object value)
@@ -344,7 +335,7 @@ namespace PipServices.Commons.Data
             if (maps != null && maps.Length > 0)
             {
                 foreach (IDictionary map in maps)
-                    result.SetAsMap(map);
+                    result.Append(map);
             }
             return result;
         }

@@ -48,5 +48,47 @@ namespace PipServices.Commons.Errors
             return error;
         }
 
+        public static Exception CreateOriginal(ErrorDescription description)
+        {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
+            if (description.Type != null)
+            {
+                try
+                {
+                    var type = Type.GetType(description.Type);
+                    Exception exception = null;
+
+                    try
+                    {
+                        exception = Activator.CreateInstance(type, description.Message) as Exception;
+                    }
+                    catch
+                    {
+                        // Ignore...
+                    }
+
+                    try
+                    {
+                        if (exception == null)
+                            exception = Activator.CreateInstance(type, description.Message) as Exception;
+                    }
+                    catch
+                    {
+                        // Ignore...
+                    }
+
+                    if (!(exception is ApplicationException))
+                        return exception;
+                }
+                catch
+                {
+                    // Ignore...
+                }
+            }
+
+            return Create(description);
+        }
     }
 }
