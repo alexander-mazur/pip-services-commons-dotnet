@@ -14,7 +14,7 @@ namespace PipServices.Commons.Run
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be closed</param>
         /// <returns></returns>
-        public static async Task ClearAsync(string correlationId, IEnumerable components)
+        public static async Task ClearComponentsAsync(string correlationId, IEnumerable components)
         {
             if (components == null) return;
 

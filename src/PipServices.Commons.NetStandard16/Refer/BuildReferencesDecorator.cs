@@ -38,16 +38,7 @@ namespace PipServices.Commons.Refer
             try
             {
                 // Create component
-                var component = factory.Create(locator);
-
-                if (component == null)
-                    return null;
-
-                // Replace locator
-                if (component is IDescriptable)
-                    locator = ((IDescriptable)component).GetDescriptor();
-
-                return component;
+                return factory.Create(locator);
             }
             catch (Exception)
             {
@@ -65,7 +56,13 @@ namespace PipServices.Commons.Refer
                 var component = CreateComponent(query.Locator);
                 if (component is T)
                 {
-                    ParentReferences.Put(component);
+                    object locator = query.Locator;
+
+                    // Replace locator
+                    if (component is IDescriptable)
+                        locator = ((IDescriptable)component).GetDescriptor();
+
+                    ParentReferences.Put(component, locator);
                     components.Add((T)component);
                 }
             }
