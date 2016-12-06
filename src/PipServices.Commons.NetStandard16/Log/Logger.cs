@@ -5,7 +5,7 @@ namespace PipServices.Commons.Log
 {
     public abstract class Logger : ILogger, IReconfigurable
     {
-        public Logger()
+        protected Logger()
         {
             Level = LogLevel.Info;
         }
@@ -23,11 +23,11 @@ namespace PipServices.Commons.Log
 
         protected void FormatAndWrite(LogLevel level, string correlationId, Exception error, string message, object[] args)
         {
-            message = message != null ? message : "";
+            var mes = !string.IsNullOrWhiteSpace(message) ? message : string.Empty;
             if (args != null && args.Length > 0)
-                message = string.Format(message, args);
+                mes = string.Format(mes, args);
 
-            Write(level, correlationId, error, message);
+            Write(level, correlationId, error, mes);
         }
 
         public void Log(LogLevel level, string correlationId, Exception error, string message, params object[] args)
