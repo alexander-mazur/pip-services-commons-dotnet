@@ -8,7 +8,7 @@ namespace PipServices.Commons.Config
     {
         public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "app-settings", "default", "1.0");
 
-        public AppSettingsConfigReader() { }
+        public AppSettingsConfigReader() {}
 
         public Descriptor GetDescriptor()
         {
