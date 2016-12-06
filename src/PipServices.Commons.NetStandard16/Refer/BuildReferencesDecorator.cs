@@ -29,7 +29,7 @@ namespace PipServices.Commons.Refer
             return null;
         }
 
-        private object CreateComponent(object locator)
+        public object Create(object locator)
         {
             // Find factory
             var factory = FindFactory(locator);
@@ -53,7 +53,7 @@ namespace PipServices.Commons.Refer
             // Try to create component
             if (components.Count == 0 && BuildEnabled)
             {
-                var component = CreateComponent(query.Locator);
+                var component = Create(query.Locator);
                 if (component is T)
                 {
                     object locator = query.Locator;
