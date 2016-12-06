@@ -10,16 +10,16 @@ namespace PipServices.Commons.Data
         /// <summary>
         /// Gets the time when the object was created
         /// </summary>
-        DateTime CreatedTime { get; }
+        DateTime CreatedTime { get; set; }
 
         /// <summary>
         /// Gets the last time when the object was changed (created, updated or deleted)
         /// </summary>
-        DateTime LastChangeTime { get; }
+        DateTime LastChangeTime { get; set; }
 
         /// <summary>
         /// Gets the logical deletion flag
         /// </summary>
-        bool IsDeleted { get; }
+        bool IsDeleted { get; set; }
     }
 }

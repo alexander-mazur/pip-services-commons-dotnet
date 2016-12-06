@@ -1,7 +1,7 @@
 ﻿namespace PipServices.Commons.Data
 {
-    public interface IIdentifiable<out T>
+    public interface IIdentifiable<T>
     {
-        T Id { get; }
+        T Id { get; set; }
     }
 }

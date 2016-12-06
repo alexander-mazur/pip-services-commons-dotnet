@@ -15,9 +15,9 @@ namespace PipServices.Commons.Run
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be notified</param>
-        public static async Task NotifyAsync(string correlationId, IEnumerable components)
+        public static async Task NotifyComponentsAsync(string correlationId, IEnumerable components)
         {
-            await NotifyAsync(correlationId, components, new Parameters());
+            await NotifyComponentsWithParametersAsync(correlationId, components, new Parameters());
         }
 
         /// <summary>
@@ -26,8 +26,9 @@ namespace PipServices.Commons.Run
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be notified</param>
-        /// <param name="args">a set of parameters to pass to notified components</param>
-        public static async Task NotifyAsync(string correlationId, IEnumerable components, Parameters args)
+        /// <param name="parameters">a set of parameters to pass to notified components</param>
+        public static async Task NotifyComponentsWithParametersAsync(
+            string correlationId, IEnumerable components, Parameters parameters)
         {
             if (components == null) return;
 
@@ -43,7 +44,7 @@ namespace PipServices.Commons.Run
                 {
                     var paramNotifiable = component as IParamNotifiable;
                     if (paramNotifiable != null)
-                        await paramNotifiable.NotifyAsync(correlationId, args);
+                        await paramNotifiable.NotifyAsync(correlationId, parameters);
                 }
             }
         }

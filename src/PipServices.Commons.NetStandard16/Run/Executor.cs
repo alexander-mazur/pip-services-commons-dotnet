@@ -16,9 +16,9 @@ namespace PipServices.Commons.Run
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be executed</param>
         /// <returns>execution results</returns>
-        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable components)
+        public static async Task<List<object>> ExecuteComponentsAsync(string correlationId, IEnumerable components)
         {
-            return await ExecuteAsync(correlationId, components, new Parameters());
+            return await ExecuteComponentsAsync(correlationId, components, new Parameters());
         }
 
         /// <summary>
@@ -29,7 +29,8 @@ namespace PipServices.Commons.Run
         /// <param name="components">a list of components to be executed</param>
         /// <param name="args">a set of parameters to pass to executed components</param>
         /// <returns>execution results</returns>
-        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable components, Parameters args)
+        public static async Task<List<object>> ExecuteComponentsAsync(
+            string correlationId, IEnumerable components, Parameters parameters)
         {
             var results = new List<object>();
             if (components == null) return results;
@@ -45,7 +46,7 @@ namespace PipServices.Commons.Run
                 {
                     var paramExecutable = component as IParamExecutable;
                     if (paramExecutable != null)
-                        results.Add(await paramExecutable.ExecuteAsync(correlationId, args));
+                        results.Add(await paramExecutable.ExecuteAsync(correlationId, parameters));
                 }
             }
 
