@@ -30,8 +30,12 @@ namespace PipServices.Commons.Config
 
         public ConfigParams ReadConfigSection(string correlationId, string section)
         {
+<<<<<<< HEAD
             var config = ReadConfig(correlationId);
             return config != null ? config.GetSection(section) : null;
+=======
+            throw new NotImplementedException();
+>>>>>>> b2b93d40d28d1cccf9548b812fe38f1bd350eb54
         }
     }
 }

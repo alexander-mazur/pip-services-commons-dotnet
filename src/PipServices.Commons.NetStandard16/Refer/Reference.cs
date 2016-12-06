@@ -23,17 +23,17 @@ namespace PipServices.Commons.Refer
         public Reference(object reference)
         {
             var locatable = reference as ILocateable;
-            var describable = reference as IDescriptable;
+            var descriptable = reference as IDescriptable;
 
-            if (locatable == null && describable == null)
-                throw new ArgumentException("Reference must implement ILocateable or IDescribable interface");
+            if (locatable == null && descriptable == null)
+                throw new ArgumentException("Reference must implement ILocateable or IDescriptable interface");
 
             _locateable = locatable;
 
             _component = reference;
 
-            if (describable != null)
-                _locator = describable.GetDescriptor();
+            if (descriptable != null)
+                _locator = descriptable.GetDescriptor();
         }
 
         public bool Locate(object locator)
