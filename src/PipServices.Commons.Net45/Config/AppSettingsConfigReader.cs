@@ -12,7 +12,7 @@ namespace PipServices.Commons.Config
 
         public Descriptor GetDescriptor()
         {
-            throw new NotImplementedException();
+            return Descriptor;
         }
 
         public ConfigParams ReadConfig(string correlationId)
