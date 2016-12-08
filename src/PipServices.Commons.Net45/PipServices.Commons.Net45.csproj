@@ -262,6 +262,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Data\ITrackable.cs">
       <Link>Data\ITrackable.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Data\IVersioned.cs">
+      <Link>Data\IVersioned.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Data\Mapper\IObjectMapper.cs">
       <Link>Data\Mapper\IObjectMapper.cs</Link>
     </Compile>

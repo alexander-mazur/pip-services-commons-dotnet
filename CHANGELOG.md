@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.28"></a> 1.0.3-1.0.28 (2016-11-30)
+## <a name="1.0.3-1.0.30"></a> 1.0.3-1.0.30 (2016-12-07)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -14,6 +14,7 @@
 * **run** Changed FixedRateTimer interface
 * **refer** Added Kind field to Descriptor
 * **refer** Added ReferencesDecorators and ManagedReferences.
+* **data** Added IVersioned interface
 
 ### Bug Fixes
 * Added description to NuGet package
@@ -32,7 +33,7 @@
 * Renamed ReferenceSet to References
 * Added auto-creation to GetOptional methods in References
 * Added CompositeCounters constructor with references 
-* Changed SetAsMap method to Append
+* Renamed SetAsMap method to Append
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 
