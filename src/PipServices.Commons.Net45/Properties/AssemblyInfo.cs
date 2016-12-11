@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Pip.Services Commons Library")]
 [assembly: AssemblyDescription("Basic portable abstractions for Pip.Services")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Digital Living Software Corp.")]
+[assembly: AssemblyCompany("Conceptual Vision Consulting LLC.")]
 [assembly: AssemblyProduct("Pip.Services")]
-[assembly: AssemblyCopyright("Copyright © Digital Living Software Corp. 2009-2016")]
+[assembly: AssemblyCopyright("Copyright © Conceptual Vision Consulting LLC. 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

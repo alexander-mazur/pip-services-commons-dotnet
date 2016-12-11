@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PipServices.Commons</id>
-    <version>1.0.32</version>
+    <version>1.0.33</version>
     <title>PipServices.Commons</title>
     <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
 
@@ -13,7 +13,7 @@
     
     <description>Basic portable abstractions for Pip.Services in .NET</description>
     <releaseNotes>Pre release</releaseNotes>
-    <copyright>Digital Living Software Corp. 2009-2016</copyright>
+    <copyright>Conceptual Vision Consulting LLC. 2016</copyright>
     <tags>pip-services microservices framework</tags>
 
     <dependencies>

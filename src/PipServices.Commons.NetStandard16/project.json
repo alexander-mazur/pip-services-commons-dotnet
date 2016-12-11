@@ -1,7 +1,7 @@
 {
-  "version": "1.0.29-*",
+  "version": "1.0.0-*",
 
-  "copyright": "Copyright © Digital Living Software Corp. 2009-2016",
+  "copyright": "Copyright © Conceptual Vision Consulting LLC. 2016",
   "title": "Pip.Services Commons Library",
   "authors": [ "Mark Zontak", "Sergey Seroukhov", "Volodymyr Tkachenko" ],
   "description": "Basic portable abstractions for Pip.Services",

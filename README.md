@@ -7,8 +7,6 @@ The key difference of this framework is a portable implementation across variety
 Currently it supports Java, .NET, Python, Node.js, Golang. The code provides reasonably thin abstraction layer 
 over most fundamental functions and delivers symmetric implementation that can be quickly ported between different platforms.
 
-All functionality is decomposed into several packages:
-
 - **Auth** - credentials for client authentication
 - **Build** - component factories framework
 - **Commands** - command and event chaining
