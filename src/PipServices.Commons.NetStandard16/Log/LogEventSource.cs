@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PipServices.Commons.Log
 {
-    [EventSource(Name = "pip-services")]
+    [EventSource(Name = "log")]
     public class LogEventSource : EventSource
     {
         public static readonly LogEventSource Current = new LogEventSource();
