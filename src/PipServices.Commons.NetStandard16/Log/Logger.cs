@@ -1,5 +1,6 @@
 ﻿using System;
 using PipServices.Commons.Config;
+using System.Text;
 
 namespace PipServices.Commons.Log
 {
@@ -20,6 +21,25 @@ namespace PipServices.Commons.Log
         }
 
         protected abstract void Write(LogLevel level, string correlationId, Exception error, string message);
+
+        protected string ComposeError(Exception error)
+        {
+            var builder = new StringBuilder();
+
+            while (error != null)
+            {
+                if (builder.Length > 0)
+                    builder.Append(" Caused by error: ");
+
+                builder.Append(error.Message)
+                    .Append(" StackTrace: ")
+                    .Append(error.StackTrace);
+
+                error = error.InnerException;
+            }
+
+            return builder.ToString();
+        }
 
         protected void FormatAndWrite(LogLevel level, string correlationId, Exception error, string message, object[] args)
         {

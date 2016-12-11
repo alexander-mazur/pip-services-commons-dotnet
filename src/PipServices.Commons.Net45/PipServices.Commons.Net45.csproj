@@ -136,6 +136,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\NameResolver.cs">
       <Link>Config\NameResolver.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\OptionsResolver.cs">
+      <Link>Config\OptionsResolver.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\YamlConfigReader.cs">
       <Link>Config\YamlConfigReader.cs</Link>
     </Compile>
@@ -352,8 +355,14 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\DiagnosticsLogger.cs">
       <Link>Log\DiagnosticsLogger.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\EventLogger.cs">
+      <Link>Log\EventLogger.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\ILogger.cs">
       <Link>Log\ILogger.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Log\LogEventSource.cs">
+      <Link>Log\LogEventSource.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Log\Logger.cs">
       <Link>Log\Logger.cs</Link>

@@ -14,25 +14,6 @@ namespace PipServices.Commons.Log
             return Descriptor;
         }
 
-        protected string ComposeError(Exception error)
-        {
-            var builder = new StringBuilder();
-
-            while (error != null)
-            {
-                if (builder.Length > 0)
-                    builder.Append(" Caused by error: ");
-
-                builder.Append(error.Message)
-                    .Append(" StackTrace: ")
-                    .Append(error.StackTrace);
-
-                error = error.InnerException;
-            }
-
-            return builder.ToString();
-        }
-
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             if (Level < level) return;
