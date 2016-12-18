@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.33"></a> 1.0.3-1.0.33 (2016-12-11)
+## <a name="1.0.3-1.0.34"></a> 1.0.3-1.0.34 (2016-12-18)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -37,6 +37,7 @@
 * Added CompositeCounters constructor with references 
 * Renamed SetAsMap method to Append
 * Added missing descriptor to EventLogger
+* Fixed timeout for CachedConfigReader
 
 ## <a name="1.0.0"></a> 1.0.0 (2016-11-21)
 
