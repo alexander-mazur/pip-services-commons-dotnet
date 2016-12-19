@@ -234,10 +234,10 @@ function GetCurrentUrl()
         if(base.substr(0, 5) == "file:" && base.substr(0, 8) != "file:///")
             base = base.replace("file://", "file:///");
 
-        //if(base.substr(0, 5) == "file:")
+        if(base.substr(0, 5) == "file:")
             top.location.href = base + "Index.html";
-        //else
-            //top.location.href = base + "index" + pageExtension; // Use lowercase on name for case-sensitive servers
+        else
+            top.location.href = base + "Index" + pageExtension; // Use lowercase on name for case-sensitive servers
     }
 
     return url;
