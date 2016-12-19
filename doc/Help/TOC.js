@@ -235,7 +235,7 @@ function GetCurrentUrl()
             base = base.replace("file://", "file:///");
 
         //if(base.substr(0, 5) == "file:")
-            top.location.href = base + "Index.html";
+            //top.location.href = base + "Index.html";
         //else
             //top.location.href = base + "Index" + pageExtension; // Use lowercase on name for case-sensitive servers
     }
