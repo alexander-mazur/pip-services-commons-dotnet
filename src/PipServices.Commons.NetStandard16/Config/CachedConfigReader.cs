@@ -26,7 +26,7 @@ namespace PipServices.Commons.Config
 
         public ConfigParams ReadConfig(string correlationId)
         {
-            if (_config != null && Environment.TickCount > _lastRead + Timeout)
+            if (_config != null && Environment.TickCount < _lastRead + Timeout)
                 return _config;
 
             _config = PerformReadConfig(correlationId);
