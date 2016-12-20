@@ -15,7 +15,7 @@
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>..\..\doc\api\</OutputPath>
-    <HtmlHelpName>Pip.Services.Documents</HtmlHelpName>
+    <HtmlHelpName>PipServices.Commons.Documents</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
       <Argument Key="logoFile" Value="Help.png" xmlns="" />
