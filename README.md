@@ -26,7 +26,7 @@ over most fundamental functions and delivers symmetric implementation that can b
 Quick Links:
 
 * [Downloads](https://github.com/pip-services/pip-services-commons-dotnet/blob/master/doc/Downloads.md)
-* [API Reference](http://htmlpreview.github.io/?https://raw.githubusercontent.com/pip-services/pip-services-commons-dotnet/master/doc/Api/Index.html)
+* [API Reference](http://htmlpreview.github.io/?https://raw.githubusercontent.com/pip-services/pip-services-commons-dotnet/master/doc/api/index.html)
 * [Building and Testing](https://github.com/pip-services/pip-services-commons-dotnet/blob/master/doc/Development.md)
 * [Contributing](https://github.com/pip-services/pip-services-commons-dotnet/blob/master/doc/Development.md/#contrib)
 
