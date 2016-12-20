@@ -9,6 +9,9 @@ namespace PipServices.Commons.Test.Log
         private CompositeLogger Log { get; set; }
         private LoggerFixture Fixture { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompositeLoggerTest"/> class.
+        /// </summary>
         public CompositeLoggerTest()
         {
             Log = new CompositeLogger();
