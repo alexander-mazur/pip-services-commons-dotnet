@@ -14,7 +14,7 @@
     <Name>PipServices.Commons.Documents</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>..\..\doc\help\</OutputPath>
+    <OutputPath>..\..\doc\api\</OutputPath>
     <HtmlHelpName>Pip.Services.Documents</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
