@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="05051a2b-2c6e-4253-8ee0-dff53a879e66" visible="True" isDefault="true" isSelected="true" title="Welcome to the [TODO: Add project name]">
+  <Topic id="05051a2b-2c6e-4253-8ee0-dff53a879e66" visible="True" isDefault="true" title="Welcome to the PipServices.Commons">
     <HelpKeywords>
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
@@ -9,7 +9,7 @@
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
-    <Topic id="9d03b340-1f1e-4f14-953e-581fcbceedc5" visible="True" title="Version 1.0.0.0">
+    <Topic id="9d03b340-1f1e-4f14-953e-581fcbceedc5" visible="True" isSelected="true" title="Version 1.0.34">
       <HelpKeywords>
         <HelpKeyword index="K" term="version, 1.0.0.0" />
       </HelpKeywords>
