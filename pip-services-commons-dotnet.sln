@@ -7,12 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FBC4A4C1-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5B56EFFF-C7C8-48DA-AC4D-7CA27A928D1F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D144AE02-95C7-46D1-A572-EBEE08FA4EBF}"
-	ProjectSection(SolutionItems) = preProject
-		doc\Development.md = doc\Development.md
-		doc\Downloads.md = doc\Downloads.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A7F95F1-9A0E-4F25-AA94-E0DE51528B21}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
@@ -31,9 +25,9 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PipServices.Commons.NetStan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipServices.Commons.Net45.Test", "test\PipServices.Commons.Net45.Test\PipServices.Commons.Net45.Test.csproj", "{9B5D4044-052B-47DA-B9B4-EF7089CF2D29}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Help", "doc\Help\Help.xproj", "{195131DB-8DD2-4809-84A1-92A53498FB3E}"
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "PipServices.Commons.Documents", "src\PipServices.Commons.Documents\PipServices.Commons.Documents.shfbproj", "{58976CB8-0A4B-4238-87F2-272FFEE0BF12}"
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "help1", "help1\help1.shfbproj", "{58976CB8-0A4B-4238-87F2-272FFEE0BF12}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "doc", "doc\doc.xproj", "{BCBD8559-1D56-492F-8483-35E3D5BCEC7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +51,14 @@ Global
 		{9B5D4044-052B-47DA-B9B4-EF7089CF2D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B5D4044-052B-47DA-B9B4-EF7089CF2D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B5D4044-052B-47DA-B9B4-EF7089CF2D29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{195131DB-8DD2-4809-84A1-92A53498FB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{195131DB-8DD2-4809-84A1-92A53498FB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{195131DB-8DD2-4809-84A1-92A53498FB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{195131DB-8DD2-4809-84A1-92A53498FB3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58976CB8-0A4B-4238-87F2-272FFEE0BF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58976CB8-0A4B-4238-87F2-272FFEE0BF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58976CB8-0A4B-4238-87F2-272FFEE0BF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58976CB8-0A4B-4238-87F2-272FFEE0BF12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCBD8559-1D56-492F-8483-35E3D5BCEC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCBD8559-1D56-492F-8483-35E3D5BCEC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCBD8559-1D56-492F-8483-35E3D5BCEC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCBD8559-1D56-492F-8483-35E3D5BCEC7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,7 +68,6 @@ Global
 		{C0DBD324-390F-4490-BF56-E778241D514D} = {5B56EFFF-C7C8-48DA-AC4D-7CA27A928D1F}
 		{5083F30E-E533-4AF0-B5E8-26E06655AF8D} = {FBC4A4C1-2181-4FAC-9413-C60C31DF9359}
 		{9B5D4044-052B-47DA-B9B4-EF7089CF2D29} = {FBC4A4C1-2181-4FAC-9413-C60C31DF9359}
-		{195131DB-8DD2-4809-84A1-92A53498FB3E} = {D144AE02-95C7-46D1-A572-EBEE08FA4EBF}
-		{58976CB8-0A4B-4238-87F2-272FFEE0BF12} = {D144AE02-95C7-46D1-A572-EBEE08FA4EBF}
+		{58976CB8-0A4B-4238-87F2-272FFEE0BF12} = {5B56EFFF-C7C8-48DA-AC4D-7CA27A928D1F}
 	EndGlobalSection
 EndGlobal
