@@ -82,8 +82,10 @@
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\doc\ReadMe.txt">
+      <Link>ReadMe.txt</Link>
+    </Content>
     <Content Include="icons\Help.png" />
-    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
