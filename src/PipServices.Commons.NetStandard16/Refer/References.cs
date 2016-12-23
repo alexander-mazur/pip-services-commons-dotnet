@@ -192,5 +192,15 @@ namespace PipServices.Commons.Refer
             return new References(components);
         }
 
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
+        public void Clear()
+        {
+            lock (_lock)
+            {
+                _references.Clear();
+            }
+        }
     }
 }

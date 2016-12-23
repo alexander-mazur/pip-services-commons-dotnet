@@ -28,11 +28,18 @@ namespace PipServices.Commons.Refer
             await Opener.OpenComponentsAsync(correlationId, components);
         }
 
+        /// <summary>
+        /// close all references as an asynchronous operation.
+        /// </summary>
+        /// <param name="correlationId">a unique transaction id to trace calls across components</param>
+        /// <returns>Task.</returns>
         public async Task CloseAsync(string correlationId)
         {
             var components = _references.GetAll();
             await Closer.CloseComponentsAsync(correlationId, components);
             Referencer.UnsetReferencesForComponents(components);
+
+            _references.Clear();
         }
     }
 }

@@ -415,7 +415,10 @@
   </HelpKINode>
   <HelpKINode Title="Cleaner.Cleaner constructor" Url="html/M_PipServices_Commons_Run_Cleaner__ctor.htm" />
   <HelpKINode Title="Cleaner.ClearComponentsAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearComponentsAsync.htm" />
-  <HelpKINode Title="Clear method" Url="html/M_PipServices_Commons_Count_CachedCounters_Clear.htm" />
+  <HelpKINode Title="Clear method">
+    <HelpKINode Title="CachedCounters.Clear Method " Url="html/M_PipServices_Commons_Count_CachedCounters_Clear.htm" />
+    <HelpKINode Title="References.Clear Method " Url="html/M_PipServices_Commons_Refer_References_Clear.htm" />
+  </HelpKINode>
   <HelpKINode Title="ClearAll method" Url="html/M_PipServices_Commons_Count_CachedCounters_ClearAll.htm" />
   <HelpKINode Title="ClearAsync method">
     <HelpKINode Title="ICleanable.ClearAsync Method " Url="html/M_PipServices_Commons_Run_ICleanable_ClearAsync.htm" />
@@ -2877,6 +2880,7 @@
     <HelpKINode Title="fields" Url="html/Fields_T_PipServices_Commons_Refer_References.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Refer_References.htm" />
   </HelpKINode>
+  <HelpKINode Title="References.Clear method" Url="html/M_PipServices_Commons_Refer_References_Clear.htm" />
   <HelpKINode Title="References.Find method" Url="html/Overload_PipServices_Commons_Refer_References_Find.htm" />
   <HelpKINode Title="References.FromList method" Url="html/M_PipServices_Commons_Refer_References_FromList.htm" />
   <HelpKINode Title="References.GetAll method" Url="html/M_PipServices_Commons_Refer_References_GetAll.htm" />
