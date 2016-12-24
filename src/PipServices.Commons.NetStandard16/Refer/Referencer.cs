@@ -12,7 +12,7 @@ namespace PipServices.Commons.Refer
         /// </summary>
         /// <param name="references">references to be assigned</param>
         /// <param name="component">a component to assign references</param>
-        public static void SetReferencesForComponent(IReferences references, object component)
+        public static void SetReferencesForOne(IReferences references, object component)
         {
             var referenceable = component as IReferenceable;
             if (referenceable != null)
@@ -24,29 +24,18 @@ namespace PipServices.Commons.Refer
         /// </summary>
         /// <param name="references">references to be assigned</param>
         /// <param name="components">a list of components to assign references</param>
-        public static void SetReferencesForComponents(IReferences references, IEnumerable components = null)
+        public static void SetReferences(IReferences references, IEnumerable components = null)
         {
             components = components ?? references.GetAll();
             foreach (var component in components)
-                SetReferencesForComponent(references, component);
-        }
-
-        /// <summary>
-        /// Assigns references to components that implement IReferenceable interface
-        /// </summary>
-        /// <param name="references">references to be assigned</param>
-        public static void SetReferences(IReferences references)
-        {
-            var components = references.GetAll();
-            foreach (var component in components)
-                SetReferencesForComponent(references, component);
+                SetReferencesForOne(references, component);
         }
 
         /// <summary>
         /// Clears references for component that implement IUnreferenceable interface 
         /// </summary>
         /// <param name="component">a components to clear references</param>
-        public static void UnsetReferencesForComponent(object component)
+        public static void UnsetReferencesForOne(object component)
         {
             var unreferenceable = component as IUnreferenceable;
             if (unreferenceable != null)
@@ -57,10 +46,10 @@ namespace PipServices.Commons.Refer
         /// Clears references for components that implement IUnreferenceable interface 
         /// </summary>
         /// <param name="components">a list of components to clear references</param>
-        public static void UnsetReferencesForComponents(IEnumerable components)
+        public static void UnsetReferences(IEnumerable components)
         {
             foreach (var component in components)
-                UnsetReferencesForComponent(component);
+                UnsetReferencesForOne(component);
         }
 
         /// <summary>
@@ -71,7 +60,7 @@ namespace PipServices.Commons.Refer
         {
             var components = references.GetAll();
             foreach (var component in components)
-                UnsetReferencesForComponent(component);
+                UnsetReferencesForOne(component);
         }
 
     }

@@ -8,7 +8,7 @@ namespace PipServices.Commons.Commands
 {
     public sealed class CommandTest
     {
-        private class CommandExec : IParamExecutable
+        private class CommandExec : IExecutable
         {
             public Task<object> ExecuteAsync(string correlationId, Parameters args)
             {

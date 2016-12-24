@@ -10,44 +10,36 @@ namespace PipServices.Commons.Run
     public class Executor
     {
         /// <summary>
-        /// Triggers execution for components that implement IExecutable and IParamExecutable interfaces.
-        /// IParamExecutable components receive an empty parameter set
+        /// Triggers execution for component that implement IExecutable interface.
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
-        /// <param name="components">a list of components to be executed</param>
+        /// <param name="component">a component to be executed</param>
+        /// <param name="args">a set of parameters to pass to executed components</param>
         /// <returns>execution results</returns>
-        public static async Task<List<object>> ExecuteComponentsAsync(string correlationId, IEnumerable components)
+        public static async Task<object> ExecuteOneAsync(string correlationId, object component, Parameters args)
         {
-            return await ExecuteComponentsAsync(correlationId, components, new Parameters());
+            var executable = component as IExecutable;
+            if (executable != null)
+                return await executable.ExecuteAsync(correlationId, args);
+            else return null;
         }
 
         /// <summary>
-        /// Triggers execution for components that implement IExecutable and IParamExecutable interfaces
-        /// and passes to IParamExecutable them set of parameters.
+        /// Triggers execution for components that implement IExecutabl interfaces.
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be executed</param>
         /// <param name="args">a set of parameters to pass to executed components</param>
         /// <returns>execution results</returns>
-        public static async Task<List<object>> ExecuteComponentsAsync(
-            string correlationId, IEnumerable components, Parameters parameters)
+        public static async Task<List<object>> ExecuteAsync(string correlationId, IEnumerable components, Parameters args)
         {
             var results = new List<object>();
             if (components == null) return results;
 
             foreach (var component in components)
             {
-                var executable = component as IExecutable;
-                if (executable != null)
-                {
-                    results.Add(await executable.ExecuteAsync(correlationId));
-                }
-                else
-                {
-                    var paramExecutable = component as IParamExecutable;
-                    if (paramExecutable != null)
-                        results.Add(await paramExecutable.ExecuteAsync(correlationId, parameters));
-                }
+                if (component is IExecutable)
+                    results.Add(await ExecuteOneAsync(correlationId, component, args));
             }
 
             return results;

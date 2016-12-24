@@ -17,7 +17,7 @@ namespace PipServices.Commons.Refer
             base.Put(component, locator);
 
             if (LinkEnabled)
-                Referencer.SetReferencesForComponent(ParentReferences, component);
+                Referencer.SetReferencesForOne(ParentReferences, component);
         }
 
         public override object Remove(object locator)
@@ -25,7 +25,7 @@ namespace PipServices.Commons.Refer
             var component = base.Remove(locator);
 
             if (LinkEnabled)
-                Referencer.UnsetReferencesForComponent(component);
+                Referencer.UnsetReferencesForOne(component);
 
             return component;
         }
@@ -35,7 +35,7 @@ namespace PipServices.Commons.Refer
             var components = base.RemoveAll(locator);
 
             if (LinkEnabled)
-                Referencer.UnsetReferencesForComponents(components);
+                Referencer.UnsetReferences(components);
 
             return components;
         }

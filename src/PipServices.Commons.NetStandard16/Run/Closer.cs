@@ -14,7 +14,7 @@ namespace PipServices.Commons.Run
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="component">a list of components to be closed</param>
         /// <returns></returns>
-        public static async Task CloseComponentAsync(string correlationId, object component)
+        public static async Task CloseOneAsync(string correlationId, object component)
         {
             var closable = component as IClosable;
             if (closable != null)
@@ -27,12 +27,12 @@ namespace PipServices.Commons.Run
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be closed</param>
         /// <returns></returns>
-        public static async Task CloseComponentsAsync(string correlationId, IEnumerable components)
+        public static async Task CloseAsync(string correlationId, IEnumerable components)
         {
             if (components == null) return;
 
             foreach (var component in components)
-                await CloseComponentAsync(correlationId, component);
+                await CloseOneAsync(correlationId, component);
         }
     }
 }

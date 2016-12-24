@@ -6,7 +6,7 @@ namespace PipServices.Commons.Commands
     /// <summary>
     /// Interface for command events.
     /// </summary>
-    public interface IEvent : IParamNotifiable
+    public interface IEvent : INotifiable
     {
         /// <summary>
         /// Gets the event name.

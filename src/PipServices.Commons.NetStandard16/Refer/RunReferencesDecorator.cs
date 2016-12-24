@@ -20,7 +20,7 @@ namespace PipServices.Commons.Refer
             base.Put(component, locator);
 
             if (OpenEnabled)
-                Opener.OpenComponentAsync(null, component).Wait();
+                Opener.OpenOneAsync(null, component).Wait();
         }
 
         public override object Remove(object locator)
@@ -28,7 +28,7 @@ namespace PipServices.Commons.Refer
             var component = base.Remove(locator);
 
             if (CloseEnabled)
-                Closer.CloseComponentAsync(null, component).Wait();
+                Closer.CloseOneAsync(null, component).Wait();
 
             return component;
         }
@@ -38,7 +38,7 @@ namespace PipServices.Commons.Refer
             var components = base.RemoveAll(locator);
 
             if (CloseEnabled)
-                Closer.CloseComponentsAsync(null, components).Wait();
+                Closer.CloseAsync(null, components).Wait();
 
             return components;
         }

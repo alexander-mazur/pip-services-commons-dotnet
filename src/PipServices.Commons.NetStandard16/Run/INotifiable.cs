@@ -3,15 +3,15 @@
 namespace PipServices.Commons.Run
 {
     /// <summary>
-    /// Interface for active components that can be notified (called without expecting a result).
-    /// In contrast to IParamNotifiable this interface does not require parameters
+    /// Interface for components that support parameterized one-way notification
     /// </summary>
     public interface INotifiable
     {
         /// <summary>
-        /// Executes a unit of work
+        /// Executes a unit of work with given parameters
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
-        Task NotifyAsync(string correlationId);
+        /// <param name="args">a set of parameters for execution</param>
+        Task NotifyAsync(string correlationId, Parameters args);
     }
 }

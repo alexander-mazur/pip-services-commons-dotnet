@@ -24,8 +24,8 @@ namespace PipServices.Commons.Refer
         public async Task OpenAsync(string correlationId)
         {
             var components = _references.GetAll();
-            Referencer.SetReferencesForComponents(this, components);
-            await Opener.OpenComponentsAsync(correlationId, components);
+            Referencer.SetReferences(this, components);
+            await Opener.OpenAsync(correlationId, components);
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace PipServices.Commons.Refer
         public async Task CloseAsync(string correlationId)
         {
             var components = _references.GetAll();
-            await Closer.CloseComponentsAsync(correlationId, components);
-            Referencer.UnsetReferencesForComponents(components);
+            await Closer.CloseAsync(correlationId, components);
+            Referencer.UnsetReferences(components);
 
             _references.Clear();
         }

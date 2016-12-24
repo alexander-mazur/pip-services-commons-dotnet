@@ -509,12 +509,6 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParameterized.cs">
       <Link>Run\IParameterized.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParamExecutable.cs">
-      <Link>Run\IParamExecutable.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Run\IParamNotifiable.cs">
-      <Link>Run\IParamNotifiable.cs</Link>
-    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Run\Notifier.cs">
       <Link>Run\Notifier.cs</Link>
     </Compile>

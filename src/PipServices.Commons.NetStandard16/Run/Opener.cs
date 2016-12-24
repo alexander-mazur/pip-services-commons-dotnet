@@ -13,7 +13,7 @@ namespace PipServices.Commons.Run
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="component">a components to be opened</param>
-        public static async Task OpenComponentAsync(string correlationId, object component)
+        public static async Task OpenOneAsync(string correlationId, object component)
         {
             var openable = component as IOpenable;
             if (openable != null)
@@ -25,12 +25,12 @@ namespace PipServices.Commons.Run
         /// </summary>
         /// <param name="correlationId">a unique transaction id to trace calls across components</param>
         /// <param name="components">a list of components to be opened</param>
-        public static async Task OpenComponentsAsync(string correlationId, IEnumerable components)
+        public static async Task OpenAsync(string correlationId, IEnumerable components)
         {
             if (components == null) return;
 
             foreach (var component in components)
-                await OpenComponentAsync(correlationId, component);
+                await OpenOneAsync(correlationId, component);
         }
     }
 }

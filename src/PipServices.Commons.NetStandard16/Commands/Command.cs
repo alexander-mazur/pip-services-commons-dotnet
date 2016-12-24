@@ -13,7 +13,7 @@ namespace PipServices.Commons.Commands
     public class Command : ICommand
     {
         private readonly Schema _schema;
-        private readonly IParamExecutable _function;
+        private readonly IExecutable _function;
 
         /// <summary>
         /// Creates an instance of Command.
@@ -21,7 +21,7 @@ namespace PipServices.Commons.Commands
         /// <param name="name">Name of the command.</param>
         /// <param name="schema">Schema for command arguments.</param>
         /// <param name="function">Execution function wrapped in this command.</param>
-        public Command(string name, Schema schema, IParamExecutable function)
+        public Command(string name, Schema schema, IExecutable function)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));

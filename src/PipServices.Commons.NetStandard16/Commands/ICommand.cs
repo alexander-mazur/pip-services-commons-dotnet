@@ -7,7 +7,7 @@ namespace PipServices.Commons.Commands
     /// <summary>
     /// Interface for commands that execute functional operations.
     /// </summary>
-    public interface ICommand : IParamExecutable
+    public interface ICommand : IExecutable
     {
         /// <summary>
         /// Gets the name of the command.
