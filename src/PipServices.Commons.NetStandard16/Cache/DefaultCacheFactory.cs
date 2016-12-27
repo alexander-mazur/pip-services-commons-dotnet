@@ -3,11 +3,15 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Cache
 {
+    /// <summary>
+    /// Class DefaultCacheFactory.
+    /// </summary>
+    /// <seealso cref="PipServices.Commons.Build.IFactory" />
+    /// <seealso cref="PipServices.Commons.Refer.IDescriptable" />
     public class DefaultCacheFactory : IFactory, IDescriptable
     {
-        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "cache", "*", "1.0");
-        private static readonly Descriptor NullCacheDescriptor = new Descriptor("pip-services-common", "cache", "null", "*", "1.0");
-        private static readonly Descriptor MemoryCacheDescriptor = new Descriptor("pip-services-common", "cache", "memory", "*", "1.0");
+        private static Descriptor Descriptor { get; } = new Descriptor("pip-services-commons", "factory", "cache", "*", "1.0")
+            ;
 
         public bool CanCreate(object locator)
         {
@@ -16,10 +20,10 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCacheDescriptor))
+            if (descriptor.Match(NullCache.Descriptor))
                 return true;
 
-            if (descriptor.Match(MemoryCacheDescriptor))
+            if (descriptor.Match(MemoryCache.Descriptor))
                 return true;
 
             return false;
@@ -32,10 +36,10 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return null;
 
-            if (descriptor.Match(NullCacheDescriptor))
+            if (descriptor.Match(NullCache.Descriptor))
                 return new NullCache();
 
-            if (descriptor.Match(MemoryCacheDescriptor))
+            if (descriptor.Match(MemoryCache.Descriptor))
                 return new MemoryCache(descriptor.Name);
 
             return null;
@@ -43,7 +47,7 @@ namespace PipServices.Commons.Cache
 
         public Descriptor GetDescriptor()
         {
-            return ThisDescriptor;
+            return Descriptor;
         }
     }
 }

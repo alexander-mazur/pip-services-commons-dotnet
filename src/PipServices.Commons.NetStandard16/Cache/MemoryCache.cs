@@ -20,6 +20,17 @@ namespace PipServices.Commons.Cache
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private readonly object _lock = new object();
 
+        /// <summary>
+        /// Gets the descriptor.
+        /// </summary>
+        /// <value>The descriptor.</value>
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory", "default", "1.0");
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryCache"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="config">The configuration.</param>
         public MemoryCache(string name = null, ConfigParams config = null)
         {
             Name = name;
@@ -50,7 +61,7 @@ namespace PipServices.Commons.Cache
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public virtual Descriptor GetDescriptor()
         {
-            return new Descriptor("pip-services-common", "cache", "memory", Name ?? "default", "1.0");
+            return Descriptor;
         }
 
         private void Cleanup()

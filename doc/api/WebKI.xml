@@ -414,17 +414,19 @@
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Cleaner.htm" />
   </HelpKINode>
   <HelpKINode Title="Cleaner.Cleaner constructor" Url="html/M_PipServices_Commons_Run_Cleaner__ctor.htm" />
-  <HelpKINode Title="Cleaner.ClearComponentsAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearComponentsAsync.htm" />
+  <HelpKINode Title="Cleaner.ClearAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearAsync.htm" />
+  <HelpKINode Title="Cleaner.ClearOneAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearOneAsync.htm" />
   <HelpKINode Title="Clear method">
     <HelpKINode Title="CachedCounters.Clear Method " Url="html/M_PipServices_Commons_Count_CachedCounters_Clear.htm" />
     <HelpKINode Title="References.Clear Method " Url="html/M_PipServices_Commons_Refer_References_Clear.htm" />
   </HelpKINode>
   <HelpKINode Title="ClearAll method" Url="html/M_PipServices_Commons_Count_CachedCounters_ClearAll.htm" />
   <HelpKINode Title="ClearAsync method">
+    <HelpKINode Title="Cleaner.ClearAsync Method " Url="html/M_PipServices_Commons_Run_Cleaner_ClearAsync.htm" />
     <HelpKINode Title="ICleanable.ClearAsync Method " Url="html/M_PipServices_Commons_Run_ICleanable_ClearAsync.htm" />
     <HelpKINode Title="MemoryCache.ClearAsync Method " Url="html/M_PipServices_Commons_Cache_MemoryCache_ClearAsync.htm" />
   </HelpKINode>
-  <HelpKINode Title="ClearComponentsAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearComponentsAsync.htm" />
+  <HelpKINode Title="ClearOneAsync method" Url="html/M_PipServices_Commons_Run_Cleaner_ClearOneAsync.htm" />
   <HelpKINode Title="Clone method">
     <HelpKINode Title="AnyValue.Clone Method " Url="html/M_PipServices_Commons_Data_AnyValue_Clone.htm" />
     <HelpKINode Title="AnyValueArray.Clone Method " Url="html/M_PipServices_Commons_Data_AnyValueArray_Clone.htm" />
@@ -433,20 +435,20 @@
     <HelpKINode Title="StringValueMap.Clone Method " Url="html/M_PipServices_Commons_Data_StringValueMap_Clone.htm" />
   </HelpKINode>
   <HelpKINode Title="CloseAsync method">
+    <HelpKINode Title="Closer.CloseAsync Method " Url="html/M_PipServices_Commons_Run_Closer_CloseAsync.htm" />
     <HelpKINode Title="IClosable.CloseAsync Method " Url="html/M_PipServices_Commons_Run_IClosable_CloseAsync.htm" />
     <HelpKINode Title="ManagedReferences.CloseAsync Method " Url="html/M_PipServices_Commons_Refer_ManagedReferences_CloseAsync.htm" />
   </HelpKINode>
-  <HelpKINode Title="CloseComponentAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseComponentAsync.htm" />
-  <HelpKINode Title="CloseComponentsAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseComponentsAsync.htm" />
   <HelpKINode Title="CloseEnabled property" Url="html/P_PipServices_Commons_Refer_RunReferencesDecorator_CloseEnabled.htm" />
+  <HelpKINode Title="CloseOneAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseOneAsync.htm" />
   <HelpKINode Title="Closer class">
     <HelpKINode Title="Closer Class" Url="html/T_PipServices_Commons_Run_Closer.htm" />
     <HelpKINode Title="about Closer class" Url="html/T_PipServices_Commons_Run_Closer.htm" />
     <HelpKINode Title="constructor" Url="html/M_PipServices_Commons_Run_Closer__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Closer.htm" />
   </HelpKINode>
-  <HelpKINode Title="Closer.CloseComponentAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseComponentAsync.htm" />
-  <HelpKINode Title="Closer.CloseComponentsAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseComponentsAsync.htm" />
+  <HelpKINode Title="Closer.CloseAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseAsync.htm" />
+  <HelpKINode Title="Closer.CloseOneAsync method" Url="html/M_PipServices_Commons_Run_Closer_CloseOneAsync.htm" />
   <HelpKINode Title="Closer.Closer constructor" Url="html/M_PipServices_Commons_Run_Closer__ctor.htm" />
   <HelpKINode Title="Code property">
     <HelpKINode Title="ApplicationException.Code Property " Url="html/P_PipServices_Commons_Errors_ApplicationException_Code.htm" />
@@ -531,7 +533,7 @@
     <HelpKINode Title="properties" Url="html/Properties_T_PipServices_Commons_Log_CompositeLogger.htm" />
   </HelpKINode>
   <HelpKINode Title="CompositeLogger.CompositeLogger constructor" Url="html/M_PipServices_Commons_Log_CompositeLogger__ctor.htm" />
-  <HelpKINode Title="CompositeLogger.Descriptor field" Url="html/F_PipServices_Commons_Log_CompositeLogger_Descriptor.htm" />
+  <HelpKINode Title="CompositeLogger.Descriptor property" Url="html/P_PipServices_Commons_Log_CompositeLogger_Descriptor.htm" />
   <HelpKINode Title="CompositeLogger.GetDescriptor method" Url="html/M_PipServices_Commons_Log_CompositeLogger_GetDescriptor.htm" />
   <HelpKINode Title="CompositeLogger.SetReferences method" Url="html/M_PipServices_Commons_Log_CompositeLogger_SetReferences.htm" />
   <HelpKINode Title="CompositeLogger.Write method" Url="html/M_PipServices_Commons_Log_CompositeLogger_Write.htm" />
@@ -823,15 +825,18 @@
   <HelpKINode Title="Descriptor field">
     <HelpKINode Title="AppSettingsConfigReader.Descriptor Field" Url="html/F_PipServices_Commons_Config_AppSettingsConfigReader_Descriptor.htm" />
     <HelpKINode Title="CompositeCounters.Descriptor Field" Url="html/F_PipServices_Commons_Count_CompositeCounters_Descriptor.htm" />
-    <HelpKINode Title="CompositeLogger.Descriptor Field" Url="html/F_PipServices_Commons_Log_CompositeLogger_Descriptor.htm" />
     <HelpKINode Title="ConnectionStringsConfigReader.Descriptor Field" Url="html/F_PipServices_Commons_Config_ConnectionStringsConfigReader_Descriptor.htm" />
     <HelpKINode Title="ConsoleLogger.Descriptor Field" Url="html/F_PipServices_Commons_Log_ConsoleLogger_Descriptor.htm" />
     <HelpKINode Title="DiagnosticsLogger.Descriptor Field" Url="html/F_PipServices_Commons_Log_DiagnosticsLogger_Descriptor.htm" />
     <HelpKINode Title="EventLogger.Descriptor Field" Url="html/F_PipServices_Commons_Log_EventLogger_Descriptor.htm" />
     <HelpKINode Title="LogCounters.Descriptor Field" Url="html/F_PipServices_Commons_Count_LogCounters_Descriptor.htm" />
-    <HelpKINode Title="NullCache.Descriptor Field" Url="html/F_PipServices_Commons_Cache_NullCache_Descriptor.htm" />
     <HelpKINode Title="NullCounters.Descriptor Field" Url="html/F_PipServices_Commons_Count_NullCounters_Descriptor.htm" />
     <HelpKINode Title="NullLogger.Descriptor Field" Url="html/F_PipServices_Commons_Log_NullLogger_Descriptor.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Descriptor property">
+    <HelpKINode Title="CompositeLogger.Descriptor Property " Url="html/P_PipServices_Commons_Log_CompositeLogger_Descriptor.htm" />
+    <HelpKINode Title="MemoryCache.Descriptor Property " Url="html/P_PipServices_Commons_Cache_MemoryCache_Descriptor.htm" />
+    <HelpKINode Title="NullCache.Descriptor Property " Url="html/P_PipServices_Commons_Cache_NullCache_Descriptor.htm" />
   </HelpKINode>
   <HelpKINode Title="Descriptor.Descriptor constructor" Url="html/M_PipServices_Commons_Refer_Descriptor__ctor.htm" />
   <HelpKINode Title="Descriptor.Equals method" Url="html/M_PipServices_Commons_Refer_Descriptor_Equals.htm" />
@@ -997,19 +1002,20 @@
   <HelpKINode Title="ExecuteAsync method">
     <HelpKINode Title="Command.ExecuteAsync Method " Url="html/M_PipServices_Commons_Commands_Command_ExecuteAsync.htm" />
     <HelpKINode Title="CommandSet.ExecuteAsync Method " Url="html/M_PipServices_Commons_Commands_CommandSet_ExecuteAsync.htm" />
+    <HelpKINode Title="Executor.ExecuteAsync Method " Url="html/M_PipServices_Commons_Run_Executor_ExecuteAsync.htm" />
     <HelpKINode Title="ICommandIntercepter.ExecuteAsync Method " Url="html/M_PipServices_Commons_Commands_ICommandIntercepter_ExecuteAsync.htm" />
     <HelpKINode Title="IExecutable.ExecuteAsync Method " Url="html/M_PipServices_Commons_Run_IExecutable_ExecuteAsync.htm" />
     <HelpKINode Title="InterceptedCommand.ExecuteAsync Method " Url="html/M_PipServices_Commons_Commands_InterceptedCommand_ExecuteAsync.htm" />
-    <HelpKINode Title="IParamExecutable.ExecuteAsync Method " Url="html/M_PipServices_Commons_Run_IParamExecutable_ExecuteAsync.htm" />
   </HelpKINode>
-  <HelpKINode Title="ExecuteComponentsAsync method" Url="html/Overload_PipServices_Commons_Run_Executor_ExecuteComponentsAsync.htm" />
+  <HelpKINode Title="ExecuteOneAsync method" Url="html/M_PipServices_Commons_Run_Executor_ExecuteOneAsync.htm" />
   <HelpKINode Title="Executor class">
     <HelpKINode Title="Executor Class" Url="html/T_PipServices_Commons_Run_Executor.htm" />
     <HelpKINode Title="about Executor class" Url="html/T_PipServices_Commons_Run_Executor.htm" />
     <HelpKINode Title="constructor" Url="html/M_PipServices_Commons_Run_Executor__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Executor.htm" />
   </HelpKINode>
-  <HelpKINode Title="Executor.ExecuteComponentsAsync method" Url="html/Overload_PipServices_Commons_Run_Executor_ExecuteComponentsAsync.htm" />
+  <HelpKINode Title="Executor.ExecuteAsync method" Url="html/M_PipServices_Commons_Run_Executor_ExecuteAsync.htm" />
+  <HelpKINode Title="Executor.ExecuteOneAsync method" Url="html/M_PipServices_Commons_Run_Executor_ExecuteOneAsync.htm" />
   <HelpKINode Title="Executor.Executor constructor" Url="html/M_PipServices_Commons_Run_Executor__ctor.htm" />
   <HelpKINode Title="Expected property" Url="html/P_PipServices_Commons_Validate_ValidationResult_Expected.htm" />
   <HelpKINode Title="Expiration property" Url="html/P_PipServices_Commons_Cache_CacheEntry_Expiration.htm" />
@@ -1766,18 +1772,6 @@
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_IParameterized.htm" />
   </HelpKINode>
   <HelpKINode Title="IParameterized.SetParameters method" Url="html/M_PipServices_Commons_Run_IParameterized_SetParameters.htm" />
-  <HelpKINode Title="IParamExecutable interface">
-    <HelpKINode Title="IParamExecutable Interface" Url="html/T_PipServices_Commons_Run_IParamExecutable.htm" />
-    <HelpKINode Title="about IParamExecutable interface" Url="html/T_PipServices_Commons_Run_IParamExecutable.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_IParamExecutable.htm" />
-  </HelpKINode>
-  <HelpKINode Title="IParamExecutable.ExecuteAsync method" Url="html/M_PipServices_Commons_Run_IParamExecutable_ExecuteAsync.htm" />
-  <HelpKINode Title="IParamNotifiable interface">
-    <HelpKINode Title="IParamNotifiable Interface" Url="html/T_PipServices_Commons_Run_IParamNotifiable.htm" />
-    <HelpKINode Title="about IParamNotifiable interface" Url="html/T_PipServices_Commons_Run_IParamNotifiable.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_IParamNotifiable.htm" />
-  </HelpKINode>
-  <HelpKINode Title="IParamNotifiable.NotifyAsync method" Url="html/M_PipServices_Commons_Run_IParamNotifiable_NotifyAsync.htm" />
   <HelpKINode Title="IProperties interface">
     <HelpKINode Title="IProperties Interface" Url="html/T_PipServices_Commons_Reflect_IProperties.htm" />
     <HelpKINode Title="about IProperties interface" Url="html/T_PipServices_Commons_Reflect_IProperties.htm" />
@@ -2082,6 +2076,7 @@
   </HelpKINode>
   <HelpKINode Title="MemoryCache.ClearAsync method" Url="html/M_PipServices_Commons_Cache_MemoryCache_ClearAsync.htm" />
   <HelpKINode Title="MemoryCache.Configure method" Url="html/M_PipServices_Commons_Cache_MemoryCache_Configure.htm" />
+  <HelpKINode Title="MemoryCache.Descriptor property" Url="html/P_PipServices_Commons_Cache_MemoryCache_Descriptor.htm" />
   <HelpKINode Title="MemoryCache.GetDescriptor method" Url="html/M_PipServices_Commons_Cache_MemoryCache_GetDescriptor.htm" />
   <HelpKINode Title="MemoryCache.MaxSize property" Url="html/P_PipServices_Commons_Cache_MemoryCache_MaxSize.htm" />
   <HelpKINode Title="MemoryCache.MemoryCache constructor" Url="html/M_PipServices_Commons_Cache_MemoryCache__ctor.htm" />
@@ -2209,16 +2204,15 @@
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Notifier.htm" />
   </HelpKINode>
   <HelpKINode Title="Notifier.Notifier constructor" Url="html/M_PipServices_Commons_Run_Notifier__ctor.htm" />
-  <HelpKINode Title="Notifier.NotifyComponentsAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyComponentsAsync.htm" />
-  <HelpKINode Title="Notifier.NotifyComponentsWithParametersAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyComponentsWithParametersAsync.htm" />
+  <HelpKINode Title="Notifier.NotifyAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyAsync.htm" />
+  <HelpKINode Title="Notifier.NotifyOneAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyOneAsync.htm" />
   <HelpKINode Title="NotifyAsync method">
     <HelpKINode Title="CommandSet.NotifyAsync Method " Url="html/M_PipServices_Commons_Commands_CommandSet_NotifyAsync.htm" />
     <HelpKINode Title="Event.NotifyAsync Method " Url="html/M_PipServices_Commons_Commands_Event_NotifyAsync.htm" />
     <HelpKINode Title="INotifiable.NotifyAsync Method " Url="html/M_PipServices_Commons_Run_INotifiable_NotifyAsync.htm" />
-    <HelpKINode Title="IParamNotifiable.NotifyAsync Method " Url="html/M_PipServices_Commons_Run_IParamNotifiable_NotifyAsync.htm" />
+    <HelpKINode Title="Notifier.NotifyAsync Method " Url="html/M_PipServices_Commons_Run_Notifier_NotifyAsync.htm" />
   </HelpKINode>
-  <HelpKINode Title="NotifyComponentsAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyComponentsAsync.htm" />
-  <HelpKINode Title="NotifyComponentsWithParametersAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyComponentsWithParametersAsync.htm" />
+  <HelpKINode Title="NotifyOneAsync method" Url="html/M_PipServices_Commons_Run_Notifier_NotifyOneAsync.htm" />
   <HelpKINode Title="NotRule class">
     <HelpKINode Title="NotRule Class" Url="html/T_PipServices_Commons_Validate_NotRule.htm" />
     <HelpKINode Title="about NotRule class" Url="html/T_PipServices_Commons_Validate_NotRule.htm" />
@@ -2231,10 +2225,10 @@
     <HelpKINode Title="NullCache Class" Url="html/T_PipServices_Commons_Cache_NullCache.htm" />
     <HelpKINode Title="about NullCache class" Url="html/T_PipServices_Commons_Cache_NullCache.htm" />
     <HelpKINode Title="constructor" Url="html/M_PipServices_Commons_Cache_NullCache__ctor.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_PipServices_Commons_Cache_NullCache.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Cache_NullCache.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_PipServices_Commons_Cache_NullCache.htm" />
   </HelpKINode>
-  <HelpKINode Title="NullCache.Descriptor field" Url="html/F_PipServices_Commons_Cache_NullCache_Descriptor.htm" />
+  <HelpKINode Title="NullCache.Descriptor property" Url="html/P_PipServices_Commons_Cache_NullCache_Descriptor.htm" />
   <HelpKINode Title="NullCache.GetDescriptor method" Url="html/M_PipServices_Commons_Cache_NullCache_GetDescriptor.htm" />
   <HelpKINode Title="NullCache.NullCache constructor" Url="html/M_PipServices_Commons_Cache_NullCache__ctor.htm" />
   <HelpKINode Title="NullCache.RemoveAsync method" Url="html/M_PipServices_Commons_Cache_NullCache_RemoveAsync.htm" />
@@ -2346,9 +2340,8 @@
   <HelpKINode Title="OpenAsync method">
     <HelpKINode Title="IOpenable.OpenAsync Method " Url="html/M_PipServices_Commons_Run_IOpenable_OpenAsync.htm" />
     <HelpKINode Title="ManagedReferences.OpenAsync Method " Url="html/M_PipServices_Commons_Refer_ManagedReferences_OpenAsync.htm" />
+    <HelpKINode Title="Opener.OpenAsync Method " Url="html/M_PipServices_Commons_Run_Opener_OpenAsync.htm" />
   </HelpKINode>
-  <HelpKINode Title="OpenComponentAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenComponentAsync.htm" />
-  <HelpKINode Title="OpenComponentsAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenComponentsAsync.htm" />
   <HelpKINode Title="OpenEnabled property" Url="html/P_PipServices_Commons_Refer_RunReferencesDecorator_OpenEnabled.htm" />
   <HelpKINode Title="Opener class">
     <HelpKINode Title="Opener Class" Url="html/T_PipServices_Commons_Run_Opener.htm" />
@@ -2356,9 +2349,10 @@
     <HelpKINode Title="constructor" Url="html/M_PipServices_Commons_Run_Opener__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Opener.htm" />
   </HelpKINode>
-  <HelpKINode Title="Opener.OpenComponentAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenComponentAsync.htm" />
-  <HelpKINode Title="Opener.OpenComponentsAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenComponentsAsync.htm" />
+  <HelpKINode Title="Opener.OpenAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenAsync.htm" />
   <HelpKINode Title="Opener.Opener constructor" Url="html/M_PipServices_Commons_Run_Opener__ctor.htm" />
+  <HelpKINode Title="Opener.OpenOneAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenOneAsync.htm" />
+  <HelpKINode Title="OpenOneAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenOneAsync.htm" />
   <HelpKINode Title="OptionsResolver class">
     <HelpKINode Title="OptionsResolver Class" Url="html/T_PipServices_Commons_Config_OptionsResolver.htm" />
     <HelpKINode Title="about OptionsResolver class" Url="html/T_PipServices_Commons_Config_OptionsResolver.htm" />
@@ -2616,8 +2610,6 @@
   <HelpKINode Title="PipServices.Commons.Run.INotifiable interface" Url="html/T_PipServices_Commons_Run_INotifiable.htm" />
   <HelpKINode Title="PipServices.Commons.Run.IOpenable interface" Url="html/T_PipServices_Commons_Run_IOpenable.htm" />
   <HelpKINode Title="PipServices.Commons.Run.IParameterized interface" Url="html/T_PipServices_Commons_Run_IParameterized.htm" />
-  <HelpKINode Title="PipServices.Commons.Run.IParamExecutable interface" Url="html/T_PipServices_Commons_Run_IParamExecutable.htm" />
-  <HelpKINode Title="PipServices.Commons.Run.IParamNotifiable interface" Url="html/T_PipServices_Commons_Run_IParamNotifiable.htm" />
   <HelpKINode Title="PipServices.Commons.Run.Notifier class" Url="html/T_PipServices_Commons_Run_Notifier.htm" />
   <HelpKINode Title="PipServices.Commons.Run.Opener class" Url="html/T_PipServices_Commons_Run_Opener.htm" />
   <HelpKINode Title="PipServices.Commons.Run.Parameters class" Url="html/T_PipServices_Commons_Run_Parameters.htm" />
@@ -2868,11 +2860,9 @@
   </HelpKINode>
   <HelpKINode Title="Referencer.Referencer constructor" Url="html/M_PipServices_Commons_Refer_Referencer__ctor.htm" />
   <HelpKINode Title="Referencer.SetReferences method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferences.htm" />
-  <HelpKINode Title="Referencer.SetReferencesForComponent method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForComponent.htm" />
-  <HelpKINode Title="Referencer.SetReferencesForComponents method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForComponents.htm" />
-  <HelpKINode Title="Referencer.UnsetReferences method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferences.htm" />
-  <HelpKINode Title="Referencer.UnsetReferencesForComponent method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForComponent.htm" />
-  <HelpKINode Title="Referencer.UnsetReferencesForComponents method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForComponents.htm" />
+  <HelpKINode Title="Referencer.SetReferencesForOne method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForOne.htm" />
+  <HelpKINode Title="Referencer.UnsetReferences method" Url="html/Overload_PipServices_Commons_Refer_Referencer_UnsetReferences.htm" />
+  <HelpKINode Title="Referencer.UnsetReferencesForOne method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForOne.htm" />
   <HelpKINode Title="References class">
     <HelpKINode Title="References Class" Url="html/T_PipServices_Commons_Refer_References.htm" />
     <HelpKINode Title="about References class" Url="html/T_PipServices_Commons_Refer_References.htm" />
@@ -3038,8 +3028,7 @@
     <HelpKINode Title="LogCounters.SetReferences Method " Url="html/M_PipServices_Commons_Count_LogCounters_SetReferences.htm" />
     <HelpKINode Title="Referencer.SetReferences Method " Url="html/M_PipServices_Commons_Refer_Referencer_SetReferences.htm" />
   </HelpKINode>
-  <HelpKINode Title="SetReferencesForComponent method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForComponent.htm" />
-  <HelpKINode Title="SetReferencesForComponents method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForComponents.htm" />
+  <HelpKINode Title="SetReferencesForOne method" Url="html/M_PipServices_Commons_Refer_Referencer_SetReferencesForOne.htm" />
   <HelpKINode Title="SetValue method" Url="html/M_PipServices_Commons_Cache_CacheEntry_SetValue.htm" />
   <HelpKINode Title="Skip property" Url="html/P_PipServices_Commons_Data_PagingParams_Skip.htm" />
   <HelpKINode Title="SortField class">
@@ -3371,10 +3360,9 @@
   <HelpKINode Title="UnknownException.UnknownException constructor" Url="html/Overload_PipServices_Commons_Errors_UnknownException__ctor.htm" />
   <HelpKINode Title="UnsetReferences method">
     <HelpKINode Title="IUnreferenceable.UnsetReferences Method " Url="html/M_PipServices_Commons_Refer_IUnreferenceable_UnsetReferences.htm" />
-    <HelpKINode Title="Referencer.UnsetReferences Method " Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferences.htm" />
+    <HelpKINode Title="Referencer.UnsetReferences Method " Url="html/Overload_PipServices_Commons_Refer_Referencer_UnsetReferences.htm" />
   </HelpKINode>
-  <HelpKINode Title="UnsetReferencesForComponent method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForComponent.htm" />
-  <HelpKINode Title="UnsetReferencesForComponents method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForComponents.htm" />
+  <HelpKINode Title="UnsetReferencesForOne method" Url="html/M_PipServices_Commons_Refer_Referencer_UnsetReferencesForOne.htm" />
   <HelpKINode Title="Unsupported field" Url="html/F_PipServices_Commons_Errors_ErrorCategory_Unsupported.htm" />
   <HelpKINode Title="UnsupportedException class">
     <HelpKINode Title="UnsupportedException Class" Url="html/T_PipServices_Commons_Errors_UnsupportedException.htm" />

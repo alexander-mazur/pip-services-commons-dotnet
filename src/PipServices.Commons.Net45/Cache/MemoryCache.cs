@@ -18,9 +18,20 @@ namespace PipServices.Commons.Cache
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
 
+        /// <summary>
+        /// Gets the descriptor.
+        /// </summary>
+        /// <value>The descriptor.</value>
+        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory", "default", "1.0");
+
         private readonly System.Runtime.Caching.MemoryCache _standardCache = System.Runtime.Caching.MemoryCache.Default;
         private readonly object _lock = new object();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryCache"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="config">The configuration.</param>
         public MemoryCache(string name = null, ConfigParams config = null)
         {
             Name = name;
@@ -51,7 +62,7 @@ namespace PipServices.Commons.Cache
         /// <returns>The component <see cref="Refer.Descriptor"/></returns>
         public Descriptor GetDescriptor()
         {
-            return new Descriptor("pip-services-common", "cache", "memory", Name ?? "default", "1.0");
+            return Descriptor;
         }
 
         /// <summary>
