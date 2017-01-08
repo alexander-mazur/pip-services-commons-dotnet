@@ -5,8 +5,14 @@ namespace PipServices.Commons.Run
     /// <summary>
     /// Interface for components that require explicit opening
     /// </summary>
-    public interface IOpenable
+    public interface IOpenable: IClosable
     {
+        /// <summary>
+        /// Checks if component is opened
+        /// </summary>
+        /// <returns><code>true</code> if component is opened and <false> otherwise.</returns>
+        bool IsOpened();
+
         /// <summary>
         /// Opens component, establishes connections to services
         /// </summary>

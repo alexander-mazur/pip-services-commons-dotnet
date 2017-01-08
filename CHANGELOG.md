@@ -1,6 +1,6 @@
 # Basic portable abstractions for Pip.Services in .NET Changelog
 
-## <a name="1.0.3-1.0.39"></a> 1.0.3-1.0.39 (2016-12-24)
+## <a name="1.0.3-1.0.40"></a> 1.0.3-1.0.40 (2017-01-07)
 
 ### Features
 * **auth** MemoryCredentialStore
@@ -38,6 +38,7 @@
 * Renamed SetAsMap method to Append
 * Added missing descriptor to EventLogger
 * Fixed timeout for CachedConfigReader
+* IOpenable interface now inherits IClosable and had IsOpened() method
 
 ## Breaking changes
 * Removed IParamNotifiable and IParamExecutable interfaces. Now INotifiable and IExecutable support arguments

@@ -21,6 +21,12 @@ namespace PipServices.Commons.Refer
             BaseReferences = _runner;
         }
 
+        public bool IsOpened()
+        {
+            var components = _references.GetAll();
+            return Opener.IsOpened(components);
+        }
+
         public async Task OpenAsync(string correlationId)
         {
             var components = _references.GetAll();
