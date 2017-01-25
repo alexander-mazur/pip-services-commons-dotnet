@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PipServices.Commons</id>
-    <version>1.0.40</version>
+    <version>1.0.43</version>
     <title>PipServices.Commons</title>
     <authors>Sergey Seroukhov, Volodymyr Tkachenko</authors>
 
@@ -17,13 +17,13 @@
     <tags>pip-services microservices framework</tags>
 
     <dependencies>
-      <group targetFramework="net">
+      <group targetFramework=".NETFramework4.5">
         <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="YamlDotNet" version="4.0" />
       </group>
-      <group targetFramework="netstandard">
+      <group targetFramework=".NETStandard1.3">
         <dependency id="Microsoft.Extensions.Logging.TraceSource" version="1.1.0" />
-        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="System.ComponentModel.TypeConverter" version="4.3.0" />
         <dependency id="System.Linq" version="4.3.0" />
         <dependency id="System.Linq.Queryable" version="4.3.0" />
