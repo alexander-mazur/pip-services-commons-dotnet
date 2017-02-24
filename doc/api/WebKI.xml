@@ -1765,6 +1765,7 @@
     <HelpKINode Title="about IOpenable interface" Url="html/T_PipServices_Commons_Run_IOpenable.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_IOpenable.htm" />
   </HelpKINode>
+  <HelpKINode Title="IOpenable.IsOpened method" Url="html/M_PipServices_Commons_Run_IOpenable_IsOpened.htm" />
   <HelpKINode Title="IOpenable.OpenAsync method" Url="html/M_PipServices_Commons_Run_IOpenable_OpenAsync.htm" />
   <HelpKINode Title="IParameterized interface">
     <HelpKINode Title="IParameterized Interface" Url="html/T_PipServices_Commons_Run_IParameterized.htm" />
@@ -1809,6 +1810,12 @@
   <HelpKINode Title="IsComplete method" Url="html/M_PipServices_Commons_Refer_Descriptor_IsComplete.htm" />
   <HelpKINode Title="IsDeleted property" Url="html/P_PipServices_Commons_Data_ITrackable_IsDeleted.htm" />
   <HelpKINode Title="IsExpired method" Url="html/M_PipServices_Commons_Cache_CacheEntry_IsExpired.htm" />
+  <HelpKINode Title="IsOpened method">
+    <HelpKINode Title="IOpenable.IsOpened Method " Url="html/M_PipServices_Commons_Run_IOpenable_IsOpened.htm" />
+    <HelpKINode Title="ManagedReferences.IsOpened Method " Url="html/M_PipServices_Commons_Refer_ManagedReferences_IsOpened.htm" />
+    <HelpKINode Title="Opener.IsOpened Method " Url="html/M_PipServices_Commons_Run_Opener_IsOpened.htm" />
+  </HelpKINode>
+  <HelpKINode Title="IsOpenedOne method" Url="html/M_PipServices_Commons_Run_Opener_IsOpenedOne.htm" />
   <HelpKINode Title="IsPrimitiveType method" Url="html/Overload_PipServices_Commons_Convert_TypeConverter_IsPrimitiveType.htm" />
   <HelpKINode Title="IsRequired property" Url="html/P_PipServices_Commons_Validate_Schema_IsRequired.htm" />
   <HelpKINode Title="IsShadowName method" Url="html/M_PipServices_Commons_Config_ConfigParams_IsShadowName.htm" />
@@ -2022,6 +2029,7 @@
     <HelpKINode Title="properties" Url="html/Properties_T_PipServices_Commons_Refer_ManagedReferences.htm" />
   </HelpKINode>
   <HelpKINode Title="ManagedReferences.CloseAsync method" Url="html/M_PipServices_Commons_Refer_ManagedReferences_CloseAsync.htm" />
+  <HelpKINode Title="ManagedReferences.IsOpened method" Url="html/M_PipServices_Commons_Refer_ManagedReferences_IsOpened.htm" />
   <HelpKINode Title="ManagedReferences.ManagedReferences constructor" Url="html/M_PipServices_Commons_Refer_ManagedReferences__ctor.htm" />
   <HelpKINode Title="ManagedReferences.OpenAsync method" Url="html/M_PipServices_Commons_Refer_ManagedReferences_OpenAsync.htm" />
   <HelpKINode Title="ManagedReferences._builder field" Url="html/F_PipServices_Commons_Refer_ManagedReferences__builder.htm" />
@@ -2349,6 +2357,8 @@
     <HelpKINode Title="constructor" Url="html/M_PipServices_Commons_Run_Opener__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_PipServices_Commons_Run_Opener.htm" />
   </HelpKINode>
+  <HelpKINode Title="Opener.IsOpened method" Url="html/M_PipServices_Commons_Run_Opener_IsOpened.htm" />
+  <HelpKINode Title="Opener.IsOpenedOne method" Url="html/M_PipServices_Commons_Run_Opener_IsOpenedOne.htm" />
   <HelpKINode Title="Opener.OpenAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenAsync.htm" />
   <HelpKINode Title="Opener.Opener constructor" Url="html/M_PipServices_Commons_Run_Opener__ctor.htm" />
   <HelpKINode Title="Opener.OpenOneAsync method" Url="html/M_PipServices_Commons_Run_Opener_OpenOneAsync.htm" />

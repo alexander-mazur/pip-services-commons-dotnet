@@ -152,6 +152,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\AnyValueArrayTest.cs">
       <Link>Data\AnyValueArrayTest.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\AnyValueMapTest.cs">
+      <Link>Data\AnyValueMapTest.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Data\AnyValueTest.cs">
       <Link>Data\AnyValueTest.cs</Link>
     </Compile>

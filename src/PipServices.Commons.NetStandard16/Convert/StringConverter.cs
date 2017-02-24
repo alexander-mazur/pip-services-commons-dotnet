@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Globalization;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace PipServices.Commons.Convert
 {
@@ -22,6 +23,9 @@ namespace PipServices.Commons.Convert
 
         public static string ToStringWithDefault(object value, string defaultValue)
         {
+            if (value is JValue)
+                value = ((JValue) value).Value;
+
             if (value == null) return defaultValue;
             if (value is string) return (string)value;
 
@@ -31,7 +35,8 @@ namespace PipServices.Commons.Convert
             if (value is DateTime || value is DateTime?)
                 return ((DateTime)value).ToString("o", CultureInfo.InvariantCulture);
 
-            if (value is IEnumerable)
+            var type = value.GetType();
+            if (value is IEnumerable && type != typeof(string))
             {
                 var builder = new StringBuilder();
                 foreach (var item in (IEnumerable)value)
