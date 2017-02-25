@@ -2,20 +2,14 @@
 using System.IO;
 using PipServices.Commons.Errors;
 using YamlDotNet.Serialization;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Config
 {
-    public class YamlConfigReader: FileConfigReader, IDescriptable
+    public class YamlConfigReader: FileConfigReader
     {
-        public YamlConfigReader(string name = null, string path = null)
-            : base(name, path)
+        public YamlConfigReader(string path = null)
+            : base(path)
         { }
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return new Descriptor("pip-services-commons", "config-reader", "yaml", Name ?? "default", "1.0");
-        }
 
         public object ReadObject(string correlationId)
         {
@@ -50,12 +44,12 @@ namespace PipServices.Commons.Config
 
         public static object ReadObject(string correlationId, string path)
         {
-            return new YamlConfigReader(null, path).ReadObject(correlationId);
+            return new YamlConfigReader(path).ReadObject(correlationId);
         }
 
         public static ConfigParams ReadConfig(string correlationId, string path)
         {
-            return new YamlConfigReader(null, path).ReadConfig(correlationId);
+            return new YamlConfigReader(path).ReadConfig(correlationId);
         }
     }
 }

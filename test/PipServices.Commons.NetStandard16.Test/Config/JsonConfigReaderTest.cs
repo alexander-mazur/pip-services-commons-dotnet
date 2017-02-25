@@ -28,9 +28,9 @@ namespace PipServices.Commons.Config
         public void TestReadAfterTimeout()
         {
 #if CORE_NET
-            var reader = new JsonConfigReader(null, "../../data/config.json");
+            var reader = new JsonConfigReader("../../data/config.json");
 #else
-            var reader = new JsonConfigReader(null, "../../../../data/config.json");
+            var reader = new JsonConfigReader("../../../../data/config.json");
 #endif
             reader.Timeout = 100;
 

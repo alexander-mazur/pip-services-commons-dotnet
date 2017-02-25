@@ -401,17 +401,8 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomText.cs">
       <Link>Random\RandomText.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\BuildReferencesDecorator.cs">
-      <Link>Refer\BuildReferencesDecorator.cs</Link>
-    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Descriptor.cs">
       <Link>Refer\Descriptor.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IDescriptable.cs">
-      <Link>Refer\IDescriptable.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ILocateable.cs">
-      <Link>Refer\ILocateable.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IReferenceable.cs">
       <Link>Refer\IReferenceable.cs</Link>
@@ -421,12 +412,6 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\IUnreferenceable.cs">
       <Link>Refer\IUnreferenceable.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\LinkReferencesDecorator.cs">
-      <Link>Refer\LinkReferencesDecorator.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ManagedReferences.cs">
-      <Link>Refer\ManagedReferences.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Reference.cs">
       <Link>Refer\Reference.cs</Link>
@@ -442,12 +427,6 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\References.cs">
       <Link>Refer\References.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\ReferencesDecorator.cs">
-      <Link>Refer\ReferencesDecorator.cs</Link>
-    </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\RunReferencesDecorator.cs">
-      <Link>Refer\RunReferencesDecorator.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Reflect\IProperties.cs">
       <Link>Reflect\IProperties.cs</Link>

@@ -218,9 +218,6 @@
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\DescriptorTest.cs">
       <Link>Refer\DescriptorTest.cs</Link>
     </Compile>
-    <Compile Include="..\PipServices.Commons.NetStandard16.Test\Refer\ManagedReferencesTest.cs">
-      <Link>Refer\ManagedReferencesTest.cs</Link>
-    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16.Test\Reflect\MethodReflectorTest.cs">
       <Link>Reflect\MethodReflectorTest.cs</Link>
     </Compile>

@@ -3,14 +3,12 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
-    public sealed class DefaultCountersFactory : IFactory, IDescriptable
+    public sealed class DefaultCountersFactory : IFactory
     {
-        private static readonly Descriptor ThisDescriptor = new Descriptor("pip-services-commons", "factory", "counters", "default", "1.0");
-
-        public Descriptor GetDescriptor()
-        {
-            return ThisDescriptor;
-        }
+        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "factory", "counters", "default", "1.0");
+        public static readonly Descriptor NullCountersDescriptor = new Descriptor("pip-services-commons", "counters", "null", "*", "1.0");
+        public static readonly Descriptor LogCountersDescriptor = new Descriptor("pip-services-commons", "counters", "log", "*", "1.0");
+        public static readonly Descriptor CompositeCountersDescriptor = new Descriptor("pip-services-commons", "counters", "composite", "*", "1.0");
 
         public bool CanCreate(object locator)
         {
@@ -19,13 +17,13 @@ namespace PipServices.Commons.Count
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCounters.Descriptor))
+            if (descriptor.Match(NullCountersDescriptor))
                 return true;
 
-            if (descriptor.Match(LogCounters.Descriptor))
+            if (descriptor.Match(LogCountersDescriptor))
                 return true;
 
-            if (descriptor.Match(CompositeCounters.Descriptor))
+            if (descriptor.Match(CompositeCountersDescriptor))
                 return true;
 
             return false;
@@ -38,13 +36,13 @@ namespace PipServices.Commons.Count
             if (descriptor == null)
                 return null;
 
-            if (descriptor.Match(NullCounters.Descriptor))
+            if (descriptor.Match(NullCountersDescriptor))
                 return new NullCounters();
 
-            if (descriptor.Match(LogCounters.Descriptor))
+            if (descriptor.Match(LogCountersDescriptor))
                 return new LogCounters();
 
-            if (descriptor.Match(CompositeCounters.Descriptor))
+            if (descriptor.Match(CompositeCountersDescriptor))
                 return new CompositeCounters();
 
             return null;

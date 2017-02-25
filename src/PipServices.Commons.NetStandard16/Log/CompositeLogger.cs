@@ -9,16 +9,8 @@ namespace PipServices.Commons.Log
     /// </summary>
     /// <seealso cref="PipServices.Commons.Log.Logger" />
     /// <seealso cref="PipServices.Commons.Refer.IReferenceable" />
-    /// <seealso cref="PipServices.Commons.Refer.IDescriptable" />
-    public class CompositeLogger : Logger, IReferenceable, IDescriptable
+    public class CompositeLogger : Logger, IReferenceable
     {
-        /// <summary>
-        /// Gets the descriptor.
-        /// </summary>
-        /// <value>The descriptor.</value>
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-commons", "logger", "composite",
-            "default", "1.0");
-
         protected readonly List<ILogger> _loggers = new List<ILogger>();
 
         /// <summary>
@@ -31,15 +23,6 @@ namespace PipServices.Commons.Log
 
             if (references != null)
                 SetReferences(references);
-        }
-
-        /// <summary>
-        /// Gets the component descriptor.
-        /// </summary>
-        /// <returns>The component <see cref="Descriptor" /></returns>
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
         }
 
         /// <summary>

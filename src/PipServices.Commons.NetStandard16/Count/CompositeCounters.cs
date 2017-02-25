@@ -4,20 +4,13 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
-    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable, IDescriptable
+    public class CompositeCounters : ICounters, ITimingCallback, IReferenceable
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "composite", "default", "1.0");
-
         protected readonly List<ICounters> _counters = new List<ICounters>();
 
         public CompositeCounters(IReferences references = null)
         {
             if (references != null) SetReferences(references);
-        }
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
         }
 
         public virtual void SetReferences(IReferences references)

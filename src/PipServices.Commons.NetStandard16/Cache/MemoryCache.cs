@@ -1,5 +1,4 @@
 ﻿using PipServices.Commons.Config;
-using PipServices.Commons.Refer;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace PipServices.Commons.Cache
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public class MemoryCache : ICache, IDescriptable, IReconfigurable
+    public class MemoryCache : ICache, IReconfigurable
     {
         private readonly long DefaultTimeout = 60000;
         private const long DefaultMaxSize = 1000;
@@ -21,26 +20,17 @@ namespace PipServices.Commons.Cache
         private readonly object _lock = new object();
 
         /// <summary>
-        /// Gets the descriptor.
-        /// </summary>
-        /// <value>The descriptor.</value>
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "memory", "default", "1.0");
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCache"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         /// <param name="config">The configuration.</param>
-        public MemoryCache(string name = null, ConfigParams config = null)
+        public MemoryCache(ConfigParams config = null)
         {
-            Name = name;
             Timeout = DefaultTimeout;
             MaxSize = DefaultMaxSize;
 
             if (config != null) Configure(config);
         }
 
-        public string Name { get; protected set; }
         public long Timeout { get; set; }
         public long MaxSize { get; set; }
 
@@ -50,18 +40,8 @@ namespace PipServices.Commons.Cache
         /// <param name="config">Configuration parameters.</param>
         public void Configure(ConfigParams config)
         {
-            Name = NameResolver.Resolve(config, Name);
             Timeout = config.GetAsLongWithDefault("timeout", Timeout);
             MaxSize = config.GetAsLongWithDefault("max_size", MaxSize);
-        }
-
-        /// <summary>
-        /// Gets the component descriptor.
-        /// </summary>
-        /// <returns>The component <see cref="Refer.Descriptor"/></returns>
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
         }
 
         private void Cleanup()

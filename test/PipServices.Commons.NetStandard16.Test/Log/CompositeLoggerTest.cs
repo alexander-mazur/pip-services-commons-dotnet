@@ -16,10 +16,10 @@ namespace PipServices.Commons.Test.Log
         {
             Log = new CompositeLogger();
 
-            var refs = References.FromList(
-                new ConsoleLogger(), 
-                new DiagnosticsLogger(),
-                Log
+            var refs = References.FromTuples(
+                DefaultLoggerFactory.ConsoleLoggerDescriptor, new ConsoleLogger(), 
+                DefaultLoggerFactory.DiagnosticsLoggerDescriptor, new DiagnosticsLogger(),
+                DefaultLoggerFactory.CompositeLoggerDescriptor, Log
             );
             Log.SetReferences(refs);
 

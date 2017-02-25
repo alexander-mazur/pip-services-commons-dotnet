@@ -1,19 +1,11 @@
 ﻿using System;
-using PipServices.Commons.Refer;
 using System.Text;
 using PipServices.Commons.Convert;
 
 namespace PipServices.Commons.Log
 {
-    public class ConsoleLogger : Logger, IDescriptable
+    public class ConsoleLogger : Logger
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "logger", "console", "default", "1.0");
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             if (Level < level) return;

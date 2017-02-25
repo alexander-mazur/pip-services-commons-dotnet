@@ -1,20 +1,11 @@
-﻿using PipServices.Commons.Refer;
-using System;
+﻿using System;
 
 namespace PipServices.Commons.Log
 {
-    public class EventLogger : Logger, IDescriptable
+    public class EventLogger : Logger
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "logger", "event", "default", "1.0");
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
-
             if (error != null)
             {
                 if (string.IsNullOrWhiteSpace(message))

@@ -4,14 +4,14 @@ using PipServices.Commons.Refer;
 namespace PipServices.Commons.Cache
 {
     /// <summary>
-    /// Class DefaultCacheFactory.
+    /// Default factory for cache components
     /// </summary>
     /// <seealso cref="PipServices.Commons.Build.IFactory" />
-    /// <seealso cref="PipServices.Commons.Refer.IDescriptable" />
-    public class DefaultCacheFactory : IFactory, IDescriptable
+    public class DefaultCacheFactory : IFactory
     {
-        private static Descriptor Descriptor { get; } = new Descriptor("pip-services-commons", "factory", "cache", "*", "1.0")
-            ;
+        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "factory", "cache", "default", "1.0");
+        public static Descriptor NullCacheDescriptor = new Descriptor("pip-services-commons", "cache", "null", "*", "1.0");
+        public static Descriptor MemoryCacheDescriptor = new Descriptor("pip-services-commons", "cache", "memory", "*", "1.0");
 
         public bool CanCreate(object locator)
         {
@@ -20,10 +20,10 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return false;
 
-            if (descriptor.Match(NullCache.Descriptor))
+            if (descriptor.Match(NullCacheDescriptor))
                 return true;
 
-            if (descriptor.Match(MemoryCache.Descriptor))
+            if (descriptor.Match(MemoryCacheDescriptor))
                 return true;
 
             return false;
@@ -36,18 +36,13 @@ namespace PipServices.Commons.Cache
             if (descriptor == null)
                 return null;
 
-            if (descriptor.Match(NullCache.Descriptor))
+            if (descriptor.Match(NullCacheDescriptor))
                 return new NullCache();
 
-            if (descriptor.Match(MemoryCache.Descriptor))
-                return new MemoryCache(descriptor.Name);
+            if (descriptor.Match(MemoryCacheDescriptor))
+                return new MemoryCache();
 
             return null;
-        }
-
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
         }
     }
 }

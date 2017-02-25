@@ -3,15 +3,8 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
-    public sealed class NullCounters : ICounters, IDescriptable
+    public sealed class NullCounters : ICounters
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "counters", "null", "default", "1.0");
-
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         public Timing BeginTiming(string name)
         {
             return new Timing();

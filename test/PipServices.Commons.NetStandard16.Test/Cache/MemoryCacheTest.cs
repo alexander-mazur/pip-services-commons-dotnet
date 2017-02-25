@@ -25,16 +25,6 @@ namespace PipServices.Commons.Test.Cache
         }
 
         [Fact]
-        public void GetDescriptor_ReturnsMemoryCache()
-        {
-            var descriptor = _cache.GetDescriptor();
-
-            Assert.NotNull(descriptor);
-            Assert.Equal("cache", descriptor.Type);
-            Assert.Equal("memory", descriptor.Kind);
-        }
-
-        [Fact]
         public void Retrieve_BothValue_In500ms()
         {
             Task.Delay(500).Wait();

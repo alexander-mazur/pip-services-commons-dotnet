@@ -7,16 +7,9 @@ using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Count
 {
-    public class LogCounters : CachedCounters, IDescriptable, IReferenceable
+    public class LogCounters : CachedCounters, IReferenceable
     {
-        public static Descriptor Descriptor = new Descriptor("pip-counters", "counters", "log", "default", "1.0");
-
         private readonly CompositeLogger _logger = new CompositeLogger();
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
 
         public virtual void SetReferences(IReferences references)
         {

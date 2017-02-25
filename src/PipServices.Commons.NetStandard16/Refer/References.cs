@@ -14,35 +14,28 @@ namespace PipServices.Commons.Refer
 
         public References() { }
 
-        public References(IEnumerable components = null)
+        public References(object[] tuples)
         {
-            if (components != null)
+            if (tuples != null)
             {
-                foreach (var component in components)
-                    Put(component);
+                for (int index = 0; index < tuples.Length; index += 2)
+                {
+                    if (index + 1 >= tuples.Length) break;
+
+                    Put(tuples[index], tuples[index + 1]);
+                }
             }
         }
 
-        public virtual void Put(object component, object locator = null)
+        public virtual void Put(object locator, object component)
         {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
             lock (_lock)
             {
-                if (locator != null)
-                    _references.Add(new Reference(component, locator));
-                else if (component is Reference)
-                    _references.Add((Reference)component);
-                else
-                    _references.Add(new Reference(component));
+                _references.Add(new Reference(locator, component));
             }
-        }
-
-        public virtual void PutAll(params object[] components)
-        {
-            foreach (var component in components)
-                Put(component);
         }
 
         public virtual object Remove(object locator)
@@ -54,7 +47,7 @@ namespace PipServices.Commons.Refer
                 for (int index = _references.Count - 1; index >= 0; index--)
                 {
                     var reference = _references[index];
-                    if (reference.Locate(locator))
+                    if (reference.Match(locator))
                     {
                         // Remove from the set
                         _references.RemoveAt(index);
@@ -75,7 +68,7 @@ namespace PipServices.Commons.Refer
                 for (int index = _references.Count - 1; index >= 0; index--)
                 {
                     var reference = _references[index];
-                    if (reference.Locate(locator))
+                    if (reference.Match(locator))
                     {
                         // Remove from the set
                         _references.RemoveAt(index);
@@ -161,7 +154,7 @@ namespace PipServices.Commons.Refer
                     while (index >= 0 && index < _references.Count)
                     {
                         var reference = _references[index];
-                        if (reference.Locate(query.StartLocator))
+                        if (reference.Match(query.StartLocator))
                             break;
                         index += query.Ascending ? 1 : -1;
                     }
@@ -171,7 +164,7 @@ namespace PipServices.Commons.Refer
                 while (index >= 0 && index < _references.Count)
                 {
                     var reference = _references[index];
-                    if (reference.Locate(query.Locator))
+                    if (reference.Match(query.Locator))
                     {
                         var component = reference.GetComponent();
                         if (component is T)
@@ -187,11 +180,6 @@ namespace PipServices.Commons.Refer
             return components;
         }
 
-        public static References FromList(params object[] components)
-        {
-            return new References(components);
-        }
-
         /// <summary>
         /// Clears this instance.
         /// </summary>
@@ -201,6 +189,11 @@ namespace PipServices.Commons.Refer
             {
                 _references.Clear();
             }
+        }
+
+        public static References FromTuples(params object[] tuples)
+        {
+            return new References(tuples);
         }
     }
 }

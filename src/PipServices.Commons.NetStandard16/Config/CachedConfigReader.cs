@@ -7,18 +7,15 @@ namespace PipServices.Commons.Config
         private long _lastRead = 0;
         private ConfigParams _config;
 
-        public CachedConfigReader(string name = null)
+        public CachedConfigReader()
         {
-            Name = name;
             Timeout = 60000;
         }
 
-        public string Name { get; set; }
         public long Timeout { get; set; }
 
         public virtual void Configure(ConfigParams config)
         {
-            Name = NameResolver.Resolve(config, Name);
             Timeout = config.GetAsLongWithDefault("timeout", Timeout);
         }
 

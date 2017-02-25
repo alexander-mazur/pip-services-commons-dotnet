@@ -1,5 +1,4 @@
-﻿using PipServices.Commons.Refer;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace PipServices.Commons.Cache
 {
@@ -8,20 +7,8 @@ namespace PipServices.Commons.Cache
     /// It is primarily used in testing and can be temporarily
     /// used to disable cache for troubleshooting purposes.
     /// </summary>
-    public class NullCache : ICache, IDescriptable
+    public class NullCache : ICache
     {
-        public static Descriptor Descriptor { get; } = new Descriptor("pip-services-common", "cache", "null",
-            "default", "1.0");
-
-        /// <summary>
-        /// Gets the component descriptor.
-        /// </summary>
-        /// <returns>The component <see cref="Refer.Descriptor"/></returns>
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         /// <summary>
         /// Retrieves a value from cache by unique key.
         /// </summary>

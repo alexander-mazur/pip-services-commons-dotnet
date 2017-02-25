@@ -4,16 +4,9 @@ using System.Configuration;
 
 namespace PipServices.Commons.Config
 {
-    public class AppSettingsConfigReader: IConfigReader, IDescriptable
+    public class AppSettingsConfigReader: IConfigReader
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "config-reader", "app-settings", "default", "1.0");
-
         public AppSettingsConfigReader() {}
-
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
 
         public ConfigParams ReadConfig(string correlationId)
         {

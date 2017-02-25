@@ -2,20 +2,14 @@
 using System.IO;
 using PipServices.Commons.Errors;
 using PipServices.Commons.Convert;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Config
 {
-    public class JsonConfigReader: FileConfigReader, IDescriptable
+    public class JsonConfigReader: FileConfigReader
     {
-        public JsonConfigReader(string name = null, string path = null)
-            : base(name, path)
+        public JsonConfigReader(string path = null)
+            : base(path)
         { }
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return new Descriptor("pip-services-commons", "config-reader", "json", Name ?? "default", "1.0");
-        }
 
         public object ReadObject(string correlationId)
         {
@@ -50,12 +44,12 @@ namespace PipServices.Commons.Config
 
         public static object ReadObject(string correlationId, string path)
         {
-            return new JsonConfigReader(null, path).ReadObject(correlationId);
+            return new JsonConfigReader(path).ReadObject(correlationId);
         }
 
         public static ConfigParams ReadConfig(string correlationId, string path)
         {
-            return new JsonConfigReader(null, path).ReadConfig(correlationId);
+            return new JsonConfigReader(path).ReadConfig(correlationId);
         }
     }
 }

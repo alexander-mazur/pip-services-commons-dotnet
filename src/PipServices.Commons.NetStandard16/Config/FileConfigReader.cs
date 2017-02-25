@@ -2,8 +2,7 @@
 {
     public abstract class FileConfigReader: CachedConfigReader, IConfigurable
     {
-        public FileConfigReader(string name = null, string path = null)
-            : base(name)
+        public FileConfigReader(string path = null)
         {
             Path = path;
         }

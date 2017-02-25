@@ -14,7 +14,9 @@ namespace PipServices.Commons.Test.Count
         public LogCountersTest()
         {
             var log = new ConsoleLogger();
-            var refs = References.FromList(log);
+            var refs = References.FromTuples(
+                DefaultLoggerFactory.ConsoleLoggerDescriptor, log
+            );
 
             _counters.SetReferences(refs);
 

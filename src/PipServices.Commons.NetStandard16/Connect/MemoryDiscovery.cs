@@ -1,24 +1,20 @@
 ﻿using PipServices.Commons.Config;
-using PipServices.Commons.Refer;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PipServices.Commons.Connect
 {
-    public class MemoryDiscovery : IDiscovery, IReconfigurable, IDescriptable
+    public class MemoryDiscovery : IDiscovery, IReconfigurable
     {
         private List<DiscoveryItem> _items = new List<DiscoveryItem>();
         private object _lock = new object();
 
         public MemoryDiscovery() { }
 
-        public MemoryDiscovery(string name = null, ConfigParams config = null)
+        public MemoryDiscovery(ConfigParams config = null)
         {
-            Name = name;
             if (config != null) Configure(config);
         }
-
-        public string Name { get; set; }
 
         private class DiscoveryItem
         {
@@ -26,14 +22,8 @@ namespace PipServices.Commons.Connect
             public ConnectionParams Connection;
         }
 
-        public virtual Descriptor GetDescriptor()
-        {
-            return new Descriptor("pip-services-commons", "discovery", "memory", Name ?? "default", "1.0");
-        }
-
         public virtual void Configure(ConfigParams config)
         {
-            Name = NameResolver.Resolve(config, Name);
             ReadConnections(config);
         }
 

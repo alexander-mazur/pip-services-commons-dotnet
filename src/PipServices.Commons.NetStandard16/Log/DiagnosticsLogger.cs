@@ -1,19 +1,11 @@
 ﻿using PipServices.Commons.Convert;
-using PipServices.Commons.Refer;
 using System;
 using System.Text;
 
 namespace PipServices.Commons.Log
 {
-    public class DiagnosticsLogger : Logger, IDescriptable
+    public class DiagnosticsLogger : Logger
     {
-        public static Descriptor Descriptor = new Descriptor("pip-services-commons", "logger", "diagnostics", "default", "1.0");
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             if (Level < level) return;

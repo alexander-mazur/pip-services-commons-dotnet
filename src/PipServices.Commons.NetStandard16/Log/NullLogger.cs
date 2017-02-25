@@ -1,17 +1,9 @@
 ﻿using System;
-using PipServices.Commons.Refer;
 
 namespace PipServices.Commons.Log
 {
-    public sealed class NullLogger : ILogger, IDescriptable
+    public sealed class NullLogger : ILogger
     {
-        public static readonly Descriptor Descriptor = new Descriptor("pip-services-commons", "logger", "null", "default", "1.0");
-
-        public Descriptor GetDescriptor()
-        {
-            return Descriptor;
-        }
-
         public LogLevel Level
         {
             get { return LogLevel.None; }

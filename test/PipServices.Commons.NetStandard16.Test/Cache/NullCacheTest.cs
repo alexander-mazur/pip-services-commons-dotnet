@@ -13,16 +13,6 @@ namespace PipServices.Commons.Test.Cache
         }
 
         [Fact]
-        public void GetDescriptor_ReturnsNullCache()
-        {
-            var descriptor = _cache.GetDescriptor();
-
-            Assert.NotNull(descriptor);
-            Assert.Equal("cache", descriptor.Type);
-            Assert.Equal("null", descriptor.Kind);
-        }
-
-        [Fact]
         public void Retrieve_ReturnsNull()
         {
             var val = _cache.RetrieveAsync(null, "key1").Result;

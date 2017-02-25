@@ -5,29 +5,20 @@ using System.Threading.Tasks;
 
 namespace PipServices.Commons.Auth
 {
-    public class MemoryCredentialStore : ICredentialStore, IReconfigurable, IDescriptable
+    public class MemoryCredentialStore : ICredentialStore, IReconfigurable
     {
         private Dictionary<string, CredentialParams> _items = new Dictionary<string, CredentialParams>();
         private object _lock = new object();
 
         public MemoryCredentialStore() { }
 
-        public MemoryCredentialStore(string name, ConfigParams credentials)
+        public MemoryCredentialStore(ConfigParams credentials)
         {
-            Name = name;
             Configure(credentials);
-        }
-
-        public string Name { get; set; }
-
-        public virtual Descriptor GetDescriptor()
-        {
-            return new Descriptor("pip-services-commons", "credential-store", "memory", Name ?? "default", "1.0");
         }
 
         public virtual void Configure(ConfigParams config)
         {
-            Name = NameResolver.Resolve(config, Name);
             ReadCredentials(config);
         }
 
