@@ -401,6 +401,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Random\RandomText.cs">
       <Link>Random\RandomText.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Refer\DependencyResolver.cs">
+      <Link>Refer\DependencyResolver.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Refer\Descriptor.cs">
       <Link>Refer\Descriptor.cs</Link>
     </Compile>
