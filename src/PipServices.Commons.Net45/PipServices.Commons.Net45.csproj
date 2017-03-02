@@ -59,6 +59,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Auth\CredentialResolver.cs">
       <Link>Auth\CredentialResolver.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Auth\DefaultCredentialStoreFactory.cs">
+      <Link>Auth\DefaultCredentialStoreFactory.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Auth\ICredentialStore.cs">
       <Link>Auth\ICredentialStore.cs</Link>
     </Compile>
@@ -70,6 +73,9 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Build\CreateException.cs">
       <Link>Build\CreateException.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Build\Factory.cs">
+      <Link>Build\Factory.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Build\IFactory.cs">
       <Link>Build\IFactory.cs</Link>
@@ -116,6 +122,9 @@
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\ConfigParams.cs">
       <Link>Config\ConfigParams.cs</Link>
     </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Config\DefaultConfigReaderFactory.cs">
+      <Link>Config\DefaultConfigReaderFactory.cs</Link>
+    </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Config\FileConfigReader.cs">
       <Link>Config\FileConfigReader.cs</Link>
     </Compile>
@@ -148,6 +157,9 @@
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Connect\ConnectionResolver.cs">
       <Link>Connect\ConnectionResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\PipServices.Commons.NetStandard16\Connect\DefaultDiscoveryFactory.cs">
+      <Link>Connect\DefaultDiscoveryFactory.cs</Link>
     </Compile>
     <Compile Include="..\PipServices.Commons.NetStandard16\Connect\IDiscovery.cs">
       <Link>Connect\IDiscovery.cs</Link>

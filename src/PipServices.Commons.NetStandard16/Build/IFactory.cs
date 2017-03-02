@@ -7,7 +7,8 @@
         /// </summary>
         /// <param name="locater">The locater.</param>
         /// <returns><c>true</c> if this instance can create the specified locater; otherwise, <c>false</c>.</returns>
-        bool CanCreate(object locater);
+        object CanCreate(object locater);
+
         /// <summary>
         /// Creates the specified locater.
         /// </summary>

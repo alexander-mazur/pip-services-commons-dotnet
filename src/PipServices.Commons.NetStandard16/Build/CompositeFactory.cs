@@ -36,12 +36,14 @@ namespace PipServices.Commons.Build
             _factories.Remove(factory);
         }
 
-        public bool CanCreate(object locator)
+        public object CanCreate(object locator)
         {
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
 
-            return _factories.Exists(x => x.CanCreate(locator));
+            var factory = _factories.FindLast(x => x.CanCreate(locator) != null);
+
+            return factory != null ? factory.CanCreate(locator) : null;
         }
 
         public object Create(object locator)
@@ -49,7 +51,7 @@ namespace PipServices.Commons.Build
             if (locator == null)
                 throw new ArgumentNullException(nameof(locator));
 
-            var factory = _factories.FindLast(x => x.CanCreate(locator));
+            var factory = _factories.FindLast(x => x.CanCreate(locator) != null);
 
             if (factory == null)
                 throw new CreateException(null, locator);

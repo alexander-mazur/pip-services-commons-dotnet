@@ -2,10 +2,11 @@
 
 ## <a name="2.0.0"></a> 2.0.0 (2017-02-24)
 
-Cleaned up and simplified dependency management.
+Cleaned up and simplified dependency management and object factories.
 
 ### Features
 * **refer** Added DependencyResolver
+* **build** Added Factory
 
 ### Breaking Changes
 * Refactored **refer** package. Removed IDescriptable and ILocateable interface. Made locator a mandatory requirement to place component into references.
